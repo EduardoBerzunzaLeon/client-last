@@ -76,7 +76,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': [ RULES.ERROR ],
     'no-param-reassign': [
       RULES.ERROR,
-      { props: true, ignorePropertyModificationsFor: [ 'state' ]},
+      { props: true, ignorePropertyModificationsFor: [ 'state', 'e' ]},
     ],
     'jsx-a11y/label-has-associated-control': RULES.OFF,
   },
