@@ -19,7 +19,7 @@ const ForgotPasswordScreen = () => {
             <i className="pi pi-envelope" />
             <InputText
               keyfilter="email"
-              className=" w-full"
+              className="w-full"
               id="email"
               value={first}
               onChange={(e) => setFirst(e.target.value)}

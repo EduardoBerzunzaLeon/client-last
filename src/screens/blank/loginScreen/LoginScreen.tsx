@@ -44,13 +44,14 @@ const LoginScreen = () => {
             <label htmlFor="email">Correo Electrónico</label>
           </span>
         </div>
-        <div className="field pt-2">
-          <div className="flex justify-content-end">
 
-            <Link to="/forgot-password">
-              ¿Olvidaste la contraseña?
-            </Link>
-          </div>
+        <div className="flex justify-content-end">
+          <Link to="/forgot-password">
+            ¿Olvidaste la contraseña?
+          </Link>
+        </div>
+
+        <div className="field pt-2">
           <span className="p-float-label w-full">
             <Password
               className="inputfield w-full"
@@ -64,6 +65,7 @@ const LoginScreen = () => {
         <div className="flex flex-column">
           <Button type="submit" label="Enviar" className="mt-2 flex align-items-center justify-content-center" />
         </div>
+
         <div className="flex justify-content-end mt-1">
           <Link to="/register">
             No tengo cuenta
