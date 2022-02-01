@@ -1,48 +1,59 @@
-import { useState } from 'react';
-
 import { Link, useNavigate } from 'react-router-dom';
-
+import { Form, Formik } from 'formik';
+import * as Yup from 'yup';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
-import { InputText } from 'primereact/inputtext';
+
+import InputTextApp from '../../../components/forms/InputTextApp';
 
 const ForgotPasswordScreen = () => {
-  const [ first, setFirst ] = useState('');
   const navigate = useNavigate();
   return (
     <Card
       title="¡Restablecer contraseña!"
     >
-      <form>
-        <div className="field pt-2">
-          <span className="p-float-label p-input-icon-right w-full">
-            <i className="pi pi-envelope" />
-            <InputText
-              keyfilter="email"
-              className="w-full"
-              id="email"
-              value={first}
-              onChange={(e) => setFirst(e.target.value)}
-              autoFocus
-            />
-            <label htmlFor="email">Correo Electrónico</label>
-          </span>
-        </div>
-        <div className="flex flex-column">
-          <Button
-            onClick={() => {
-              navigate('/reset-password');
-            }}
-            label="Enviar correo de cambio de contraseña"
-            className="mt-2 flex align-items-center justify-content-center"
-          />
-        </div>
-        <div className="flex justify-content-end mt-1">
-          <Link to="/login">
-            Ya recorde mi clave
-          </Link>
-        </div>
-      </form>
+      <Formik
+        initialValues={{ email: '' }}
+        onSubmit={(values) => {
+          console.log(values);
+        }}
+        validationSchema={Yup.object({
+          email: Yup.string()
+            .email('Email no tiene un formato valido')
+            .required('Requerido'),
+        })}
+      >
+
+        {({ isValid, isSubmitting }) => (
+          <Form>
+            <div className="field pt-2">
+              <InputTextApp
+                label="Email"
+                name="email"
+                keyfilter="email"
+                className="w-full"
+                icon="pi pi-envelope"
+                autoFocus
+              />
+            </div>
+            <div className="flex flex-column">
+              <Button
+                onClick={() => {
+                  navigate('/reset-password');
+                }}
+                label="Enviar correo de cambio de contraseña"
+                className="mt-2 flex align-items-center justify-content-center"
+                disabled={!isValid || isSubmitting}
+              />
+            </div>
+            <div className="flex justify-content-end mt-1">
+              <Link to="/login">
+                Ya recorde mi clave
+              </Link>
+            </div>
+          </Form>
+        )}
+      </Formik>
 
     </Card>
   );

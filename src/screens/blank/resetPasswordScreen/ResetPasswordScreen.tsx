@@ -1,38 +1,61 @@
 import { Card } from 'primereact/card';
 
-import { Password } from 'primereact/password';
 import { Button } from 'primereact/button';
+import { Form, Formik } from 'formik';
+import * as Yup from 'yup';
+import InputTextApp from '../../../components/forms/InputTextApp';
 
 const ResetPasswordScreen = () => (
   <Card
     title="¡Cambiar contraseña!"
   >
-    <form>
-      <div className="field pt-2">
-        <span className="p-float-label w-full">
-          <Password
-            className="inputfield w-full"
-            toggleMask
-          />
-          <label htmlFor="email">Contraseña*</label>
-        </span>
-      </div>
+    <Formik
+      initialValues={{
+        password: '',
+        confirmPassword: '',
+      }}
+      onSubmit={(values) => {
+        console.log(values);
+      }}
+      validationSchema={Yup.object({
+        password: Yup.string()
+          .min(6, 'Mínimo 6 letras')
+          .required('Requerido'),
+        confirmPassword: Yup.string()
+          .oneOf([ Yup.ref('password') ], 'Las contraseñas tienen que ser iguales')
+          .required('Requerido'),
+      })}
+    >
+      {({ isValid, isSubmitting }) => (
+        <Form>
+          <div className="field pt-2">
+            <InputTextApp
+              label="Contraseña"
+              name="password"
+              type="password"
+              className="w-full"
+              toggleMask
+              feedback={false}
+            />
+          </div>
 
-      <div className="field pt-2">
-        <span className="p-float-label w-full">
-          <Password
-            className="inputfield w-full"
-            toggleMask
-          />
-          <label htmlFor="email">Confirmar contraseña*</label>
-        </span>
-      </div>
+          <div className="field pt-2">
+            <InputTextApp
+              label="Contraseña"
+              name="confirmPassword"
+              type="password"
+              className="w-full"
+              toggleMask
+              feedback={false}
+            />
+          </div>
 
-      <div className="flex flex-column">
-        <Button type="submit" label="Cambiar contraseña" className="mt-2 flex align-items-center justify-content-center" />
-      </div>
-    </form>
-
+          <div className="flex flex-column">
+            <Button type="submit" label="Cambiar contraseña" className="mt-2 flex align-items-center justify-content-center" disabled={!isValid || isSubmitting} />
+          </div>
+        </Form>
+      )}
+    </Formik>
   </Card>
 );
 

@@ -1,107 +1,114 @@
-import { useState } from 'react';
-
 import { Link } from 'react-router-dom';
 
+import { Form, Formik } from 'formik';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
-import { InputText } from 'primereact/inputtext';
-import { Password } from 'primereact/password';
-import { RadioButton } from 'primereact/radiobutton';
+import * as Yup from 'yup';
 
-const RegisterScreen = () => {
-  const [ first, setFirst ] = useState('');
-  const [ city, setCity ] = useState(null);
-  return (
-    <Card
-      title="¡Registrarme!"
-      subTitle="Crear una cuenta"
+import InputTextApp from '../../../components/forms/InputTextApp';
+
+const RegisterScreen = () => (
+  <Card
+    title="¡Registrarme!"
+    subTitle="Crear una cuenta"
+  >
+    <Formik
+      initialValues={{
+        first: '',
+        last: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        gender: '',
+      }}
+      onSubmit={(values) => {
+        console.log(values);
+      }}
+      validationSchema={Yup.object({
+        first: Yup.string()
+          .required('Requerido'),
+        last: Yup.string()
+          .required('Requerido'),
+        email: Yup.string()
+          .email('Email no tiene un formato valido')
+          .required('Requerido'),
+        password: Yup.string()
+          .min(6, 'Mínimo 6 letras')
+          .required('Requerido'),
+        confirmPassword: Yup.string()
+          .oneOf([ Yup.ref('password') ], 'Las contraseñas tienen que ser iguales')
+          .required('Requerido'),
+        gender: Yup.string()
+          .required('Requerido'),
+      })}
     >
-      <form>
+      {({ isValid, isSubmitting }) => (
+        <Form>
 
-        <div className="field pt-2">
-          <span className="p-float-label p-input-icon-right w-full">
-            <i className="pi pi-user" />
-            <InputText
-              className=" w-full"
-              id="first"
-              value={first}
-              onChange={(e) => setFirst(e.target.value)}
+          <div className="field pt-2">
+            <InputTextApp
+              label="Nombre*"
+              name="first"
+              className="w-full"
+              icon="pi pi-user"
               autoFocus
             />
-            <label htmlFor="first">Nombre*</label>
-          </span>
-        </div>
+          </div>
 
-        <div className="field pt-2">
-          <span className="p-float-label p-input-icon-right w-full">
-            <i className="pi pi-user-edit" />
-            <InputText
-              className=" w-full"
-              id="last"
-              value={first}
-              onChange={(e) => setFirst(e.target.value)}
+          <div className="field pt-2">
+            <InputTextApp
+              label="Apellido(s)*"
+              name="last"
+              className="w-full"
+              icon="pi pi-user-edit"
             />
-            <label htmlFor="last">Apellido(s)*</label>
-          </span>
-        </div>
+          </div>
 
-        <div className="field pt-2">
-          <span className="p-float-label p-input-icon-right w-full">
-            <i className="pi pi-envelope" />
-            <InputText
+          <div className="field pt-2">
+            <InputTextApp
+              label="Email"
+              name="email"
               keyfilter="email"
-              className=" w-full"
-              id="email"
-              value={first}
-              onChange={(e) => setFirst(e.target.value)}
+              className="w-full"
+              icon="pi pi-envelope"
             />
-            <label htmlFor="email">Correo Electrónico*</label>
-          </span>
-        </div>
-
-        <div className="field pt-2">
-          <span className="p-float-label w-full">
-            <Password
-              className="inputfield w-full"
-              toggleMask
-            />
-            <label htmlFor="email">Contraseña*</label>
-          </span>
-        </div>
-
-        <div className="field pt-2">
-          <span className="p-float-label w-full">
-            <Password
-              className="inputfield w-full"
-              toggleMask
-            />
-            <label htmlFor="email">Confirmar contraseña*</label>
-          </span>
-        </div>
-
-        <div className="flex field pt-2 justify-content-start">
-          <div className="field-radiobutton">
-            <RadioButton inputId="city3" name="city" value="M" onChange={(e) => setCity(e.value)} checked={city === 'New York'} />
-            <label htmlFor="city3">Masculino</label>
           </div>
-          <div className="field-radiobutton ml-2">
-            <RadioButton inputId="city4" name="city" value="F" onChange={(e) => setCity(e.value)} checked={city === 'San Francisco'} />
-            <label htmlFor="city4">Femenino</label>
+
+          <div className="field pt-2">
+            <InputTextApp
+              label="Contraseña"
+              name="password"
+              type="password"
+              className="w-full"
+              toggleMask
+              feedback={false}
+            />
           </div>
-        </div>
 
-        <div className="flex flex-column">
-          <Button type="submit" label="Enviar" className="mt-2 flex align-items-center justify-content-center" />
-        </div>
-        <div className="flex justify-content-end mt-1">
-          <Link to="/login">
-            Ya tengo una cuenta
-          </Link>
-        </div>
-      </form>
+          <div className="field pt-2">
+            <InputTextApp
+              label="Contraseña"
+              name="confirmPassword"
+              type="password"
+              className="w-full"
+              toggleMask
+              feedback={false}
+            />
+          </div>
 
-    </Card>
-  );
-};
+          <div className="flex flex-column">
+            <Button type="submit" label="Enviar" className="mt-2 flex align-items-center justify-content-center" disabled={!isValid || isSubmitting} />
+          </div>
+          <div className="flex justify-content-end mt-1">
+            <Link to="/login">
+              Ya tengo una cuenta
+            </Link>
+          </div>
+        </Form>
+      )}
+    </Formik>
+
+  </Card>
+);
 
 export default RegisterScreen;

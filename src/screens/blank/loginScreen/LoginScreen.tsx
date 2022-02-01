@@ -11,11 +11,6 @@ import { Divider } from 'primereact/divider';
 import InputTextApp from '../../../components/forms/InputTextApp';
 import './loginScreen.scss';
 
-// interface InitialValues {
-//   email: string,
-//   password: string
-// }
-
 const LoginScreen = () => (
   <Card
     title="¡Bienvenido!"
@@ -37,13 +32,13 @@ const LoginScreen = () => (
           .required('Requerido'),
       })}
     >
-      {() => (
+      {({ isValid, isSubmitting }) => (
         <Form>
-
           <div className="field pt-2">
             <InputTextApp
               label="Email"
               name="email"
+              keyfilter="email"
               className="w-full"
               icon="pi pi-envelope"
               autoFocus
@@ -57,7 +52,6 @@ const LoginScreen = () => (
           </div>
 
           <div className="field pt-2">
-
             <InputTextApp
               label="Contraseña"
               name="password"
@@ -66,19 +60,10 @@ const LoginScreen = () => (
               toggleMask
               feedback={false}
             />
-
-            {/* <span className="p-float-label w-full">
-              <Password
-                className="w-full"
-                toggleMask
-                feedback={false}
-              />
-              <label htmlFor="email">Contraseña</label>
-            </span> */}
           </div>
 
           <div className="flex flex-column">
-            <Button type="submit" label="Enviar" className="mt-2 flex align-items-center justify-content-center" />
+            <Button type="submit" label="Iniciar Sesión" className="mt-2 flex align-items-center justify-content-center" disabled={!isValid || isSubmitting} />
           </div>
 
           <div className="flex justify-content-end mt-1">
@@ -90,6 +75,7 @@ const LoginScreen = () => (
         </Form>
       )}
     </Formik>
+
     <Divider align="center">
       <span className="p-card-subtitle">Ingresar por red social</span>
     </Divider>
