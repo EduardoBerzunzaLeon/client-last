@@ -79,5 +79,6 @@ module.exports = {
       { props: true, ignorePropertyModificationsFor: [ 'state', 'e' ]},
     ],
     'jsx-a11y/label-has-associated-control': RULES.OFF,
+    'react/jsx-props-no-spreading': RULES.OFF,
   },
 };

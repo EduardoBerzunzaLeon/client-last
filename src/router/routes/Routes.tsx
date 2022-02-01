@@ -9,6 +9,7 @@ import LoginScreen from '../../screens/blank/loginScreen/LoginScreen';
 import RegisterScreen from '../../screens/blank/registerScreen/RegisterScreen';
 
 import Private from '../PrivateRoute';
+
 import Public from '../PublicRoute';
 import ForgotPasswordScreen from '../../screens/blank/forgotPasswordScreen/ForgotPasswordScreen';
 import ResetPasswordScreen from '../../screens/blank/resetPasswordScreen/ResetPasswordScreen';
@@ -17,11 +18,11 @@ const Routes = () => {
   const routesObject: RouteObject[] = [
     {
       path: '/admin',
-      element: <AdminLayout />,
+      element: <Private><AdminLayout /></Private>,
       children: [
         {
           index: true,
-          element: <Private><HomeScreen /></Private>,
+          element: <HomeScreen />,
         },
         {
           element: <HomeScreen />,
@@ -31,26 +32,26 @@ const Routes = () => {
     },
     {
       path: '/',
-      element: <BlankLayout />,
+      element: <Public><BlankLayout /></Public>,
       children: [
         {
           index: true,
-          element: <Public><LoginScreen /></Public>,
+          element: <LoginScreen />,
         },
         {
-          element: <Public><LoginScreen /></Public>,
+          element: <LoginScreen />,
           path: 'login',
         },
         {
-          element: <Public><RegisterScreen /></Public>,
+          element: <RegisterScreen />,
           path: 'register',
         },
         {
-          element: <Public><ForgotPasswordScreen /></Public>,
+          element: <ForgotPasswordScreen />,
           path: 'forgot-password',
         },
         {
-          element: <Public><ResetPasswordScreen /></Public>,
+          element: <ResetPasswordScreen />,
           path: 'reset-password',
         },
       ],

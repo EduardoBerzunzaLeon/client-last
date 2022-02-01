@@ -1,93 +1,109 @@
-import { useState } from 'react';
+import React from 'react';
 
 import { Link } from 'react-router-dom';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
 
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { Divider } from 'primereact/divider';
-import { InputText } from 'primereact/inputtext';
-import { Password } from 'primereact/password';
 
+import InputTextApp from '../../../components/forms/InputTextApp';
 import './loginScreen.scss';
 
-// const header = (
-//   <img
-//     alt="login header"
-//     src="../assets/images/admin-login.jpg"
-//     onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-//       e.currentTarget.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png';
-//     }}
-//   />
-// );
+// interface InitialValues {
+//   email: string,
+//   password: string
+// }
 
-const LoginScreen = () => {
-  const [ first, setFirst ] = useState('');
-  return (
-    <Card
-      title="¡Bienvenido!"
-      subTitle="Inicio de Sesión"
-      // header={header}
+const LoginScreen = () => (
+  <Card
+    title="¡Bienvenido!"
+    subTitle="Inicio de Sesión"
+  >
+    <Formik
+      initialValues={{
+        email: '',
+        password: '',
+      }}
+      onSubmit={(values) => {
+        console.log(values);
+      }}
+      validationSchema={Yup.object({
+        email: Yup.string()
+          .email('Email no tiene un formato valido')
+          .required('Requerido'),
+        password: Yup.string()
+          .required('Requerido'),
+      })}
     >
-      <form>
+      {() => (
+        <Form>
 
-        <div className="field pt-2">
-          <span className="p-float-label p-input-icon-right w-full">
-            <i className="pi pi-envelope" />
-            <InputText
-              keyfilter="email"
-              className=" w-full"
-              id="email"
-              value={first}
-              onChange={(e) => setFirst(e.target.value)}
+          <div className="field pt-2">
+            <InputTextApp
+              label="Email"
+              name="email"
+              className="w-full"
+              icon="pi pi-envelope"
               autoFocus
             />
-            <label htmlFor="email">Correo Electrónico</label>
-          </span>
-        </div>
+          </div>
 
-        <div className="flex justify-content-end">
-          <Link to="/forgot-password">
-            ¿Olvidaste la contraseña?
-          </Link>
-        </div>
+          <div className="flex justify-content-end">
+            <Link to="/forgot-password">
+              ¿Olvidaste la contraseña?
+            </Link>
+          </div>
 
-        <div className="field pt-2">
-          <span className="p-float-label w-full">
-            <Password
-              className="inputfield w-full"
+          <div className="field pt-2">
+
+            <InputTextApp
+              label="Contraseña"
+              name="password"
+              type="password"
+              className="w-full"
               toggleMask
               feedback={false}
             />
-            <label htmlFor="email">Contraseña</label>
-          </span>
-        </div>
 
-        <div className="flex flex-column">
-          <Button type="submit" label="Enviar" className="mt-2 flex align-items-center justify-content-center" />
-        </div>
+            {/* <span className="p-float-label w-full">
+              <Password
+                className="w-full"
+                toggleMask
+                feedback={false}
+              />
+              <label htmlFor="email">Contraseña</label>
+            </span> */}
+          </div>
 
-        <div className="flex justify-content-end mt-1">
-          <Link to="/register">
-            No tengo cuenta
-          </Link>
-        </div>
-      </form>
+          <div className="flex flex-column">
+            <Button type="submit" label="Enviar" className="mt-2 flex align-items-center justify-content-center" />
+          </div>
 
-      <Divider align="center">
-        <span className="p-card-subtitle">Ingresar por red social</span>
-      </Divider>
+          <div className="flex justify-content-end mt-1">
+            <Link to="/register">
+              No tengo cuenta
+            </Link>
+          </div>
 
-      <div className="grid">
-        <div className="col-12 lg:col-6">
-          <Button type="submit" label="Google" className="mt-2 w-full" />
-        </div>
-        <div className="col-12 lg:col-6">
-          <Button type="submit" label="Facebook" className="mt-2 w-full" />
-        </div>
+        </Form>
+      )}
+    </Formik>
+    <Divider align="center">
+      <span className="p-card-subtitle">Ingresar por red social</span>
+    </Divider>
+
+    <div className="grid">
+      <div className="col-12 lg:col-6">
+        <Button type="submit" label="Google" className="mt-2 w-full" />
       </div>
+      <div className="col-12 lg:col-6">
+        <Button type="submit" label="Facebook" className="mt-2 w-full" />
+      </div>
+    </div>
 
-    </Card>
-  );
-};
+  </Card>
+);
 
 export default LoginScreen;
