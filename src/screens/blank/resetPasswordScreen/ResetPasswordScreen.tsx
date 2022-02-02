@@ -5,7 +5,7 @@ import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 
 import InputTextApp from '../../../components/forms/InputTextApp';
-import withDetailInputPassword from '../../../components/forms/withDetailPassword';
+import withDetailInputPassword from '../../../components/forms/withDetailInputPassword';
 
 const InputPassword = withDetailInputPassword(InputTextApp);
 

@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 import { genderRadio } from '../../../utils/form/radioButtonsObjects';
 import InputTextApp from '../../../components/forms/InputTextApp';
 import RadioGroup from '../../../components/forms/RadioGroup';
-import withDetailInputPassword from '../../../components/forms/withDetailPassword';
+import withDetailInputPassword from '../../../components/forms/withDetailInputPassword';
 
 const InputPassword = withDetailInputPassword(InputTextApp);
 
