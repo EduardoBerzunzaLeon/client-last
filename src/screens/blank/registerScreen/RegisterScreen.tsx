@@ -1,11 +1,16 @@
 import { Link } from 'react-router-dom';
 
-import { Form, Formik } from 'formik';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
+import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 
+import { genderRadio } from '../../../utils/form/radioButtonsObjects';
 import InputTextApp from '../../../components/forms/InputTextApp';
+import RadioGroup from '../../../components/forms/RadioGroup';
+import withDetailInputPassword from '../../../components/forms/withDetailPassword';
+
+const InputPassword = withDetailInputPassword(InputTextApp);
 
 const RegisterScreen = () => (
   <Card
@@ -42,9 +47,8 @@ const RegisterScreen = () => (
           .required('Requerido'),
       })}
     >
-      {({ isValid, isSubmitting }) => (
+      {({ isValid, isSubmitting, dirty }) => (
         <Form>
-
           <div className="field pt-2">
             <InputTextApp
               label="Nombre*"
@@ -75,29 +79,25 @@ const RegisterScreen = () => (
           </div>
 
           <div className="field pt-2">
-            <InputTextApp
+            <InputPassword
               label="Contraseña"
               name="password"
-              type="password"
               className="w-full"
-              toggleMask
-              feedback={false}
             />
           </div>
 
           <div className="field pt-2">
-            <InputTextApp
+            <InputPassword
               label="Contraseña"
               name="confirmPassword"
-              type="password"
               className="w-full"
-              toggleMask
-              feedback={false}
             />
           </div>
 
+          <RadioGroup radios={genderRadio} />
+
           <div className="flex flex-column">
-            <Button type="submit" label="Enviar" className="mt-2 flex align-items-center justify-content-center" disabled={!isValid || isSubmitting} />
+            <Button type="submit" label="Crear una cuenta" className="mt-2 flex align-items-center justify-content-center" disabled={!isValid || isSubmitting || !dirty} />
           </div>
           <div className="flex justify-content-end mt-1">
             <Link to="/login">

@@ -1,12 +1,10 @@
-import React from 'react';
-
 import { Link } from 'react-router-dom';
-import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
 
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { Divider } from 'primereact/divider';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
 
 import InputTextApp from '../../../components/forms/InputTextApp';
 import './loginScreen.scss';
@@ -32,7 +30,7 @@ const LoginScreen = () => (
           .required('Requerido'),
       })}
     >
-      {({ isValid, isSubmitting }) => (
+      {({ isValid, isSubmitting, dirty }) => (
         <Form>
           <div className="field pt-2">
             <InputTextApp
@@ -63,7 +61,7 @@ const LoginScreen = () => (
           </div>
 
           <div className="flex flex-column">
-            <Button type="submit" label="Iniciar Sesión" className="mt-2 flex align-items-center justify-content-center" disabled={!isValid || isSubmitting} />
+            <Button type="submit" label="Iniciar Sesión" className="mt-2 flex align-items-center justify-content-center" disabled={!isValid || isSubmitting || !dirty} />
           </div>
 
           <div className="flex justify-content-end mt-1">

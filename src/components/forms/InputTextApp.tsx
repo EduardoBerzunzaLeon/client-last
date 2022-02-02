@@ -3,28 +3,29 @@ import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
 import classNames from 'classnames';
 
-interface Props {
+ interface Props {
     label: string;
     name: string;
     className?: string;
     icon?: string,
     id?: string,
     placeholder?: string;
-    type?: 'text' | 'email'| 'password';
+    type?: string;
     [x: string]: any
 }
 
 const InputTextApp = ({ label, ...props }: Props) => {
   const [ field, meta ] = useField(props);
   const showErrorClass = meta.error && meta.touched;
+  const classname = classNames(props.className, { 'p-invalid': showErrorClass });
 
   return (
     <>
       <span className="p-float-label p-input-icon-right w-full">
         <i className={props.icon} />
         { props.type !== 'password'
-          ? <InputText {...field} {...props} className={classNames(props.className, { 'p-invalid': showErrorClass })} />
-          : <Password {...field} {...props} className={classNames(props.className, { 'p-invalid': showErrorClass })} />}
+          ? <InputText {...field} {...props} className={classname} />
+          : <Password {...field} {...props} className={classname} />}
 
         <label htmlFor={props.id || props.name} className={classNames({ 'p-error': showErrorClass })}>{label}</label>
       </span>

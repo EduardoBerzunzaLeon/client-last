@@ -3,7 +3,11 @@ import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
+
 import InputTextApp from '../../../components/forms/InputTextApp';
+import withDetailInputPassword from '../../../components/forms/withDetailPassword';
+
+const InputPassword = withDetailInputPassword(InputTextApp);
 
 const ResetPasswordScreen = () => (
   <Card
@@ -26,7 +30,7 @@ const ResetPasswordScreen = () => (
           .required('Requerido'),
       })}
     >
-      {({ isValid, isSubmitting }) => (
+      {({ isValid, isSubmitting, dirty }) => (
         <Form>
           <div className="field pt-2">
             <InputTextApp
@@ -40,18 +44,15 @@ const ResetPasswordScreen = () => (
           </div>
 
           <div className="field pt-2">
-            <InputTextApp
+            <InputPassword
               label="Contraseña"
-              name="confirmPassword"
-              type="password"
+              name="password"
               className="w-full"
-              toggleMask
-              feedback={false}
             />
           </div>
 
           <div className="flex flex-column">
-            <Button type="submit" label="Cambiar contraseña" className="mt-2 flex align-items-center justify-content-center" disabled={!isValid || isSubmitting} />
+            <Button type="submit" label="Cambiar contraseña" className="mt-2 flex align-items-center justify-content-center" disabled={!isValid || isSubmitting || !dirty} />
           </div>
         </Form>
       )}

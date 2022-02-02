@@ -1,8 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Form, Formik } from 'formik';
-import * as Yup from 'yup';
+
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
+import { Form, Formik } from 'formik';
+import * as Yup from 'yup';
 
 import InputTextApp from '../../../components/forms/InputTextApp';
 
@@ -24,7 +25,7 @@ const ForgotPasswordScreen = () => {
         })}
       >
 
-        {({ isValid, isSubmitting }) => (
+        {({ isValid, isSubmitting, dirty }) => (
           <Form>
             <div className="field pt-2">
               <InputTextApp
@@ -43,7 +44,7 @@ const ForgotPasswordScreen = () => {
                 }}
                 label="Enviar correo de cambio de contraseña"
                 className="mt-2 flex align-items-center justify-content-center"
-                disabled={!isValid || isSubmitting}
+                disabled={!isValid || isSubmitting || !dirty}
               />
             </div>
             <div className="flex justify-content-end mt-1">

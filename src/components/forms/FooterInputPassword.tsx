@@ -8,7 +8,7 @@ const footerInputPassword = () => (
       <li>Al menos una minúscula</li>
       <li>Al menos una mayúscula</li>
       <li>Al menos un númerico</li>
-      <li>Mínimo 8 caracteres</li>
+      <li>Mínimo 8 carácteres</li>
     </ul>
   </>
 );

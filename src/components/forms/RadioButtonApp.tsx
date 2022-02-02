@@ -6,6 +6,7 @@ export interface PropsRadioButton {
   label: string;
   name: string;
   inputId: string;
+  value: string;
   className?: string;
   id?: string,
   [x: string]: any
@@ -13,9 +14,10 @@ export interface PropsRadioButton {
 
 const RadioButtonApp = ({ label, ...props }: PropsRadioButton) => {
   const [ field ] = useField(props);
+
   return (
     <div className={classNames('field-radiobutton', props.className)}>
-      <RadioButton {...field} {...props} />
+      <RadioButton checked={field.value === props.value} {...field} {...props} />
       <label htmlFor={props.id || props.name}>{label}</label>
     </div>
   );
