@@ -6,8 +6,8 @@ import { Divider } from 'primereact/divider';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 
-import InputTextApp from '../../../components/forms/InputTextApp';
 import './loginScreen.scss';
+import { InputTextApp } from '../../../components/forms';
 
 const LoginScreen = () => (
   <Card

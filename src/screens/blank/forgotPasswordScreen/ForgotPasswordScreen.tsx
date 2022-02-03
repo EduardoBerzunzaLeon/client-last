@@ -4,8 +4,7 @@ import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
-
-import InputTextApp from '../../../components/forms/InputTextApp';
+import { InputTextApp } from '../../../components/forms';
 
 const ForgotPasswordScreen = () => {
   const navigate = useNavigate();

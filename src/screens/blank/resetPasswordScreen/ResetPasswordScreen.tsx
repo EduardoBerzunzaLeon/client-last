@@ -4,8 +4,7 @@ import { Button } from 'primereact/button';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 
-import InputTextApp from '../../../components/forms/InputTextApp';
-import withDetailInputPassword from '../../../components/forms/withDetailInputPassword';
+import { InputTextApp, withDetailInputPassword } from '../../../components/forms';
 
 const InputPassword = withDetailInputPassword(InputTextApp);
 

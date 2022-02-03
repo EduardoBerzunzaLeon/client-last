@@ -1,7 +1,7 @@
 import React from 'react';
-import footerInputPassword from './FooterInputPassword';
+import { footerInputPassword } from './FooterInputPassword';
 
-const withDetailInputPassword = <P extends object>
+export const withDetailInputPassword = <P extends object>
   (Component: React.ComponentType<P>) => (props: P) => (
     <Component
       {...props}

@@ -12,7 +12,7 @@ export interface PropsRadioButton {
   [x: string]: any
 }
 
-const RadioButtonApp = ({ label, ...props }: PropsRadioButton) => {
+export const RadioButtonApp = ({ label, ...props }: PropsRadioButton) => {
   const [ field ] = useField(props);
 
   return (

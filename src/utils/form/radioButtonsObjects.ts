@@ -1,4 +1,4 @@
-import { PropsRadioButton } from '../../components/forms/RadioButtonApp';
+import { PropsRadioButton } from '../../components/forms/radioButton/RadioButtonApp';
 
 export const genderRadio: Array<PropsRadioButton> = [
   {
