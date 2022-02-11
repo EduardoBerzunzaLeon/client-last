@@ -1,28 +1,22 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 
-import { pokemonApi } from './services/pokemon';
+import { tutorApi } from './services/tutor';
 import authReducer from './auth/auth.slice';
 
 export const store = configureStore({
   reducer: {
+    [tutorApi.reducerPath]: tutorApi.reducer,
     auth: authReducer,
-    [pokemonApi.reducerPath]: pokemonApi.reducer,
   },
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
-
-  /* eslint implicit-arrow-linebreak: [0, "below"] */
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(pokemonApi.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(tutorApi.middleware),
 });
 
+// optional, but required for refetchOnFocus/refetchOnReconnect behaviors
+// see `setupListeners` docs - takes an optional callback as the 2nd arg for customization
 setupListeners(store.dispatch);
+
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->;

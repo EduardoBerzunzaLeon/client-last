@@ -1,6 +1,8 @@
+import { Provider } from 'react-redux';
 import PrimeReact from 'primereact/api';
 
 import Router from './router/Router';
+import { store } from './redux/store';
 
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
@@ -11,9 +13,11 @@ function App() {
   // active ripple effect
   PrimeReact.ripple = true;
   return (
-    <div>
-      <Router />
-    </div>
+    <Provider store={store}>
+      <div>
+        <Router />
+      </div>
+    </Provider>
   );
 }
 

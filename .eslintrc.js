@@ -69,6 +69,7 @@ module.exports = {
       'always',
       { objectsInObjects: false, arraysInObjects: false },
     ],
+    'no-unused-expressions': [ 'error', { allowShortCircuit: true }],
     // Change the linebreak-style to CF (/n), Need to change in Settings "end of line" select \n
     'linebreak-style': [ RULES.ERROR, 'unix' ],
     // Disabled no-unused-vars in interfaces Typescript

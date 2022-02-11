@@ -1,14 +1,11 @@
 import { Navigate, useLocation } from 'react-router-dom';
-
-interface User {
-    name: string;
-}
+import useAuth from '../hooks/useAuth';
 
 const PrivateRoute = ({ children }: {children: JSX.Element}) => {
-  const currentUser: User = { name: 'Eduardo' };
+  const { user } = useAuth();
   const location = useLocation();
 
-  if (currentUser) {
+  if (!user) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
