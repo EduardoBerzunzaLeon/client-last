@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 
-import { tutorApi } from './services/tutor';
+import { tutorApi } from './services/tutorApi';
 import authReducer from './auth/auth.slice';
 
 export const store = configureStore({
@@ -9,8 +9,6 @@ export const store = configureStore({
     [tutorApi.reducerPath]: tutorApi.reducer,
     auth: authReducer,
   },
-  // Adding the api middleware enables caching, invalidation, polling,
-  // and other useful features of `rtk-query`.
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(tutorApi.middleware),
 });
 

@@ -1,5 +1,3 @@
-import { useRef } from 'react';
-
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { Divider } from 'primereact/divider';
@@ -9,50 +7,40 @@ import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
 import { InputTextApp } from '../../../components/forms';
+
 import { setCredentials } from '../../../redux/auth/auth.slice';
 import { useAppDispatch } from '../../../redux/hooks';
-import { ErrorResponse, useLoginMutation } from '../../../redux/services/tutor';
+import { useLoginMutation } from '../../../redux/services/tutorApi';
+import useToast from '../../../hooks/useToast';
 
-import 'primeicons/primeicons.css';
-// import 'primereact/resources/themes/lara-light-indigo/theme.css';
-// import 'primereact/resources/primereact.css';
-// import 'primeflex/primeflex.css';
 import './loginScreen.scss';
-
-const isErrorResponseApiType = (error: any): error is ErrorResponse => ('data' in error && 'error' in error.data);
+import { getDetailError } from '../../../redux/services/handlerError';
 
 const LoginScreen = () => {
   const dispatch = useAppDispatch();
-  const [ login ] = useLoginMutation();
-
-  const toast = useRef<any>(null);
-
-  const showError = (message: string) => {
-    toast.current.show({
-      severity: 'error', summary: 'Error', detail: message, life: 3000,
-    });
-  };
+  const [ login, { isLoading }] = useLoginMutation();
+  const { toast, showError } = useToast();
 
   return (
     <Card
       title="¡Bienvenido!"
       subTitle="Inicio de Sesión"
     >
-
       <Toast ref={toast} />
       <Formik
         initialValues={{
           email: '',
           password: '',
         }}
-        onSubmit={async (values, { setSubmitting }) => {
+        onSubmit={async (values) => {
           try {
             const user = await login(values).unwrap();
             dispatch(setCredentials(user));
           } catch (err) {
-            isErrorResponseApiType(err) && showError(err.data.error.message);
-          } finally {
-            setSubmitting(false);
+            showError({
+              summary: 'Error',
+              detail: getDetailError(err),
+            });
           }
         }}
         validationSchema={Yup.object({
@@ -94,7 +82,13 @@ const LoginScreen = () => {
             </div>
 
             <div className="flex flex-column">
-              <Button type="submit" label="Iniciar Sesión" className="mt-2 flex align-items-center justify-content-center" disabled={!isValid || isSubmitting || !dirty} />
+              <Button
+                type="submit"
+                label="Iniciar Sesión"
+                className="mt-2 flex align-items-center justify-content-center"
+                loading={isLoading}
+                disabled={!isValid || isSubmitting || !dirty}
+              />
             </div>
 
             <div className="flex justify-content-end mt-1">
