@@ -1,10 +1,18 @@
 import {
   BaseQueryFn,
-  createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError, FetchBaseQueryMeta,
+  createApi,
+  FetchArgs,
+  fetchBaseQuery,
+  FetchBaseQueryError,
+  FetchBaseQueryMeta,
 } from '@reduxjs/toolkit/query/react';
 
-import { ErrorResponse, UserResponse, LoginRequest } from '../../interfaces/api';
-import { RegisterRequest } from '../../interfaces/api/requests/authRequests';
+import {
+  ErrorResponse,
+  UserResponse,
+  LoginRequest,
+  RegisterRequest,
+} from '../../interfaces/api';
 
 export const tutorApi = createApi({
   reducerPath: 'tutorApi',

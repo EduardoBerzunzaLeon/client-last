@@ -10,7 +10,7 @@ import { errorTranslateAuthForm } from '../../../utils/form/handlerErrorsForms';
 import { genderRadio } from '../../../utils/form/radioButtonsObjects';
 import { getDetailError } from '../../../redux/services/handlerErrorApi';
 import { InputTextApp, RadioGroup, withDetailInputPassword } from '../../../components/forms';
-import { RegisterRequest } from '../../../interfaces/api/requests/authRequests';
+import { RegisterRequest } from '../../../interfaces/api';
 import { translateAuthFields } from '../../../utils/translate/translateFieldForms';
 import { useSignUpMutation } from '../../../redux/services/tutorApi';
 import useToast from '../../../hooks/useToast';

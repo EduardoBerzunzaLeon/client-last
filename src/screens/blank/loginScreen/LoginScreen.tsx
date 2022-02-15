@@ -6,9 +6,8 @@ import { Link } from 'react-router-dom';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import { InputTextApp } from '../../../components/forms';
-
 import { getDetailError } from '../../../redux/services/handlerErrorApi';
+import { InputTextApp } from '../../../components/forms';
 import { setCredentials } from '../../../redux/auth/auth.slice';
 import { useAppDispatch } from '../../../redux/hooks';
 import { useLoginMutation } from '../../../redux/services/tutorApi';
