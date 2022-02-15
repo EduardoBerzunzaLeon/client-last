@@ -6,14 +6,14 @@ import { Form, Formik } from 'formik';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
+import { errorTranslateAuthForm } from '../../../utils/form/handlerErrorsForms';
 import { genderRadio } from '../../../utils/form/radioButtonsObjects';
-import { getDetailError } from '../../../redux/services/handlerError';
+import { getDetailError } from '../../../redux/services/handlerErrorApi';
 import { InputTextApp, RadioGroup, withDetailInputPassword } from '../../../components/forms';
 import { RegisterRequest } from '../../../interfaces/api/requests/authRequests';
+import { translateAuthFields } from '../../../utils/translate/translateFieldForms';
 import { useSignUpMutation } from '../../../redux/services/tutorApi';
 import useToast from '../../../hooks/useToast';
-import { createErrorsArray } from '../../../utils/form/handlerFormErrors';
-import { translateAuthFields } from '../../../utils/translate/translateFieldForms';
 
 const InputPassword = withDetailInputPassword(InputTextApp);
 
@@ -51,7 +51,7 @@ const RegisterScreen = () => {
             await register(newUser).unwrap();
           } catch (error) {
             const detail: string = getDetailError(error);
-            createErrorsArray({
+            errorTranslateAuthForm({
               errors: detail,
               errorsTranslate: translateAuthFields,
               setFieldError,
