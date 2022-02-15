@@ -8,13 +8,13 @@ import * as Yup from 'yup';
 
 import { InputTextApp } from '../../../components/forms';
 
+import { getDetailError } from '../../../redux/services/handlerError';
 import { setCredentials } from '../../../redux/auth/auth.slice';
 import { useAppDispatch } from '../../../redux/hooks';
 import { useLoginMutation } from '../../../redux/services/tutorApi';
 import useToast from '../../../hooks/useToast';
 
 import './loginScreen.scss';
-import { getDetailError } from '../../../redux/services/handlerError';
 
 const LoginScreen = () => {
   const dispatch = useAppDispatch();
@@ -36,10 +36,10 @@ const LoginScreen = () => {
           try {
             const user = await login(values).unwrap();
             dispatch(setCredentials(user));
-          } catch (err) {
+          } catch (error) {
             showError({
               summary: 'Error',
-              detail: getDetailError(err),
+              detail: getDetailError(error),
             });
           }
         }}

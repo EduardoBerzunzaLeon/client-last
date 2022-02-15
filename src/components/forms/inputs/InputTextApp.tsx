@@ -16,6 +16,7 @@ import classNames from 'classnames';
 
 export const InputTextApp = ({ label, ...props }: Props) => {
   const [ field, meta ] = useField(props);
+
   const showErrorClass = meta.error && meta.touched;
   const classname = classNames(props.className, { 'p-invalid': showErrorClass });
 

@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import { User } from '../../interfaces/api';
 
 interface AuthState {
   user: User | null,
-  token: string | null
+  token: string | null,
 }
 
 const authSlice = createSlice({

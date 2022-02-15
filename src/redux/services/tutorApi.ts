@@ -4,6 +4,7 @@ import {
 } from '@reduxjs/toolkit/query/react';
 
 import { ErrorResponse, UserResponse, LoginRequest } from '../../interfaces/api';
+import { RegisterRequest } from '../../interfaces/api/requests/authRequests';
 
 export const tutorApi = createApi({
   reducerPath: 'tutorApi',
@@ -18,7 +19,14 @@ export const tutorApi = createApi({
         body: credentials,
       }),
     }),
+    signUp: builder.mutation<UserResponse, RegisterRequest>({
+      query: (newUser) => ({
+        url: 'users/signup',
+        method: 'POST',
+        body: newUser,
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation } = tutorApi;
+export const { useLoginMutation, useSignUpMutation } = tutorApi;
