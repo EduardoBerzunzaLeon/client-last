@@ -16,3 +16,7 @@ export interface RegisterRequest {
     confirmPassword: string,
     gender: string
   }
+
+export interface ForgotPasswordRequest {
+  email: string
+}

@@ -10,3 +10,9 @@ export interface UserResponse {
     token: string,
     status: string
   }
+
+export interface ForgotPasswordResponse {
+    status: string,
+    message: string,
+    data: { resetUrl: string }
+  }

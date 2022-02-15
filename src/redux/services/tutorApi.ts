@@ -6,6 +6,8 @@ import {
   FetchBaseQueryError,
   FetchBaseQueryMeta,
 } from '@reduxjs/toolkit/query/react';
+import { ForgotPasswordResponse } from '../../interfaces/api/responses/userInterface';
+import { ForgotPasswordRequest } from '../../interfaces/api/requests/authInterface';
 
 import {
   ErrorResponse,
@@ -34,7 +36,15 @@ export const tutorApi = createApi({
         body: newUser,
       }),
     }),
+    forgotPassword: builder.mutation<ForgotPasswordResponse, ForgotPasswordRequest>({
+      query: (email) => ({
+        url: 'users/forgotPassword',
+        method: 'POST',
+        body: email,
+      }),
+    }),
+
   }),
 });
 
-export const { useLoginMutation, useSignUpMutation } = tutorApi;
+export const { useLoginMutation, useSignUpMutation, useForgotPasswordMutation } = tutorApi;
