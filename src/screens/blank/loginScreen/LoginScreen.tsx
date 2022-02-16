@@ -33,7 +33,8 @@ const LoginScreen = () => {
         }}
         onSubmit={async (values) => {
           try {
-            const user = await login(values).unwrap();
+            const user = await login({ ...values }).unwrap();
+            localStorage.setItem('token', user.token);
             dispatch(setCredentials(user));
           } catch (error) {
             showError({

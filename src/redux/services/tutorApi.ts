@@ -6,15 +6,18 @@ import {
   FetchBaseQueryError,
   FetchBaseQueryMeta,
 } from '@reduxjs/toolkit/query/react';
-import { ForgotPasswordResponse } from '../../interfaces/api/responses/userInterface';
-import { ForgotPasswordRequest } from '../../interfaces/api/requests/authInterface';
 
 import {
   ErrorResponse,
-  UserResponse,
+  ForgotPasswordRequest,
+  ForgotPasswordResponse,
   LoginRequest,
   RegisterRequest,
+  ResetPasswordRequest,
+  SendEmailVerifyRequest,
+  UserResponse,
 } from '../../interfaces/api';
+
 // eslint-disable-next-line import/no-cycle
 import { RootState } from '../store';
 
@@ -49,15 +52,45 @@ export const tutorApi = createApi({
       }),
     }),
     forgotPassword: builder.mutation<ForgotPasswordResponse, ForgotPasswordRequest>({
-      query: (email) => ({
+      query: (body) => ({
         url: 'users/forgotPassword',
         method: 'POST',
-        body: email,
+        body,
       }),
       invalidatesTags: [ 'User' ],
     }),
-
+    resetPassword: builder.mutation<UserResponse, ResetPasswordRequest>({
+      query: ({ token, ...body }) => ({
+        url: `users/resetPassword/${token}`,
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: [ 'User' ],
+    }),
+    emailVerify: builder.mutation<UserResponse, string>({
+      query: (id) => ({
+        url: `users/activate/${id}`,
+        method: 'PATCH',
+      }),
+      invalidatesTags: [ 'User' ],
+    }),
+    sendEmailVerify: builder.mutation<UserResponse, SendEmailVerifyRequest>({
+      query: (body) => ({
+        url: 'users/resendEmailVerify',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: [ 'User' ],
+    }),
   }),
 });
 
-export const { useLoginMutation, useSignUpMutation, useForgotPasswordMutation } = tutorApi;
+export const
+  {
+    useLoginMutation,
+    useSignUpMutation,
+    useForgotPasswordMutation,
+    useResetPasswordMutation,
+    useEmailVerifyMutation,
+    useSendEmailVerifyMutation,
+  } = tutorApi;

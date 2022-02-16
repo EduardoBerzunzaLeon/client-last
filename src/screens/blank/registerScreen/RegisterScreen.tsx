@@ -48,8 +48,7 @@ const RegisterScreen = () => {
           };
 
           try {
-            const user = await register(newUser).unwrap();
-            console.log(user);
+            await register(newUser).unwrap();
           } catch (error) {
             const detail: string = getDetailError(error);
             errorTranslateAuthForm({
