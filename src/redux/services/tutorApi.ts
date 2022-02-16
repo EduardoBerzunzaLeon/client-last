@@ -15,12 +15,24 @@ import {
   LoginRequest,
   RegisterRequest,
 } from '../../interfaces/api';
+// eslint-disable-next-line import/no-cycle
+import { RootState } from '../store';
 
 export const tutorApi = createApi({
   reducerPath: 'tutorApi',
   baseQuery:
-  fetchBaseQuery({ baseUrl: process.env.REACT_APP_API_URL }) as BaseQueryFn<string | FetchArgs,
+  fetchBaseQuery({
+    baseUrl: process.env.REACT_APP_API_URL,
+    prepareHeaders: (headers, { getState }) => {
+      const { token } = (getState() as RootState).auth;
+      if (token) {
+        headers.set('authentication', `Bearer ${token}`);
+      }
+      return headers;
+    },
+  }) as BaseQueryFn<string | FetchArgs,
     unknown, FetchBaseQueryError | ErrorResponse, {}, FetchBaseQueryMeta>,
+  tagTypes: [ 'User' ],
   endpoints: (builder) => ({
     login: builder.mutation<UserResponse, LoginRequest>({
       query: (credentials) => ({
@@ -42,6 +54,7 @@ export const tutorApi = createApi({
         method: 'POST',
         body: email,
       }),
+      invalidatesTags: [ 'User' ],
     }),
 
   }),

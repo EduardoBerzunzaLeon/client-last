@@ -37,10 +37,10 @@ const RegisterScreen = () => {
           gender: '',
         }}
         onSubmit={async (values, { setFieldError }) => {
-          const { last, ...dataWithoutName } = values;
+          const { last, first, ...dataWithoutName } = values;
           const newUser: RegisterRequest = {
             name: {
-              first: '',
+              first,
               last,
             },
             url: process.env.REACT_APP_ACTIVE_URL ?? '',
@@ -48,7 +48,8 @@ const RegisterScreen = () => {
           };
 
           try {
-            await register(newUser).unwrap();
+            const user = await register(newUser).unwrap();
+            console.log(user);
           } catch (error) {
             const detail: string = getDetailError(error);
             errorTranslateAuthForm({
