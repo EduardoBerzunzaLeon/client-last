@@ -18,11 +18,13 @@ export interface RegisterRequest {
   }
 
 export interface ForgotPasswordRequest {
-  email: string
+  email: string,
+  url: string,
 }
 
 export interface SendEmailVerifyRequest {
-  email: string
+  email: string,
+  url: string,
 }
 
 export interface ResetPasswordRequest {

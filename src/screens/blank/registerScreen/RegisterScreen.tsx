@@ -19,7 +19,7 @@ const InputPassword = withDetailInputPassword(InputTextApp);
 
 const RegisterScreen = () => {
   const [ register, { isLoading }] = useSignUpMutation();
-  const { toast, showError } = useToast();
+  const { toast, showError, showSuccess } = useToast();
 
   return (
     <Card
@@ -36,7 +36,7 @@ const RegisterScreen = () => {
           confirmPassword: '',
           gender: '',
         }}
-        onSubmit={async (values, { setFieldError }) => {
+        onSubmit={async (values, { setFieldError, resetForm }) => {
           const { last, first, ...dataWithoutName } = values;
           const newUser: RegisterRequest = {
             name: {
@@ -49,6 +49,12 @@ const RegisterScreen = () => {
 
           try {
             await register(newUser).unwrap();
+            showSuccess({
+              summary: 'Éxito',
+              detail: 'El usuario se creo con éxito, se envio un correo para la activación de su cuenta',
+              life: 4000,
+            });
+            resetForm();
           } catch (error) {
             const detail: string = getDetailError(error);
             errorTranslateAuthForm({

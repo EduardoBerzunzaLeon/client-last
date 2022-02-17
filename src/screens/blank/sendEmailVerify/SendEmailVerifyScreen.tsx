@@ -1,7 +1,7 @@
 import { Form, Formik } from 'formik';
 import { Link, useLocation } from 'react-router-dom';
 import * as Yup from 'yup';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Toast } from 'primereact/toast';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
@@ -16,7 +16,7 @@ interface LocationProps {
 const SendEmailVerifyScreen = () => {
   const { state } = useLocation() as LocationProps;
   const [ sendMail, { isLoading, isError, isSuccess }] = useSendEmailVerifyMutation();
-  const [ email, setEmail ] = useState('');
+  const url: string = process.env.REACT_APP_RESET_PASSWORD_URL ?? '';
 
   const { toast, showError, showSuccess } = useToast();
 
@@ -38,8 +38,10 @@ const SendEmailVerifyScreen = () => {
 
   useEffect(() => {
     if (state?.email) {
-      setEmail(state.email);
-      sendMail({ email });
+      sendMail({
+        email: state.email,
+        url,
+      });
     }
   }, [ sendMail, state ]);
 
@@ -58,10 +60,10 @@ const SendEmailVerifyScreen = () => {
           </p>
         ) : (
           <Formik
-            initialValues={{ email }}
+            initialValues={{ email: state?.email ?? '' }}
             onSubmit={async (values) => {
               try {
-                await sendMail({ ...values }).unwrap();
+                await sendMail({ ...values, url }).unwrap();
               } catch (error) {
                 console.log(error);
               }

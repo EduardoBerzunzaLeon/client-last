@@ -76,7 +76,7 @@ export const tutorApi = createApi({
     }),
     sendEmailVerify: builder.mutation<UserResponse, SendEmailVerifyRequest>({
       query: (body) => ({
-        url: 'users/resendEmailVerify',
+        url: 'users/sendEmailVerify',
         method: 'POST',
         body,
       }),

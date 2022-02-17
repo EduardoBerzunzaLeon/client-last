@@ -2,7 +2,7 @@ import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { Divider } from 'primereact/divider';
 import { Formik, Form } from 'formik';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
@@ -16,6 +16,7 @@ import useToast from '../../../hooks/useToast';
 import './loginScreen.scss';
 
 const LoginScreen = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [ login, { isLoading }] = useLoginMutation();
   const { toast, showError } = useToast();
@@ -34,13 +35,21 @@ const LoginScreen = () => {
         onSubmit={async (values) => {
           try {
             const user = await login({ ...values }).unwrap();
-            localStorage.setItem('token', user.token);
+            // localStorage.setItem('token', user.token);
             dispatch(setCredentials(user));
           } catch (error) {
+            const detail: string = getDetailError(error);
+
             showError({
               summary: 'Error',
-              detail: getDetailError(error),
+              detail,
             });
+
+            if (detail === 'El correo aun no ha sido activado') {
+              setTimeout(() => {
+                navigate('/send-email-verify', { state: { email: values.email }});
+              }, 3000);
+            }
           }
         }}
         validationSchema={Yup.object({

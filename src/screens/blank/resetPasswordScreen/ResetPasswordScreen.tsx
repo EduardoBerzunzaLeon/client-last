@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
@@ -9,6 +9,7 @@ import * as Yup from 'yup';
 import { errorTranslateAuthForm } from '../../../utils/form/handlerErrorsForms';
 import { getDetailError } from '../../../redux/services/handlerErrorApi';
 import { InputTextApp, withDetailInputPassword } from '../../../components/forms';
+import { ResetPasswordRequest } from '../../../interfaces/api';
 import { setCredentials } from '../../../redux/auth/auth.slice';
 import { translateAuthFields } from '../../../utils/translate/translateFieldForms';
 import { useAppDispatch } from '../../../redux/hooks';
@@ -19,6 +20,7 @@ const InputPassword = withDetailInputPassword(InputTextApp);
 
 const ResetPasswordScreen = () => {
   const { token } = useParams();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [ resetPassword, { isLoading }] = useResetPasswordMutation();
   const { toast, showError } = useToast();
@@ -35,7 +37,7 @@ const ResetPasswordScreen = () => {
         }}
         onSubmit={async (values, { setFieldError }) => {
           const sanatizeToken = token ?? '';
-          const prepareSend = { ...values, token: sanatizeToken };
+          const prepareSend: ResetPasswordRequest = { ...values, token: sanatizeToken };
           try {
             const user = await resetPassword({ ...prepareSend }).unwrap();
             localStorage.setItem('token', user.token);
@@ -50,7 +52,12 @@ const ResetPasswordScreen = () => {
             showError({
               summary: 'Error',
               detail,
+              life: 1500,
             });
+
+            setTimeout(() => {
+              navigate('/login');
+            }, 1500);
           }
         }}
         validationSchema={Yup.object({
@@ -65,13 +72,10 @@ const ResetPasswordScreen = () => {
         {({ isValid, isSubmitting, dirty }) => (
           <Form>
             <div className="field pt-2">
-              <InputTextApp
+              <InputPassword
                 label="Contraseña"
                 name="password"
-                type="password"
                 className="w-full"
-                toggleMask
-                feedback={false}
               />
             </div>
 

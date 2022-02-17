@@ -13,6 +13,7 @@ import { InputTextApp } from '../../../components/forms';
 import { translateAuthFields } from '../../../utils/translate/translateFieldForms';
 import { useForgotPasswordMutation } from '../../../redux/services/tutorApi';
 import useToast from '../../../hooks/useToast';
+import { ForgotPasswordRequest } from '../../../interfaces/api/requests/authInterface';
 
 const ForgotPasswordScreen = () => {
   const { toast, showError, showSuccess } = useToast();
@@ -36,7 +37,11 @@ const ForgotPasswordScreen = () => {
             initialValues={{ email: '' }}
             onSubmit={async (values, { setFieldError }) => {
               try {
-                const { message } = await sendEmailForgotPassword(values).unwrap();
+                const sendData: ForgotPasswordRequest = {
+                  url: process.env.REACT_APP_RESET_PASSWORD_URL ?? '',
+                  ...values,
+                };
+                const { message } = await sendEmailForgotPassword(sendData).unwrap();
                 showSuccess({
                   summary: 'Error',
                   detail: message,
@@ -82,17 +87,17 @@ const ForgotPasswordScreen = () => {
                     disabled={!isValid || isSubmitting || !dirty}
                   />
                 </div>
-                <div className="flex justify-content-end mt-1">
-                  <Link to="/login">
-                    Ya recorde mi clave
-                  </Link>
-                </div>
+
               </Form>
             )}
           </Formik>
         )
       }
-
+      <div className="flex justify-content-end mt-1">
+        <Link to="/login">
+          Ya recorde mi clave
+        </Link>
+      </div>
     </Card>
   );
 };
