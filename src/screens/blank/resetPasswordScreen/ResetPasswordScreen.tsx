@@ -13,7 +13,7 @@ import { ResetPasswordRequest } from '../../../interfaces/api';
 import { setCredentials } from '../../../redux/auth/auth.slice';
 import { translateAuthFields } from '../../../utils/translate/translateFieldForms';
 import { useAppDispatch } from '../../../redux/hooks';
-import { useResetPasswordMutation } from '../../../redux/services/tutorApi';
+import { useResetPasswordMutation } from '../../../redux/auth/auth.api';
 import useToast from '../../../hooks/useToast';
 
 const InputPassword = withDetailInputPassword(InputTextApp);
@@ -40,7 +40,6 @@ const ResetPasswordScreen = () => {
           const prepareSend: ResetPasswordRequest = { ...values, token: sanatizeToken };
           try {
             const user = await resetPassword({ ...prepareSend }).unwrap();
-            localStorage.setItem('token', user.token);
             dispatch(setCredentials(user));
           } catch (error) {
             const detail: string = getDetailError(error);

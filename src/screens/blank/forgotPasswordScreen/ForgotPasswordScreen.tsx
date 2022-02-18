@@ -8,12 +8,12 @@ import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
 import { errorTranslateAuthForm } from '../../../utils/form/handlerErrorsForms';
+import { ForgotPasswordRequest } from '../../../interfaces/api/requests/authInterface';
 import { getDetailError } from '../../../redux/services/handlerErrorApi';
 import { InputTextApp } from '../../../components/forms';
 import { translateAuthFields } from '../../../utils/translate/translateFieldForms';
-import { useForgotPasswordMutation } from '../../../redux/services/tutorApi';
+import { useForgotPasswordMutation } from '../../../redux/auth/auth.api';
 import useToast from '../../../hooks/useToast';
-import { ForgotPasswordRequest } from '../../../interfaces/api/requests/authInterface';
 
 const ForgotPasswordScreen = () => {
   const { toast, showError, showSuccess } = useToast();

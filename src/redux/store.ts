@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 
+// eslint-disable-next-line import/no-cycle
 import { tutorApi } from './services/tutorApi';
 import authReducer from './auth/auth.slice';
 

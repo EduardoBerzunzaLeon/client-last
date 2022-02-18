@@ -1,13 +1,15 @@
+import { useEffect } from 'react';
+
 import { Form, Formik } from 'formik';
 import { Link, useLocation } from 'react-router-dom';
 import * as Yup from 'yup';
-import { useEffect } from 'react';
-import { Toast } from 'primereact/toast';
-import { Card } from 'primereact/card';
+
 import { Button } from 'primereact/button';
+import { Card } from 'primereact/card';
+import { Toast } from 'primereact/toast';
 import { InputTextApp } from '../../../components/forms';
+import { useSendEmailVerifyMutation } from '../../../redux/auth/auth.api';
 import useToast from '../../../hooks/useToast';
-import { useSendEmailVerifyMutation } from '../../../redux/services/tutorApi';
 
 interface LocationProps {
     state: { email?: string } | null
@@ -15,7 +17,9 @@ interface LocationProps {
 
 const SendEmailVerifyScreen = () => {
   const { state } = useLocation() as LocationProps;
-  const [ sendMail, { isLoading, isError, isSuccess }] = useSendEmailVerifyMutation();
+  const [ sendMail, {
+    isLoading, isError, isSuccess,
+  }] = useSendEmailVerifyMutation();
   const url: string = process.env.REACT_APP_RESET_PASSWORD_URL ?? '';
 
   const { toast, showError, showSuccess } = useToast();
@@ -65,7 +69,10 @@ const SendEmailVerifyScreen = () => {
               try {
                 await sendMail({ ...values, url }).unwrap();
               } catch (error) {
-                console.log(error);
+                showError({
+                  summary: 'Error',
+                  detail: 'No se pudo enviar el correo, favor se cambiar el correo electronico o volverlo a intentar',
+                });
               }
             }}
             validationSchema={Yup.object({

@@ -6,11 +6,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
+import { FacebookButton } from '../../../components/facebookButton/FacebookButton';
 import { getDetailError } from '../../../redux/services/handlerErrorApi';
 import { InputTextApp } from '../../../components/forms';
 import { setCredentials } from '../../../redux/auth/auth.slice';
 import { useAppDispatch } from '../../../redux/hooks';
-import { useLoginMutation } from '../../../redux/services/tutorApi';
+import { useLoginMutation } from '../../../redux/auth/auth.api';
 import useToast from '../../../hooks/useToast';
 
 import './loginScreen.scss';
@@ -116,10 +117,10 @@ const LoginScreen = () => {
 
       <div className="grid">
         <div className="col-12 lg:col-6">
-          <Button type="submit" label="Google" className="mt-2 w-full" />
+          <FacebookButton />
         </div>
         <div className="col-12 lg:col-6">
-          <Button type="submit" label="Facebook" className="mt-2 w-full" />
+          <FacebookButton />
         </div>
       </div>
 

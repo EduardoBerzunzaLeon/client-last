@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import { Card } from 'primereact/card';
 import { Toast } from 'primereact/toast';
 
-import { useEmailVerifyMutation } from '../../../redux/services/tutorApi';
+import { useEmailVerifyMutation } from '../../../redux/auth/auth.api';
 import Spinner from '../../../components/spinner/Spinner';
 import useToast from '../../../hooks/useToast';
 

@@ -12,7 +12,7 @@ import { getDetailError } from '../../../redux/services/handlerErrorApi';
 import { InputTextApp, RadioGroup, withDetailInputPassword } from '../../../components/forms';
 import { RegisterRequest } from '../../../interfaces/api';
 import { translateAuthFields } from '../../../utils/translate/translateFieldForms';
-import { useSignUpMutation } from '../../../redux/services/tutorApi';
+import { useSignUpMutation } from '../../../redux/auth/auth.api';
 import useToast from '../../../hooks/useToast';
 
 const InputPassword = withDetailInputPassword(InputTextApp);
