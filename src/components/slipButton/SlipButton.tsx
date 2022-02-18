@@ -14,9 +14,8 @@ interface Props {
 export const SlipButton = ({
   color, icon, label, ...props
 }: Props) => {
-  const buttonClass = classNames('button-slip', color, 'p-0', 'mt-1');
+  const buttonClass = classNames('button-slip', color, 'p-0', 'mt-1', 'w-full');
   const iconClass = classNames('pi', `pi-${icon}`, 'px-2');
-  console.log('slip');
   return (
     <div className="container-slip ">
       <Button className={buttonClass} {...props}>

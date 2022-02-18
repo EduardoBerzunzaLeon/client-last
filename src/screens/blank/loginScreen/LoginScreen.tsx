@@ -15,6 +15,7 @@ import { useLoginMutation } from '../../../redux/auth/auth.api';
 import useToast from '../../../hooks/useToast';
 
 import './loginScreen.scss';
+import { GoogleButton } from '../../../components/googleButton/GoogleButton';
 
 const LoginScreen = () => {
   const navigate = useNavigate();
@@ -114,12 +115,11 @@ const LoginScreen = () => {
       <Divider align="center">
         <span className="p-card-subtitle">Ingresar por red social</span>
       </Divider>
-
       <div className="grid">
-        <div className="col-12 lg:col-6">
-          <FacebookButton />
+        <div className="col-12 md:col-6">
+          <GoogleButton />
         </div>
-        <div className="col-12 lg:col-6">
+        <div className="col-12 md:col-6">
           <FacebookButton />
         </div>
       </div>
