@@ -8,6 +8,11 @@ export interface LoginRequest {
     password: string
   }
 
+export interface SignInSocialRequest {
+  socialName: string,
+  tokenId: string
+}
+
 export interface RegisterRequest {
     name: Name,
     url: string

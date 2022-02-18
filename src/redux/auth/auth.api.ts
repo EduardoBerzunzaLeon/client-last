@@ -7,6 +7,7 @@ import {
   RegisterRequest,
   ResetPasswordRequest,
   SendEmailVerifyRequest,
+  SignInSocialRequest,
   UserResponse,
 } from '../../interfaces/api';
 
@@ -23,6 +24,14 @@ const authApi = tutorApi.injectEndpoints({
         url: 'users/login',
         method: 'POST',
         body: credentials,
+      }),
+      transformResponse: transformResponseToken,
+    }),
+    signInWithSocial: builder.mutation<UserResponse, SignInSocialRequest>({
+      query: ({ socialName, ...body }) => ({
+        url: `users/${socialName}`,
+        method: 'POST',
+        body,
       }),
       transformResponse: transformResponseToken,
     }),
@@ -81,6 +90,7 @@ const authApi = tutorApi.injectEndpoints({
 export const
   {
     useLoginMutation,
+    useSignInWithSocialMutation,
     useSignUpMutation,
     useForgotPasswordMutation,
     useResetPasswordMutation,

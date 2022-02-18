@@ -4,6 +4,7 @@ export type {
 } from './responses/userInterface';
 export type {
   LoginRequest,
+  SignInSocialRequest,
   RegisterRequest,
   ForgotPasswordRequest,
   ResetPasswordRequest,
