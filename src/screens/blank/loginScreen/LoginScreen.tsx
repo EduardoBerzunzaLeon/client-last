@@ -6,7 +6,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import { useEffect, useRef } from 'react';
+import {
+  useEffect, useRef, useState,
+} from 'react';
 import { FacebookButton } from '../../../components/facebookButton/FacebookButton';
 import { getDetailError } from '../../../redux/services/handlerErrorApi';
 import { GoogleButton } from '../../../components/googleButton/GoogleButton';
@@ -19,16 +21,25 @@ import useToast from '../../../hooks/useToast';
 import './loginScreen.scss';
 
 const LoginScreen = () => {
-  const isMountedRef = useRef<any>(null);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [ login, { isLoading }] = useLoginMutation();
   const { toast, showError } = useToast();
+  const isMounted = useRef<any>(null);
+  const [ showGoogle, setShowGoogle ] = useState(false);
 
+  // ! DELETE: In production with https: this useEffect is unnecessary
   useEffect(() => {
-    isMountedRef.current = true;
-    return () => { isMountedRef.current = false; };
-  });
+    isMounted.current = true;
+
+    if (isMounted.current) {
+      setShowGoogle(true);
+    }
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
 
   return (
     <Card
@@ -44,7 +55,6 @@ const LoginScreen = () => {
         onSubmit={async (values) => {
           try {
             const user = await login({ ...values }).unwrap();
-            // localStorage.setItem('token', user.token);
             dispatch(setCredentials(user));
           } catch (error) {
             const detail: string = getDetailError(error);
@@ -125,9 +135,8 @@ const LoginScreen = () => {
       <div className="grid">
         <div className="col-12 md:col-6">
           {
-              isMountedRef.current && <GoogleButton />
+            showGoogle && <GoogleButton />
           }
-
         </div>
         <div className="col-12 md:col-6">
           <FacebookButton />

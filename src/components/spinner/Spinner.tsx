@@ -1,4 +1,5 @@
 import { ProgressSpinner } from 'primereact/progressspinner';
+import './spinner.scss';
 
 const Spinner = ({ message }: { message: string }) => (
   <>

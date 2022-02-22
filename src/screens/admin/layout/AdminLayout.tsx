@@ -12,6 +12,8 @@ import { selectSiderStatus } from '../../../redux/ui/ui.selectors';
 import { useAppDispatch } from '../../../redux/hooks';
 import { closeSider } from '../../../redux/ui/ui.slice';
 import { MenuProfile } from '../../../components/menuProfile/MenuProfile';
+import { MenuSlideContent } from '../../../components/menuSlideContent/MenuSlideContent';
+import { menu } from '../../../utils/menuElement';
 
 const AdminLayout = () => {
   const dispatch = useAppDispatch();
@@ -27,7 +29,7 @@ const AdminLayout = () => {
         showCloseIcon={false}
       >
         <MenuProfile />
-        {/* <MenuSlideContent model={menu} /> */}
+        <MenuSlideContent model={menu} />
       </Sidebar>
       <div className="layout-main">
         <div className="grid">

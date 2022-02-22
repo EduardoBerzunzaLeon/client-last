@@ -17,7 +17,6 @@ export const GoogleButton = () => {
   const responseGoogle = useCallback((
     response: GoogleLoginResponse | GoogleLoginResponseOffline,
   ) => {
-    console.log(response);
     if ('tokenId' in response) {
       signInSocial({
         socialName: 'google',
@@ -41,6 +40,18 @@ export const GoogleButton = () => {
     }
   }, []);
 
+  const responseErrorGoogle = useCallback((
+    response: any,
+  ) => {
+    if ('error' in response) {
+      response.error !== 'idpiframe_initialization_failed'
+        && showError({
+          summary: 'Error',
+          detail: 'Ocurrio un error en el servicio de Google, favor de intentarlo mas tarde.',
+        });
+    }
+  }, []);
+
   return (
     <>
       <Toast ref={toast} />
@@ -56,7 +67,7 @@ export const GoogleButton = () => {
           />
         )}
         onSuccess={responseGoogle}
-        onFailure={responseGoogle}
+        onFailure={responseErrorGoogle}
         cookiePolicy="single_host_origin"
       />
     </>

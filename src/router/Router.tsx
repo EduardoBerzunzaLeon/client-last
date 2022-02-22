@@ -5,10 +5,11 @@ import { setCredentials, setDefaultAuthState } from '../redux/auth/auth.slice';
 import { useAppDispatch } from '../redux/hooks';
 import { useRenewTokenMutation } from '../redux/auth/auth.api';
 import Routes from './routes/Routes';
+import Spinner from '../components/spinner/Spinner';
 
 const Router = () => {
   const dispatch = useAppDispatch();
-  const [ renewToken ] = useRenewTokenMutation();
+  const [ renewToken, { isLoading }] = useRenewTokenMutation();
 
   useEffect(() => {
     renewToken().unwrap()
@@ -17,9 +18,15 @@ const Router = () => {
   }, [ renewToken ]);
 
   return (
-    <BrowserRouter>
-      <Routes />
-    </BrowserRouter>
+    <div>
+      {
+        isLoading ? <Spinner message="Cargando..." /> : (
+          <BrowserRouter>
+            <Routes />
+          </BrowserRouter>
+        )
+      }
+    </div>
   );
 };
 
