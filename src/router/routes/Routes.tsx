@@ -2,11 +2,12 @@ import type { RouteObject } from 'react-router-dom';
 
 import { useRoutes } from 'react-router-dom';
 
+import { lazy } from 'react';
 import Private from '../PrivateRoute';
 import Public from '../PublicRoute';
 
 import AdminLayout from '../../screens/admin/layout/AdminLayout';
-import BlankLayout from '../../screens/blank/layout/BlankLayout';
+// import BlankLayout from '../../screens/blank/layout/BlankLayout';
 import EmailVerifyScreen from '../../screens/blank/emailVerify/EmailVerifyScreen';
 import ForgotPasswordScreen from '../../screens/blank/forgotPasswordScreen/ForgotPasswordScreen';
 import HomeScreen from '../../screens/admin/home/HomeScreen';
@@ -14,6 +15,8 @@ import LoginScreen from '../../screens/blank/loginScreen/LoginScreen';
 import RegisterScreen from '../../screens/blank/registerScreen/RegisterScreen';
 import ResetPasswordScreen from '../../screens/blank/resetPasswordScreen/ResetPasswordScreen';
 import SendEmailVerifyScreen from '../../screens/blank/sendEmailVerify/SendEmailVerifyScreen';
+
+const BlankLayoutLazy = lazy(() => import(/* webpackChunkName: "Auth" */'../../screens/blank/layout/BlankLayout'));
 
 const Routes = () => {
   const routesObject: RouteObject[] = [
@@ -32,8 +35,8 @@ const Routes = () => {
       ],
     },
     {
-      path: '/',
-      element: <Public><BlankLayout /></Public>,
+      path: '/*',
+      element: <Public><BlankLayoutLazy /></Public>,
       children: [
         {
           index: true,

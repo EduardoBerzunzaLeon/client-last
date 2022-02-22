@@ -1,5 +1,5 @@
 import { BrowserRouter } from 'react-router-dom';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 
 import { setCredentials, setDefaultAuthState } from '../redux/auth/auth.slice';
 import { useAppDispatch } from '../redux/hooks';
@@ -14,16 +14,18 @@ const Router = () => {
   useEffect(() => {
     renewToken().unwrap()
       .then((user) => dispatch(setCredentials(user)))
-      .catch(() => setDefaultAuthState());
+      .catch(() => dispatch(setDefaultAuthState()));
   }, [ renewToken ]);
 
   return (
     <div>
       {
         isLoading ? <Spinner message="Cargando..." /> : (
-          <BrowserRouter>
-            <Routes />
-          </BrowserRouter>
+          <Suspense fallback={<Spinner message="Cargando..." />}>
+            <BrowserRouter>
+              <Routes />
+            </BrowserRouter>
+          </Suspense>
         )
       }
     </div>

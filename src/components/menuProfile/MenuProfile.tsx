@@ -6,8 +6,12 @@ import { CSSTransition } from 'react-transition-group';
 
 import { Button } from 'primereact/button';
 import useAuth from '../../hooks/useAuth';
+import { useAppDispatch } from '../../redux/hooks';
+import { closeSider } from '../../redux/ui/ui.slice';
+import { setDefaultAuthState } from '../../redux/auth/auth.slice';
 
 export const MenuProfile = () => {
+  const dispatch = useAppDispatch();
   const [ expanded, setExpanded ] = useState(false);
   const { user } = useAuth();
 
@@ -17,9 +21,9 @@ export const MenuProfile = () => {
   };
 
   const handleLogout = () => {
-    console.log('hi');
-    // dispatch(uiCloseSider());
-    // dispatch(signOutStart());
+    localStorage.clear();
+    dispatch(closeSider());
+    dispatch(setDefaultAuthState());
   };
 
   return (
