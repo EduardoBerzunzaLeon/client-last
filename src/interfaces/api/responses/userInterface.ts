@@ -1,8 +1,13 @@
 export interface User {
     email: string,
+    name: {
+      first: string,
+      last: string,
+    },
     gender: string,
     role: string,
-    avatar: string
+    avatar: string,
+    imagen?: string
   }
 
 export interface UserResponse {

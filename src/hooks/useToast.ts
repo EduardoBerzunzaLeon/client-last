@@ -16,12 +16,14 @@ const useToast = () => {
       life = 3000,
     }: Props,
   ): void => {
-    toast.current.show({
-      severity,
-      summary,
-      detail,
-      life,
-    });
+    if (toast.current) {
+      toast.current.show({
+        severity,
+        summary,
+        detail,
+        life,
+      });
+    }
   };
 
   const showError = showGenericToast('error');

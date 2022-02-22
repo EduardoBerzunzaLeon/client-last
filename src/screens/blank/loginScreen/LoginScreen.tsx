@@ -6,8 +6,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
+import { useEffect, useRef } from 'react';
 import { FacebookButton } from '../../../components/facebookButton/FacebookButton';
 import { getDetailError } from '../../../redux/services/handlerErrorApi';
+import { GoogleButton } from '../../../components/googleButton/GoogleButton';
 import { InputTextApp } from '../../../components/forms';
 import { setCredentials } from '../../../redux/auth/auth.slice';
 import { useAppDispatch } from '../../../redux/hooks';
@@ -15,13 +17,18 @@ import { useLoginMutation } from '../../../redux/auth/auth.api';
 import useToast from '../../../hooks/useToast';
 
 import './loginScreen.scss';
-import { GoogleButton } from '../../../components/googleButton/GoogleButton';
 
 const LoginScreen = () => {
+  const isMountedRef = useRef<any>(null);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [ login, { isLoading }] = useLoginMutation();
   const { toast, showError } = useToast();
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => { isMountedRef.current = false; };
+  });
 
   return (
     <Card
@@ -117,7 +124,10 @@ const LoginScreen = () => {
       </Divider>
       <div className="grid">
         <div className="col-12 md:col-6">
-          <GoogleButton />
+          {
+              isMountedRef.current && <GoogleButton />
+          }
+
         </div>
         <div className="col-12 md:col-6">
           <FacebookButton />

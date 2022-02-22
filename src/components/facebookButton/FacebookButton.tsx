@@ -4,11 +4,15 @@ import { ReactFacebookLoginInfo, ReactFacebookFailureResponse } from 'react-face
 import { Toast } from 'primereact/toast';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
+import { setCredentials } from '../../redux/auth/auth.slice';
 import { SlipButton } from '../slipButton/SlipButton';
+import { useAppDispatch } from '../../redux/hooks';
 import { useSignInWithSocialMutation } from '../../redux/auth/auth.api';
 import useToast from '../../hooks/useToast';
+import { getDetailError } from '../../redux/services/handlerErrorApi';
 
 export const FacebookButton = () => {
+  const dispatch = useAppDispatch();
   const [ signInSocial, { isLoading }] = useSignInWithSocialMutation();
   const { toast, showError } = useToast();
 
@@ -19,11 +23,21 @@ export const FacebookButton = () => {
       signInSocial({
         socialName: 'facebook',
         tokenId: response.accessToken,
+      }).unwrap().then(
+        (element) => {
+          dispatch(setCredentials(element));
+        },
+      ).catch((e) => {
+        const detail: string = getDetailError(e);
+        showError({
+          summary: 'Error',
+          detail,
+        });
       });
     } else {
       showError({
-        detail: 'error',
-        summary: 'error',
+        summary: 'Error',
+        detail: 'Ocurrio un error en el servicio de Facebook, favor de intentarlo mas tarde.',
       });
     }
   }, []);
@@ -39,7 +53,7 @@ export const FacebookButton = () => {
             color="indigo"
             icon="facebook"
             label="Facebook"
-            isLoading={isLoading}
+            loading={isLoading}
             onClick={renderProps.onClick}
           />
         )}

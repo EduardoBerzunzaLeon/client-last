@@ -4,11 +4,13 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 // eslint-disable-next-line import/no-cycle
 import { tutorApi } from './services/tutorApi';
 import authReducer from './auth/auth.slice';
+import uiReducer from './ui/ui.slice';
 
 export const store = configureStore({
   reducer: {
     [tutorApi.reducerPath]: tutorApi.reducer,
     auth: authReducer,
+    ui: uiReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(tutorApi.middleware),
 });
