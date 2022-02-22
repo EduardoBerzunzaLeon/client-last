@@ -3,6 +3,8 @@ import { CSSTransition } from 'react-transition-group';
 import classnames from 'classnames';
 import { NavLink } from 'react-router-dom';
 import { Menu } from '../../utils/menuElement';
+import { useAppDispatch } from '../../redux/hooks';
+import { closeSider } from '../../redux/ui/ui.slice';
 
 export interface SubmenuProps {
     elements: Menu[];
@@ -11,6 +13,7 @@ export interface SubmenuProps {
 }
 
 const Submenu = ({ elements, className = '', root = false }: SubmenuProps) => {
+  const dispatch = useAppDispatch();
   const [ activeIndex, setActiveIndex ] = useState<number>(0);
 
   //   const dispatch = useDispatch();
@@ -28,9 +31,9 @@ const Submenu = ({ elements, className = '', root = false }: SubmenuProps) => {
     } else if (index === activeIndex) setActiveIndex(0);
     else setActiveIndex(index);
 
-    // if (!item.items) {
-    //   dispatch(uiCloseSider());
-    // }
+    if (!item.items) {
+      dispatch(closeSider());
+    }
 
     // if (props.onMenuItemClick) {
     //   props.onMenuItemClick({
