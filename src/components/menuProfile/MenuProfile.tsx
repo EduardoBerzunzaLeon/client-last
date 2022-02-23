@@ -21,7 +21,6 @@ export const MenuProfile = () => {
   };
 
   const handleLogout = () => {
-    localStorage.clear();
     dispatch(closeSider());
     dispatch(setDefaultAuthState());
   };

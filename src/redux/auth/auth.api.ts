@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-cycle
 import { tutorApi } from '../services/tutorApi';
 
 import {
@@ -11,13 +12,7 @@ import {
   UserResponse,
 } from '../../interfaces/api';
 
-const transformResponseToken = (response: UserResponse) => {
-  localStorage.setItem('token', response.token);
-  localStorage.setItem('token-init-date', `${new Date().getTime()}`);
-  return response;
-};
-
-const authApi = tutorApi.injectEndpoints({
+export const authApi = tutorApi.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation<UserResponse, LoginRequest>({
       query: (credentials) => ({
@@ -25,7 +20,6 @@ const authApi = tutorApi.injectEndpoints({
         method: 'POST',
         body: credentials,
       }),
-      transformResponse: transformResponseToken,
     }),
     signInWithSocial: builder.mutation<UserResponse, SignInSocialRequest>({
       query: ({ socialName, ...body }) => ({
@@ -33,7 +27,6 @@ const authApi = tutorApi.injectEndpoints({
         method: 'POST',
         body,
       }),
-      transformResponse: transformResponseToken,
     }),
     signUp: builder.mutation<UserResponse, RegisterRequest>({
       query: (newUser) => ({
@@ -41,7 +34,6 @@ const authApi = tutorApi.injectEndpoints({
         method: 'POST',
         body: newUser,
       }),
-      transformResponse: transformResponseToken,
     }),
     forgotPassword: builder.mutation<ForgotPasswordResponse, ForgotPasswordRequest>({
       query: (body) => ({
@@ -57,7 +49,6 @@ const authApi = tutorApi.injectEndpoints({
         method: 'PATCH',
         body,
       }),
-      transformResponse: transformResponseToken,
       invalidatesTags: [ 'User' ],
     }),
     emailVerify: builder.mutation<UserResponse, string>({
@@ -81,7 +72,6 @@ const authApi = tutorApi.injectEndpoints({
         method: 'POST',
       }),
       invalidatesTags: [ 'User' ],
-      transformResponse: transformResponseToken,
     }),
   }),
   overrideExisting: false,

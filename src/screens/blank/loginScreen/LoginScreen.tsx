@@ -13,8 +13,6 @@ import { FacebookButton } from '../../../components/facebookButton/FacebookButto
 import { getDetailError } from '../../../redux/services/handlerErrorApi';
 import { GoogleButton } from '../../../components/googleButton/GoogleButton';
 import { InputTextApp } from '../../../components/forms';
-import { setCredentials } from '../../../redux/auth/auth.slice';
-import { useAppDispatch } from '../../../redux/hooks';
 import { useLoginMutation } from '../../../redux/auth/auth.api';
 import useToast from '../../../hooks/useToast';
 
@@ -22,7 +20,6 @@ import './loginScreen.scss';
 
 const LoginScreen = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const [ login, { isLoading }] = useLoginMutation();
   const { toast, showError } = useToast();
   const isMounted = useRef<any>(null);
@@ -54,11 +51,9 @@ const LoginScreen = () => {
         }}
         onSubmit={async (values) => {
           try {
-            const user = await login({ ...values }).unwrap();
-            dispatch(setCredentials(user));
+            await login({ ...values }).unwrap();
           } catch (error) {
             const detail: string = getDetailError(error);
-
             showError({
               summary: 'Error',
               detail,

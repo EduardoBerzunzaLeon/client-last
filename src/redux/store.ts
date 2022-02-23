@@ -3,8 +3,10 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 
 // eslint-disable-next-line import/no-cycle
 import { tutorApi } from './services/tutorApi';
+// eslint-disable-next-line import/no-cycle
 import authReducer from './auth/auth.slice';
 import uiReducer from './ui/ui.slice';
+import { persistLogingMiddleware } from './auth/auth.middleware';
 
 export const store = configureStore({
   reducer: {
@@ -12,7 +14,8 @@ export const store = configureStore({
     auth: authReducer,
     ui: uiReducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(tutorApi.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware()
+    .concat(tutorApi.middleware, persistLogingMiddleware),
 });
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors

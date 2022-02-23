@@ -10,9 +10,7 @@ import { errorTranslateAuthForm } from '../../../utils/form/handlerErrorsForms';
 import { getDetailError } from '../../../redux/services/handlerErrorApi';
 import { InputTextApp, withDetailInputPassword } from '../../../components/forms';
 import { ResetPasswordRequest } from '../../../interfaces/api';
-import { setCredentials } from '../../../redux/auth/auth.slice';
 import { translateAuthFields } from '../../../utils/translate/translateFieldForms';
-import { useAppDispatch } from '../../../redux/hooks';
 import { useResetPasswordMutation } from '../../../redux/auth/auth.api';
 import useToast from '../../../hooks/useToast';
 
@@ -21,7 +19,6 @@ const InputPassword = withDetailInputPassword(InputTextApp);
 const ResetPasswordScreen = () => {
   const { token } = useParams();
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const [ resetPassword, { isLoading }] = useResetPasswordMutation();
   const { toast, showError } = useToast();
 
@@ -39,8 +36,7 @@ const ResetPasswordScreen = () => {
           const sanatizeToken = token ?? '';
           const prepareSend: ResetPasswordRequest = { ...values, token: sanatizeToken };
           try {
-            const user = await resetPassword({ ...prepareSend }).unwrap();
-            dispatch(setCredentials(user));
+            await resetPassword({ ...prepareSend }).unwrap();
           } catch (error) {
             const detail: string = getDetailError(error);
             errorTranslateAuthForm({

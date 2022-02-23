@@ -1,7 +1,7 @@
 import { BrowserRouter } from 'react-router-dom';
 import { Suspense, useEffect } from 'react';
 
-import { setCredentials, setDefaultAuthState } from '../redux/auth/auth.slice';
+import { setDefaultAuthState } from '../redux/auth/auth.slice';
 import { useAppDispatch } from '../redux/hooks';
 import { useRenewTokenMutation } from '../redux/auth/auth.api';
 import Routes from './routes/Routes';
@@ -13,7 +13,6 @@ const Router = () => {
 
   useEffect(() => {
     renewToken().unwrap()
-      .then((user) => dispatch(setCredentials(user)))
       .catch(() => dispatch(setDefaultAuthState()));
   }, [ renewToken ]);
 
