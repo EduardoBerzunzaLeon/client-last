@@ -1,3 +1,7 @@
+import {
+  useEffect, useRef, useState,
+} from 'react';
+
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { Divider } from 'primereact/divider';
@@ -6,9 +10,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import {
-  useEffect, useRef, useState,
-} from 'react';
 import { FacebookButton } from '../../../components/facebookButton/FacebookButton';
 import { getDetailError } from '../../../redux/services/handlerErrorApi';
 import { GoogleButton } from '../../../components/googleButton/GoogleButton';

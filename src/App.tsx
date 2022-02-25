@@ -9,6 +9,8 @@ import 'primeicons/primeicons.css';
 import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/bootstrap4-light-purple/theme.css';
 
+import './app.scss';
+
 function App() {
   // active ripple effect
   PrimeReact.ripple = true;

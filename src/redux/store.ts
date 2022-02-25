@@ -1,11 +1,11 @@
+/* eslint-disable import/no-cycle */
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 
-// eslint-disable-next-line import/no-cycle
 import { tutorApi } from './services/tutorApi';
-// eslint-disable-next-line import/no-cycle
 import authReducer from './auth/auth.slice';
 import uiReducer from './ui/ui.slice';
+
 import { persistLogingMiddleware } from './auth/auth.middleware';
 
 export const store = configureStore({
