@@ -81,5 +81,6 @@ module.exports = {
     ],
     'jsx-a11y/label-has-associated-control': RULES.OFF,
     'react/jsx-props-no-spreading': RULES.OFF,
+    'import/no-extraneous-dependencies': [ RULES.ERROR, { devDependencies: true }],
   },
 };
