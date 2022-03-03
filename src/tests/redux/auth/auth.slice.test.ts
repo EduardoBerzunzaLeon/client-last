@@ -1,4 +1,5 @@
 import reducer, { setDefaultAuthState } from '../../../redux/auth/auth.slice';
+import { userLogged } from '../../fixtures/testData/fakeAuthData';
 
 describe('Auth slice', () => {
   test('should return the initial state', () => {
@@ -10,17 +11,8 @@ describe('Auth slice', () => {
 
   test('should reset to the initial state', () => {
     const previousState = {
-      user: {
-        email: 'eduardo@gmail.com',
-        name: {
-          first: 'test',
-          last: 'lastTest',
-        },
-        gender: 'M',
-        role: 'Admin',
-        avatar: 'https:/url/myimage.jpg',
-      },
-      token: 'fakeToken',
+      user: userLogged.data,
+      token: userLogged.token,
     };
 
     expect(reducer(previousState, setDefaultAuthState())).toEqual({
