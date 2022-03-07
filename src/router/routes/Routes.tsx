@@ -7,7 +7,6 @@ import Private from '../PrivateRoute';
 import Public from '../PublicRoute';
 
 import AdminLayout from '../../screens/admin/layout/AdminLayout';
-// import BlankLayout from '../../screens/blank/layout/BlankLayout';
 import EmailVerifyScreen from '../../screens/blank/emailVerify/EmailVerifyScreen';
 import ForgotPasswordScreen from '../../screens/blank/forgotPasswordScreen/ForgotPasswordScreen';
 import HomeScreen from '../../screens/admin/home/HomeScreen';

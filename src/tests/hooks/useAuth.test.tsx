@@ -1,31 +1,26 @@
 import React from 'react';
 
-import fetchMock, { enableFetchMocks } from 'jest-fetch-mock';
-import { renderHook } from '@testing-library/react-hooks';
-
 import { Provider } from 'react-redux';
-import { authApi } from '../../redux/auth/auth.api';
-import { setupApiStore } from '../fixtures/redux/setupApiStore';
-import authReducer from '../../redux/auth/auth.slice';
-import useAuth from '../../hooks/useAuth';
-import { loginFakeData, userLogged } from '../fixtures/testData/fakeAuthData';
+import { renderHook } from '@testing-library/react-hooks';
+import fetchMock, { enableFetchMocks } from 'jest-fetch-mock';
 
-enableFetchMocks();
+import { authApi } from '../../redux/auth/auth.api';
+import { loginFakeData, userLogged } from '../fixtures/testData/fakeAuthData';
+import { storeRef } from '../fixtures/render';
+import useAuth from '../../hooks/useAuth';
 
 interface Props {
   children: React.ReactNode
 }
+enableFetchMocks();
 
 describe('useAuth', () => {
-  const storeRef = setupApiStore(authApi, [], { auth: authReducer });
   let wrapper: React.FC<Props>;
 
   beforeEach((): void => {
     fetchMock.resetMocks();
     wrapper = ({ children }: Props) => (
-      <Provider
-        store={storeRef.store}
-      >
+      <Provider store={storeRef.store}>
         {children}
       </Provider>
     );

@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Spinner /> should match to snapshot 1`] = `
+<div
+  className="flex flex-column align-items-center justify-content-center h-screen"
+>
+  <ProgressSpinner
+    animationDuration="2s"
+    className={null}
+    fill="none"
+    id={null}
+    strokeWidth="4"
+    style={null}
+  />
+  <span
+    className=" font-bold text-2xl text-pink-700"
+  >
+    Cargando
+  </span>
+</div>
+`;

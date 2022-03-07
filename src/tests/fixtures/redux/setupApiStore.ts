@@ -17,7 +17,7 @@ export function setupApiStore<
     },
     M extends Middleware<{}, any, Dispatch<AnyAction>>,
     R extends Record<string, Reducer<any, any>> = Record<never, never>,
-  >(api: A, customMiddlewares?: M[], extraReducers?: R):
+  >(api: A, customMiddlewares?: M[], extraReducers?: R, preloadedState = {}):
    { api: any; store: EnhancedStore } {
   const getStore = (): EnhancedStore => configureStore({
     reducer: combineReducers({
@@ -26,6 +26,7 @@ export function setupApiStore<
     }),
     middleware: (gdm) => gdm({ serializableCheck: false, immutableCheck: false })
       .concat(api.middleware, ...(customMiddlewares ?? [])),
+    preloadedState,
   });
 
     type StoreType = EnhancedStore<

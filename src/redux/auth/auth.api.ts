@@ -66,12 +66,12 @@ export const authApi = tutorApi.injectEndpoints({
       }),
       invalidatesTags: [ 'User' ],
     }),
-    renewToken: builder.mutation<UserResponse, void>({
+    renewToken: builder.query<UserResponse, void>({
       query: () => ({
         url: 'users/renew',
         method: 'POST',
       }),
-      invalidatesTags: [ 'User' ],
+      providesTags: [ 'User' ],
     }),
   }),
   overrideExisting: false,
@@ -86,5 +86,5 @@ export const
     useResetPasswordMutation,
     useEmailVerifyMutation,
     useSendEmailVerifyMutation,
-    useRenewTokenMutation,
+    useRenewTokenQuery,
   } = authApi;
