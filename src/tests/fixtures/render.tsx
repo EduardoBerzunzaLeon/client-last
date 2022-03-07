@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
-import { EnhancedStore } from '@reduxjs/toolkit';
+import { AnyAction, EnhancedStore, Middleware } from '@reduxjs/toolkit';
 
 import { authApi } from '../../redux/auth/auth.api';
 import { authState, uiState } from './testData/fakeStoreData';
@@ -9,9 +9,22 @@ import { setupApiStore } from './redux/setupApiStore';
 import authReducer from '../../redux/auth/auth.slice';
 import uiReducer from '../../redux/ui/ui.slice';
 
-export const storeRef = setupApiStore(authApi, [], { auth: authReducer });
+declare type Middlewares<S> = ReadonlyArray<Middleware<{}, S>>;
 
-export const mockStore = <P extends Object>(state?: P) => {
+interface Props {
+  initialEntries?: string,
+  store?: EnhancedStore
+  children?: JSX.Element
+}
+
+export interface StoreRef {
+  api: any;
+  store: EnhancedStore<any, AnyAction, Middlewares<any>>;
+}
+
+export const storeRef: StoreRef = setupApiStore(authApi, [], { auth: authReducer });
+
+export const mockStore = <P extends Object>(state?: P): StoreRef => {
   const initialState = { auth: authState, ui: uiState };
   const finalState = state ? { ...initialState, ...state } : { ...initialState };
   return setupApiStore(
@@ -21,12 +34,6 @@ export const mockStore = <P extends Object>(state?: P) => {
     finalState,
   );
 };
-
-interface Props {
-  initialEntries?: string,
-  store?: EnhancedStore
-  children?: JSX.Element
-}
 
 export const render = (
   Component: React.ComponentType,
