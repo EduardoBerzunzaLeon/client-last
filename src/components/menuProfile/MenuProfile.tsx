@@ -30,7 +30,7 @@ export const MenuProfile = () => {
       <div className="layout-profile">
         <div>
           <img
-            src={`assets/layout/images/${!!user?.avatar || 'profile.png'}`}
+            src={`assets/layout/images/${user?.avatar || 'profile.png'}`}
             alt="Profile"
           />
         </div>

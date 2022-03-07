@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-interface UIState {
+export interface UIState {
     siderOpen: boolean;
 }
 

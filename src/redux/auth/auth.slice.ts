@@ -4,7 +4,7 @@ import { User } from '../../interfaces/api';
 // eslint-disable-next-line import/no-cycle
 import { authApi } from './auth.api';
 
-interface AuthState {
+export interface AuthState {
   user: User | null,
   token: string | null,
 }

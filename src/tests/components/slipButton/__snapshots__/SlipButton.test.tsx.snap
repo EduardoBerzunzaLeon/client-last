@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SlipButton /> should match to snapshot and disabled button when the loading is true 1`] = `
+<SlipButton
+  color="purple"
+  icon="google"
+  label="Google"
+  loading={true}
+  onClick={[Function]}
+>
+  <div
+    className="container-slip "
+  >
+    <ForwardRef
+      className="button-slip purple p-0 mt-1 w-full"
+      loading={true}
+      onClick={[Function]}
+    >
+      <ButtonComponent
+        badge={null}
+        badgeClassName={null}
+        className="button-slip purple p-0 mt-1 w-full"
+        disabled={false}
+        forwardRef={null}
+        icon={null}
+        iconPos="left"
+        label={null}
+        loading={true}
+        loadingIcon="pi pi-spinner pi-spin"
+        onClick={[Function]}
+        tooltip={null}
+        tooltipOptions={null}
+      >
+        <button
+          className="p-button p-component button-slip purple p-0 mt-1 w-full p-button-icon-only p-disabled p-button-loading"
+          disabled={true}
+          onClick={[Function]}
+        >
+          <span
+            className="p-button-icon p-c p-button-loading-icon pi pi-spinner pi-spin"
+          />
+          <i
+            className="pi pi-google px-2"
+          />
+          <span
+            className="px-3"
+          >
+            Google
+          </span>
+          <Ripple />
+        </button>
+      </ButtonComponent>
+    </ForwardRef>
+  </div>
+</SlipButton>
+`;
