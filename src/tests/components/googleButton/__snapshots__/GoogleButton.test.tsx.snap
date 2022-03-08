@@ -1,0 +1,137 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<GoogleButton /> should math to snapshot 1`] = `
+<Provider
+  store={
+    Object {
+      "@@observable": [Function],
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <GoogleButton>
+    <Toast
+      appendTo="self"
+      baseZIndex={0}
+      className={null}
+      id={null}
+      onClick={null}
+      onHide={null}
+      onRemove={null}
+      onShow={null}
+      position="top-right"
+      style={null}
+      transitionOptions={null}
+    >
+      <Portal
+        appendTo="self"
+        element={
+          <div
+            className="p-toast p-component p-toast-top-right"
+            id={null}
+            style={null}
+          >
+            <TransitionGroup
+              childFactory={[Function]}
+              component="div"
+            />
+          </div>
+        }
+        onMounted={null}
+        onUnmounted={null}
+        visible={false}
+      >
+        <div
+          className="p-toast p-component p-toast-top-right"
+          id={null}
+          style={null}
+        >
+          <TransitionGroup
+            childFactory={[Function]}
+            component="div"
+          >
+            <div />
+          </TransitionGroup>
+        </div>
+      </Portal>
+    </Toast>
+    <y
+      accessType="online"
+      buttonText="Sign in with Google"
+      clientId="470852633553-tlunbjug95qo3eodrus5kf49i0e1ok71.apps.googleusercontent.com"
+      cookiePolicy="single_host_origin"
+      disabledStyle={
+        Object {
+          "opacity": 0.6,
+        }
+      }
+      fetchBasicProfile={true}
+      icon={true}
+      isSignedIn={false}
+      onFailure={[Function]}
+      onRequest={[Function]}
+      onSuccess={[Function]}
+      prompt=""
+      render={[Function]}
+      scope="profile email"
+      tag="button"
+      theme="light"
+      type="button"
+      uxMode="popup"
+    >
+      <SlipButton
+        color="purple"
+        icon="google"
+        label="Google"
+        loading={false}
+        onClick={[Function]}
+      >
+        <div
+          className="container-slip "
+        >
+          <ForwardRef
+            className="button-slip purple p-0 mt-1 w-full"
+            loading={false}
+            onClick={[Function]}
+          >
+            <ButtonComponent
+              badge={null}
+              badgeClassName={null}
+              className="button-slip purple p-0 mt-1 w-full"
+              disabled={false}
+              forwardRef={null}
+              icon={null}
+              iconPos="left"
+              label={null}
+              loading={false}
+              loadingIcon="pi pi-spinner pi-spin"
+              onClick={[Function]}
+              tooltip={null}
+              tooltipOptions={null}
+            >
+              <button
+                className="p-button p-component button-slip purple p-0 mt-1 w-full"
+                disabled={false}
+                onClick={[Function]}
+              >
+                <i
+                  className="pi pi-google px-2"
+                />
+                <span
+                  className="px-3"
+                >
+                  Google
+                </span>
+                <Ripple />
+              </button>
+            </ButtonComponent>
+          </ForwardRef>
+        </div>
+      </SlipButton>
+    </y>
+  </GoogleButton>
+</Provider>
+`;

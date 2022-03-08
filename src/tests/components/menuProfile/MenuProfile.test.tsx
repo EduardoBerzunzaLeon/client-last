@@ -1,11 +1,15 @@
-import React from 'react';
-import { mount, ReactWrapper } from 'enzyme';
+import { mount } from 'enzyme';
 import { MenuProfile } from '../../../components/menuProfile/MenuProfile';
-import { mockStore, renderWithRouter, StoreRef } from '../../fixtures/render';
+import {
+  mockStore,
+  renderWithRouter,
+  StoreRef,
+  Wrapper,
+} from '../../fixtures/render';
 
 describe('<MenuProfile />', () => {
   let storeRef: StoreRef;
-  let wrapper: ReactWrapper<any, Readonly<{}>, React.Component<{}, {}, any>>;
+  let wrapper: Wrapper;
 
   beforeEach(() => {
     storeRef = mockStore({ ui: { siderOpen: true }});

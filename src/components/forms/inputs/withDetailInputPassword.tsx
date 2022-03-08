@@ -1,5 +1,5 @@
 import React from 'react';
-import { footerInputPassword } from './FooterInputPassword';
+import { FooterInputPassword } from './FooterInputPassword';
 
 export const withDetailInputPassword = <P extends object>
   (Component: React.ComponentType<P>) => (props: P) => (
@@ -7,7 +7,7 @@ export const withDetailInputPassword = <P extends object>
       {...props}
       toggleMask
       keyfilter={/[^\s]/}
-      footer={footerInputPassword}
+      footer={FooterInputPassword}
       promptLabel="Ingresa una contraseña"
       weakLabel="Débil"
       mediumLabel="Moderada"

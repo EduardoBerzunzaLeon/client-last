@@ -1,7 +1,8 @@
 import React, { Suspense } from 'react';
-import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
 import { AnyAction, EnhancedStore, Middleware } from '@reduxjs/toolkit';
+import { MemoryRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { ReactWrapper } from 'enzyme';
 
 import { authApi } from '../../redux/auth/auth.api';
 import { authState, uiState } from './testData/fakeStoreData';
@@ -10,6 +11,7 @@ import authReducer from '../../redux/auth/auth.slice';
 import uiReducer from '../../redux/ui/ui.slice';
 
 declare type Middlewares<S> = ReadonlyArray<Middleware<{}, S>>;
+export declare type Wrapper = ReactWrapper<any, Readonly<{}>, React.Component<{}, {}, any>>;
 
 interface Props {
   initialEntries?: string,

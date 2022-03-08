@@ -1,6 +1,6 @@
 import { Divider } from 'primereact/divider';
 
-export const footerInputPassword = () => (
+export const FooterInputPassword = () => (
   <>
     <Divider />
     <p className="p-mt-2">Sugerencias</p>
@@ -13,4 +13,4 @@ export const footerInputPassword = () => (
   </>
 );
 
-export default footerInputPassword;
+export default FooterInputPassword;
