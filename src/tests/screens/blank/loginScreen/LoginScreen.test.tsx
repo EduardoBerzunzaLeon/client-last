@@ -1,10 +1,14 @@
+import { rest } from 'msw';
+import { setupServer } from 'msw/node';
 import {
-  render, fireEvent, wait, RenderResult,
+  fireEvent,
+  render,
+  waitFor,
 } from '@testing-library/react';
-
-import { mount } from 'enzyme';
-import { renderWithRouter, Wrapper } from '../../../fixtures/render';
 import LoginScreen from '../../../../screens/blank/loginScreen/LoginScreen';
+import { renderWithRouter } from '../../../fixtures/render';
+
+Storage.prototype.setItem = jest.fn();
 
 const mockNavigate = jest.fn();
 
@@ -13,38 +17,100 @@ jest.mock('react-router-dom', () => ({
   useNavigate: () => mockNavigate,
 }));
 
+const handlers = [
+  rest.post(
+    `${process.env.REACT_APP_API_URL}/users/slogin`,
+    (req, res, ctx) => res(
+      // ctx.status(500),
+      // ctx.json({ message: 'Internal Server Error' }),
+      // ctx.delay(150),
+
+      ctx.json('John Smith'), ctx.delay(150)),
+  ),
+];
+
+const server = setupServer(...handlers);
+
 describe('<LoginComponent />', () => {
-  let wrapper: RenderResult;
+// Enable API mocking before tests.
+  beforeAll(() => server.listen());
+
+  // Reset any runtime request handlers we may add during the tests.
+  afterEach(() => server.resetHandlers());
+
+  // Disable API mocking after the tests are done.
+  afterAll(() => server.close());
+
   beforeEach(() => {
-    wrapper = render(renderWithRouter(LoginScreen, { initialEntries: '/admin' }));
     jest.clearAllMocks();
   });
 
-  test('should render correctly LoginScreenComponent', () => {
-    const wrapperEnzyme = mount(renderWithRouter(LoginScreen, { initialEntries: '/admin' }));
-    expect(wrapperEnzyme.find('input').length).toBe(2);
-    expect(wrapperEnzyme.find('input[name="email"]').prop('value')).toBe('');
-    expect(wrapperEnzyme.find('input[name="password"]').prop('value')).toBe('');
-    expect(wrapperEnzyme.find('GoogleButton').exists()).toBe(true);
-    expect(wrapperEnzyme.find('FacebookButton').exists()).toBe(true);
-    expect(wrapperEnzyme.find('Link').first().props()).toEqual({ to: '/forgot-password', children: '¿Olvidaste la contraseña?' });
-    expect(wrapperEnzyme.find('Link').last().props()).toEqual({ to: '/register', children: 'No tengo cuenta' });
+  // test send form when send empty data show
+  // an error and is correctl
+  // y data call login redux
+  test('should show validation on blur in input', async () => {
+    const { getByRole, getByLabelText, getByText } = render(renderWithRouter(LoginScreen, { initialEntries: '/login' }));
+
+    const button = getByRole('button', { name: /Iniciar Sesión/i });
+    const inputEmail = getByLabelText('Email');
+
+    expect(button).toBeDisabled();
+
+    if (inputEmail) {
+      await waitFor(() => {
+        fireEvent.blur(inputEmail);
+      });
+    }
+
+    expect(inputEmail).toHaveClass('p-invalid');
+    expect(getByText('Requerido')).toBeInTheDocument();
   });
 
-  // test send form when send empty data show an error and is correctly data call login redux
+  test('should show validation on submit form', async () => {
+    const {
+      container, getByLabelText, getAllByText,
+    } = render(renderWithRouter(LoginScreen, { initialEntries: '/login' }));
 
-  //   test('Should show and error when the inputs are emtpy and call login method when is successful', () => {
-  //     wrapper.find('form').prop('onSubmit')!(({ preventDefault() {} }) as any);
-  //     console.log(wrapper.find('input[name="email"]').props());
-  //   });
+    const inputEmail = getByLabelText('Email');
+    const inputPass = container.querySelector('#password');
+    const form = container.querySelector('form');
 
-  //   const { getByLabelText, getByTestId } = render(<App />);
-  //   const input = getByLabelText("Email");
-  //   fireEvent.blur(input);
-  //   await wait(() => {
-  //     expect(getByTestId("emailError")).not.toBe(null);
-  //     expect(getByTestId("emailError")).toHaveTextContent("Required");
-  //   });
+    if (form) {
+      await waitFor(() => {
+        fireEvent.submit(form);
+      });
+    }
 
-  // mock the feth useLoginMutation and enter to email not activated and redirect to /send-email-verify
+    expect(inputEmail).toHaveClass('p-invalid');
+    expect(inputPass).toHaveClass('p-invalid');
+    expect(getAllByText('Requerido').length).toBe(2);
+  });
+
+  test('should show validation on submit form', async () => {
+    const {
+      container, getByLabelText,
+    } = render(renderWithRouter(LoginScreen, { initialEntries: '/login' }));
+
+    const inputEmail = getByLabelText('Email');
+    const inputPass = container.querySelector('input[name="password"]');
+    const form = container.querySelector('form');
+
+    if (inputEmail && inputPass) {
+      await waitFor(() => {
+        fireEvent.change(inputEmail, { target: { value: 'eduardo@berzunza.com' }});
+        fireEvent.change(inputPass, { target: { value: '12345678' }});
+      });
+    }
+
+    if (form) {
+      await waitFor(() => {
+        fireEvent.submit(form);
+      });
+    }
+
+    // expect(mockNavigate).toHaveBeenCalledTimes(1);
+  });
+
+  // mock the feth useLoginMutation and
+  //  enter to email not activated and redirect to /send-email-verify
 });

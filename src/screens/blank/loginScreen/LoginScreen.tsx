@@ -53,7 +53,9 @@ const LoginScreen = () => {
         onSubmit={async (values) => {
           try {
             await login({ ...values }).unwrap();
+            console.log('sd');
           } catch (error) {
+            console.log(error);
             const detail: string = getDetailError(error);
             showError({
               summary: 'Error',
@@ -80,6 +82,7 @@ const LoginScreen = () => {
             <div className="field pt-2">
               <InputTextApp
                 label="Email"
+                id="email"
                 name="email"
                 keyfilter="email"
                 className="w-full"
@@ -98,6 +101,7 @@ const LoginScreen = () => {
               <InputTextApp
                 label="Contraseña"
                 name="password"
+                id="password"
                 type="password"
                 className="w-full"
                 toggleMask
@@ -135,7 +139,7 @@ const LoginScreen = () => {
           }
         </div>
         <div className="col-12 md:col-6">
-          <FacebookButton />
+          {/* <FacebookButton /> */}
         </div>
       </div>
 
