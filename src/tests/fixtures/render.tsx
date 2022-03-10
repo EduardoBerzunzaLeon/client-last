@@ -71,13 +71,13 @@ export const renderWithRouter = (
   Component: React.ComponentType,
   { initialEntries = '/', store = storeRef.store }: Props,
 ) => (
-  <Suspense fallback="cargando">
-    <MemoryRouter initialEntries={[ initialEntries ]}>
-      <Provider store={store}>
+  <Provider store={store}>
+    <Suspense fallback="cargando">
+      <MemoryRouter initialEntries={[ initialEntries ]}>
         <Component />
-      </Provider>
-    </MemoryRouter>
-  </Suspense>
+      </MemoryRouter>
+    </Suspense>
+  </Provider>
 );
 
 export const renderWithChildren = (

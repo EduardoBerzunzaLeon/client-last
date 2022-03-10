@@ -8,9 +8,7 @@ import { setDefaultAuthState } from './auth.slice';
 
 export const persistLogingMiddleware: Middleware = (api: MiddlewareAPI) => (next) => (action) => {
   const result = next(action);
-  // console.log(api.getState());
   const { token } = api.getState().auth;
-
   if (isFulfilled(action)) {
     const { endpointName } = action.meta.arg;
     if (

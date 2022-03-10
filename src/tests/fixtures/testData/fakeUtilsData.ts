@@ -13,6 +13,20 @@ export const errorResponse: ErrorResponse = {
   },
 };
 
+export const generateError = (message: string, status: number):ErrorResponse => ({
+  status,
+  data: {
+    status: 'error',
+    error: {
+      isOperational: true,
+      statusCode: status,
+      status: 'error',
+      message,
+    },
+  },
+});
+
 export default {
   errorResponse,
+  generateError,
 };
