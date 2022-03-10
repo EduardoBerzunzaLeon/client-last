@@ -8,7 +8,7 @@ export const errorResponse: ErrorResponse = {
       isOperational: true,
       statusCode: 401,
       status: 'error',
-      message: 'El correo aun no ha sido activado',
+      message: 'Unauthorized error',
     },
   },
 };
