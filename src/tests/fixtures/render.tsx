@@ -9,6 +9,8 @@ import { authState, uiState } from './testData/fakeStoreData';
 import { setupApiStore } from './redux/setupApiStore';
 import authReducer from '../../redux/auth/auth.slice';
 import uiReducer from '../../redux/ui/ui.slice';
+import { tutorApi } from '../../redux/services/tutorApi';
+import { persistLogingMiddleware } from '../../redux/auth/auth.middleware';
 
 declare type Middlewares<S> = ReadonlyArray<Middleware<{}, S>>;
 export declare type Wrapper = ReactWrapper<any, Readonly<{}>, React.Component<{}, {}, any>>;
@@ -25,6 +27,11 @@ export interface StoreRef {
 }
 
 export const storeRef: StoreRef = setupApiStore(authApi, [], { auth: authReducer });
+export const storeGeneric: StoreRef = setupApiStore(
+  tutorApi,
+  [ persistLogingMiddleware ],
+  { auth: authReducer },
+);
 
 export const mockStore = <P extends Object>(state?: P): StoreRef => {
   const initialState = { auth: authState, ui: uiState };
@@ -64,13 +71,13 @@ export const renderWithRouter = (
   Component: React.ComponentType,
   { initialEntries = '/', store = storeRef.store }: Props,
 ) => (
-  <Provider store={store}>
-    <Suspense fallback="cargando">
-      <MemoryRouter initialEntries={[ initialEntries ]}>
+  <Suspense fallback="cargando">
+    <MemoryRouter initialEntries={[ initialEntries ]}>
+      <Provider store={store}>
         <Component />
-      </MemoryRouter>
-    </Suspense>
-  </Provider>
+      </Provider>
+    </MemoryRouter>
+  </Suspense>
 );
 
 export const renderWithChildren = (
@@ -95,4 +102,5 @@ export default {
   renderWithProps,
   renderWithRouter,
   storeRef,
+  storeGeneric,
 };

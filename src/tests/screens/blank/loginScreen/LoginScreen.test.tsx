@@ -1,13 +1,22 @@
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
+
+import fetchMock, { enableFetchMocks } from 'jest-fetch-mock';
+
 import {
   fireEvent,
   render,
   waitFor,
 } from '@testing-library/react';
 import LoginScreen from '../../../../screens/blank/loginScreen/LoginScreen';
-import { renderWithRouter } from '../../../fixtures/render';
+import { renderWithRouter, storeGeneric } from '../../../fixtures/render';
+// import { ErrorResponse, LoginRequest } from '../../../../interfaces/api';
+// import { errorResponse } from '../../../fixtures/testData/fakeUtilsData';
+import { tutorApi } from '../../../../redux/services/tutorApi';
+import { loginFakeData, userLogged } from '../../../fixtures/testData/fakeAuthData';
+import { errorResponse } from '../../../fixtures/testData/fakeUtilsData';
 
+// enableFetchMocks();
 Storage.prototype.setItem = jest.fn();
 
 const mockNavigate = jest.fn();
@@ -19,37 +28,47 @@ jest.mock('react-router-dom', () => ({
 
 const handlers = [
   rest.post(
-    `${process.env.REACT_APP_API_URL}/users/slogin`,
+    `${process.env.REACT_APP_API_URL}/users/login`,
     (req, res, ctx) => res(
-      // ctx.status(500),
-      // ctx.json({ message: 'Internal Server Error' }),
-      // ctx.delay(150),
-
-      ctx.json('John Smith'), ctx.delay(150)),
+      ctx.status(401),
+      ctx.json(errorResponse.data),
+    ),
   ),
 ];
 
 const server = setupServer(...handlers);
+
+const storeRef = storeGeneric;
 
 describe('<LoginComponent />', () => {
 // Enable API mocking before tests.
   beforeAll(() => server.listen());
 
   // Reset any runtime request handlers we may add during the tests.
-  afterEach(() => server.resetHandlers());
+  afterEach(() => {
+    // storeRef.store.dispatch(tutorApi.util.resetApiState());
+    server.resetHandlers();
+  });
 
   // Disable API mocking after the tests are done.
   afterAll(() => server.close());
 
   beforeEach(() => {
+    fetchMock.resetMocks();
     jest.clearAllMocks();
+    jest.useFakeTimers();
   });
 
   // test send form when send empty data show
   // an error and is correctl
   // y data call login redux
   test('should show validation on blur in input', async () => {
-    const { getByRole, getByLabelText, getByText } = render(renderWithRouter(LoginScreen, { initialEntries: '/login' }));
+    const { getByRole, getByLabelText, getByText } = render(
+      renderWithRouter(
+        LoginScreen,
+        { initialEntries: '/login', store: storeRef.store },
+      ),
+    );
 
     const button = getByRole('button', { name: /Iniciar Sesión/i });
     const inputEmail = getByLabelText('Email');
@@ -87,6 +106,8 @@ describe('<LoginComponent />', () => {
   });
 
   test('should show validation on submit form', async () => {
+    // fetchMock.mockResponse(JSON.stringify(userLogged));
+
     const {
       container, getByLabelText,
     } = render(renderWithRouter(LoginScreen, { initialEntries: '/login' }));
@@ -108,7 +129,10 @@ describe('<LoginComponent />', () => {
       });
     }
 
-    // expect(mockNavigate).toHaveBeenCalledTimes(1);
+    jest.runOnlyPendingTimers();
+    // await waitFor(() => {
+    expect(mockNavigate).toHaveBeenCalledTimes(1);
+    // });
   });
 
   // mock the feth useLoginMutation and

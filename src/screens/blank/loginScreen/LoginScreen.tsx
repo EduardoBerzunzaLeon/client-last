@@ -53,16 +53,16 @@ const LoginScreen = () => {
         onSubmit={async (values) => {
           try {
             await login({ ...values }).unwrap();
-            console.log('sd');
           } catch (error) {
-            console.log(error);
             const detail: string = getDetailError(error);
+            // console.log(detail);
             showError({
               summary: 'Error',
               detail,
             });
 
             if (detail === 'El correo aun no ha sido activado') {
+              console.log('inside detail');
               setTimeout(() => {
                 navigate('/send-email-verify', { state: { email: values.email }});
               }, 3000);
