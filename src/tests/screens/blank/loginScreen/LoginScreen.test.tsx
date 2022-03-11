@@ -1,6 +1,7 @@
 import fetchMock from 'jest-fetch-mock';
 import { setupServer } from 'msw/node';
 import {
+  act,
   cleanup,
   fireEvent,
   render,
@@ -35,8 +36,8 @@ describe('<LoginComponent />', () => {
   afterEach(() => {
     cleanup();
     server.resetHandlers();
-    fetchMock.resetMocks();
     storeRef.store.dispatch(tutorApi.util.resetApiState());
+    fetchMock.resetMocks();
   });
 
   test('should show validation on blur in input', async () => {
@@ -82,7 +83,7 @@ describe('<LoginComponent />', () => {
     expect(getAllByText('Requerido').length).toBe(2);
   });
 
-  test('should show validation on submit form', async () => {
+  test('should error toast when the login is incorrectly', async () => {
     const {
       container, getByLabelText, getByText,
     } = render(renderWithRouter(LoginScreen, { initialEntries: '/login', store: storeRef.store }));
@@ -139,7 +140,9 @@ describe('<LoginComponent />', () => {
       });
     }
 
-    expect(localStorage.setItem).toHaveBeenCalledWith('token', 'fakeToken');
-    expect(localStorage.setItem).toHaveBeenCalledWith('token-init-date', expect.any(String));
+    act(() => {
+      expect(localStorage.setItem).toHaveBeenCalledWith('token', 'fakeToken');
+      expect(localStorage.setItem).toHaveBeenCalledWith('token-init-date', expect.any(String));
+    });
   });
 });

@@ -137,7 +137,7 @@ const LoginScreen = () => {
           }
         </div>
         <div className="col-12 md:col-6">
-          {/* <FacebookButton /> */}
+          <FacebookButton />
         </div>
       </div>
 

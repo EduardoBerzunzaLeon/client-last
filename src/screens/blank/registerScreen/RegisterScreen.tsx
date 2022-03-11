@@ -49,6 +49,7 @@ const RegisterScreen = () => {
 
           try {
             await register(newUser).unwrap();
+            console.log('hi');
             showSuccess({
               summary: 'Éxito',
               detail: 'El usuario se creo con éxito, se envio un correo para la activación de su cuenta',
@@ -91,6 +92,7 @@ const RegisterScreen = () => {
             <div className="field pt-2">
               <InputTextApp
                 label="Nombre*"
+                id="first"
                 name="first"
                 className="w-full"
                 icon="pi pi-user"
@@ -102,6 +104,7 @@ const RegisterScreen = () => {
               <InputTextApp
                 label="Apellido(s)*"
                 name="last"
+                id="last"
                 className="w-full"
                 icon="pi pi-user-edit"
               />
@@ -111,6 +114,7 @@ const RegisterScreen = () => {
               <InputTextApp
                 label="Email"
                 name="email"
+                id="email"
                 keyfilter="email"
                 className="w-full"
                 icon="pi pi-envelope"
@@ -121,6 +125,7 @@ const RegisterScreen = () => {
               <InputPassword
                 label="Contraseña"
                 name="password"
+                id="password"
                 className="w-full"
               />
             </div>
@@ -129,6 +134,7 @@ const RegisterScreen = () => {
               <InputPassword
                 label="Contraseña"
                 name="confirmPassword"
+                id="confirmPassword"
                 className="w-full"
               />
             </div>
