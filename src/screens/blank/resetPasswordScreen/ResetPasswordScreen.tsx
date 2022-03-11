@@ -18,6 +18,7 @@ const InputPassword = withDetailInputPassword(InputTextApp);
 
 const ResetPasswordScreen = () => {
   const { token } = useParams();
+
   const navigate = useNavigate();
   const [ resetPassword, { isLoading }] = useResetPasswordMutation();
   const { toast, showError } = useToast();
@@ -69,6 +70,7 @@ const ResetPasswordScreen = () => {
             <div className="field pt-2">
               <InputPassword
                 label="Contraseña"
+                id="password"
                 name="password"
                 className="w-full"
               />
@@ -78,6 +80,7 @@ const ResetPasswordScreen = () => {
               <InputPassword
                 label="Confirmar Contraseña"
                 name="confirmPassword"
+                id="confirmPassword"
                 className="w-full"
               />
             </div>

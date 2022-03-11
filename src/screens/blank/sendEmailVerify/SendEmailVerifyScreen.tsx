@@ -88,6 +88,7 @@ const SendEmailVerifyScreen = () => {
                   <InputTextApp
                     label="Email"
                     name="email"
+                    id="email"
                     keyfilter="email"
                     className="w-full"
                     icon="pi pi-envelope"

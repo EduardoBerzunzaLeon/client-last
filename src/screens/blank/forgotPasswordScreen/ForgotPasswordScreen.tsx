@@ -43,7 +43,7 @@ const ForgotPasswordScreen = () => {
                 };
                 const { message } = await sendEmailForgotPassword(sendData).unwrap();
                 showSuccess({
-                  summary: 'Error',
+                  summary: 'Éxito',
                   detail: message,
                 });
               } catch (error) {
@@ -72,6 +72,7 @@ const ForgotPasswordScreen = () => {
                   <InputTextApp
                     label="Email"
                     name="email"
+                    id="email"
                     keyfilter="email"
                     className="w-full"
                     icon="pi pi-envelope"

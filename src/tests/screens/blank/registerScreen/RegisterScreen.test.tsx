@@ -15,17 +15,11 @@ import * as authApi from '../../../../redux/auth/auth.api';
 import RegisterScreen from '../../../../screens/blank/registerScreen/RegisterScreen';
 
 Storage.prototype.setItem = jest.fn();
-const mockNavigate = jest.fn();
-
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useNavigate: () => mockNavigate,
-}));
 
 const server = setupServer(mockRegister);
 const storeRef = storeGeneric;
 
-describe('<RegisterComponent />', () => {
+describe('<RegisterScreen />', () => {
   beforeAll(() => server.listen());
   afterAll(() => server.close());
 

@@ -34,7 +34,7 @@ const Routes = () => {
       ],
     },
     {
-      path: '/*',
+      path: '/',
       element: <Public><BlankLayoutLazy /></Public>,
       children: [
         {
@@ -64,6 +64,10 @@ const Routes = () => {
         {
           element: <ResetPasswordScreen />,
           path: 'reset-password/:token',
+        },
+        {
+          element: <LoginScreen />,
+          path: '*',
         },
       ],
     },

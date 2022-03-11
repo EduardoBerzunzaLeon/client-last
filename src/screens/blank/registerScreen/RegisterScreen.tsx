@@ -49,7 +49,6 @@ const RegisterScreen = () => {
 
           try {
             await register(newUser).unwrap();
-            console.log('hi');
             showSuccess({
               summary: 'Éxito',
               detail: 'El usuario se creo con éxito, se envio un correo para la activación de su cuenta',
