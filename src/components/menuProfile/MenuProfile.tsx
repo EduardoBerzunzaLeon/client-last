@@ -1,14 +1,13 @@
 import { MouseEvent, useState } from 'react';
 
+import { Button } from 'primereact/button';
+import { CSSTransition } from 'react-transition-group';
 import classNames from 'classnames';
 
-import { CSSTransition } from 'react-transition-group';
-
-import { Button } from 'primereact/button';
-import useAuth from '../../hooks/useAuth';
-import { useAppDispatch } from '../../redux/hooks';
 import { closeSider } from '../../redux/ui/ui.slice';
 import { setDefaultAuthState } from '../../redux/auth/auth.slice';
+import { useAppDispatch } from '../../redux/hooks';
+import useAuth from '../../hooks/useAuth';
 
 export const MenuProfile = () => {
   const dispatch = useAppDispatch();
@@ -29,10 +28,13 @@ export const MenuProfile = () => {
     <div className="layout-sidebar-dark">
       <div className="layout-profile">
         <div>
-          <img
-            src={`assets/layout/images/${user?.avatar || 'profile.png'}`}
-            alt="Profile"
-          />
+          <figure>
+            <img
+              src={user?.avatar || '../assets/images/profile.png'}
+              alt="Profile"
+              className="border-circle w-6rem h-6rem m-2"
+            />
+          </figure>
         </div>
         <Button className="p-link layout-profile-link" onClick={onClick}>
           <span className="username">{user?.name?.first}</span>
