@@ -1,17 +1,9 @@
 import { AuthState } from '../../../redux/auth/auth.slice';
 import { UIState } from '../../../redux/ui/ui.slice';
+import { userLogged } from './fakeAuthData';
 
 export const authState: AuthState = {
-  user: {
-    email: 'eduardo@gmail.com',
-    name: {
-      first: 'test',
-      last: 'lastTest',
-    },
-    gender: 'M',
-    role: 'Admin',
-    avatar: 'https:/url/myimage.jpg',
-  },
+  user: userLogged.data,
   token: 'fakeToken',
 };
 

@@ -49,6 +49,28 @@
           vertical-align: middle;
         }
       }
+      
+      a {
+        width: 100%;
+        padding: 1em;
+        border: 0 none;
+        border-radius: 0;
+        cursor: pointer;
+        transition: color $transitionDuration;
+
+        &:hover {
+          color: $menuitemHoverColor;
+        }
+
+        span {
+          margin-left: 0.25em;
+          vertical-align: middle;
+        }
+
+        i {
+          vertical-align: middle;
+        }
+      }
     }
 
     &.layout-submenu-wrapper-enter,
@@ -94,6 +116,13 @@
             color: $menuitemHoverColor;
           }
         }
+        a {
+          color: $menuitemColor;
+
+          &:hover {
+            color: $menuitemHoverColor;
+          }
+        }
       }
     }
   }
@@ -115,6 +144,18 @@
       li {
         button {
           color: $menuitemDarkColor;
+
+          &:hover {
+            color: $menuitemDarkHoverColor;
+          }
+        }
+        
+        a {
+          color: $menuitemDarkColor;
+
+          &.active-route {
+            color: $menuitemActiveRouteColor;
+          }
 
           &:hover {
             color: $menuitemDarkHoverColor;

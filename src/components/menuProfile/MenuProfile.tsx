@@ -4,6 +4,7 @@ import { Button } from 'primereact/button';
 import { CSSTransition } from 'react-transition-group';
 import classNames from 'classnames';
 
+import { NavLink } from 'react-router-dom';
 import { closeSider } from '../../redux/ui/ui.slice';
 import { setDefaultAuthState } from '../../redux/auth/auth.slice';
 import { useAppDispatch } from '../../redux/hooks';
@@ -20,8 +21,12 @@ export const MenuProfile = () => {
   };
 
   const handleLogout = () => {
-    dispatch(closeSider());
     dispatch(setDefaultAuthState());
+    dispatch(closeSider());
+  };
+
+  const handleClickLink = () => {
+    dispatch(closeSider());
   };
 
   return (
@@ -30,9 +35,10 @@ export const MenuProfile = () => {
         <div>
           <figure>
             <img
-              src={user?.avatar || '../assets/images/profile.png'}
+              src={user?.avatar}
               alt="Profile"
               className="border-circle w-6rem h-6rem m-2"
+              referrerPolicy="no-referrer"
             />
           </figure>
         </div>
@@ -47,11 +53,17 @@ export const MenuProfile = () => {
           unmountOnExit
         >
           <ul className={classNames({ 'layout-profile-expanded': expanded })}>
+
             <li>
-              <button type="button" className="p-link">
+              <NavLink
+                className={({ isActive }) => classNames('p-link flex align-items-center', { 'active-route': isActive })}
+                to="/admin/profile"
+                onClick={handleClickLink}
+              >
                 <i className="pi pi-fw pi-user" />
                 <span>Account</span>
-              </button>
+              </NavLink>
+
             </li>
             <li>
               <button type="button" className="p-link">

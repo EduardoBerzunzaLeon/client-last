@@ -7,6 +7,7 @@ export const userLogged: UserResponse = {
       first: 'test',
       last: 'lastTest',
     },
+    fullname: 'test lastTest',
     gender: 'M',
     role: 'Admin',
     avatar: 'https:/url/myimage.jpg',

@@ -73,6 +73,7 @@ const Submenu = ({ elements, className = '', root = false }: SubmenuProps) => {
           onClick={(e) => onMenuItemClick(e, item, i)}
           to={item.to}
           target={item.target}
+          end
         >
           {content}
         </NavLink>
