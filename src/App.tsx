@@ -6,8 +6,8 @@ import { store } from './redux/store';
 
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
-import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/bootstrap4-light-purple/theme.css';
+import 'primereact/resources/primereact.css';
 
 import './app.scss';
 
@@ -16,7 +16,7 @@ function App() {
   PrimeReact.ripple = true;
   return (
     <Provider store={store}>
-      <div>
+      <div className="layout-wrapper">
         <Router />
       </div>
     </Provider>

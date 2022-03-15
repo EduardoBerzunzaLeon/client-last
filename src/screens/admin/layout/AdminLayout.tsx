@@ -34,7 +34,7 @@ const AdminLayout = () => {
       <div className="layout-main">
         <div className="grid">
           <div className="col-12">
-            <div className="card">
+            <div className="card p-gray">
               <Outlet />
             </div>
           </div>
