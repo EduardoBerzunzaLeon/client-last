@@ -35,14 +35,14 @@ export const MenuProfile = () => {
         <div>
           <figure>
             <img
-              src={user?.avatar}
+              src="https://lh3.googleusercontent.com/a-/AOh14GgCTImJUSPX48BAHretaktttHcq-gangEKBbowa=s96-c"
               alt="Profile"
-              className="border-circle w-6rem h-6rem m-2"
+              className="border-circle border-purple-300 border-3 w-6rem h-6rem m-2"
               referrerPolicy="no-referrer"
             />
           </figure>
         </div>
-        <Button className="p-link layout-profile-link" onClick={onClick}>
+        <Button className="layout-profile-link" onClick={onClick}>
           <span className="username">{user?.name?.first}</span>
           <i className="pi pi-fw pi-cog" />
         </Button>

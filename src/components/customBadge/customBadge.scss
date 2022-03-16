@@ -1,0 +1,40 @@
+.custom-badge {
+    border-radius: 2px;
+    padding: .25em .5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .3px;
+    box-sizing: border-box;
+  
+    &.status-warning {
+        background: #feedaf;
+        color: #8a5340;
+      }
+  
+    &.status-danger {
+        background: #ffcdd2;
+        color: #c63737;
+    }
+  
+    &.status-success {
+        background: #c8e6c9;
+        color: #256029;
+    }
+  
+    &.status-info {
+       background-color: #b3e5fc;
+        color: #23547b;
+    }
+  
+    &.status-purple {
+        background-color: #eccfff;
+        color: #694382;
+    }
+  
+    &.status-extra {
+        background-color: #ffd8b2;
+        color: #805b36;
+    }
+    
+  }

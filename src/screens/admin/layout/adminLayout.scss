@@ -4,22 +4,24 @@
     font-weight: bold;
   }
   
-  // override
-  .p-sidebar {
-    background: #3b3e47 !important;
-  }
-  
-  .p-sidebar-content {
-    padding: 0px !important;
-  }
+// override
+.p-sidebar {
+  background: #3b3e47 !important;
+}
 
-  .p-gray {
-    background: #efefef !important;
-  }
-  
-  .p-card-title {
-    color: #561561;
-  }
+.p-sidebar-content {
+  padding: 0px !important;
+}
+
+.p-gray {
+  background: #efefef !important;
+}
+
+.p-card-title {
+  color: #561561;
+}
+
+
   // template styles
   
   .dashboard {

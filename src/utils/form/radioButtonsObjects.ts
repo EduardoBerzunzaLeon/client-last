@@ -2,13 +2,13 @@ import { PropsRadioButton } from '../../components/forms/radioButton/RadioButton
 
 export const genderRadio: Array<PropsRadioButton> = [
   {
-    label: 'Masculino',
+    label: 'Hombre',
     name: 'gender',
     inputId: 'male',
     value: 'M',
   },
   {
-    label: 'Femenino',
+    label: 'Mujer',
     name: 'gender',
     inputId: 'famale',
     value: 'F',

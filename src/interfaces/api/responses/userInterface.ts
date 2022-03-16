@@ -8,7 +8,8 @@ export interface User {
     gender: string,
     role: string,
     avatar: string,
-    imagen?: string
+    active: boolean,
+    blocked: boolean
   }
 
 export interface UserResponse {

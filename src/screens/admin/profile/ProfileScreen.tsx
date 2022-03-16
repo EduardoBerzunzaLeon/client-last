@@ -1,9 +1,12 @@
+import { useState } from 'react';
+
+import { BreadCrumb } from 'primereact/breadcrumb';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
+import { Dialog } from 'primereact/dialog';
 
-import { Divider } from 'primereact/divider';
-import { BreadCrumb } from 'primereact/breadcrumb';
-
+import CustomBadge from '../../../components/customBadge/CustomBadge';
+import Divider from '../../../components/Divider/Divider';
 import useAuth from '../../../hooks/useAuth';
 
 import './profileScreen.scss';
@@ -13,8 +16,16 @@ const ProfileScreen = () => {
   const items = [
     { label: 'Perfil' },
   ];
-
   const home = { icon: 'pi pi-home', url: 'https://www.primefaces.org/primereact/showcase' };
+  const [ displayModal, setDisplayModal ] = useState(false);
+
+  const renderFooter = () => (
+    <div>
+      <Button label="No" icon="pi pi-times" onClick={() => setDisplayModal(false)} className="p-button-text" />
+      <Button label="Yes" icon="pi pi-check" onClick={() => setDisplayModal(false)} autoFocus />
+    </div>
+  );
+
   return (
     <>
       <div className="flex justify-content-between flex-wrap card-container">
@@ -22,7 +33,8 @@ const ProfileScreen = () => {
         <BreadCrumb model={items} home={home} />
       </div>
       <div className="grid">
-        <div className="col-12 md:col-6 xl:col-4">
+
+        <div className="col-12 md:col-6">
           <Card title="Perfil">
             <div className="flex justify-content-center">
               <figure>
@@ -36,36 +48,18 @@ const ProfileScreen = () => {
             </div>
 
             <div className="overflow-hidden text-overflow-ellipsis">
-              <Divider align="left">
-                <div className="inline-flex align-items-center text-purple-700">
-                  <i className="pi pi-user mr-2" />
-                  <b>Nombre</b>
-                </div>
-              </Divider>
-
+              <Divider text="Nombre" icon="user" />
               <span className="font-semibold">{user?.fullname}</span>
             </div>
 
             <div className="overflow-hidden text-overflow-ellipsis">
-              <Divider align="left">
-                <div className="inline-flex align-items-center text-purple-700">
-                  <i className="pi pi-envelope mr-2" />
-                  <b>Correo</b>
-                </div>
-              </Divider>
-
+              <Divider text="Correo" icon="envelope" />
               <span className="font-semibold">{user?.email}</span>
             </div>
 
             <div className="overflow-hidden text-overflow-ellipsis">
-              <Divider align="left">
-                <div className="inline-flex align-items-center text-purple-700">
-                  <i className="pi pi-question mr-2" />
-                  <b>Género</b>
-                </div>
-              </Divider>
-
-              <span className="font-semibold">{user?.gender === 'M' ? 'Masculino' : 'Femenino'}</span>
+              <Divider text="Sexo" icon="question" />
+              <span className="font-semibold">{user?.gender === 'M' ? 'Hombre' : 'Mujer'}</span>
             </div>
 
             <div className="flex flex-column">
@@ -75,32 +69,53 @@ const ProfileScreen = () => {
                 className="mt-3 flex align-items-center justify-content-center"
                 icon="pi pi-pencil"
                 iconPos="right"
+                onClick={() => setDisplayModal(true)}
               />
             </div>
 
           </Card>
         </div>
-        <div className="col-12 md:col-6 xl:col-4">
-          <Card title="Simple Card">
-            <p className="m-0" style={{ lineHeight: '1.5' }}>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. I
-              nventore sed consequuntur error repudiandae numquam deserunt
-              quisquam repellat libero asperiores earum nam nobis, culp
-              a ratione quam perferendis esse, cupiditate neque quas!
-            </p>
+
+        <div className="col-12 md:col-6">
+          <Card title="Datos del sistema">
+            <div className="overflow-hidden text-overflow-ellipsis">
+              <Divider text="Rol" icon="shield" />
+              <span className="font-semibold">{user?.role}</span>
+            </div>
+
+            <div className="overflow-hidden text-overflow-ellipsis py-1">
+              <Divider text="Activo" icon="key" />
+              <CustomBadge
+                text={user?.active ? 'Activo' : 'Inactivo'}
+                matchObject={{
+                  true: 'success',
+                  false: 'danger',
+                }}
+                match={user!.active.toString()}
+              />
+            </div>
+
+            <div className="overflow-hidden text-overflow-ellipsis py-1">
+              <Divider text="Bloqueado" icon="unlock" />
+              <CustomBadge
+                text={user?.blocked ? 'Bloqueado' : 'Desbloqueado'}
+                matchObject={{
+                  true: 'danger',
+                  false: 'success',
+                }}
+                match={user!.blocked.toString()}
+              />
+            </div>
           </Card>
         </div>
-        <div className="col-12 md:col-6 xl:col-4">
-          <Card title="Simple Card">
-            <p className="m-0" style={{ lineHeight: '1.5' }}>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. I
-              nventore sed consequuntur error repudiandae numquam deserunt
-              quisquam repellat libero asperiores earum nam nobis, culp
-              a ratione quam perferendis esse, cupiditate neque quas!
-            </p>
-          </Card>
-        </div>
+
       </div>
+
+      <Dialog header="Editar Perfil" className="flex-grow-1 sm:flex-grow-0 flex" style={{ width: '450px' }} modal visible={displayModal} footer={renderFooter()} onHide={() => setDisplayModal(false)}>
+        <p>
+          Lorem ipsum do
+        </p>
+      </Dialog>
     </>
   );
 };

@@ -11,6 +11,8 @@ export const userLogged: UserResponse = {
     gender: 'M',
     role: 'Admin',
     avatar: 'https:/url/myimage.jpg',
+    active: true,
+    blocked: false,
   },
   token: 'fakeToken',
   status: 'success',

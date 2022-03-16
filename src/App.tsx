@@ -16,7 +16,7 @@ function App() {
   PrimeReact.ripple = true;
   return (
     <Provider store={store}>
-      <div className="layout-wrapper">
+      <div>
         <Router />
       </div>
     </Provider>
