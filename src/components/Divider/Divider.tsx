@@ -5,7 +5,7 @@ interface Props {
     icon: string
 }
 
-const Divider = ({ text, icon }: Props) => (
+export const Divider = ({ text, icon }: Props) => (
   <PrimeDivider align="left">
     <div className="inline-flex align-items-center text-purple-700">
       <i className={`pi pi-${icon} mr-2`} />

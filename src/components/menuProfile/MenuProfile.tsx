@@ -8,6 +8,7 @@ import { NavLink } from 'react-router-dom';
 import { closeSider } from '../../redux/ui/ui.slice';
 import { setDefaultAuthState } from '../../redux/auth/auth.slice';
 import { useAppDispatch } from '../../redux/hooks';
+import { Skeleton } from '../Skeleton/Skeleton';
 import useAuth from '../../hooks/useAuth';
 
 export const MenuProfile = () => {
@@ -32,14 +33,16 @@ export const MenuProfile = () => {
   return (
     <div className="layout-sidebar-dark">
       <div className="layout-profile">
-        <div>
+        <div className="flex justify-content-center">
           <figure>
-            <img
-              src="https://lh3.googleusercontent.com/a-/AOh14GgCTImJUSPX48BAHretaktttHcq-gangEKBbowa=s96-c"
-              alt="Profile"
-              className="border-circle border-purple-300 border-3 w-6rem h-6rem m-2"
-              referrerPolicy="no-referrer"
-            />
+            <Skeleton classNameSkeleton="border-circle w-6rem h-6rem">
+              <img
+                src="https://lh3.googleusercontent.com/a-/AOh14GgCTImJUSPX48BAHretaktttHcq-gangEKBbowa=s96-c"
+                alt="Profile"
+                className="border-circle border-purple-300 border-3 w-6rem h-6rem m-2"
+                referrerPolicy="no-referrer"
+              />
+            </Skeleton>
           </figure>
         </div>
         <Button className="layout-profile-link" onClick={onClick}>
