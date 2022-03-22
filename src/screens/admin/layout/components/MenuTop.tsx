@@ -1,7 +1,7 @@
 import { InputText } from 'primereact/inputtext';
 
-import { useAppDispatch } from '../../redux/hooks';
-import { openSider } from '../../redux/ui/ui.slice';
+import { useAppDispatch } from '../../../../redux/hooks';
+import { openSider } from '../../../../redux/ui/ui.slice';
 
 const MenuTop = () => {
   const dispatch = useAppDispatch();

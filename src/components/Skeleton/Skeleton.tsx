@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { Skeleton as PrimeSkeleton } from 'primereact/skeleton';
+
 import { Generic } from '../../interfaces/generic';
 
 interface Props extends Generic {
@@ -17,14 +18,14 @@ export const Skeleton = <P extends Props>(props: P) => {
   return (
     <>
       {
-          isLoading && <PrimeSkeleton className={classNameSkeleton || children.props.className} />
-        }
+        isLoading && <PrimeSkeleton className={classNameSkeleton || children.props.className} />
+      }
       {
-            React.cloneElement(children, {
-              ...newProps,
-              style: isLoading ? { display: 'none' } : {},
-              onLoad: () => setIsLoading(false),
-            })
+        React.cloneElement(children, {
+          ...newProps,
+          style: isLoading ? { display: 'none' } : {},
+          onLoad: () => setIsLoading(false),
+        })
         }
     </>
   );

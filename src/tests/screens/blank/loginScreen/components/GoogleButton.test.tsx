@@ -1,7 +1,7 @@
 import { mount } from 'enzyme';
 
-import { GoogleButton } from '../../../components/googleButton/GoogleButton';
-import { render, Wrapper } from '../../fixtures/render';
+import { GoogleButton } from '../../../../../screens/blank/loginScreen/components/GoogleButton';
+import { render, Wrapper } from '../../../../fixtures/render';
 
 const mockSignInWithSocialMutation = jest.fn();
 

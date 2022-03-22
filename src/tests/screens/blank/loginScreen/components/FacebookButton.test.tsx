@@ -1,7 +1,7 @@
 import { mount } from 'enzyme';
 
-import { FacebookButton } from '../../../components/facebookButton/FacebookButton';
-import { render, Wrapper } from '../../fixtures/render';
+import { FacebookButton } from '../../../../../screens/blank/loginScreen/components/FacebookButton';
+import { render, Wrapper } from '../../../../fixtures/render';
 
 const mockSignInWithSocialMutation = jest.fn();
 

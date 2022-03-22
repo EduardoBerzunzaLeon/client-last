@@ -5,7 +5,7 @@ import { Card } from 'primereact/card';
 import { Dialog } from 'primereact/dialog';
 import { TabView, TabPanel } from 'primereact/tabview';
 
-import { CustomBadge } from '../../../components/customBadge/CustomBadge';
+import { Badge } from '../../../components/badge/Badge';
 import { Divider } from '../../../components/Divider/Divider';
 import { FileSingleUpload } from '../../../components/fileUpload/FileSingleUpload';
 import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
@@ -78,7 +78,7 @@ const ProfileScreen = () => {
 
             <div className="overflow-hidden text-overflow-ellipsis py-1">
               <Divider text="Activo" icon="key" />
-              <CustomBadge
+              <Badge
                 text={user?.active ? 'Activo' : 'Inactivo'}
                 matchObject={{
                   true: 'success',
@@ -90,7 +90,7 @@ const ProfileScreen = () => {
 
             <div className="overflow-hidden text-overflow-ellipsis py-1">
               <Divider text="Bloqueado" icon="unlock" />
-              <CustomBadge
+              <Badge
                 text={user?.blocked ? 'Bloqueado' : 'Desbloqueado'}
                 matchObject={{
                   true: 'danger',
