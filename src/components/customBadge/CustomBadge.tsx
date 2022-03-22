@@ -1,3 +1,4 @@
+import { Generic } from '../../interfaces/generic';
 import './customBadge.scss';
 
 interface Props <T>{
@@ -6,7 +7,7 @@ interface Props <T>{
     text: string
 }
 
-export const CustomBadge = ({ text, matchObject, match }: Props<{[x: string]: any}>) => (
+export const CustomBadge = ({ text, matchObject, match }: Props<Generic>) => (
   <span className={`custom-badge status-${matchObject[match]}`}>{text.trim()}</span>
 );
 

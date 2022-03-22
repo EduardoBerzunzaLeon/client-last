@@ -1,7 +1,7 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 
 import { User } from '../../interfaces/api';
-import { userLogged } from '../../tests/fixtures/testData/fakeAuthData';
+// import { userLogged } from '../../tests/fixtures/testData/fakeAuthData';
 // eslint-disable-next-line import/no-cycle
 import { authApi } from './auth.api';
 
@@ -15,10 +15,10 @@ const authSlice = createSlice({
   initialState: { user: null, token: null } as AuthState,
   reducers: {
     setDefaultAuthState: (state) => {
-      // state.user = null;
-      // state.token = null;
-      state.user = userLogged.data;
-      state.token = userLogged.token;
+      state.user = null;
+      state.token = null;
+      // state.user = userLogged.data;
+      // state.token = userLogged.token;
     },
   },
   extraReducers: (builder) => {

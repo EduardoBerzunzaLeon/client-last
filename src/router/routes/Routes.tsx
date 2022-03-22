@@ -36,6 +36,10 @@ const Routes = () => {
           element: <ProfileScreen />,
           path: 'profile',
         },
+        {
+          element: <ProfileScreen />,
+          path: 'users/:id',
+        },
       ],
     },
     {

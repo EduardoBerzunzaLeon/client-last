@@ -66,7 +66,7 @@ export const authApi = tutorApi.injectEndpoints({
       }),
       invalidatesTags: [ 'User' ],
     }),
-    renewToken: builder.query<UserResponse, void>({
+    renewToken: builder.query<UserResponse, null>({
       query: () => ({
         url: 'users/renew',
         method: 'POST',

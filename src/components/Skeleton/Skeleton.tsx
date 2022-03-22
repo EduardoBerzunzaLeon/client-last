@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 
 import { Skeleton as PrimeSkeleton } from 'primereact/skeleton';
+import { Generic } from '../../interfaces/generic';
 
-interface Generic {
+interface Props extends Generic {
     classNameSkeleton?:string,
     children: JSX.Element,
-    [x:string]: any
 }
 
-export const Skeleton = <P extends Generic>(props: P) => {
+export const Skeleton = <P extends Props>(props: P) => {
   const [ isLoading, setIsLoading ] = useState(true);
   const {
     classNameSkeleton, children, ...newProps

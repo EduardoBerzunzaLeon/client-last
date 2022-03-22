@@ -1,8 +1,5 @@
+import { Generic } from '../../interfaces/generic';
 import { TranslateAuthFields } from '../translate/translateFieldForms';
-
-interface Generic {
-  [x: string]: any
-}
 
 interface CreateErrorArrayProps<T> {
     errors: string,
