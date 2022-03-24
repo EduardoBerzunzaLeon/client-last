@@ -5,21 +5,41 @@ import { Card } from 'primereact/card';
 import { Dialog } from 'primereact/dialog';
 import { TabView, TabPanel } from 'primereact/tabview';
 
+import { useParams } from 'react-router-dom';
 import { CustomBadge } from '../../../components/customBadge/CustomBadge';
 import { Divider } from '../../../components/Divider/Divider';
 import { FileSingleUpload } from '../../../components/fileUpload/FileSingleUpload';
+import { getDetailError } from '../../../redux/services/handlerErrorApi';
 import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
 import { PasswordForm } from './components/PasswordForm';
 import { PersonalDataForm } from './components/PersonalDataForm';
 import { Skeleton } from '../../../components/Skeleton/Skeleton';
-import useAuth from '../../../hooks/useAuth';
+import { useGetUserQuery } from '../../../redux/user/user.api';
+import ErrorCard from '../../../components/errorCard/ErrorCard';
+import Spinner from '../../../components/spinner/Spinner';
+
+// import useAuth from '../../../hooks/useAuth';
 
 import './profileScreen.scss';
 
 const ProfileScreen = () => {
-  const { user } = useAuth();
+  const { id } = useParams();
+
+  const {
+    data, isLoading, isError, error,
+  } = useGetUserQuery(id ?? '');
+
   const [ displayModal, setDisplayModal ] = useState(false);
 
+  if (isLoading) {
+    return <Spinner message="Cargando Usuario" />;
+  }
+
+  if (isError) {
+    return <ErrorCard title="Ocurrio un error en su petición" detail={getDetailError(error)} />;
+  }
+
+  const user = data!.data;
   return (
     <>
       <HeaderAdmin position="users/profile" title="Información Personal" />
@@ -31,7 +51,7 @@ const ProfileScreen = () => {
               <figure>
                 <Skeleton classNameSkeleton="border-circle w-8rem h-8rem">
                   <img
-                    src="https://lh3.googleusercontent.com/a-/AOh14GgCTImJUSPX48BAHretaktttHcq-gangEKBbowa=s96-c"
+                    src={user?.avatar || 'profile.png'}
                     alt="Profile"
                     className="border-circle border-purple-700 border-3 w-8rem h-8rem"
                     referrerPolicy="no-referrer"
@@ -105,13 +125,12 @@ const ProfileScreen = () => {
       </div>
 
       <Dialog header="Editar Perfil" className="shadow-5 w-11 md:w-6 lg:w-5" modal visible={displayModal} onHide={() => setDisplayModal(false)}>
-
         <TabView>
           <TabPanel header="Datos Personales">
             <Divider text="Foto de perfil" icon="image" />
             <FileSingleUpload url="https://primefaces.org/primereact/showcase/upload.php" />
             <Divider text="Información Personal" icon="user" />
-            <PersonalDataForm />
+            <PersonalDataForm user={user} />
           </TabPanel>
           <TabPanel header="Cambiar contraseña">
             <PasswordForm />

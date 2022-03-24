@@ -2,6 +2,7 @@ import { ForgotPasswordRequest, LoginRequest, UserResponse } from '../../../inte
 
 export const userLogged: UserResponse = {
   data: {
+    id: '608064aa1d7963091081ab5d',
     email: 'eduardo@gmail.com',
     name: {
       first: 'test',

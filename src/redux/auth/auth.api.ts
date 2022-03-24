@@ -41,7 +41,7 @@ export const authApi = tutorApi.injectEndpoints({
         method: 'POST',
         body,
       }),
-      invalidatesTags: [ 'User' ],
+      invalidatesTags: [ 'Auth' ],
     }),
     resetPassword: builder.mutation<UserResponse, ResetPasswordRequest>({
       query: ({ token, ...body }) => ({
@@ -49,14 +49,14 @@ export const authApi = tutorApi.injectEndpoints({
         method: 'PATCH',
         body,
       }),
-      invalidatesTags: [ 'User' ],
+      invalidatesTags: [ 'Auth' ],
     }),
     emailVerify: builder.mutation<UserResponse, string>({
       query: (id) => ({
         url: `users/activate/${id}`,
         method: 'PATCH',
       }),
-      invalidatesTags: [ 'User' ],
+      invalidatesTags: [ 'Auth' ],
     }),
     sendEmailVerify: builder.mutation<UserResponse, SendEmailVerifyRequest>({
       query: (body) => ({
@@ -64,14 +64,14 @@ export const authApi = tutorApi.injectEndpoints({
         method: 'POST',
         body,
       }),
-      invalidatesTags: [ 'User' ],
+      invalidatesTags: [ 'Auth' ],
     }),
     renewToken: builder.query<UserResponse, null>({
       query: () => ({
         url: 'users/renew',
         method: 'POST',
       }),
-      providesTags: [ 'User' ],
+      providesTags: [ 'Auth' ],
     }),
   }),
   overrideExisting: false,

@@ -4,67 +4,70 @@ import * as Yup from 'yup';
 
 import { genderRadio } from '../../../../utils/form/radioButtonsObjects';
 import { InputTextApp, RadioGroup } from '../../../../components/forms';
+import { User } from '../../../../interfaces/api';
 
-export const PersonalDataForm = () => (
-  <Formik
-    initialValues={{
-      first: '',
-      last: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-      gender: '',
-    }}
-    onSubmit={async () => {
-      console.log('hi');
-    }}
-    validationSchema={Yup.object({
-      first: Yup.string()
-        .required('Requerido'),
-      last: Yup.string()
-        .required('Requerido'),
-      gender: Yup.string()
-        .required('Requerido'),
-    })}
-  >
-    {({ isValid, isSubmitting, dirty }) => (
-      <Form>
+export const PersonalDataForm = ({ user }: {user: User }) => {
+  const { name: { first, last }, gender, id } = user;
 
-        <div className="field pt-2">
-          <InputTextApp
-            label="Nombre*"
-            id="first"
-            name="first"
-            className="w-full"
-            icon="pi pi-user"
-          />
-        </div>
+  console.log(id);
+  return (
+    <Formik
+      initialValues={{
+        first,
+        last,
+        gender,
+      }}
+      onSubmit={async () => {
+        console.log('hi');
+      }}
+      validationSchema={Yup.object({
+        first: Yup.string()
+          .required('Requerido'),
+        last: Yup.string()
+          .required('Requerido'),
+        gender: Yup.string()
+          .required('Requerido'),
+      })}
+    >
+      {({ isValid, isSubmitting, dirty }) => (
+        <Form>
 
-        <div className="field pt-2">
-          <InputTextApp
-            label="Apellido(s)*"
-            name="last"
-            id="last"
-            className="w-full"
-            icon="pi pi-user-edit"
-          />
-        </div>
+          <div className="field pt-2">
+            <InputTextApp
+              label="Nombre*"
+              id="first"
+              name="first"
+              className="w-full"
+              icon="pi pi-user"
+            />
+          </div>
 
-        <RadioGroup radios={genderRadio} />
+          <div className="field pt-2">
+            <InputTextApp
+              label="Apellido(s)*"
+              name="last"
+              id="last"
+              className="w-full"
+              icon="pi pi-user-edit"
+            />
+          </div>
 
-        <div className="flex flex-column">
-          <Button
-            type="submit"
-            label="Cambiar Datos Personales"
-            className="mt-2 flex align-items-center justify-content-center"
+          <RadioGroup radios={genderRadio} />
+
+          <div className="flex flex-column">
+            <Button
+              type="submit"
+              label="Cambiar Datos Personales"
+              className="mt-2 flex align-items-center justify-content-center"
             // loading={isLoading}
-            disabled={!isValid || isSubmitting || !dirty}
-          />
-        </div>
+              disabled={!isValid || isSubmitting || !dirty}
+            />
+          </div>
 
-      </Form>
-    )}
-  </Formik>
-);
+        </Form>
+      )}
+    </Formik>
+  );
+};
 
 export default PersonalDataForm;

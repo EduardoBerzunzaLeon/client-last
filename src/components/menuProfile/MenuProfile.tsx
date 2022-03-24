@@ -60,7 +60,7 @@ export const MenuProfile = () => {
             <li>
               <NavLink
                 className={({ isActive }) => classNames('p-link flex align-items-center', { 'active-route': isActive })}
-                to="/admin/profile"
+                to={`/admin/users/${user?.id}`}
                 onClick={handleClickLink}
               >
                 <i className="pi pi-fw pi-user" />
