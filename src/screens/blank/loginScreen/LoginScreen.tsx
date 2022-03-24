@@ -10,11 +10,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import { FacebookButton } from '../../../components/facebookButton/FacebookButton';
+import { FacebookButton } from './components/FacebookButton';
 import { getDetailError } from '../../../redux/services/handlerErrorApi';
-import { GoogleButton } from '../../../components/googleButton/GoogleButton';
+import { GoogleButton } from './components/GoogleButton';
 import { InputTextApp } from '../../../components/forms';
 import { useLoginMutation } from '../../../redux/auth/auth.api';
+
 import useToast from '../../../hooks/useToast';
 
 import './loginScreen.scss';

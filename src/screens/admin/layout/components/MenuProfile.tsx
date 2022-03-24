@@ -5,11 +5,11 @@ import { CSSTransition } from 'react-transition-group';
 import classNames from 'classnames';
 
 import { NavLink } from 'react-router-dom';
-import { closeSider } from '../../redux/ui/ui.slice';
-import { setDefaultAuthState } from '../../redux/auth/auth.slice';
-import { useAppDispatch } from '../../redux/hooks';
-import { Skeleton } from '../Skeleton/Skeleton';
-import useAuth from '../../hooks/useAuth';
+import { closeSider } from '../../../../redux/ui/ui.slice';
+import { setDefaultAuthState } from '../../../../redux/auth/auth.slice';
+import { useAppDispatch } from '../../../../redux/hooks';
+import { Skeleton } from '../../../../components/Skeleton/Skeleton';
+import useAuth from '../../../../hooks/useAuth';
 
 export const MenuProfile = () => {
   const dispatch = useAppDispatch();

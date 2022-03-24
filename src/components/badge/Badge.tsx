@@ -1,5 +1,5 @@
 import { Generic } from '../../interfaces/generic';
-import './customBadge.scss';
+import './badge.scss';
 
 interface Props <T>{
     match: keyof T,
@@ -7,8 +7,8 @@ interface Props <T>{
     text: string
 }
 
-export const CustomBadge = ({ text, matchObject, match }: Props<Generic>) => (
+export const Badge = ({ text, matchObject, match }: Props<Generic>) => (
   <span className={`custom-badge status-${matchObject[match]}`}>{text.trim()}</span>
 );
 
-export default CustomBadge;
+export default Badge;

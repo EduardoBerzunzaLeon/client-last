@@ -1,15 +1,16 @@
-import classNames from 'classnames';
-import { useField } from 'formik';
 import { RadioButton } from 'primereact/radiobutton';
+import { useField } from 'formik';
+import classNames from 'classnames';
 
-export interface PropsRadioButton {
-  label: string;
-  name: string;
-  inputId: string;
-  value: string;
-  className?: string;
+import { Generic } from '../../../interfaces/generic';
+
+export interface PropsRadioButton extends Generic{
+  label: string,
+  name: string,
+  inputId: string,
+  value: string,
+  className?: string,
   id?: string,
-  [x: string]: any
 }
 
 export const RadioButtonApp = ({ label, ...props }: PropsRadioButton) => {

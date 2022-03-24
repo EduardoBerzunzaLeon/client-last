@@ -1,8 +1,8 @@
 import { mount } from 'enzyme';
 
-import { renderWithProps, mockStore } from '../../fixtures/render';
-import { MenuSlideContent } from '../../../components/menuSlideContent/MenuSlideContent';
-import { menu } from '../../../utils/menuElement';
+import { menu } from '../../../../../utils/menuElement';
+import { MenuSlideContent } from '../../../../../screens/admin/layout/components/MenuSlideContent';
+import { mockStore, renderWithProps } from '../../../../fixtures/render';
 
 describe('<MenuTop />', () => {
   test('should render correctly menu top and set openSider option ', () => {

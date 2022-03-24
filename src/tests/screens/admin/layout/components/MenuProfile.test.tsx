@@ -1,11 +1,11 @@
 import { mount } from 'enzyme';
-import { MenuProfile } from '../../../components/menuProfile/MenuProfile';
+import { MenuProfile } from '../../../../../screens/admin/layout/components/MenuProfile';
 import {
   mockStore,
   renderWithRouter,
   StoreRef,
   Wrapper,
-} from '../../fixtures/render';
+} from '../../../../fixtures/render';
 
 describe('<MenuProfile />', () => {
   let storeRef: StoreRef;

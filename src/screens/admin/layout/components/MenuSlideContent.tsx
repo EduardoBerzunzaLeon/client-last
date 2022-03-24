@@ -3,9 +3,9 @@ import { CSSTransition } from 'react-transition-group';
 import classnames from 'classnames';
 
 import { NavLink } from 'react-router-dom';
-import { closeSider } from '../../redux/ui/ui.slice';
-import { Menu } from '../../utils/menuElement';
-import { useAppDispatch } from '../../redux/hooks';
+import { closeSider } from '../../../../redux/ui/ui.slice';
+import { Menu } from '../../../../utils/menuElement';
+import { useAppDispatch } from '../../../../redux/hooks';
 
 export interface SubmenuProps {
     elements: Menu[];
@@ -16,8 +16,6 @@ export interface SubmenuProps {
 const Submenu = ({ elements, className = '', root = false }: SubmenuProps) => {
   const dispatch = useAppDispatch();
   const [ activeIndex, setActiveIndex ] = useState<number>(0);
-
-  //   const dispatch = useDispatch();
 
   const onMenuItemClick = (
     event: MouseEvent<HTMLAnchorElement>,

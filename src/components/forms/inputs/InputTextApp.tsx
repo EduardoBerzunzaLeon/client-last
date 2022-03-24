@@ -1,17 +1,18 @@
 import { ErrorMessage, useField } from 'formik';
-import { InputText } from 'primereact/inputtext';
-import { Password } from 'primereact/password';
 import classNames from 'classnames';
 
- interface Props {
-    label: string;
-    name: string;
-    className?: string;
+import { InputText } from 'primereact/inputtext';
+import { Password } from 'primereact/password';
+import { Generic } from '../../../interfaces/generic';
+
+ interface Props extends Generic{
+    label: string,
+    name: string,
+    className?: string,
     icon?: string,
     id?: string,
-    placeholder?: string;
-    type?: string;
-    [x: string]: any
+    placeholder?: string,
+    type?: string,
 }
 
 export const InputTextApp = ({ label, ...props }: Props) => {
@@ -33,7 +34,6 @@ export const InputTextApp = ({ label, ...props }: Props) => {
       <ErrorMessage name={props.name}>
         {(msg: string) => <small className="p-error">{msg}</small>}
       </ErrorMessage>
-
     </>
   );
 };

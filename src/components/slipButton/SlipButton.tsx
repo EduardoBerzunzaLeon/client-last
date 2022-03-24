@@ -1,14 +1,14 @@
-import React from 'react';
 import { Button } from 'primereact/button';
 import classNames from 'classnames';
 
+import { Generic } from '../../interfaces/generic';
+
 import './slipButton.scss';
 
-interface Props {
+interface Props extends Generic{
     color: string,
     icon: string,
     label: string,
-    [x: string]: any
 }
 
 export const SlipButton = ({
