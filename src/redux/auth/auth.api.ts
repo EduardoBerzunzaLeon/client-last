@@ -9,6 +9,7 @@ import {
   ResetPasswordRequest,
   SendEmailVerifyRequest,
   SignInSocialRequest,
+  UpdatePasswordRequest,
   UserResponse,
 } from '../../interfaces/api';
 
@@ -73,6 +74,14 @@ export const authApi = tutorApi.injectEndpoints({
       }),
       providesTags: [ 'Auth' ],
     }),
+    updatePassword: builder.mutation<UserResponse, UpdatePasswordRequest>({
+      query: (body) => ({
+        url: 'users/me/password',
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: [ 'Auth' ],
+    }),
   }),
   overrideExisting: false,
 });
@@ -87,4 +96,5 @@ export const
     useEmailVerifyMutation,
     useSendEmailVerifyMutation,
     useRenewTokenQuery,
+    useUpdatePasswordMutation,
   } = authApi;

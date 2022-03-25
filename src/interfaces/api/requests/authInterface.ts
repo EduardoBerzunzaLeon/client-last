@@ -1,4 +1,4 @@
-interface Name {
+export interface Name {
     first: string,
     last: string
   }
@@ -36,4 +36,11 @@ export interface ResetPasswordRequest {
   token: string,
   password: string,
   confirmPassword: string,
+}
+
+export interface UpdatePasswordRequest {
+  id: string,
+  password: string,
+  confirmPassword: string,
+  currentPassword: string
 }

@@ -29,6 +29,7 @@ const authSlice = createSlice({
           authApi.endpoints.signInWithSocial.matchFulfilled,
           authApi.endpoints.renewToken.matchFulfilled,
           authApi.endpoints.resetPassword.matchFulfilled,
+          authApi.endpoints.updatePassword.matchFulfilled,
         ),
         (state, { payload }) => {
           state.token = payload.token;

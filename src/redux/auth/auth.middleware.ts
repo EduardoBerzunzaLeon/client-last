@@ -16,6 +16,7 @@ export const persistLogingMiddleware: Middleware = (api: MiddlewareAPI) => (next
       || endpointName === 'signInWithSocial'
       || endpointName === 'renewToken'
       || endpointName === 'resetPassword'
+      || endpointName === 'updatePassword'
     ) {
       localStorage.setItem('token', token);
       localStorage.setItem('token-init-date', `${new Date().getTime()}`);

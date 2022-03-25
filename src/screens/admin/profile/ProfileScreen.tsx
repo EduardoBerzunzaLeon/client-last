@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
@@ -18,28 +18,42 @@ import { useGetUserQuery } from '../../../redux/user/user.api';
 import ErrorCard from '../../../components/errorCard/ErrorCard';
 import Spinner from '../../../components/spinner/Spinner';
 
-// import useAuth from '../../../hooks/useAuth';
+import useAuth from '../../../hooks/useAuth';
 
 import './profileScreen.scss';
 
 const ProfileScreen = () => {
   const { id } = useParams();
+  const { user: userAuth } = useAuth();
+
+  const [ isUserLogged, setIsUserLogged ] = useState(false);
+  const [ displayModal, setDisplayModal ] = useState(false);
 
   const {
     data, isLoading, isError, error,
   } = useGetUserQuery(id ?? '');
 
-  const [ displayModal, setDisplayModal ] = useState(false);
+  useEffect(() => {
+    if (data) {
+      setIsUserLogged(userAuth?.id === data.data.id);
+    }
+  }, [ userAuth, data ]);
 
   if (isLoading) {
     return <Spinner message="Cargando Usuario" />;
   }
 
-  if (isError) {
-    return <ErrorCard title="Ocurrio un error en su petición" detail={getDetailError(error)} />;
+  if (isError || !data) {
+    return (
+      <ErrorCard
+        title="Ocurrio un error en su petición"
+        detail={error ? getDetailError(error) : 'No se encontro el usuario'}
+      />
+    );
   }
 
-  const user = data!.data;
+  const { data: user } = data;
+
   return (
     <>
       <HeaderAdmin position="users/profile" title="Información Personal" />
@@ -51,7 +65,7 @@ const ProfileScreen = () => {
               <figure>
                 <Skeleton classNameSkeleton="border-circle w-8rem h-8rem">
                   <img
-                    src={user?.avatar || 'profile.png'}
+                    src={user.avatar || 'profile.png'}
                     alt="Profile"
                     className="border-circle border-purple-700 border-3 w-8rem h-8rem"
                     referrerPolicy="no-referrer"
@@ -62,17 +76,17 @@ const ProfileScreen = () => {
 
             <div className="overflow-hidden text-overflow-ellipsis">
               <Divider text="Nombre" icon="user" />
-              <span className="font-semibold">{user?.fullname}</span>
+              <span className="font-semibold">{user.fullname}</span>
             </div>
 
             <div className="overflow-hidden text-overflow-ellipsis">
               <Divider text="Correo" icon="envelope" />
-              <span className="font-semibold">{user?.email}</span>
+              <span className="font-semibold">{user.email}</span>
             </div>
 
             <div className="overflow-hidden text-overflow-ellipsis">
               <Divider text="Sexo" icon="question" />
-              <span className="font-semibold">{user?.gender === 'M' ? 'Hombre' : 'Mujer'}</span>
+              <span className="font-semibold">{user.gender === 'M' ? 'Hombre' : 'Mujer'}</span>
             </div>
 
             <div className="flex flex-column">
@@ -93,7 +107,7 @@ const ProfileScreen = () => {
           <Card title="Datos del sistema">
             <div className="overflow-hidden text-overflow-ellipsis">
               <Divider text="Rol" icon="shield" />
-              <span className="font-semibold">{user?.role}</span>
+              <span className="font-semibold">{user.role}</span>
             </div>
 
             <div className="overflow-hidden text-overflow-ellipsis py-1">
@@ -127,14 +141,25 @@ const ProfileScreen = () => {
       <Dialog header="Editar Perfil" className="shadow-5 w-11 md:w-6 lg:w-5" modal visible={displayModal} onHide={() => setDisplayModal(false)}>
         <TabView>
           <TabPanel header="Datos Personales">
-            <Divider text="Foto de perfil" icon="image" />
-            <FileSingleUpload url="https://primefaces.org/primereact/showcase/upload.php" />
+            {
+              (isUserLogged) && (
+                <>
+                  <Divider text="Foto de perfil" icon="image" />
+                  <FileSingleUpload url="https://primefaces.org/primereact/showcase/upload.php" />
+                </>
+              )
+            }
             <Divider text="Información Personal" icon="user" />
             <PersonalDataForm user={user} />
           </TabPanel>
-          <TabPanel header="Cambiar contraseña">
-            <PasswordForm />
-          </TabPanel>
+          {
+              (isUserLogged) && (
+                <TabPanel header="Cambiar contraseña">
+                  <PasswordForm userId={user.id} />
+                </TabPanel>
+              )
+            }
+
         </TabView>
       </Dialog>
     </>

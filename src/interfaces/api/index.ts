@@ -9,4 +9,7 @@ export type {
   ForgotPasswordRequest,
   ResetPasswordRequest,
   SendEmailVerifyRequest,
+  UpdatePasswordRequest,
 } from './requests/authInterface';
+
+export type { UpdateUserRequest } from './requests/userInterface';
