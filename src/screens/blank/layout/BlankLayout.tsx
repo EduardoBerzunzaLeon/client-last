@@ -4,7 +4,7 @@ import './blankLayout.scss';
 
 const BlankLayout = () => (
   <div className="flex align-items-center justify-content-center h-screen image-background">
-    <div className="shadow-5 w-11 md:w-6 lg:w-5 border-round-20">
+    <div className="shadow-5 w-11 border-round-20 m-width-32rem">
       <Outlet />
     </div>
   </div>

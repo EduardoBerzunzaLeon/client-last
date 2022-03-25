@@ -1,7 +1,9 @@
 export type { Error, ErrorResponse } from './responses/errorInterface';
+
 export type {
-  User, UserResponse, ForgotPasswordResponse,
+  User, UserResponse, ForgotPasswordResponse, UserSingleResponse,
 } from './responses/userInterface';
+
 export type {
   LoginRequest,
   SignInSocialRequest,
@@ -12,4 +14,4 @@ export type {
   UpdatePasswordRequest,
 } from './requests/authInterface';
 
-export type { UpdateUserRequest } from './requests/userInterface';
+export type { UpdateUserRequest, UpdateAvatarRequest } from './requests/userInterface';

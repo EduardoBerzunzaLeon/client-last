@@ -5,3 +5,7 @@ export interface UpdateUserRequest {
     name: Name,
     gender: string
 }
+
+export interface UpdateAvatarRequest {
+    avatar: File
+}

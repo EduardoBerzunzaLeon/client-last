@@ -24,10 +24,10 @@ import './profileScreen.scss';
 
 const ProfileScreen = () => {
   const { id } = useParams();
-  const { user: userAuth } = useAuth();
-
   const [ isUserLogged, setIsUserLogged ] = useState(false);
   const [ displayModal, setDisplayModal ] = useState(false);
+
+  const { user: userAuth } = useAuth();
 
   const {
     data, isLoading, isError, error,
@@ -63,9 +63,9 @@ const ProfileScreen = () => {
           <Card title="Perfil">
             <div className="flex justify-content-center">
               <figure>
-                <Skeleton classNameSkeleton="border-circle w-8rem h-8rem">
+                <Skeleton classNameSkeleton="border-circle w-8rem h-8rem" imgError="/assets/images/profile.png">
                   <img
-                    src={user.avatar || 'profile.png'}
+                    src={user?.avatar}
                     alt="Profile"
                     className="border-circle border-purple-700 border-3 w-8rem h-8rem"
                     referrerPolicy="no-referrer"
@@ -89,16 +89,21 @@ const ProfileScreen = () => {
               <span className="font-semibold">{user.gender === 'M' ? 'Hombre' : 'Mujer'}</span>
             </div>
 
-            <div className="flex flex-column">
-              <Button
-                type="button"
-                label="Editar Perfil"
-                className="mt-3 flex align-items-center justify-content-center"
-                icon="pi pi-pencil"
-                iconPos="right"
-                onClick={() => setDisplayModal(true)}
-              />
-            </div>
+            {
+             (userAuth?.role === 'admin' || isUserLogged)
+             && (
+             <div className="flex flex-column">
+               <Button
+                 type="button"
+                 label="Editar Perfil"
+                 className="mt-3 flex align-items-center justify-content-center"
+                 icon="pi pi-pencil"
+                 iconPos="right"
+                 onClick={() => setDisplayModal(true)}
+               />
+             </div>
+             )
+            }
 
           </Card>
         </div>
@@ -145,7 +150,7 @@ const ProfileScreen = () => {
               (isUserLogged) && (
                 <>
                   <Divider text="Foto de perfil" icon="image" />
-                  <FileSingleUpload url="https://primefaces.org/primereact/showcase/upload.php" />
+                  <FileSingleUpload />
                 </>
               )
             }

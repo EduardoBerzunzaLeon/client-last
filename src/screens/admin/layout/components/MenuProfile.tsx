@@ -35,7 +35,7 @@ export const MenuProfile = () => {
       <div className="layout-profile">
         <div className="flex justify-content-center">
           <figure>
-            <Skeleton classNameSkeleton="border-circle w-6rem h-6rem">
+            <Skeleton classNameSkeleton="border-circle w-6rem h-6rem" imgError="/assets/images/profile.png">
               <img
                 src="https://lh3.googleusercontent.com/a-/AOh14GgCTImJUSPX48BAHretaktttHcq-gangEKBbowa=s96-c"
                 alt="Profile"

@@ -24,3 +24,5 @@ export interface ForgotPasswordResponse {
     message: string,
     data: { resetUrl: string }
   }
+
+export type UserSingleResponse = Omit<UserResponse, 'token'>;

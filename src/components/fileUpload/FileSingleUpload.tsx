@@ -4,7 +4,11 @@ import {
   FileUpload,
   FileUploadHeaderTemplateOptions,
   FileUploadItemTemplateType,
+  FileUploadHandlerParam,
 } from 'primereact/fileupload';
+
+import { Tooltip } from 'primereact/tooltip';
+import { useUploadAvatarMutation } from '../../redux/user/user.api';
 
 interface PrimeFile {
     objectURL: string,
@@ -16,17 +20,29 @@ interface PrimeFile {
   }
 
 interface Props {
-    url: string,
     accept?: string
 }
 
-export const FileSingleUpload = ({ url, accept }: Props) => {
+export const FileSingleUpload = ({ accept }: Props) => {
   const fileUploadRef = useRef<any>(null);
+  const [ uploadAvatar, { isLoading }] = useUploadAvatarMutation();
 
   const onTemplateSelect = () => {
     if (fileUploadRef.current.files.length > 1) {
       fileUploadRef.current.files.shift();
     }
+  };
+
+  const onTemplateUpload = async (e: FileUploadHandlerParam) => {
+    const newBanner = new FormData();
+    newBanner.append('avatar', e.files[0]);
+    try {
+      const element = await uploadAvatar(newBanner).unwrap();
+      console.log(element);
+    } catch (error) {
+      console.log(error);
+    }
+    console.log(isLoading);
   };
 
   const headerTemplate = (options: FileUploadHeaderTemplateOptions) => {
@@ -64,21 +80,28 @@ export const FileSingleUpload = ({ url, accept }: Props) => {
   const cancelOptions = { icon: 'pi pi-fw pi-times', iconOnly: true, className: 'custom-cancel-btn p-button-danger p-button-rounded p-button-outlined' };
 
   return (
-    <FileUpload
-      ref={fileUploadRef}
-      name="image[]"
-      url={url}
-      accept={accept}
-      maxFileSize={1000000}
-      multiple
-      onSelect={onTemplateSelect}
-      headerTemplate={headerTemplate}
-      itemTemplate={itemTemplate}
-      emptyTemplate={emptyTemplate}
-      chooseOptions={chooseOptions}
-      uploadOptions={uploadOptions}
-      cancelOptions={cancelOptions}
-    />
+    <>
+      <Tooltip target=".custom-choose-btn" content="Elegir" position="bottom" />
+      <Tooltip target=".custom-upload-btn" content="Actualizar" position="bottom" />
+      <Tooltip target=".custom-cancel-btn" content="Eliminar" position="bottom" />
+      <FileUpload
+        ref={fileUploadRef}
+        name="image[]"
+        accept={accept}
+        maxFileSize={1000000}
+        multiple
+        customUpload
+        uploadHandler={onTemplateUpload}
+        onSelect={onTemplateSelect}
+        // onUpload={onTemplateUpload}
+        headerTemplate={headerTemplate}
+        itemTemplate={itemTemplate}
+        emptyTemplate={emptyTemplate}
+        chooseOptions={chooseOptions}
+        uploadOptions={uploadOptions}
+        cancelOptions={cancelOptions}
+      />
+    </>
   );
 };
 

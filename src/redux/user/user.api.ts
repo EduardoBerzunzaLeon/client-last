@@ -1,16 +1,16 @@
 // eslint-disable-next-line import/no-cycle
 import { tutorApi } from '../services/tutorApi';
 
-import { UserResponse } from '../../interfaces/api';
+import { UserSingleResponse } from '../../interfaces/api';
 import { UpdateUserRequest } from '../../interfaces/api/requests/userInterface';
 
 export const userApi = tutorApi.injectEndpoints({
   endpoints: (builder) => ({
-    getUser: builder.query<Omit<UserResponse, 'token'>, string>({
+    getUser: builder.query<UserSingleResponse, string>({
       query: (id) => `users/${id}`,
       providesTags: (result, error, id) => [{ type: 'User', id }],
     }),
-    updateUser: builder.mutation<Omit<UserResponse, 'token'>, UpdateUserRequest>({
+    updateUser: builder.mutation<UserSingleResponse, UpdateUserRequest>({
       query: ({ id, ...patch }) => ({
         url: `users/${id}`,
         method: 'PATCH',
@@ -18,8 +18,16 @@ export const userApi = tutorApi.injectEndpoints({
       }),
       invalidatesTags: [ 'User', 'Auth' ],
     }),
+    uploadAvatar: builder.mutation<UserSingleResponse, any>({
+      query: (body) => ({
+        url: 'users/avatar',
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: [ 'User', 'Auth' ],
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useGetUserQuery, useUpdateUserMutation } = userApi;
+export const { useGetUserQuery, useUpdateUserMutation, useUploadAvatarMutation } = userApi;
