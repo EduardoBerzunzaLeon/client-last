@@ -6,9 +6,15 @@ import {
   FileUploadItemTemplateType,
   FileUploadHandlerParam,
 } from 'primereact/fileupload';
-
+import { ProgressBar } from 'primereact/progressbar';
+import { Toast } from 'primereact/toast';
 import { Tooltip } from 'primereact/tooltip';
+
+import { getDetailError } from '../../redux/services/handlerErrorApi';
+import { setDataAuth } from '../../redux/auth/auth.slice';
+import { useAppDispatch } from '../../redux/hooks';
 import { useUploadAvatarMutation } from '../../redux/user/user.api';
+import useToast from '../../hooks/useToast';
 
 interface PrimeFile {
     objectURL: string,
@@ -26,7 +32,10 @@ interface Props {
 export const FileSingleUpload = ({ accept }: Props) => {
   const fileUploadRef = useRef<any>(null);
   const [ uploadAvatar, { isLoading }] = useUploadAvatarMutation();
+  const dispatch = useAppDispatch();
+  const { toast, showError, showSuccess } = useToast();
 
+  // console.log(isLoading);
   const onTemplateSelect = () => {
     if (fileUploadRef.current.files.length > 1) {
       fileUploadRef.current.files.shift();
@@ -37,12 +46,21 @@ export const FileSingleUpload = ({ accept }: Props) => {
     const newBanner = new FormData();
     newBanner.append('avatar', e.files[0]);
     try {
-      const element = await uploadAvatar(newBanner).unwrap();
-      console.log(element);
+      const { data } = await uploadAvatar(newBanner).unwrap();
+      dispatch(setDataAuth({ user: data }));
+      showSuccess({
+        summary: 'Éxito',
+        detail: 'La foto de perfil se actualizó con éxito',
+        life: 2000,
+      });
+      fileUploadRef.current.clear();
     } catch (error) {
-      console.log(error);
+      const detail: string = getDetailError(error);
+      showError({
+        summary: 'Error',
+        detail,
+      });
     }
-    console.log(isLoading);
   };
 
   const headerTemplate = (options: FileUploadHeaderTemplateOptions) => {
@@ -60,7 +78,7 @@ export const FileSingleUpload = ({ accept }: Props) => {
   };
 
   const itemTemplate: FileUploadItemTemplateType = (file: PrimeFile) => (
-    <img alt={file.name} role="presentation" style={{ width: '100%' }} src={file.objectURL} />
+    <img alt={file.name} role="presentation" className="w-full" src={file.objectURL} />
   );
 
   const emptyTemplate = () => (
@@ -75,12 +93,15 @@ export const FileSingleUpload = ({ accept }: Props) => {
     </div>
   );
 
+  const progressBarTemplate = () => (<ProgressBar mode={isLoading ? 'indeterminate' : 'determinate'} style={{ height: '6px' }} />);
+
   const chooseOptions = { icon: 'pi pi-fw pi-images', iconOnly: true, className: 'custom-choose-btn p-button-rounded p-button-outlined' };
   const uploadOptions = { icon: 'pi pi-fw pi-cloud-upload', iconOnly: true, className: 'custom-upload-btn p-button-success p-button-rounded p-button-outlined' };
   const cancelOptions = { icon: 'pi pi-fw pi-times', iconOnly: true, className: 'custom-cancel-btn p-button-danger p-button-rounded p-button-outlined' };
 
   return (
     <>
+      <Toast ref={toast} />
       <Tooltip target=".custom-choose-btn" content="Elegir" position="bottom" />
       <Tooltip target=".custom-upload-btn" content="Actualizar" position="bottom" />
       <Tooltip target=".custom-cancel-btn" content="Eliminar" position="bottom" />
@@ -93,10 +114,10 @@ export const FileSingleUpload = ({ accept }: Props) => {
         customUpload
         uploadHandler={onTemplateUpload}
         onSelect={onTemplateSelect}
-        // onUpload={onTemplateUpload}
         headerTemplate={headerTemplate}
         itemTemplate={itemTemplate}
         emptyTemplate={emptyTemplate}
+        progressBarTemplate={progressBarTemplate}
         chooseOptions={chooseOptions}
         uploadOptions={uploadOptions}
         cancelOptions={cancelOptions}

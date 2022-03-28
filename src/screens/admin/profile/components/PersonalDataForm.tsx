@@ -12,9 +12,14 @@ import useToast from '../../../../hooks/useToast';
 import { getDetailError } from '../../../../redux/services/handlerErrorApi';
 import { errorTranslateAuthForm } from '../../../../utils/form/handlerErrorsForms';
 import { translateAuthFields } from '../../../../utils/translate/translateFieldForms';
+import { setDataAuth } from '../../../../redux/auth/auth.slice';
+import { useAppDispatch } from '../../../../redux/hooks';
 
-export const PersonalDataForm = ({ user }: {user: User }) => {
+interface Props { user: User, isUserLogged: boolean }
+
+export const PersonalDataForm = ({ user, isUserLogged }: Props) => {
   const [ updateUser, { isLoading }] = useUpdateUserMutation();
+  const dispatch = useAppDispatch();
   const { toast, showError, showSuccess } = useToast();
   const { name: { first, last }, gender, id } = user;
 
@@ -36,7 +41,12 @@ export const PersonalDataForm = ({ user }: {user: User }) => {
             gender: genderUser,
           };
           try {
-            await updateUser(newUser).unwrap();
+            const updatedUser = await updateUser(newUser).unwrap();
+
+            if (isUserLogged) {
+              dispatch(setDataAuth({ user: updatedUser.data }));
+            }
+
             showSuccess({
               summary: 'Éxito',
               detail: 'El usuario se actualizo con éxito',

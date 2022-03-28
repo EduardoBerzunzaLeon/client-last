@@ -16,7 +16,7 @@ export const userApi = tutorApi.injectEndpoints({
         method: 'PATCH',
         body: patch,
       }),
-      invalidatesTags: [ 'User', 'Auth' ],
+      invalidatesTags: [ 'User' ],
     }),
     uploadAvatar: builder.mutation<UserSingleResponse, any>({
       query: (body) => ({
@@ -24,7 +24,7 @@ export const userApi = tutorApi.injectEndpoints({
         method: 'PATCH',
         body,
       }),
-      invalidatesTags: [ 'User', 'Auth' ],
+      invalidatesTags: [ 'User' ],
     }),
   }),
   overrideExisting: false,

@@ -1,4 +1,4 @@
-import { createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
 
 import { User } from '../../interfaces/api';
 // import { userLogged } from '../../tests/fixtures/testData/fakeAuthData';
@@ -17,8 +17,12 @@ const authSlice = createSlice({
     setDefaultAuthState: (state) => {
       state.user = null;
       state.token = null;
-      // state.user = userLogged.data;
-      // state.token = userLogged.token;
+    },
+    setDataAuth: (
+      state,
+      { payload: { user }}: PayloadAction<{ user: Partial<User> }>,
+    ) => {
+      Object.assign(state.user, user);
     },
   },
   extraReducers: (builder) => {
@@ -39,6 +43,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { setDefaultAuthState } = authSlice.actions;
+export const { setDefaultAuthState, setDataAuth } = authSlice.actions;
 
 export default authSlice.reducer;

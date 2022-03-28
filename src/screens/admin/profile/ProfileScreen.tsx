@@ -155,7 +155,7 @@ const ProfileScreen = () => {
               )
             }
             <Divider text="Información Personal" icon="user" />
-            <PersonalDataForm user={user} />
+            <PersonalDataForm user={user} isUserLogged={isUserLogged} />
           </TabPanel>
           {
               (isUserLogged) && (

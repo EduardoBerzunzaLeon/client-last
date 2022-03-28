@@ -37,7 +37,7 @@ export const MenuProfile = () => {
           <figure>
             <Skeleton classNameSkeleton="border-circle w-6rem h-6rem" imgError="/assets/images/profile.png">
               <img
-                src="https://lh3.googleusercontent.com/a-/AOh14GgCTImJUSPX48BAHretaktttHcq-gangEKBbowa=s96-c"
+                src={user?.avatar}
                 alt="Profile"
                 className="border-circle border-purple-300 border-3 w-6rem h-6rem m-2"
                 referrerPolicy="no-referrer"
