@@ -40,10 +40,7 @@ const ForgotPasswordScreen = () => {
                   ...values,
                 };
                 const { message } = await sendEmailForgotPassword(sendData).unwrap();
-                showSuccess({
-                  summary: 'Éxito',
-                  detail: message,
-                });
+                showSuccess({ detail: message });
               } catch (error) {
                 const errors: string = processError({ error, showError });
                 errorTranslateAuthForm({ errors, setFieldError });

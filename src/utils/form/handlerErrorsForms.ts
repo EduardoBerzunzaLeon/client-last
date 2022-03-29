@@ -10,15 +10,12 @@ interface ErrorProps {
 
 interface ProcessProps {
   error: unknown,
-  showError: ({ summary, detail, life }: MessageProps) => void
+  showError: ({ detail, life }: MessageProps) => void
 }
 
 export const processError = ({ error, showError }: ProcessProps) => {
   const detail: string = getDetailError(error);
-  showError({
-    summary: 'Error',
-    detail,
-  });
+  showError({ detail });
   return detail;
 };
 

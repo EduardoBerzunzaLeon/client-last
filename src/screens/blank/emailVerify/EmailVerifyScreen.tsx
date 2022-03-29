@@ -15,17 +15,11 @@ const EmailVerifyScreen = () => {
 
   useEffect(() => {
     if (isError) {
-      showError({
-        summary: 'Error',
-        detail: 'Ocurrio un error',
-      });
+      showError({ detail: 'Ocurrio un error' });
     }
 
     if (isSuccess) {
-      showSuccess({
-        summary: 'Éxito',
-        detail: 'Cuenta verificada con éxito',
-      });
+      showSuccess({ detail: 'Cuenta verificada con éxito' });
     }
   }, [ isError, isSuccess ]);
 

@@ -28,11 +28,7 @@ export const PasswordForm = ({ userId }: {userId: string}) => {
           const request: UpdatePasswordRequest = { id: userId, ...values };
           try {
             await updatePassword(request).unwrap();
-            showSuccess({
-              summary: 'Éxito',
-              detail: 'El usuario se actualizó con éxito',
-              life: 2000,
-            });
+            showSuccess({ detail: 'El usuario se actualizó con éxito' });
             resetForm();
           } catch (error) {
             processError({ error, showError });

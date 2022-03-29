@@ -5,8 +5,8 @@ import { render, Wrapper } from '../../../../fixtures/render';
 
 const mockSignInWithSocialMutation = jest.fn();
 
-jest.mock('../../../redux/auth/auth.api', () => ({
-  ...jest.requireActual('../../../redux/auth/auth.api'),
+jest.mock('../../../../../redux/auth/auth.api', () => ({
+  ...jest.requireActual('../../../../../redux/auth/auth.api'),
   useSignInWithSocialMutation: () => [
     mockSignInWithSocialMutation(),
     {

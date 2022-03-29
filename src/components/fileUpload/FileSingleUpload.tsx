@@ -10,7 +10,7 @@ import { ProgressBar } from 'primereact/progressbar';
 import { Toast } from 'primereact/toast';
 import { Tooltip } from 'primereact/tooltip';
 
-import { getDetailError } from '../../redux/services/handlerErrorApi';
+import { processError } from '../../utils/form/handlerErrorsForms';
 import { setDataAuth } from '../../redux/auth/auth.slice';
 import { useAppDispatch } from '../../redux/hooks';
 import { useUploadAvatarMutation } from '../../redux/user/user.api';
@@ -55,18 +55,10 @@ export const FileSingleUpload = ({ accept }: Props) => {
     try {
       const { data } = await uploadAvatar(newBanner).unwrap();
       dispatch(setDataAuth({ user: data }));
-      showSuccess({
-        summary: 'Éxito',
-        detail: 'La foto de perfil se actualizó con éxito',
-        life: 2000,
-      });
+      showSuccess({ detail: 'La foto de perfil se actualizó con éxito' });
       fileUploadRef.current.clear();
     } catch (error) {
-      const detail: string = getDetailError(error);
-      showError({
-        summary: 'Error',
-        detail,
-      });
+      processError({ error, showError });
     }
   };
 

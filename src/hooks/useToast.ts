@@ -5,11 +5,10 @@ import { MessageProps } from '../interfaces/ui/hooks/hooksInterface';
 const useToast = () => {
   const toast = useRef<any>(null);
 
-  const showGenericToast = (severity: string) => (
+  const showGenericToast = (severity: string, summary: string) => (
     {
-      summary,
       detail,
-      life = 3000,
+      life = 2000,
     }: MessageProps,
   ): void => {
     if (toast.current) {
@@ -22,10 +21,10 @@ const useToast = () => {
     }
   };
 
-  const showError = showGenericToast('error');
-  const showWarn = showGenericToast('warn');
-  const showSuccess = showGenericToast('success');
-  const showInfo = showGenericToast('info');
+  const showError = showGenericToast('error', 'Error');
+  const showWarn = showGenericToast('warn', 'Advertencia');
+  const showSuccess = showGenericToast('success', 'Éxito');
+  const showInfo = showGenericToast('info', 'Aviso');
 
   return {
     toast,

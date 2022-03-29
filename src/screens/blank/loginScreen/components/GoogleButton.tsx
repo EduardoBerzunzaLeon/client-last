@@ -2,9 +2,9 @@ import { useCallback } from 'react';
 
 import { Toast } from 'primereact/toast';
 import { GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
-
-import { getDetailError } from '../../../../redux/services/handlerErrorApi';
 import { SlipButton } from '../../../../components/slipButton/SlipButton';
+
+import { processError } from '../../../../utils/form/handlerErrorsForms';
 import { useSignInWithSocialMutation } from '../../../../redux/auth/auth.api';
 import useToast from '../../../../hooks/useToast';
 
@@ -19,18 +19,11 @@ export const GoogleButton = () => {
       signInSocial({
         socialName: 'google',
         tokenId: response.tokenId,
-      }).unwrap().catch((e) => {
-        const detail: string = getDetailError(e);
-        showError({
-          summary: 'Error',
-          detail,
-        });
+      }).unwrap().catch((error) => {
+        processError({ error, showError });
       });
     } else {
-      showError({
-        summary: 'Error',
-        detail: 'Ocurrio un error en el servicio de Google, favor de intentarlo mas tarde.',
-      });
+      showError({ detail: 'Ocurrio un error en el servicio de Google, favor de intentarlo mas tarde.' });
     }
   }, []);
 
@@ -39,10 +32,7 @@ export const GoogleButton = () => {
   ) => {
     if ('error' in response) {
       response.error !== 'idpiframe_initialization_failed'
-        && showError({
-          summary: 'Error',
-          detail: 'Ocurrio un error en el servicio de Google, favor de intentarlo mas tarde.',
-        });
+        && showError({ detail: 'Ocurrio un error en el servicio de Google, favor de intentarlo mas tarde.' });
     }
   }, []);
 

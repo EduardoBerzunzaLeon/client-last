@@ -15,10 +15,10 @@ describe('useToast', () => {
     expect(wrapper.html()).toEqual(expect.not.stringContaining('success message'));
 
     act(() => {
-      result.current.showInfo({ summary: 'Info', detail: 'success message' });
+      result.current.showInfo({ detail: 'success message' });
     });
 
     expect(wrapper.html()).toEqual(expect.stringContaining('success message'));
-    expect(wrapper.html()).toEqual(expect.stringContaining('Info'));
+    expect(wrapper.html()).toEqual(expect.stringContaining('Aviso'));
   });
 });

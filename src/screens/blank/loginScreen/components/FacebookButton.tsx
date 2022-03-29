@@ -4,10 +4,10 @@ import { ReactFacebookLoginInfo, ReactFacebookFailureResponse } from 'react-face
 import { Toast } from 'primereact/toast';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
+import { processError } from '../../../../utils/form/handlerErrorsForms';
 import { SlipButton } from '../../../../components/slipButton/SlipButton';
 import { useSignInWithSocialMutation } from '../../../../redux/auth/auth.api';
 import useToast from '../../../../hooks/useToast';
-import { getDetailError } from '../../../../redux/services/handlerErrorApi';
 
 export const FacebookButton = () => {
   const [ signInSocial, { isLoading }] = useSignInWithSocialMutation();
@@ -21,18 +21,11 @@ export const FacebookButton = () => {
         socialName: 'facebook',
         tokenId: response.accessToken,
       }).unwrap()
-        .catch((e) => {
-          const detail: string = getDetailError(e);
-          showError({
-            summary: 'Error',
-            detail,
-          });
+        .catch((error) => {
+          processError({ error, showError });
         });
     } else {
-      showError({
-        summary: 'Error',
-        detail: 'Ocurrio un error en el servicio de Facebook, favor de intentarlo mas tarde.',
-      });
+      showError({ detail: 'Ocurrio un error en el servicio de Facebook, favor de intentarlo mas tarde.' });
     }
   }, []);
 

@@ -4,8 +4,8 @@ import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { Dialog } from 'primereact/dialog';
 import { TabView, TabPanel } from 'primereact/tabview';
-
 import { useParams } from 'react-router-dom';
+
 import { Badge } from '../../../components/badge/Badge';
 import { Divider } from '../../../components/Divider/Divider';
 import { FileSingleUpload } from '../../../components/fileUpload/FileSingleUpload';

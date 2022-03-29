@@ -47,11 +47,7 @@ const RegisterScreen = () => {
 
           try {
             await register(newUser).unwrap();
-            showSuccess({
-              summary: 'Éxito',
-              detail: 'El usuario se creo con éxito, se envio un correo para la activación de su cuenta',
-              life: 4000,
-            });
+            showSuccess({ detail: 'El usuario se creo con éxito, se envio un correo para la activación de su cuenta' });
             resetForm();
           } catch (error) {
             const errors: string = processError({ error, showError });

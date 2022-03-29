@@ -26,17 +26,11 @@ const SendEmailVerifyScreen = () => {
 
   useEffect(() => {
     if (isError) {
-      showError({
-        summary: 'Error',
-        detail: 'No se pudo enviar el correo, favor se cambiar el correo electronico o volverlo a intentar',
-      });
+      showError({ detail: 'No se pudo enviar el correo, favor se cambiar el correo electronico o volverlo a intentar' });
     }
 
     if (isSuccess) {
-      showSuccess({
-        summary: 'Éxito',
-        detail: 'Cuenta verificada con éxito',
-      });
+      showSuccess({ detail: 'Cuenta verificada con éxito' });
     }
   }, [ isError, isSuccess ]);
 
@@ -69,10 +63,7 @@ const SendEmailVerifyScreen = () => {
               try {
                 await sendMail({ ...values, url }).unwrap();
               } catch (error) {
-                showError({
-                  summary: 'Error',
-                  detail: 'No se pudo enviar el correo, favor se cambiar el correo electronico o volverlo a intentar',
-                });
+                showError({ detail: 'No se pudo enviar el correo, favor se cambiar el correo electronico o volverlo a intentar' });
               }
             }}
             validationSchema={Yup.object({
