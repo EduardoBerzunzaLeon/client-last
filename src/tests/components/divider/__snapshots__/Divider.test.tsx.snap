@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Divider /> should match to snapshot 1`] = `
+<Divider
+  align="left"
+  className={null}
+  layout="horizontal"
+  style={null}
+  type="solid"
+>
+  <div
+    className="inline-flex align-items-center text-purple-700"
+  >
+    <i
+      className="pi pi-user mr-2"
+    />
+    <b>
+      Name
+    </b>
+  </div>
+</Divider>
+`;
