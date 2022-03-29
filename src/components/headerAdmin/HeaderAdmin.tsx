@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { convertArrayToObject } from '../../utils/convertArrayToObject';
 import { Generic } from '../../interfaces/generic';
-import { MenuItem } from '../../interfaces/ui/primereact/menuItemInterace';
+import { MenuItem } from '../../interfaces/ui/primereact/menuItemInterface';
 
 interface Props {
   position: string,

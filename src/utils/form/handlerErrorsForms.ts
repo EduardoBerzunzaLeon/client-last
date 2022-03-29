@@ -1,18 +1,29 @@
 import { Generic } from '../../interfaces/generic';
-import { TranslateAuthFields } from '../translate/translateFieldForms';
+import { MessageProps } from '../../interfaces/ui/hooks/hooksInterface';
+import { getDetailError } from '../../redux/services/handlerErrorApi';
+import { translateAuthFields, TranslateAuthFields } from '../translate/translateFieldForms';
 
-interface CreateErrorArrayProps<T> {
-    errors: string,
-    errorsTranslate: T,
-    setFieldError: (field: string, message: string | undefined) => void
+interface ErrorProps {
+  errors: string,
+  setFieldError: (field: string, message: string | undefined) => void
 }
 
-interface GenericIndentityFn<Type>{
-  (arg: CreateErrorArrayProps<Type>) :void
+interface ProcessProps {
+  error: unknown,
+  showError: ({ summary, detail, life }: MessageProps) => void
 }
 
-export const createErrorsArray = <T extends Generic>(
-  { errors, errorsTranslate, setFieldError }: CreateErrorArrayProps<T>,
+export const processError = ({ error, showError }: ProcessProps) => {
+  const detail: string = getDetailError(error);
+  showError({
+    summary: 'Error',
+    detail,
+  });
+  return detail;
+};
+
+export const createErrorsArray = <T extends Generic>(errorsTranslate: T) => (
+  { setFieldError, errors }: ErrorProps,
 ) => {
   if (errors) {
     const errorsArray = errors.split('.');
@@ -28,6 +39,6 @@ export const createErrorsArray = <T extends Generic>(
   }
 };
 
-export const errorTranslateAuthForm: GenericIndentityFn<TranslateAuthFields> = createErrorsArray;
+export const errorTranslateAuthForm = createErrorsArray<TranslateAuthFields>(translateAuthFields);
 
 export default { createErrorsArray, errorTranslateAuthForm };

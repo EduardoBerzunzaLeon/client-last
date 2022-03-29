@@ -11,7 +11,6 @@ import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
 import { FacebookButton } from './components/FacebookButton';
-import { getDetailError } from '../../../redux/services/handlerErrorApi';
 import { GoogleButton } from './components/GoogleButton';
 import { InputTextApp } from '../../../components/forms';
 import { useLoginMutation } from '../../../redux/auth/auth.api';
@@ -19,6 +18,7 @@ import { useLoginMutation } from '../../../redux/auth/auth.api';
 import useToast from '../../../hooks/useToast';
 
 import './loginScreen.scss';
+import { processError } from '../../../utils/form/handlerErrorsForms';
 
 const LoginScreen = () => {
   const navigate = useNavigate();
@@ -55,11 +55,7 @@ const LoginScreen = () => {
           try {
             await login({ ...values }).unwrap();
           } catch (error) {
-            const detail: string = getDetailError(error);
-            showError({
-              summary: 'Error',
-              detail,
-            });
+            const detail = processError({ error, showError });
 
             if (detail === 'El correo aun no ha sido activado') {
               navigate('/send-email-verify', { state: { email: values.email }});

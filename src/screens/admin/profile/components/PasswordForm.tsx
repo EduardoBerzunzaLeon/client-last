@@ -1,13 +1,13 @@
 import { Button } from 'primereact/button';
 import { Form, Formik } from 'formik';
+import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import { Toast } from 'primereact/toast';
 import { InputTextApp, withDetailInputPassword } from '../../../../components/forms';
-import { useUpdatePasswordMutation } from '../../../../redux/auth/auth.api';
+import { processError } from '../../../../utils/form/handlerErrorsForms';
 import { UpdatePasswordRequest } from '../../../../interfaces/api';
+import { useUpdatePasswordMutation } from '../../../../redux/auth/auth.api';
 import useToast from '../../../../hooks/useToast';
-import { getDetailError } from '../../../../redux/services/handlerErrorApi';
 
 const InputPassword = withDetailInputPassword(InputTextApp);
 
@@ -35,11 +35,7 @@ export const PasswordForm = ({ userId }: {userId: string}) => {
             });
             resetForm();
           } catch (error) {
-            const detail: string = getDetailError(error);
-            showError({
-              summary: 'Error',
-              detail,
-            });
+            processError({ error, showError });
           }
         }}
         validationSchema={Yup.object({

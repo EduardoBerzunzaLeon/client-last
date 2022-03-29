@@ -7,11 +7,9 @@ import { Form, Formik } from 'formik';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import { errorTranslateAuthForm } from '../../../utils/form/handlerErrorsForms';
+import { errorTranslateAuthForm, processError } from '../../../utils/form/handlerErrorsForms';
 import { ForgotPasswordRequest } from '../../../interfaces/api/requests/authInterface';
-import { getDetailError } from '../../../redux/services/handlerErrorApi';
 import { InputTextApp } from '../../../components/forms';
-import { translateAuthFields } from '../../../utils/translate/translateFieldForms';
 import { useForgotPasswordMutation } from '../../../redux/auth/auth.api';
 import useToast from '../../../hooks/useToast';
 
@@ -47,16 +45,8 @@ const ForgotPasswordScreen = () => {
                   detail: message,
                 });
               } catch (error) {
-                const detail: string = getDetailError(error);
-                errorTranslateAuthForm({
-                  errors: detail,
-                  errorsTranslate: translateAuthFields,
-                  setFieldError,
-                });
-                showError({
-                  summary: 'Error',
-                  detail,
-                });
+                const errors: string = processError({ error, showError });
+                errorTranslateAuthForm({ errors, setFieldError });
               }
             }}
             validationSchema={Yup.object({

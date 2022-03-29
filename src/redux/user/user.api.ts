@@ -18,7 +18,7 @@ export const userApi = tutorApi.injectEndpoints({
       }),
       invalidatesTags: [ 'User' ],
     }),
-    uploadAvatar: builder.mutation<UserSingleResponse, any>({
+    uploadAvatar: builder.mutation<UserSingleResponse, FormData>({
       query: (body) => ({
         url: 'users/avatar',
         method: 'PATCH',

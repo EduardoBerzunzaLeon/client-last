@@ -1,10 +1,6 @@
 import { useRef } from 'react';
 
-interface Props {
-  summary: string,
-  detail: string,
-  life?: number
-}
+import { MessageProps } from '../interfaces/ui/hooks/hooksInterface';
 
 const useToast = () => {
   const toast = useRef<any>(null);
@@ -14,7 +10,7 @@ const useToast = () => {
       summary,
       detail,
       life = 3000,
-    }: Props,
+    }: MessageProps,
   ): void => {
     if (toast.current) {
       toast.current.show({

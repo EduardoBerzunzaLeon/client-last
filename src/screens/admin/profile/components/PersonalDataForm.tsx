@@ -1,19 +1,17 @@
 import { Button } from 'primereact/button';
 import { Form, Formik } from 'formik';
+import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import { Toast } from 'primereact/toast';
+import { errorTranslateAuthForm, processError } from '../../../../utils/form/handlerErrorsForms';
 import { genderRadio } from '../../../../utils/form/radioButtonsObjects';
 import { InputTextApp, RadioGroup } from '../../../../components/forms';
-import { User } from '../../../../interfaces/api';
+import { setDataAuth } from '../../../../redux/auth/auth.slice';
 import { UpdateUserRequest } from '../../../../interfaces/api/requests/userInterface';
+import { useAppDispatch } from '../../../../redux/hooks';
+import { User } from '../../../../interfaces/api';
 import { useUpdateUserMutation } from '../../../../redux/user/user.api';
 import useToast from '../../../../hooks/useToast';
-import { getDetailError } from '../../../../redux/services/handlerErrorApi';
-import { errorTranslateAuthForm } from '../../../../utils/form/handlerErrorsForms';
-import { translateAuthFields } from '../../../../utils/translate/translateFieldForms';
-import { setDataAuth } from '../../../../redux/auth/auth.slice';
-import { useAppDispatch } from '../../../../redux/hooks';
 
 interface Props { user: User, isUserLogged: boolean }
 
@@ -53,16 +51,8 @@ export const PersonalDataForm = ({ user, isUserLogged }: Props) => {
               life: 2000,
             });
           } catch (error) {
-            const detail: string = getDetailError(error);
-            errorTranslateAuthForm({
-              errors: detail,
-              errorsTranslate: translateAuthFields,
-              setFieldError,
-            });
-            showError({
-              summary: 'Error',
-              detail,
-            });
+            const errors: string = processError({ error, showError });
+            errorTranslateAuthForm({ errors, setFieldError });
           }
         }}
         validationSchema={Yup.object({

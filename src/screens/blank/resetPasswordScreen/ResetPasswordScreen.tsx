@@ -6,11 +6,9 @@ import { Form, Formik } from 'formik';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import { errorTranslateAuthForm } from '../../../utils/form/handlerErrorsForms';
-import { getDetailError } from '../../../redux/services/handlerErrorApi';
+import { errorTranslateAuthForm, processError } from '../../../utils/form/handlerErrorsForms';
 import { InputTextApp, withDetailInputPassword } from '../../../components/forms';
 import { ResetPasswordRequest } from '../../../interfaces/api';
-import { translateAuthFields } from '../../../utils/translate/translateFieldForms';
 import { useResetPasswordMutation } from '../../../redux/auth/auth.api';
 import useToast from '../../../hooks/useToast';
 
@@ -39,17 +37,8 @@ const ResetPasswordScreen = () => {
           try {
             await resetPassword({ ...prepareSend }).unwrap();
           } catch (error) {
-            const detail: string = getDetailError(error);
-            errorTranslateAuthForm({
-              errors: detail,
-              errorsTranslate: translateAuthFields,
-              setFieldError,
-            });
-            showError({
-              summary: 'Error',
-              detail,
-              life: 1500,
-            });
+            const errors: string = processError({ error, showError });
+            errorTranslateAuthForm({ errors, setFieldError });
 
             setTimeout(() => {
               navigate('/login');
