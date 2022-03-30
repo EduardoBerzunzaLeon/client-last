@@ -1,7 +1,8 @@
 import { rest } from 'msw';
+
+import { generateError } from '../testData/fakeUtilsData';
 import { UpdateUserRequest } from '../../../interfaces/api';
 import { userLogged } from '../testData/fakeAuthData';
-import { generateError } from '../testData/fakeUtilsData';
 
 export const mockGetUser = rest.get<string>(
   `${process.env.REACT_APP_API_URL}/users/:id`,
@@ -23,7 +24,7 @@ export const mockGetUser = rest.get<string>(
 export const mockUpdateUser = rest.patch<UpdateUserRequest>(
   `${process.env.REACT_APP_API_URL}/users/:id`,
   (req, res, ctx) => {
-    if (req.params.id === '123456789') {
+    if (req.params.id === userLogged.data.id) {
       return res(
         ctx.status(200),
         ctx.json(req.body),

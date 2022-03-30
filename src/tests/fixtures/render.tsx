@@ -44,6 +44,17 @@ export const mockStore = <P extends Object>(state?: P): StoreRef => {
   );
 };
 
+export const mockStoreWithMiddlewares = <P extends Object>(state?: P): StoreRef => {
+  const initialState = { auth: authState, ui: uiState };
+  const finalState = state ? { ...initialState, ...state } : { ...initialState };
+  return setupApiStore(
+    tutorApi,
+    [ persistLogingMiddleware ],
+    { auth: authReducer, ui: uiReducer },
+    finalState,
+  );
+};
+
 export const render = (
   Component: React.ComponentType,
   store = storeRef.store,
@@ -97,6 +108,7 @@ export const renderWithChildren = (
 
 export default {
   mockStore,
+  mockStoreWithMiddlewares,
   render,
   renderWithChildren,
   renderWithProps,

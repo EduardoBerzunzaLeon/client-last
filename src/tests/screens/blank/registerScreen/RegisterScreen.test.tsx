@@ -34,7 +34,7 @@ describe('<RegisterScreen />', () => {
     fetchMock.resetMocks();
   });
 
-  describe('Register Component withOut mock hook', () => {
+  describe('Register component without mock hook', () => {
     let wrapper: RenderResult;
     beforeEach(() => {
       wrapper = render(renderWithRouter(RegisterScreen, { initialEntries: '/register', store: storeRef.store }));

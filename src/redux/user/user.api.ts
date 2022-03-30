@@ -30,4 +30,8 @@ export const userApi = tutorApi.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { useGetUserQuery, useUpdateUserMutation, useUploadAvatarMutation } = userApi;
+export const {
+  useGetUserQuery,
+  useUpdateUserMutation,
+  useUploadAvatarMutation,
+} = userApi;
