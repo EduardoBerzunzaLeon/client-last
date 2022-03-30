@@ -28,7 +28,7 @@ const ErrorCard = ({ title, detail }: Props) => (
         <span
           className="flex align-items-center justify-content-center text-pink-900 font-bold text-xl text-justify"
         >
-          ¡Ups! Tobi se comio la infomación, favor de intentarlo más tarde.
+          ¡Ups! Nuestro perrito se comio la infomación, favor de intentarlo más tarde.
         </span>
         <span className="inline-block mt-2">
           {`Error: ${detail}`}

@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ErrorCard /> should match to snapshot 1`] = `
+<div
+  className="grid"
+>
+  <div
+    className="col-12"
+  >
+    <Card
+      className="bg-purple-100 "
+      footer={null}
+      header={null}
+      id={null}
+      style={null}
+      subTitle={null}
+      title="Error"
+    >
+      <div
+        className="flex align-items-center justify-content-center"
+      >
+        <div
+          className="fadein animation-duration-2000"
+          style={
+            Object {
+              "maxWidth": "500px",
+            }
+          }
+        >
+          <figure>
+            <img
+              alt="error400"
+              className="max-w-full block"
+              src="/assets/images/error404.png"
+            />
+          </figure>
+        </div>
+      </div>
+      <span
+        className="flex align-items-center justify-content-center text-pink-900 font-bold text-xl text-justify"
+      >
+        ¡Ups! Nuestro perrito se comio la infomación, favor de intentarlo más tarde.
+      </span>
+      <span
+        className="inline-block mt-2"
+      >
+        Error: Server Error 500
+      </span>
+    </Card>
+  </div>
+</div>
+`;

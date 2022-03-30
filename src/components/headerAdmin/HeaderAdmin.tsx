@@ -3,7 +3,7 @@ import React from 'react';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { useNavigate } from 'react-router-dom';
 
-import { convertArrayToObject } from '../../utils/convertArrayToObject';
+import { convertObjectToArray } from '../../utils/convertObjectToArray';
 import { Generic } from '../../interfaces/generic';
 import { MenuItem } from '../../interfaces/ui/primereact/menuItemInterface';
 
@@ -20,7 +20,7 @@ export const HeaderAdmin = React.memo(({ position, title }: Props) => {
     profile: { label: 'Perfil' },
   };
 
-  const models = convertArrayToObject<MenuItem>(position, items);
+  const models = convertObjectToArray<MenuItem>(position, items);
 
   const home = {
     icon: 'pi pi-home',

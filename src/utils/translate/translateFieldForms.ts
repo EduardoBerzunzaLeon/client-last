@@ -13,7 +13,7 @@ export const translateAuthFields: TranslateAuthFields = {
   gender: 'genero',
   first: 'nombre',
   last: 'apellido',
-  name: 'nombre',
+  name: 'nombre completo',
 };
 
 export default {
