@@ -54,8 +54,8 @@ export const FileSingleUpload = ({ accept }: Props) => {
     newBanner.append('avatar', e.files[0]);
     try {
       const { data } = await uploadAvatar(newBanner).unwrap();
-      dispatch(setDataAuth({ user: data }));
       showSuccess({ detail: 'La foto de perfil se actualizó con éxito' });
+      dispatch(setDataAuth({ user: data }));
       fileUploadRef.current.clear();
     } catch (error) {
       processError({ error, showError });
@@ -88,7 +88,7 @@ export const FileSingleUpload = ({ accept }: Props) => {
           fontSize: '5em', borderRadius: '50%', backgroundColor: 'var(--surface-b)', color: 'var(--surface-d)',
         }}
       />
-      <span style={{ fontSize: '1.2em', color: 'var(--text-color-secondary)' }} className="my-5">Drag and Drop Image Here</span>
+      <span style={{ fontSize: '1.2em', color: 'var(--text-color-secondary)' }} className="my-5">Arrastre la imagen aqui</span>
     </div>
   );
 

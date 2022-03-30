@@ -22,7 +22,9 @@ const authSlice = createSlice({
       state,
       { payload: { user }}: PayloadAction<{ user: Partial<User> }>,
     ) => {
-      Object.assign(state.user, user);
+      if (state.user) {
+        Object.assign(state.user, user);
+      }
     },
   },
   extraReducers: (builder) => {
