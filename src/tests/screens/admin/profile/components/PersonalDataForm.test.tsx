@@ -39,7 +39,7 @@ describe('<PersonalDataForm />', () => {
     fetchMock.resetMocks();
   });
 
-  describe('PersonalDataForm without mock hook', () => {
+  describe('PersonalDataForm component without mock hook', () => {
     let wrapper: RenderResult;
 
     beforeEach(() => {

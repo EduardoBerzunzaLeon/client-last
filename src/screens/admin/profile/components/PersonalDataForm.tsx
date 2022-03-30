@@ -40,7 +40,6 @@ export const PersonalDataForm = ({ user, isUserLogged }: Props) => {
           };
           try {
             const updatedUser = await updateUser(newUser).unwrap();
-            console.log(updateUser);
             if (isUserLogged) {
               dispatch(setDataAuth({ user: updatedUser.data }));
             }
