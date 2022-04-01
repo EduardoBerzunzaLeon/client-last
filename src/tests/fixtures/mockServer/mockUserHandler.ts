@@ -2,15 +2,33 @@ import { rest } from 'msw';
 
 import { generateError } from '../testData/fakeUtilsData';
 import { UpdateUserRequest } from '../../../interfaces/api';
-import { userLogged } from '../testData/fakeAuthData';
+
+const userTesting = {
+  data: {
+    id: '608064aa1d7963091081ab5d',
+    email: 'eduardo@gmail.com',
+    name: {
+      first: 'test',
+      last: 'lastTest',
+    },
+    fullname: 'test lastTest',
+    gender: 'M',
+    role: 'Admin',
+    avatar: 'https:/url/myimage.jpg',
+    active: true,
+    blocked: false,
+  },
+  token: 'fakeToken',
+  status: 'success',
+};
 
 export const mockGetUser = rest.get<string>(
   `${process.env.REACT_APP_API_URL}/users/:id`,
   (req, res, ctx) => {
-    if (req.params.id === userLogged.data.id) {
+    if (req.params.id === userTesting.data.id) {
       return res(
         ctx.status(200),
-        ctx.json(userLogged),
+        ctx.json(userTesting),
       );
     }
 
@@ -24,26 +42,13 @@ export const mockGetUser = rest.get<string>(
 export const mockUpdateUser = rest.patch<UpdateUserRequest>(
   `${process.env.REACT_APP_API_URL}/users/:id`,
   (req, res, ctx) => {
-    if (req.params.id === userLogged.data.id) {
+    if (req.params.id === userTesting.data.id) {
+      userTesting.data.name.first = req.body.name.first;
+      userTesting.data.fullname = `${req.body.name.first} ${req.body.name.last}`;
+
       return res(
         ctx.status(200),
-        ctx.json({
-          status: 'success',
-          data: {
-            id: '608064aa1d7963091081ab5d',
-            name: {
-              first: 'Eduardo Jesússs',
-              last: 'Berzunza León',
-            },
-            fullname: 'Eduardo Jesússs Berzunza León',
-            gender: 'M',
-            email: 'eduardoberzunzal@gmail.com',
-            active: true,
-            blocked: false,
-            role: 'admin',
-            avatar: 'http://localhost:4000/img/c58c1b0dc778f206af641e6ebde3e4.png',
-          },
-        }),
+        ctx.json(userTesting),
       );
     }
 

@@ -52,7 +52,6 @@ const ProfileScreen = () => {
   }
 
   const { data: user } = data;
-
   return (
     <>
       <HeaderAdmin position="users/profile" title="Información Personal" />

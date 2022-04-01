@@ -7,11 +7,11 @@ import {
   RenderResult,
   waitFor,
 } from '@testing-library/react';
+
 import { mockStoreWithMiddlewares, renderWithRouter } from '../../../fixtures/render';
 import { mockGetUser, mockUpdateUser } from '../../../fixtures/mockServer/mockUserHandler';
 import { tutorApi } from '../../../../redux/services/tutorApi';
 import { userLogged } from '../../../fixtures/testData/fakeAuthData';
-import * as userApi from '../../../../redux/user/user.api';
 import ProfileScreen from '../../../../screens/admin/profile/ProfileScreen';
 
 const server = setupServer(mockGetUser, mockUpdateUser);
@@ -113,21 +113,27 @@ describe('<ProfileScreen />', () => {
       });
 
       await waitFor(() => {
-        //   FIXME query tag is necessary change
-        //
-        expect(queryByText('Fernando Andres')).toBeInTheDocument();
+        expect(queryByText(/Fernando Andres/i)).toBeInTheDocument();
       });
     });
   });
+
+  test('should show a error card', async () => {
+    mockParams.mockReturnValue({ id: 'noValidId' });
+
+    const {
+      queryByText,
+      getByRole,
+    } = render(
+      renderWithRouter(
+        ProfileScreen,
+        { initialEntries: '/admin/users/:id', store: storeRef.store },
+      ),
+    );
+
+    await waitFor(() => {
+      expect(queryByText(/Nuestro perrito se comio la infomación,/i)).toBeInTheDocument();
+      expect(getByRole('img')).toHaveAttribute('src', '/assets/images/error404.png');
+    });
+  });
 });
-
-// Test the initial correctly render
-//  6 dividers
-// 2 badges
-// 1 imagen
-
-// 2.- When click editar perfil show modal
-
-// 2.1 or 3 .- when modifiend login input verify that in profile card changes
-
-// 3.- Test when user doesnt retrieve data (Error Card)
