@@ -20,10 +20,9 @@ import Spinner from '../../../components/spinner/Spinner';
 
 import useAuth from '../../../hooks/useAuth';
 
-import './profileScreen.scss';
-
 const ProfileScreen = () => {
   const { id } = useParams();
+
   const [ isUserLogged, setIsUserLogged ] = useState(false);
   const [ displayModal, setDisplayModal ] = useState(false);
 

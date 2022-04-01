@@ -2,7 +2,9 @@ import { rest } from 'msw';
 import { RegisterRequest } from '../../../interfaces/api';
 import { userLogged } from '../testData/fakeAuthData';
 import { generateError } from '../testData/fakeUtilsData';
-import { ForgotPasswordRequest, SendEmailVerifyRequest, ResetPasswordRequest } from '../../../interfaces/api/requests/authInterface';
+import {
+  ForgotPasswordRequest, SendEmailVerifyRequest, ResetPasswordRequest, UpdatePasswordRequest,
+} from '../../../interfaces/api/requests/authInterface';
 
 export const mockLoginError = rest.post(
   `${process.env.REACT_APP_API_URL}/users/login`,
@@ -111,6 +113,23 @@ export const mockEmailVerify = rest.patch<string>(
   },
 );
 
+export const mockUpdatePassword = rest.patch<UpdatePasswordRequest>(
+  `${process.env.REACT_APP_API_URL}/users/me/password`,
+  (req, res, ctx) => {
+    if (req.body.currentPassword === '12345678') {
+      return res(
+        ctx.status(200),
+        ctx.json(req.body),
+      );
+    }
+
+    return res(
+      ctx.status(404),
+      ctx.json(generateError('No tiene autorización', 401).data),
+    );
+  },
+);
+
 export default {
   mockLoginError,
   mockLoginSuccess,
@@ -119,4 +138,5 @@ export default {
   mockSendEmailVerify,
   mockResetPassword,
   mockEmailVerify,
+  mockUpdatePassword,
 };

@@ -3,6 +3,7 @@ import { Form, Formik } from 'formik';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
+import { useState } from 'react';
 import { errorTranslateAuthForm, processError } from '../../../../utils/form/handlerErrorsForms';
 import { genderRadio } from '../../../../utils/form/radioButtonsObjects';
 import { InputTextApp, RadioGroup } from '../../../../components/forms';
@@ -19,7 +20,9 @@ export const PersonalDataForm = ({ user, isUserLogged }: Props) => {
   const [ updateUser, { isLoading }] = useUpdateUserMutation();
   const dispatch = useAppDispatch();
   const { toast, showError, showSuccess } = useToast();
-  const { name: { first, last }, gender, id } = user;
+  const [ userSelected, setUserSelected ] = useState(user);
+
+  const { name: { first, last }, gender, id } = userSelected;
 
   return (
     <>
@@ -31,6 +34,7 @@ export const PersonalDataForm = ({ user, isUserLogged }: Props) => {
           last,
           gender,
         }}
+        enableReinitialize
         onSubmit={async (values, { setFieldError }) => {
           const { last: lastUser, first: firstUser, gender: genderUser } = values;
           const newUser: UpdateUserRequest = {
@@ -38,8 +42,10 @@ export const PersonalDataForm = ({ user, isUserLogged }: Props) => {
             name: { first: firstUser, last: lastUser },
             gender: genderUser,
           };
+
           try {
             const updatedUser = await updateUser(newUser).unwrap();
+            setUserSelected({ ...updatedUser.data });
             if (isUserLogged) {
               dispatch(setDataAuth({ user: updatedUser.data }));
             }

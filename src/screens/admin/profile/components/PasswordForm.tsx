@@ -39,6 +39,7 @@ export const PasswordForm = ({ userId }: {userId: string}) => {
             .min(6, 'Mínimo 6 letras')
             .required('Requerido'),
           password: Yup.string()
+            .notOneOf([ Yup.ref('currentPassword') ], 'La nueva contraseña tiene que ser diferente')
             .min(6, 'Mínimo 6 letras')
             .required('Requerido'),
           confirmPassword: Yup.string()

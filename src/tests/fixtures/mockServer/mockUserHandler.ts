@@ -7,7 +7,7 @@ import { userLogged } from '../testData/fakeAuthData';
 export const mockGetUser = rest.get<string>(
   `${process.env.REACT_APP_API_URL}/users/:id`,
   (req, res, ctx) => {
-    if (req.params.id === '123456789') {
+    if (req.params.id === userLogged.data.id) {
       return res(
         ctx.status(200),
         ctx.json(userLogged),
@@ -27,7 +27,23 @@ export const mockUpdateUser = rest.patch<UpdateUserRequest>(
     if (req.params.id === userLogged.data.id) {
       return res(
         ctx.status(200),
-        ctx.json(req.body),
+        ctx.json({
+          status: 'success',
+          data: {
+            id: '608064aa1d7963091081ab5d',
+            name: {
+              first: 'Eduardo Jesússs',
+              last: 'Berzunza León',
+            },
+            fullname: 'Eduardo Jesússs Berzunza León',
+            gender: 'M',
+            email: 'eduardoberzunzal@gmail.com',
+            active: true,
+            blocked: false,
+            role: 'admin',
+            avatar: 'http://localhost:4000/img/c58c1b0dc778f206af641e6ebde3e4.png',
+          },
+        }),
       );
     }
 
