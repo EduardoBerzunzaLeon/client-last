@@ -1,10 +1,39 @@
+import { useRef } from 'react';
+
+import { useNavigate } from 'react-router-dom';
+import { Menu } from 'primereact/menu';
 import { InputText } from 'primereact/inputtext';
 
 import { useAppDispatch } from '../../../../redux/hooks';
 import { openSider } from '../../../../redux/ui/ui.slice';
+import { setDefaultAuthState } from '../../../../redux/auth/auth.slice';
+import useAuth from '../../../../hooks/useAuth';
 
 const MenuTop = () => {
+  const menu = useRef<any>(null);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { user } = useAuth();
+
+  const items = [
+    {
+      label: 'Perfil',
+      icon: 'pi pi-user',
+      command: () => {
+        navigate(`/admin/users/${user?.id}`);
+      },
+    },
+    {
+      separator: true,
+    },
+    {
+      label: 'Cerrar Sesión',
+      icon: 'pi pi-fw pi-power-off',
+      command: () => {
+        dispatch(setDefaultAuthState());
+      },
+    },
+  ];
 
   const onToggleMenu = () => {
     dispatch(openSider());
@@ -23,19 +52,17 @@ const MenuTop = () => {
           <InputText type="text" placeholder="Search" />
           <span className="layout-topbar-search-icon pi pi-search" />
         </span>
-        <button type="button" className="p-link">
-          <span className="layout-topbar-item-text">Events</span>
-          <span className="layout-topbar-icon pi pi-calendar" />
-          <span className="layout-topbar-badge">5</span>
-        </button>
-        <button type="button" className="p-link">
-          <span className="layout-topbar-item-text">Settings</span>
-          <span className="layout-topbar-icon pi pi-cog" />
-        </button>
-        <button type="button" className="p-link">
+        <button
+          type="button"
+          className="p-link"
+          onClick={(event) => menu.current.toggle(event)}
+          aria-controls="popup_menu"
+          aria-haspopup
+        >
           <span className="layout-topbar-item-text">User</span>
           <span className="layout-topbar-icon pi pi-user" />
         </button>
+        <Menu model={items} popup ref={menu} id="popup_menu" />
       </div>
     </div>
   );

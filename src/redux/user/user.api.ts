@@ -1,14 +1,20 @@
 // eslint-disable-next-line import/no-cycle
-import { tutorApi } from '../services/tutorApi';
-
-import { UserSingleResponse } from '../../interfaces/api';
+import { invalidatesList, providesList, tutorApi } from '../services/tutorApi';
+import { UserSingleResponse, UsersResponse } from '../../interfaces/api';
 import { UpdateUserRequest } from '../../interfaces/api/requests/userInterface';
+
+const providesListUser = providesList('Users');
+const invalidatesListUsers = invalidatesList('Users');
 
 export const userApi = tutorApi.injectEndpoints({
   endpoints: (builder) => ({
     getUser: builder.query<UserSingleResponse, string>({
       query: (id) => `users/${id}`,
-      providesTags: (result, error, id) => [{ type: 'User', id }],
+      providesTags: (result, error, id) => [{ type: 'Users', id }],
+    }),
+    getUsers: builder.query<UsersResponse, void>({
+      query: () => 'users',
+      providesTags: providesListUser,
     }),
     updateUser: builder.mutation<UserSingleResponse, UpdateUserRequest>({
       query: ({ id, ...patch }) => ({
@@ -16,7 +22,7 @@ export const userApi = tutorApi.injectEndpoints({
         method: 'PATCH',
         body: patch,
       }),
-      invalidatesTags: [ 'User' ],
+      invalidatesTags: invalidatesListUsers,
     }),
     uploadAvatar: builder.mutation<UserSingleResponse, FormData>({
       query: (body) => ({
@@ -24,7 +30,7 @@ export const userApi = tutorApi.injectEndpoints({
         method: 'PATCH',
         body,
       }),
-      invalidatesTags: [ 'User' ],
+      invalidatesTags: invalidatesListUsers,
     }),
   }),
   overrideExisting: false,
@@ -32,6 +38,7 @@ export const userApi = tutorApi.injectEndpoints({
 
 export const {
   useGetUserQuery,
+  useGetUsersQuery,
   useUpdateUserMutation,
   useUploadAvatarMutation,
 } = userApi;

@@ -12,6 +12,32 @@ import { ErrorResponse } from '../../interfaces/api';
 // eslint-disable-next-line import/no-cycle
 import { RootState } from '../store';
 
+interface genericResponse {
+  id: string | number
+}
+
+interface responseRTK {
+  data: genericResponse
+}
+
+interface responsArrayRTK {
+  data: genericResponse[]
+}
+
+export const invalidatesList = <R extends responseRTK, T extends string>(tagType: T) => (
+  resultsWithIds: R | undefined,
+) => [{ type: tagType, id: resultsWithIds?.data.id }];
+
+export const providesList = <R extends responsArrayRTK, T extends string>(
+  tagType: T) => (
+    resultsWithIds: R | undefined,
+  ) => (resultsWithIds
+    ? [
+      { type: tagType, id: 'LIST' },
+      ...resultsWithIds.data.map(({ id }) => ({ type: tagType, id })),
+    ]
+    : [{ type: tagType, id: 'LIST' }]);
+
 export const tutorApi = createApi({
   reducerPath: 'tutorApi',
   baseQuery:
@@ -32,7 +58,7 @@ export const tutorApi = createApi({
   }) as BaseQueryFn<string | FetchArgs,
     unknown, FetchBaseQueryError | ErrorResponse, {}, FetchBaseQueryMeta>,
   keepUnusedDataFor: process.env.NODE_ENV !== 'test' ? 60 : 0,
-  tagTypes: [ 'Auth', 'User' ],
+  tagTypes: [ 'Auth', 'Users' ],
   endpoints: () => ({}),
 });
 

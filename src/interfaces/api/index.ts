@@ -1,7 +1,7 @@
 export type { Error, ErrorResponse } from './responses/errorInterface';
 
 export type {
-  User, UserResponse, ForgotPasswordResponse, UserSingleResponse,
+  User, UserResponse, UsersResponse, ForgotPasswordResponse, UserSingleResponse,
 } from './responses/userInterface';
 
 export type {

@@ -64,7 +64,7 @@ export const MenuProfile = () => {
                 onClick={handleClickLink}
               >
                 <i className="pi pi-fw pi-user" />
-                <span>Account</span>
+                <span>Mi Perfil</span>
               </NavLink>
 
             </li>
@@ -78,7 +78,7 @@ export const MenuProfile = () => {
             <li>
               <button onClick={handleLogout} type="button" className="p-link">
                 <i className="pi pi-fw pi-power-off" />
-                <span>Logout</span>
+                <span>Cerrar Sesión</span>
               </button>
             </li>
           </ul>

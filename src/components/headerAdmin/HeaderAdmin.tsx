@@ -18,6 +18,7 @@ export const HeaderAdmin = React.memo(({ position, title }: Props) => {
   const items: Generic = {
     users: { label: 'Usuarios', command: () => { navigate('/admin/users'); } },
     profile: { label: 'Perfil' },
+    home: { label: 'Dashboard' },
   };
 
   const models = convertObjectToArray<MenuItem>(position, items);

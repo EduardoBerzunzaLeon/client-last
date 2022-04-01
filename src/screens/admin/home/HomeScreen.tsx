@@ -1,7 +1,7 @@
+import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
+
 const HomeScreen = () => (
-  <div>
-    HomeScreen
-  </div>
+  <HeaderAdmin position="home" title="Dashboard" />
 );
 
 export default HomeScreen;
