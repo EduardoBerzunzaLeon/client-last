@@ -114,6 +114,7 @@ describe('<ProfileScreen />', () => {
 
       await waitFor(() => {
         //   FIXME query tag is necessary change
+        //
         expect(queryByText('Fernando Andres')).toBeInTheDocument();
       });
     });
