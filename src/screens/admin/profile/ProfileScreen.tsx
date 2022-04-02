@@ -9,49 +9,26 @@ import { useParams } from 'react-router-dom';
 import { Badge } from '../../../components/badge/Badge';
 import { Divider } from '../../../components/Divider/Divider';
 import { FileSingleUpload } from '../../../components/fileUpload/FileSingleUpload';
-import { getDetailError } from '../../../redux/services/handlerErrorApi';
 import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
 import { PasswordForm } from './components/PasswordForm';
 import { PersonalDataForm } from './components/PersonalDataForm';
 import { Skeleton } from '../../../components/Skeleton/Skeleton';
 import { useGetUserQuery } from '../../../redux/user/user.api';
-import ErrorCard from '../../../components/errorCard/ErrorCard';
-import Spinner from '../../../components/spinner/Spinner';
-
+import { User } from '../../../interfaces/api';
+import { withSpinnerRTK } from '../../../components/withSpinnerRTK/withSpinnerRTK';
 import useAuth from '../../../hooks/useAuth';
 
-const ProfileScreen = () => {
-  const { id } = useParams();
-
+const ProfileScreenMin = ({ data }: {data: User}) => {
   const [ isUserLogged, setIsUserLogged ] = useState(false);
   const [ displayModal, setDisplayModal ] = useState(false);
-
   const { user: userAuth } = useAuth();
-
-  const {
-    data, isLoading, isError, error,
-  } = useGetUserQuery(id ?? '');
 
   useEffect(() => {
     if (data) {
-      setIsUserLogged(userAuth?.id === data.data.id);
+      setIsUserLogged(userAuth?.id === data.id);
     }
   }, [ userAuth, data ]);
 
-  if (isLoading) {
-    return <Spinner message="Cargando Usuario" />;
-  }
-
-  if (isError || !data) {
-    return (
-      <ErrorCard
-        title="Ocurrio un error en su petición"
-        detail={error ? getDetailError(error) : 'No se encontro el usuario'}
-      />
-    );
-  }
-
-  const { data: user } = data;
   return (
     <>
       <HeaderAdmin position="users/profile" title="Información Personal" />
@@ -63,7 +40,7 @@ const ProfileScreen = () => {
               <figure>
                 <Skeleton classNameSkeleton="border-circle w-8rem h-8rem" imgError="/assets/images/profile.png">
                   <img
-                    src={user?.avatar}
+                    src={data?.avatar}
                     alt="Profile"
                     className="border-circle border-purple-700 border-3 w-8rem h-8rem"
                     referrerPolicy="no-referrer"
@@ -74,17 +51,17 @@ const ProfileScreen = () => {
 
             <div className="overflow-hidden text-overflow-ellipsis">
               <Divider text="Nombre" icon="user" />
-              <span className="font-semibold">{user.fullname}</span>
+              <span className="font-semibold">{data.fullname}</span>
             </div>
 
             <div className="overflow-hidden text-overflow-ellipsis">
               <Divider text="Correo" icon="envelope" />
-              <span className="font-semibold">{user.email}</span>
+              <span className="font-semibold">{data.email}</span>
             </div>
 
             <div className="overflow-hidden text-overflow-ellipsis">
               <Divider text="Sexo" icon="question" />
-              <span className="font-semibold">{user.gender === 'M' ? 'Hombre' : 'Mujer'}</span>
+              <span className="font-semibold">{data.gender === 'M' ? 'Hombre' : 'Mujer'}</span>
             </div>
 
             {
@@ -110,30 +87,30 @@ const ProfileScreen = () => {
           <Card title="Datos del sistema">
             <div className="overflow-hidden text-overflow-ellipsis">
               <Divider text="Rol" icon="shield" />
-              <span className="font-semibold">{user.role}</span>
+              <span className="font-semibold">{data.role}</span>
             </div>
 
             <div className="overflow-hidden text-overflow-ellipsis py-1">
               <Divider text="Activo" icon="key" />
               <Badge
-                text={user?.active ? 'Activo' : 'Inactivo'}
+                text={data?.active ? 'Activo' : 'Inactivo'}
                 matchObject={{
                   true: 'success',
                   false: 'danger',
                 }}
-                match={user!.active.toString()}
+                match={data!.active.toString()}
               />
             </div>
 
             <div className="overflow-hidden text-overflow-ellipsis py-1">
               <Divider text="Bloqueado" icon="unlock" />
               <Badge
-                text={user?.blocked ? 'Bloqueado' : 'Desbloqueado'}
+                text={data?.blocked ? 'Bloqueado' : 'Desbloqueado'}
                 matchObject={{
                   true: 'danger',
                   false: 'success',
                 }}
-                match={user!.blocked.toString()}
+                match={data!.blocked.toString()}
               />
             </div>
           </Card>
@@ -153,12 +130,12 @@ const ProfileScreen = () => {
               )
             }
             <Divider text="Información Personal" icon="user" />
-            <PersonalDataForm user={user} isUserLogged={isUserLogged} />
+            <PersonalDataForm user={data} isUserLogged={isUserLogged} />
           </TabPanel>
           {
               (isUserLogged) && (
                 <TabPanel header="Cambiar contraseña">
-                  <PasswordForm userId={user.id} />
+                  <PasswordForm userId={data.id} />
                 </TabPanel>
               )
             }
@@ -167,6 +144,13 @@ const ProfileScreen = () => {
       </Dialog>
     </>
   );
+};
+
+const ProfileScreen = () => {
+  const { id } = useParams();
+  const Component = withSpinnerRTK(ProfileScreenMin, useGetUserQuery, id ?? '');
+
+  return <Component />;
 };
 
 export default ProfileScreen;

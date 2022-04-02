@@ -7,22 +7,10 @@ import {
   FetchBaseQueryMeta,
 } from '@reduxjs/toolkit/query/react';
 
-import { ErrorResponse } from '../../interfaces/api';
+import { ErrorResponse, responsArrayRTK, responseRTK } from '../../interfaces/api';
 
 // eslint-disable-next-line import/no-cycle
 import { RootState } from '../store';
-
-interface genericResponse {
-  id: string | number
-}
-
-interface responseRTK {
-  data: genericResponse
-}
-
-interface responsArrayRTK {
-  data: genericResponse[]
-}
 
 export const invalidatesList = <R extends responseRTK, T extends string>(tagType: T) => (
   resultsWithIds: R | undefined,

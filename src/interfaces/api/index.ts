@@ -1,3 +1,5 @@
+export type { genericResponse, responseRTK, responsArrayRTK } from './responses/genericInterface';
+
 export type { Error, ErrorResponse } from './responses/errorInterface';
 
 export type {
