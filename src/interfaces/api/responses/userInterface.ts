@@ -19,11 +19,6 @@ export interface UserResponse {
     status: string
   }
 
-export interface UsersResponse {
-    data: User[],
-    status: string
-  }
-
 export interface ForgotPasswordResponse {
     status: string,
     message: string,

@@ -1,10 +1,17 @@
 // eslint-disable-next-line import/no-cycle
 import { invalidatesList, providesList, tutorApi } from '../services/tutorApi';
-import { UserSingleResponse, UsersResponse } from '../../interfaces/api';
+import { User, UserSingleResponse } from '../../interfaces/api';
 import { UpdateUserRequest } from '../../interfaces/api/requests/userInterface';
+import { ListResponse } from '../../interfaces/api/responses/genericInterface';
 
 const providesListUser = providesList('Users');
 const invalidatesListUsers = invalidatesList('Users');
+
+interface Paginator {
+  page: string | void,
+  sortField: string | void,
+  sortOrder: string | void
+}
 
 export const userApi = tutorApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -12,8 +19,8 @@ export const userApi = tutorApi.injectEndpoints({
       query: (id) => `users/${id}`,
       providesTags: (result, error, id) => [{ type: 'Users', id }],
     }),
-    getUsers: builder.query<UsersResponse, void>({
-      query: () => 'users',
+    getUsers: builder.query<ListResponse<User>, Paginator>({
+      query: ({ page = '1', sortField = '', sortOrder = '1' }) => `users/?page=${page}&sort=${sortField}&limit=2&sortOrder=${sortOrder}`,
       providesTags: providesListUser,
     }),
     updateUser: builder.mutation<UserSingleResponse, UpdateUserRequest>({

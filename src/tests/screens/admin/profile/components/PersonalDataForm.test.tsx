@@ -166,6 +166,7 @@ describe('<PersonalDataForm />', () => {
     await waitFor(() => {
       expect(mockCalled).toHaveBeenCalledWith({
         id: userLogged.data.id,
+        email: userLogged.data.email,
         gender: 'M',
         name: { first: 'Fernando Andres', last: 'lastTest' },
       });

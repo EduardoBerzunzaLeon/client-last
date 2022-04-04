@@ -14,8 +14,10 @@ import LoginScreen from '../../screens/blank/loginScreen/LoginScreen';
 import RegisterScreen from '../../screens/blank/registerScreen/RegisterScreen';
 import ResetPasswordScreen from '../../screens/blank/resetPasswordScreen/ResetPasswordScreen';
 import SendEmailVerifyScreen from '../../screens/blank/sendEmailVerify/SendEmailVerifyScreen';
-import UsersScreen from '../../screens/admin/users/UsersScreen';
+// import UsersScreen from '../../screens/admin/users/UsersScreen';
 import ProfileScreen from '../../screens/admin/profile/ProfileScreen';
+// import { DataTableFilterDemo } from '../../screens/admin/users/DataTableDemo';
+import DataTableLazy from '../../screens/admin/users/DataTableLazy';
 
 const BlankLayoutLazy = lazy(() => import(/* webpackChunkName: "Auth" */'../../screens/blank/layout/BlankLayout'));
 
@@ -34,7 +36,8 @@ const Routes = () => {
           path: 'home',
         },
         {
-          element: <UsersScreen />,
+          // element: <UsersScreen />,
+          element: <DataTableLazy />,
           path: 'users',
         },
         {

@@ -38,7 +38,7 @@ describe('<ProfileScreen />', () => {
     fetchMock.resetMocks();
   });
 
-  describe('PersonalDataForm component without mock hook', () => {
+  describe('ProfileScreen component without mock hook', () => {
     let wrapper: RenderResult;
 
     beforeEach(() => {
@@ -56,7 +56,7 @@ describe('<ProfileScreen />', () => {
         queryByText, container, getAllByRole, getByRole,
       } = wrapper;
 
-      expect(queryByText(/Cargando Usuario/i)).toBeInTheDocument();
+      expect(queryByText(/Cargando/i)).toBeInTheDocument();
 
       await waitFor(() => {
         expect(getAllByRole('separator').length).toBe(6);
@@ -85,7 +85,7 @@ describe('<ProfileScreen />', () => {
       } = wrapper;
 
       await waitFor(() => {
-        expect(queryByText(/Cargando Usuario/i)).not.toBeInTheDocument();
+        expect(queryByText(/Cargando/i)).not.toBeInTheDocument();
       });
 
       const button = getByRole('button', { name: /Editar Perfil/i });

@@ -22,7 +22,9 @@ export const PersonalDataForm = ({ user, isUserLogged }: Props) => {
   const { toast, showError, showSuccess } = useToast();
   const [ userSelected, setUserSelected ] = useState(user);
 
-  const { name: { first, last }, gender, id } = userSelected;
+  const {
+    name: { first, last }, gender, email, id,
+  } = userSelected;
 
   return (
     <>
@@ -33,14 +35,18 @@ export const PersonalDataForm = ({ user, isUserLogged }: Props) => {
           first,
           last,
           gender,
+          email,
         }}
         enableReinitialize
         onSubmit={async (values, { setFieldError }) => {
-          const { last: lastUser, first: firstUser, gender: genderUser } = values;
+          const {
+            last: lastUser, first: firstUser, gender: genderUser, email: emailUser,
+          } = values;
           const newUser: UpdateUserRequest = {
             id,
             name: { first: firstUser, last: lastUser },
             gender: genderUser,
+            email: emailUser,
           };
 
           try {
@@ -60,6 +66,9 @@ export const PersonalDataForm = ({ user, isUserLogged }: Props) => {
           first: Yup.string()
             .required('Requerido'),
           last: Yup.string()
+            .required('Requerido'),
+          email: Yup.string()
+            .email('Email no tiene un formato valido')
             .required('Requerido'),
           gender: Yup.string()
             .required('Requerido'),
@@ -85,6 +94,17 @@ export const PersonalDataForm = ({ user, isUserLogged }: Props) => {
                 id="last"
                 className="w-full"
                 icon="pi pi-user-edit"
+              />
+            </div>
+
+            <div className="field pt-2">
+              <InputTextApp
+                label="Email"
+                name="email"
+                id="email"
+                keyfilter="email"
+                className="w-full"
+                icon="pi pi-envelope"
               />
             </div>
 

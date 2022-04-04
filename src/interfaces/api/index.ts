@@ -1,9 +1,11 @@
-export type { genericResponse, responseRTK, responsArrayRTK } from './responses/genericInterface';
+export type {
+  genericResponse, responseRTK, responsArrayRTK, ListResponse, SingleResponse,
+} from './responses/genericInterface';
 
 export type { Error, ErrorResponse } from './responses/errorInterface';
 
 export type {
-  User, UserResponse, UsersResponse, ForgotPasswordResponse, UserSingleResponse,
+  User, UserResponse, ForgotPasswordResponse, UserSingleResponse,
 } from './responses/userInterface';
 
 export type {
