@@ -25,6 +25,7 @@ export const DataTableFilterDemo = () => {
     page: '1',
     sortField: 'NU',
     sortOrder: '1',
+    filters: {},
   });
 
   const [ customers1, setCustomers1 ] = useState<any>(null);

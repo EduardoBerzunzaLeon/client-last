@@ -29,6 +29,7 @@ const DataTableLazy = () => {
       page: lazyParams.page + 1,
       sortField: lazyParams.sortField,
       sortOrder: lazyParams.sortOrder,
+      filters: lazyParams.filters,
     },
   );
 
@@ -36,7 +37,6 @@ const DataTableLazy = () => {
     setLazyParams(event);
   };
 
-  console.log(lazyParams);
   const onSort = (event: DataTablePFSEvent) => {
     setLazyParams(event);
   };
@@ -44,7 +44,6 @@ const DataTableLazy = () => {
   const onFilter = (event: DataTablePFSEvent) => {
     // eslint-disable-next-line no-param-reassign
     event.first = 0;
-    console.log(event);
     setLazyParams(event);
   };
 
@@ -74,19 +73,6 @@ const DataTableLazy = () => {
 
   const header = renderHeader();
 
-  //   const representativeBodyTemplate = (rowData:User) => (
-  //     <>
-  //       <img
-  //         alt={rowData.name.first}
-  //         src={rowData.avatar}
-  //         onError={(e: any) => { e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'; }}
-  //         width={32}
-  //         style={{ verticalAlign: 'middle' }}
-  //       />
-  //       <span className="image-text">{rowData.fullname}</span>
-  //     </>
-  //   );
-
   return (
     <div>
       <div className="card">
@@ -110,13 +96,21 @@ const DataTableLazy = () => {
           filters={lazyParams.filters}
           loading={isFetching}
         >
-          <Column field="fullname" header="Name" sortable filter filterPlaceholder="Search by name" />
+          <Column
+            field="fullname"
+            header="Name"
+            sortable
+            showFilterMenu={false}
+            filter
+            filterPlaceholder="Search by name"
+          />
           <Column
             header="First"
             filterField="name.first"
             field="name.first"
             sortable
             filter
+            showFilterMenu={false}
             filterPlaceholder="Search by country"
           />
           <Column
@@ -125,9 +119,16 @@ const DataTableLazy = () => {
             filterField="email"
             sortable
             filter
+            showFilterMenu={false}
             filterPlaceholder="Search by company"
           />
-          <Column field="gender" header="Sex" filter filterPlaceholder="Search by representative" />
+          <Column
+            field="gender"
+            header="Sex"
+            filter
+            filterPlaceholder="Search by representative"
+            showFilterMenu={false}
+          />
         </DataTable>
       </div>
     </div>
