@@ -17,14 +17,15 @@ interface Paginator {
 
 const prepareFilters = (filterOptions: Generic) => Object.keys(filterOptions).map((fieldName) => {
   const f = filterOptions[fieldName];
-  if (f.value) {
+  // ? Not pass falsy values except boolean false
+  if (f.value || f.value === false) {
     let matchMode = '[regex]=';
     if (f.matchMode) {
       switch (f.matchMode) {
         case 'contains':
           matchMode = '[regex]=';
           break;
-        case 'equal':
+        case 'equals':
           matchMode = '=';
           break;
         default:
