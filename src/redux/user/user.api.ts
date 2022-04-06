@@ -15,19 +15,27 @@ interface Paginator {
   filters: Generic
 }
 
-const prepareFilters = (filterOptions: Generic) => {
-  const keyNames = Object.keys(filterOptions);
-  console.log({ keyNames, filterOptions });
-  //* email[regex]=bernes
-
-  Object.keys(filterOptions).map((fieldName) => {
-
-  });
-
-  // console.log(keyNames);
-  // params ? Object.keys(params).map(k => encodeURIComponent(k) + '='
-  // + encodeURIComponent(params[k])).join('&') : '';
-};
+const prepareFilters = (filterOptions: Generic) => Object.keys(filterOptions).map((fieldName) => {
+  const f = filterOptions[fieldName];
+  if (f.value) {
+    let matchMode = '[regex]=';
+    if (f.matchMode) {
+      switch (f.matchMode) {
+        case 'contains':
+          matchMode = '[regex]=';
+          break;
+        case 'equal':
+          matchMode = '=';
+          break;
+        default:
+          matchMode = '[regex]=';
+          break;
+      }
+    }
+    return `${fieldName}${matchMode}${encodeURIComponent(f.value)}`.replace('.', '_');
+  }
+  return '';
+}).filter(Boolean).join('&');
 
 export const userApi = tutorApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -38,10 +46,7 @@ export const userApi = tutorApi.injectEndpoints({
     getUsers: builder.query<ListResponse<User>, Paginator>({
       query: ({
         page = '1', sortField = '', sortOrder = '1', filters,
-      }) => {
-        prepareFilters(filters);
-        return `users/?page=${page}&sort=${sortField}&limit=2&sortOrder=${sortOrder}`;
-      },
+      }) => `users/?page=${page}&sort=${sortField}&limit=2&sortOrder=${sortOrder}&${prepareFilters(filters)}`,
       providesTags: providesListUser,
     }),
     updateUser: builder.mutation<UserSingleResponse, UpdateUserRequest>({
