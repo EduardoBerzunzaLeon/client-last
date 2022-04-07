@@ -1,3 +1,4 @@
+import { User } from '../responses/userInterface';
 import { Name } from './authInterface';
 
 export interface UpdateUserRequest {
@@ -10,3 +11,6 @@ export interface UpdateUserRequest {
 export interface UpdateAvatarRequest {
     avatar: File
 }
+
+export type CreateUserRequest = Omit<User, 'id' | 'fullname' | 'active'>;
+export type UpdateUserAdminRequest = Omit<User, 'fullname' | 'active'>;

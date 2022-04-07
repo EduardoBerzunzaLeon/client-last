@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-cycle
 import { invalidatesList, providesList, tutorApi } from '../services/tutorApi';
 import { User, UserSingleResponse } from '../../interfaces/api';
-import { UpdateUserRequest } from '../../interfaces/api/requests/userInterface';
+import { CreateUserRequest, UpdateUserAdminRequest, UpdateUserRequest } from '../../interfaces/api/requests/userInterface';
 import { ListResponse } from '../../interfaces/api/responses/genericInterface';
 import { Generic } from '../../interfaces/generic';
 
@@ -58,6 +58,22 @@ export const userApi = tutorApi.injectEndpoints({
       }),
       invalidatesTags: invalidatesListUsers,
     }),
+    updateUserAdmin: builder.mutation<UserSingleResponse, UpdateUserAdminRequest>({
+      query: ({ id, ...patch }) => ({
+        url: `users/${id}/admin`,
+        method: 'PATCH',
+        body: patch,
+      }),
+      invalidatesTags: invalidatesListUsers,
+    }),
+    createUser: builder.mutation<UserSingleResponse, CreateUserRequest>({
+      query: ({ ...post }) => ({
+        url: 'users/',
+        method: 'POST',
+        body: post,
+      }),
+      invalidatesTags: invalidatesListUsers,
+    }),
     uploadAvatar: builder.mutation<UserSingleResponse, FormData>({
       query: (body) => ({
         url: 'users/avatar',
@@ -75,4 +91,6 @@ export const {
   useGetUsersQuery,
   useUpdateUserMutation,
   useUploadAvatarMutation,
+  useUpdateUserAdminMutation,
+  useCreateUserMutation,
 } = userApi;

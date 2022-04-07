@@ -18,4 +18,9 @@ export type {
   UpdatePasswordRequest,
 } from './requests/authInterface';
 
-export type { UpdateUserRequest, UpdateAvatarRequest } from './requests/userInterface';
+export type {
+  UpdateUserRequest,
+  UpdateAvatarRequest,
+  CreateUserRequest,
+  UpdateUserAdminRequest,
+} from './requests/userInterface';

@@ -9,8 +9,14 @@ import { Dropdown } from 'primereact/dropdown';
 import classNames from 'classnames';
 import { TriStateCheckbox } from 'primereact/tristatecheckbox';
 import { useNavigate } from 'react-router-dom';
+import { Dialog } from 'primereact/dialog';
+import { TabPanel, TabView } from 'primereact/tabview';
 import { useGetUsersQuery } from '../../../redux/user/user.api';
 import { User } from '../../../interfaces/api';
+import { Divider } from '../../../components/Divider/Divider';
+import { FileSingleUpload } from '../../../components/fileUpload/FileSingleUpload';
+import { PasswordForm } from '../profile/components/PasswordForm';
+import { UserDataForm } from './components/UserDataForm';
 // import { User } from '../../../interfaces/api';
 
 const initialFiltersValue = {
@@ -31,6 +37,8 @@ const DataTableLazy = () => {
     sortOrder: null,
     filters: { ...initialFiltersValue },
   });
+
+  const [ displayModal, setDisplayModal ] = useState(false);
 
   const navigate = useNavigate();
 
@@ -79,16 +87,25 @@ const DataTableLazy = () => {
 
   const renderHeader = () => (
     <div className="flex justify-content-between flex-wrap">
-      <Button
-        type="button"
-        icon="pi pi-filter-slash"
-        label="Clear"
-        className="p-button-outlined m-2"
-        onClick={() => setLazyParams({
-          ...lazyParams,
-          filters: { ...initialFiltersValue },
-        })}
-      />
+      <div>
+        <Button
+          type="button"
+          icon="pi pi-filter-slash"
+          label="Limpiar Filtros"
+          className="p-button-outlined m-2"
+          onClick={() => setLazyParams({
+            ...lazyParams,
+            filters: { ...initialFiltersValue },
+          })}
+        />
+        <Button
+          type="button"
+          icon="pi pi-user-plus"
+          label="Crear Usuario"
+          className="p-button-outlined p-button-success m-2"
+          onClick={() => setDisplayModal(true)}
+        />
+      </div>
       <span className="p-input-icon-left m-2 overflow-hidden">
         <i className="pi pi-search" />
         <InputText
@@ -112,13 +129,16 @@ const DataTableLazy = () => {
   const actionBodyTemplate = (rowData: User) => (
     <>
       <Button icon="pi pi-eye" className="p-button-sm p-button-raised p-button-primary mr-1" onClick={() => navigate(`/admin/users/${rowData?.id}`)} />
-      <Button icon="pi pi-pencil" className="p-button-sm p-button-raised p-button-primary mr-1" onClick={() => console.log(rowData)} />
+      <Button icon="pi pi-pencil" className="p-button-sm p-button-raised p-button-primary mr-1" onClick={() => setDisplayModal(true)} />
       <Button icon="pi pi-lock" className="p-button-sm p-button-raised p-button-danger" onClick={() => console.log(rowData)} />
 
     </>
   );
 
   const header = renderHeader();
+  if (!data) {
+    return (<div>Cargando</div>);
+  }
 
   return (
     <div>
@@ -193,6 +213,22 @@ const DataTableLazy = () => {
           />
         </DataTable>
       </div>
+      <Dialog header="Editar Perfil" className="shadow-5 w-11 md:w-6 lg:w-5" modal visible={displayModal} onHide={() => setDisplayModal(false)}>
+        <TabView>
+          <TabPanel header="Datos Personales">
+
+            <Divider text="Foto de perfil" icon="image" />
+            <FileSingleUpload />
+
+            <Divider text="Información Personal" icon="user" />
+            <UserDataForm user={data?.data[0]} />
+          </TabPanel>
+          <TabPanel header="Cambiar contraseña">
+            <PasswordForm userId="123456789" />
+          </TabPanel>
+
+        </TabView>
+      </Dialog>
     </div>
   );
 };

@@ -8,7 +8,7 @@ export interface User {
     fullname: string,
     gender: string,
     role: string,
-    avatar: string,
+    avatar?: string,
     active: boolean,
     blocked: boolean
   }
