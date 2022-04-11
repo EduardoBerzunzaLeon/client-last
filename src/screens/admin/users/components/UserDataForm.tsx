@@ -3,11 +3,6 @@ import { Form, Formik } from 'formik';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import { useState } from 'react';
-import { ToggleButton } from 'primereact/togglebutton';
-import { Dropdown } from 'primereact/dropdown';
-
-import classNames from 'classnames';
 import { errorTranslateAuthForm, processError } from '../../../../utils/form/handlerErrorsForms';
 import { genderRadio } from '../../../../utils/form/radioButtonsObjects';
 
@@ -15,6 +10,9 @@ import { InputTextApp, RadioGroup } from '../../../../components/forms';
 import { User } from '../../../../interfaces/api';
 import { useUpdateUserAdminMutation, useCreateUserMutation } from '../../../../redux/user/user.api';
 import useToast from '../../../../hooks/useToast';
+import { DropdownApp } from '../../../../components/forms/dropdown/DropdownApp';
+import { ToggleButtonApp } from '../../../../components/forms/toggleButton/ToggleButtonApp';
+import { FileSingleInputApp } from '../../../../components/forms/fileInput/FileSingleInputApp';
 
 interface Props { user: User | undefined }
 
@@ -22,18 +20,12 @@ export const UserDataForm = ({ user }: Props) => {
   const [ updateUser, { isLoading: isLoadingUpdate }] = useUpdateUserAdminMutation();
   const [ createUser, { isLoading: isLoadingCreate }] = useCreateUserMutation();
 
-  const [ selectedCity1, setSelectedCity1 ] = useState<any>(null);
   const { toast, showError, showSuccess } = useToast();
-  const [ checked1, setChecked1 ] = useState(false);
 
-  const cities = [
-    { name: 'Usuario', code: 'admin' },
-    { name: 'Administrador', code: 'user' },
+  const roles = [
+    { name: 'Usuario', code: 'user' },
+    { name: 'Administrador', code: 'admin' },
   ];
-
-  const onCityChange = (e: { value: any}) => {
-    setSelectedCity1(e.value);
-  };
 
   return (
     <>
@@ -46,13 +38,13 @@ export const UserDataForm = ({ user }: Props) => {
           gender: user?.gender || '',
           email: user?.email || '',
           blocked: user?.blocked || false,
-          role: user?.role || '',
+          role: { name: 'Usuario', code: 'user' },
           avatar: '',
         }}
         enableReinitialize
         onSubmit={async (values, { setFieldError }) => {
           const {
-            last: lastUser, first: firstUser, ...restData
+            last: lastUser, first: firstUser, role, ...restData
           } = values;
 
           try {
@@ -60,6 +52,7 @@ export const UserDataForm = ({ user }: Props) => {
               const userUpdate = {
                 id: user.id,
                 name: { first: firstUser, last: lastUser },
+                role: role.code,
                 ...restData,
               };
 
@@ -67,6 +60,7 @@ export const UserDataForm = ({ user }: Props) => {
             } else {
               const newUser = {
                 name: { first: firstUser, last: lastUser },
+                role: '',
                 ...restData,
               };
 
@@ -89,12 +83,13 @@ export const UserDataForm = ({ user }: Props) => {
             .required('Requerido'),
           gender: Yup.string()
             .required('Requerido'),
+          role: Yup.object().required('Requerido'),
         })}
       >
         {({ isValid, isSubmitting, dirty }) => (
           <Form>
-
-            <div className="field pt-2">
+            <FileSingleInputApp />
+            <div className="field pt-2 mt-4">
               <InputTextApp
                 label="Nombre*"
                 id="first"
@@ -125,20 +120,25 @@ export const UserDataForm = ({ user }: Props) => {
               />
             </div>
 
-            <RadioGroup radios={genderRadio} />
-
-            <div className="field pt-2 w-full">
-              <Dropdown value={selectedCity1} options={cities} onChange={onCityChange} optionLabel="name" placeholder="Elegir el role" />
+            <div className="field pt-2">
+              <DropdownApp
+                id="role"
+                inputId="role"
+                name="role"
+                options={roles}
+                optionLabel="name"
+                className="w-full"
+                label="Rol"
+              />
             </div>
 
+            <RadioGroup radios={genderRadio} />
+
             <div className="field pt-2">
-              <ToggleButton
-                checked={checked1}
-                className={classNames({
-                  'bg-green-500': !checked1,
-                  'bg-pink-600': checked1,
-                })}
-                onChange={(e) => setChecked1(e.value)}
+              <ToggleButtonApp
+                name="blocked"
+                onClassName="color-danger"
+                offClassName="bg-green-500"
                 onIcon="pi pi-lock"
                 offIcon="pi pi-lock-open"
                 onLabel="Bloqueado"

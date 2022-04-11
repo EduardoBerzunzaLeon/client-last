@@ -14,7 +14,6 @@ import { TabPanel, TabView } from 'primereact/tabview';
 import { useGetUsersQuery } from '../../../redux/user/user.api';
 import { User } from '../../../interfaces/api';
 import { Divider } from '../../../components/Divider/Divider';
-import { FileSingleUpload } from '../../../components/fileUpload/FileSingleUpload';
 import { PasswordForm } from '../profile/components/PasswordForm';
 import { UserDataForm } from './components/UserDataForm';
 // import { User } from '../../../interfaces/api';
@@ -216,10 +215,6 @@ const DataTableLazy = () => {
       <Dialog header="Editar Perfil" className="shadow-5 w-11 md:w-6 lg:w-5" modal visible={displayModal} onHide={() => setDisplayModal(false)}>
         <TabView>
           <TabPanel header="Datos Personales">
-
-            <Divider text="Foto de perfil" icon="image" />
-            <FileSingleUpload />
-
             <Divider text="Información Personal" icon="user" />
             <UserDataForm user={data?.data[0]} />
           </TabPanel>
