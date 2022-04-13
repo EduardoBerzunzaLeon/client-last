@@ -14,11 +14,29 @@ import { DropdownApp } from '../../../../components/forms/dropdown/DropdownApp';
 import { ToggleButtonApp } from '../../../../components/forms/toggleButton/ToggleButtonApp';
 import { FileSingleInputApp } from '../../../../components/forms/fileInput/FileSingleInputApp';
 
+// const initialState = {
+//   name: { first: '', last: '' },
+//   gender: '',
+//   email: '',
+//   blocked: false,
+//   role: { name: 'Usuario', code: 'user' },
+//   avatar: '',
+// };
+
 interface Props { user: User | undefined }
 
 export const UserDataForm = ({ user }: Props) => {
   const [ updateUser, { isLoading: isLoadingUpdate }] = useUpdateUserAdminMutation();
   const [ createUser, { isLoading: isLoadingCreate }] = useCreateUserMutation();
+
+  const initialValues = {
+    objectURL: 'http://localhost:4000/img/2cdf6586bd8e3458e551344dfef5a6.png',
+    name: 'avatar.png',
+    lastModified: Date.now(),
+    webkitRelativePath: '',
+    size: 1,
+    type: 'image/png',
+  };
 
   const { toast, showError, showSuccess } = useToast();
 
@@ -40,6 +58,7 @@ export const UserDataForm = ({ user }: Props) => {
           blocked: user?.blocked || false,
           role: { name: 'Usuario', code: 'user' },
           avatar: '',
+          file: null,
         }}
         enableReinitialize
         onSubmit={async (values, { setFieldError }) => {
@@ -47,6 +66,7 @@ export const UserDataForm = ({ user }: Props) => {
             last: lastUser, first: firstUser, role, ...restData
           } = values;
 
+          console.log(values);
           try {
             if (user?.id) {
               const userUpdate = {
@@ -86,9 +106,16 @@ export const UserDataForm = ({ user }: Props) => {
           role: Yup.object().required('Requerido'),
         })}
       >
-        {({ isValid, isSubmitting, dirty }) => (
+        {({
+          isValid, isSubmitting, dirty, setFieldValue,
+        }) => (
           <Form>
-            <FileSingleInputApp />
+            <FileSingleInputApp
+              onChange={(primeFile) => {
+                setFieldValue('file', primeFile);
+              }}
+              inititalValue={initialValues}
+            />
             <div className="field pt-2 mt-4">
               <InputTextApp
                 label="Nombre*"

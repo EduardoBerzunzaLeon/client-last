@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { ProgressBar } from 'primereact/progressbar';
 
 import {
@@ -9,7 +9,7 @@ import {
 
 import { Tooltip } from 'primereact/tooltip';
 
-interface PrimeFile {
+export interface PrimeFile {
     objectURL: string,
     name: string,
     lastModified: number,
@@ -60,12 +60,41 @@ const EmptyLayout = () => (
   </div>
 );
 
-export const FileSingleInputApp = ({ accept }: { accept?: string}) => {
+interface FileSingleUploadProps {
+  accept?: string,
+  onChange?: (files: PrimeFile | null) => void,
+  inititalValue?: PrimeFile | null
+}
+
+export const FileSingleInputApp = ({ accept, onChange, inititalValue }: FileSingleUploadProps) => {
   const fileUploadRef = useRef<any>(null);
+  const isControlled = useRef(!!onChange);
+  const [ initial, setInitial ] = useState(inititalValue);
+
+  // useEffect(() => {
+  //   console.log({ inititalValue });
+  //   if (inititalValue !== null) {
+  //     fileUploadRef.current = {
+  //       files: [ inititalValue ],
+  //     };
+  //   }
+  //   console.log(fileUploadRef.current);
+  // }, [ inititalValue ]);
 
   const onSelect = () => {
+    // console.log({ value });
     if (fileUploadRef.current.files.length > 1) {
       fileUploadRef.current.files.shift();
+    }
+    if (isControlled) {
+      onChange!(fileUploadRef.current.files[0]);
+    }
+  };
+
+  const onClear = () => {
+    if (isControlled) {
+      onChange!(null);
+      setInitial(null);
     }
   };
 
@@ -80,9 +109,10 @@ export const FileSingleInputApp = ({ accept }: { accept?: string}) => {
         maxFileSize={1000000}
         multiple
         onSelect={onSelect}
+        onClear={onClear}
         headerTemplate={HeaderFileInput}
         itemTemplate={ItemFileInput}
-        emptyTemplate={EmptyLayout}
+        emptyTemplate={!initial ? EmptyLayout : <img alt="avatar" role="presentation" className="w-full" src="http://localhost:4000/img/2cdf6586bd8e3458e551344dfef5a6.png" />}
         progressBarTemplate={ProgressBarFileInput}
         chooseOptions={chooseOptions}
         cancelOptions={cancelOptions}
@@ -94,6 +124,8 @@ export const FileSingleInputApp = ({ accept }: { accept?: string}) => {
 
 FileSingleInputApp.defaultProps = {
   accept: 'image/*',
+  onChange: () => {},
+  inititalValue: null,
 };
 
 export default FileSingleInputApp;
