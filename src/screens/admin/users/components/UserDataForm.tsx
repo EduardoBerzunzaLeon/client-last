@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Button } from 'primereact/button';
 import { Form, Formik } from 'formik';
 import { Toast } from 'primereact/toast';
@@ -14,30 +15,39 @@ import { DropdownApp } from '../../../../components/forms/dropdown/DropdownApp';
 import { ToggleButtonApp } from '../../../../components/forms/toggleButton/ToggleButtonApp';
 import { FileSingleInputApp } from '../../../../components/forms/fileInput/FileSingleInputApp';
 
-// const initialState = {
-//   name: { first: '', last: '' },
-//   gender: '',
-//   email: '',
-//   blocked: false,
-//   role: { name: 'Usuario', code: 'user' },
-//   avatar: '',
-// };
-
 interface Props { user: User | undefined }
+
+const initialValues = {
+  first: '',
+  last: '',
+  gender: '',
+  email: '',
+  role: { name: 'Usuario', code: 'user' },
+  blocked: false,
+  avatar: null,
+};
 
 export const UserDataForm = ({ user }: Props) => {
   const [ updateUser, { isLoading: isLoadingUpdate }] = useUpdateUserAdminMutation();
   const [ createUser, { isLoading: isLoadingCreate }] = useCreateUserMutation();
-
-  const initialValues = {
-    objectURL: 'http://localhost:4000/img/2cdf6586bd8e3458e551344dfef5a6.png',
-    name: 'avatar.png',
-    lastModified: Date.now(),
-    webkitRelativePath: '',
-    size: 1,
-    type: 'image/png',
-  };
-
+  const [ initialUser ] = useState(user
+    ? {
+      first: user.name.first,
+      last: user.name.last,
+      gender: user.gender,
+      email: user.email,
+      blocked: user.blocked,
+      role: { name: user.role === 'admin' ? 'Administrador' : 'Usuario', code: user.role },
+      avatar: {
+        objectURL: user?.avatar || '',
+        name: 'avatar.png',
+        lastModified: Date.now(),
+        webkitRelativePath: '',
+        size: 1,
+        type: 'image/png',
+      },
+    }
+    : initialValues);
   const { toast, showError, showSuccess } = useToast();
 
   const roles = [
@@ -50,29 +60,20 @@ export const UserDataForm = ({ user }: Props) => {
       <Toast ref={toast} />
 
       <Formik
-        initialValues={{
-          first: user?.name?.first || '',
-          last: user?.name?.last || '',
-          gender: user?.gender || '',
-          email: user?.email || '',
-          blocked: user?.blocked || false,
-          role: { name: 'Usuario', code: 'user' },
-          avatar: '',
-          file: null,
-        }}
+        initialValues={initialUser}
         enableReinitialize
         onSubmit={async (values, { setFieldError }) => {
           const {
-            last: lastUser, first: firstUser, role, ...restData
+            last: lastUser, first: firstUser, role, avatar, ...restData
           } = values;
 
-          console.log(values);
           try {
             if (user?.id) {
               const userUpdate = {
                 id: user.id,
                 name: { first: firstUser, last: lastUser },
                 role: role.code,
+                avatar: avatar?.objectURL,
                 ...restData,
               };
 
@@ -80,6 +81,7 @@ export const UserDataForm = ({ user }: Props) => {
             } else {
               const newUser = {
                 name: { first: firstUser, last: lastUser },
+                avatar: avatar?.objectURL,
                 role: '',
                 ...restData,
               };
@@ -114,7 +116,7 @@ export const UserDataForm = ({ user }: Props) => {
               onChange={(primeFile) => {
                 setFieldValue('file', primeFile);
               }}
-              inititalValue={initialValues}
+              initialValue={initialUser.avatar}
             />
             <div className="field pt-2 mt-4">
               <InputTextApp

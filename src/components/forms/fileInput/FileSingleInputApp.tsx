@@ -43,9 +43,12 @@ const HeaderFileInput = (options: FileUploadHeaderTemplateOptions) => {
   );
 };
 
-const ItemFileInput: FileUploadItemTemplateType = (file: PrimeFile) => (
-  // eslint-disable-next-line react/destructuring-assignment
-  <img alt={file.name} role="presentation" className="w-full" src={file.objectURL} />
+const ItemFileInput: FileUploadItemTemplateType = ({ name, objectURL }: PrimeFile) => (
+  <img alt={name} role="presentation" className="w-full" src={objectURL} />
+);
+
+const ItemFileDefault = ({ name, objectURL }: PrimeFile) => () => (
+  <img alt={name} role="presentation" className="w-full" src={objectURL} />
 );
 
 const EmptyLayout = () => (
@@ -63,29 +66,19 @@ const EmptyLayout = () => (
 interface FileSingleUploadProps {
   accept?: string,
   onChange?: (files: PrimeFile | null) => void,
-  inititalValue?: PrimeFile | null
+  initialValue?: PrimeFile | null
 }
 
-export const FileSingleInputApp = ({ accept, onChange, inititalValue }: FileSingleUploadProps) => {
+export const FileSingleInputApp = ({ accept, onChange, initialValue }: FileSingleUploadProps) => {
   const fileUploadRef = useRef<any>(null);
   const isControlled = useRef(!!onChange);
-  const [ initial, setInitial ] = useState(inititalValue);
-
-  // useEffect(() => {
-  //   console.log({ inititalValue });
-  //   if (inititalValue !== null) {
-  //     fileUploadRef.current = {
-  //       files: [ inititalValue ],
-  //     };
-  //   }
-  //   console.log(fileUploadRef.current);
-  // }, [ inititalValue ]);
+  const [ initialFile, setInitialFile ] = useState(initialValue);
 
   const onSelect = () => {
-    // console.log({ value });
     if (fileUploadRef.current.files.length > 1) {
       fileUploadRef.current.files.shift();
     }
+
     if (isControlled) {
       onChange!(fileUploadRef.current.files[0]);
     }
@@ -94,7 +87,7 @@ export const FileSingleInputApp = ({ accept, onChange, inititalValue }: FileSing
   const onClear = () => {
     if (isControlled) {
       onChange!(null);
-      setInitial(null);
+      setInitialFile(initialValue);
     }
   };
 
@@ -112,7 +105,7 @@ export const FileSingleInputApp = ({ accept, onChange, inititalValue }: FileSing
         onClear={onClear}
         headerTemplate={HeaderFileInput}
         itemTemplate={ItemFileInput}
-        emptyTemplate={!initial ? EmptyLayout : <img alt="avatar" role="presentation" className="w-full" src="http://localhost:4000/img/2cdf6586bd8e3458e551344dfef5a6.png" />}
+        emptyTemplate={initialFile ? ItemFileDefault(initialFile) : EmptyLayout}
         progressBarTemplate={ProgressBarFileInput}
         chooseOptions={chooseOptions}
         cancelOptions={cancelOptions}
@@ -125,7 +118,7 @@ export const FileSingleInputApp = ({ accept, onChange, inititalValue }: FileSing
 FileSingleInputApp.defaultProps = {
   accept: 'image/*',
   onChange: () => {},
-  inititalValue: null,
+  initialValue: null,
 };
 
 export default FileSingleInputApp;
