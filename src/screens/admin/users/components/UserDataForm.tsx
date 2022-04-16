@@ -30,6 +30,7 @@ const initialValues = {
 export const UserDataForm = ({ user }: Props) => {
   const [ updateUser, { isLoading: isLoadingUpdate }] = useUpdateUserAdminMutation();
   const [ createUser, { isLoading: isLoadingCreate }] = useCreateUserMutation();
+
   const [ initialUser ] = useState(user
     ? {
       first: user.name.first,
@@ -38,16 +39,10 @@ export const UserDataForm = ({ user }: Props) => {
       email: user.email,
       blocked: user.blocked,
       role: { name: user.role === 'admin' ? 'Administrador' : 'Usuario', code: user.role },
-      avatar: {
-        objectURL: user?.avatar || '',
-        name: 'avatar.png',
-        lastModified: Date.now(),
-        webkitRelativePath: '',
-        size: 1,
-        type: 'image/png',
-      },
+      avatar: null,
     }
     : initialValues);
+
   const { toast, showError, showSuccess } = useToast();
 
   const roles = [
@@ -64,25 +59,28 @@ export const UserDataForm = ({ user }: Props) => {
         enableReinitialize
         onSubmit={async (values, { setFieldError }) => {
           const {
-            last: lastUser, first: firstUser, role, avatar, ...restData
+            last: lastUser, first: firstUser, role, avatar, email, gender, ...restData
           } = values;
+
+          const dataSend = new FormData();
+          dataSend.append('avatar', avatar || '');
+          dataSend.append('id', user?.id || '');
+          dataSend.append('first', firstUser);
+          dataSend.append('email', email);
+          dataSend.append('gender', gender);
+          dataSend.append('last', lastUser);
+          dataSend.append('role', role.code);
 
           try {
             if (user?.id) {
-              const userUpdate = {
-                id: user.id,
-                name: { first: firstUser, last: lastUser },
-                role: role.code,
-                avatar: avatar?.objectURL,
-                ...restData,
-              };
-
-              await updateUser(userUpdate).unwrap();
+              await updateUser(dataSend).unwrap();
             } else {
               const newUser = {
                 name: { first: firstUser, last: lastUser },
-                avatar: avatar?.objectURL,
+                avatar: '',
                 role: '',
+                email,
+                gender,
                 ...restData,
               };
 
@@ -114,9 +112,9 @@ export const UserDataForm = ({ user }: Props) => {
           <Form>
             <FileSingleInputApp
               onChange={(primeFile) => {
-                setFieldValue('file', primeFile);
+                setFieldValue('avatar', primeFile);
               }}
-              initialValue={initialUser.avatar}
+              initialValue={user?.avatar ?? ''}
             />
             <div className="field pt-2 mt-4">
               <InputTextApp

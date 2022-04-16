@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { ProgressBar } from 'primereact/progressbar';
 
 import {
@@ -17,11 +17,6 @@ export interface PrimeFile {
     size: number,
     type: string
   }
-
-// interface ItemProps {
-//     objectURL: string,
-//     name: string,
-// }
 
 const cancelOptions = { icon: 'pi pi-fw pi-times', iconOnly: true, className: 'custom-cancel-btn p-button-danger p-button-rounded p-button-outlined' };
 const chooseOptions = { icon: 'pi pi-fw pi-images', iconOnly: true, className: 'custom-choose-btn p-button-rounded p-button-outlined' };
@@ -65,14 +60,47 @@ const EmptyLayout = () => (
 
 interface FileSingleUploadProps {
   accept?: string,
-  onChange?: (files: PrimeFile | null) => void,
-  initialValue?: PrimeFile | null
+  onChange?: (files: File | null) => void,
+  initialValue?: string
+}
+
+async function getFileFromUrl(url: string, name: string, defaultType = 'image/jpeg') {
+  const response = await fetch(url);
+  const data = await response.blob();
+  return new File([ data ], name, {
+    type: data.type || defaultType,
+  });
 }
 
 export const FileSingleInputApp = ({ accept, onChange, initialValue }: FileSingleUploadProps) => {
   const fileUploadRef = useRef<any>(null);
   const isControlled = useRef(!!onChange);
-  const [ initialFile, setInitialFile ] = useState(initialValue);
+
+  const mounted = useRef(false);
+  const [ objectUrl, setObjectUrl ] = useState<string>();
+  const [ file, setFile ] = useState<PrimeFile>();
+
+  useEffect(() => {
+    mounted.current = true;
+    if (initialValue) {
+      const getFile = async () => {
+        const data = await getFileFromUrl(initialValue ?? '', 'imagen.png');
+        const url = URL.createObjectURL(data);
+        if (mounted) {
+          setObjectUrl(url);
+          setFile(Object.assign(data, { objectURL: url }));
+        }
+      };
+      getFile();
+    }
+  }, [ initialValue ]);
+
+  useEffect(() => () => {
+    mounted.current = false;
+    if (objectUrl) {
+      URL.revokeObjectURL(objectUrl);
+    }
+  }, []);
 
   const onSelect = () => {
     if (fileUploadRef.current.files.length > 1) {
@@ -87,7 +115,6 @@ export const FileSingleInputApp = ({ accept, onChange, initialValue }: FileSingl
   const onClear = () => {
     if (isControlled) {
       onChange!(null);
-      setInitialFile(initialValue);
     }
   };
 
@@ -105,7 +132,7 @@ export const FileSingleInputApp = ({ accept, onChange, initialValue }: FileSingl
         onClear={onClear}
         headerTemplate={HeaderFileInput}
         itemTemplate={ItemFileInput}
-        emptyTemplate={initialFile ? ItemFileDefault(initialFile) : EmptyLayout}
+        emptyTemplate={file ? ItemFileDefault(file) : EmptyLayout}
         progressBarTemplate={ProgressBarFileInput}
         chooseOptions={chooseOptions}
         cancelOptions={cancelOptions}
@@ -118,7 +145,7 @@ export const FileSingleInputApp = ({ accept, onChange, initialValue }: FileSingl
 FileSingleInputApp.defaultProps = {
   accept: 'image/*',
   onChange: () => {},
-  initialValue: null,
+  initialValue: '',
 };
 
 export default FileSingleInputApp;
