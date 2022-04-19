@@ -16,6 +16,7 @@ import { User } from '../../../interfaces/api';
 import { Divider } from '../../../components/Divider/Divider';
 import { PasswordForm } from '../profile/components/PasswordForm';
 import { UserDataForm } from './components/UserDataForm';
+import useAuth from '../../../hooks/useAuth';
 // import { User } from '../../../interfaces/api';
 
 const initialFiltersValue = {
@@ -40,6 +41,8 @@ const DataTableLazy = () => {
   const [ displayModal, setDisplayModal ] = useState(false);
 
   const navigate = useNavigate();
+
+  const { user: userAuth } = useAuth();
 
   const genders = [ 'M', 'F' ];
 
@@ -125,14 +128,22 @@ const DataTableLazy = () => {
     />
   );
 
-  const actionBodyTemplate = (rowData: User) => (
-    <>
-      <Button icon="pi pi-eye" className="p-button-sm p-button-raised p-button-primary mr-1" onClick={() => navigate(`/admin/users/${rowData?.id}`)} />
-      <Button icon="pi pi-pencil" className="p-button-sm p-button-raised p-button-primary mr-1" onClick={() => setDisplayModal(true)} />
-      <Button icon="pi pi-lock" className="p-button-sm p-button-raised p-button-danger" onClick={() => console.log(rowData)} />
+  const actionBodyTemplate = (rowData: User) => {
+    const isUserLogged = rowData.id === userAuth?.id;
 
-    </>
-  );
+    return (
+      <>
+        <Button icon="pi pi-eye" className="p-button-sm p-button-raised p-button-primary mr-1" onClick={() => navigate(`/admin/users/${rowData?.id}`)} />
+        <Button icon="pi pi-pencil" className={classNames('p-button-sm', 'p-button-raised', 'p-button-primary', 'mr-1', { 'p-disabled': isUserLogged })} onClick={() => setDisplayModal(true)} />
+        <Button
+          icon="pi pi-lock"
+          className={classNames('p-button-sm', 'p-button-raised', 'p-button-danger', { 'p-disabled': isUserLogged })}
+          onClick={() => console.log({ rowData, isUserLogged })}
+        />
+
+      </>
+    );
+  };
 
   const header = renderHeader();
   if (!data) {

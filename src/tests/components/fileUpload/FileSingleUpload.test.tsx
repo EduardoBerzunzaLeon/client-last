@@ -10,8 +10,9 @@ import {
 
 import { storeGeneric, renderWithProps } from '../../fixtures/render';
 import { tutorApi } from '../../../redux/services/tutorApi';
-import { FileSingleUpload } from '../../../components/fileUpload/FileSingleUpload';
+
 import { mockUploadAvatar } from '../../fixtures/mockServer/mockUserHandler';
+import { ProfileImageForm } from '../../../screens/admin/profile/components/ProfileImageForm';
 
 const server = setupServer(mockUploadAvatar);
 const storeRef = storeGeneric;
@@ -28,7 +29,7 @@ describe('<FileSingleUpload />', () => {
   beforeEach(() => {
     wrapper = render(
       renderWithProps(
-        FileSingleUpload,
+        ProfileImageForm,
         { accept: 'image/*' },
         { initialEntries: '/', store: storeRef.store },
       ),

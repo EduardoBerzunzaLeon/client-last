@@ -8,13 +8,13 @@ import { useParams } from 'react-router-dom';
 
 import { Badge } from '../../../components/badge/Badge';
 import { Divider } from '../../../components/Divider/Divider';
-import { FileSingleUpload } from '../../../components/fileUpload/FileSingleUpload';
 import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
 import { PasswordForm } from './components/PasswordForm';
 import { PersonalDataForm } from './components/PersonalDataForm';
 import { Skeleton } from '../../../components/Skeleton/Skeleton';
 import { useGetUserQuery } from '../../../redux/user/user.api';
 import { User } from '../../../interfaces/api';
+import { ProfileImageForm } from './components/ProfileImageForm';
 import { withSpinnerRTK } from '../../../components/withSpinnerRTK/withSpinnerRTK';
 import useAuth from '../../../hooks/useAuth';
 
@@ -125,7 +125,7 @@ const ProfileScreenMin = ({ data }: {data: User}) => {
               (isUserLogged) && (
                 <>
                   <Divider text="Foto de perfil" icon="image" />
-                  <FileSingleUpload />
+                  <ProfileImageForm />
                 </>
               )
             }

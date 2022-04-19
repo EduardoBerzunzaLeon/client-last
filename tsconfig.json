@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-  ]
+, "src/screens/admin/profile/components/.tsx"  ]
 }

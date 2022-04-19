@@ -1,106 +1,55 @@
-import { useRef, useState, useEffect } from 'react';
-import { ProgressBar } from 'primereact/progressbar';
+import React, { useRef } from 'react';
 
 import {
   FileUpload,
-  FileUploadHeaderTemplateOptions,
-  FileUploadItemTemplateType,
+  FileUploadHandlerParam,
 } from 'primereact/fileupload';
-
 import { Tooltip } from 'primereact/tooltip';
 
-export interface PrimeFile {
-    objectURL: string,
-    name: string,
-    lastModified: number,
-    webkitRelativePath: string,
-    size: number,
-    type: string
-  }
+import { EmptyLayout } from './EmptyLayout';
+import { HeaderFileInput } from './HeaderFileInput';
+import { ItemFileDefault, ItemFileInput } from './ItemFileInput';
+import { ProgressBarFileControlledInput, ProgressBarFileInput } from './ProgressBarFileInput';
+import { useFile } from '../../../hooks/useFile';
 
-const cancelOptions = { icon: 'pi pi-fw pi-times', iconOnly: true, className: 'custom-cancel-btn p-button-danger p-button-rounded p-button-outlined' };
-const chooseOptions = { icon: 'pi pi-fw pi-images', iconOnly: true, className: 'custom-choose-btn p-button-rounded p-button-outlined' };
-const uploadOptions = { icon: 'pi pi-fw pi-cloud-upload', iconOnly: true, className: 'hidden' };
+const cancelOptionsDefault = { icon: 'pi pi-fw pi-times', iconOnly: true, className: 'custom-cancel-btn p-button-danger p-button-rounded p-button-outlined' };
+const chooseOptionsDefault = { icon: 'pi pi-fw pi-images', iconOnly: true, className: 'custom-choose-btn p-button-rounded p-button-outlined' };
+const uploadOptionsDefault = { icon: 'pi pi-fw pi-cloud-upload', iconOnly: true, className: 'custom-upload-btn p-button-success p-button-rounded p-button-outlined' };
 
-const ProgressBarFileInput = ({ isLoading = false }: {isLoading: boolean}) => <ProgressBar mode={isLoading ? 'indeterminate' : 'determinate'} style={{ height: '6px' }} />;
-
-const HeaderFileInput = (options: FileUploadHeaderTemplateOptions) => {
-  const {
-    className, chooseButton, uploadButton, cancelButton,
-  } = options;
-
-  return (
-    <div className={className} style={{ backgroundColor: 'transparent', display: 'flex', alignItems: 'center' }}>
-      {chooseButton}
-      {uploadButton}
-      {cancelButton}
-    </div>
-  );
-};
-
-const ItemFileInput: FileUploadItemTemplateType = ({ name, objectURL }: PrimeFile) => (
-  <img alt={name} role="presentation" className="w-full" src={objectURL} />
-);
-
-const ItemFileDefault = ({ name, objectURL }: PrimeFile) => () => (
-  <img alt={name} role="presentation" className="w-full" src={objectURL} />
-);
-
-const EmptyLayout = () => (
-  <div className="flex align-items-center flex-column">
-    <i
-      className="pi pi-image mt-3 p-5"
-      style={{
-        fontSize: '5em', borderRadius: '50%', backgroundColor: 'var(--surface-b)', color: 'var(--surface-d)',
-      }}
-    />
-    <span style={{ fontSize: '1.2em', color: 'var(--text-color-secondary)' }} className="my-5">Arrastre la imagen aqui</span>
-  </div>
-);
+interface OptionsProps {
+  icon: string,
+  iconOnly: boolean,
+  className: string
+}
 
 interface FileSingleUploadProps {
   accept?: string,
+  initialValue?: string,
+  isLoading?: boolean | undefined,
+  cancelOptions?: OptionsProps,
+  chooseOptions?: OptionsProps,
+  uploadOptions?: OptionsProps,
   onChange?: (files: File | null) => void,
-  initialValue?: string
+  onUpload?: (file: File, fileUplodRed: React.MutableRefObject<any>) => void
 }
 
-async function getFileFromUrl(url: string, name: string, defaultType = 'image/jpeg') {
-  const response = await fetch(url);
-  const data = await response.blob();
-  return new File([ data ], name, {
-    type: data.type || defaultType,
-  });
-}
-
-export const FileSingleInputApp = ({ accept, onChange, initialValue }: FileSingleUploadProps) => {
+export const FileSingleInputApp = ({
+  accept,
+  initialValue,
+  cancelOptions,
+  chooseOptions,
+  uploadOptions,
+  onChange,
+  onUpload,
+  isLoading,
+}: FileSingleUploadProps) => {
   const fileUploadRef = useRef<any>(null);
   const isControlled = useRef(!!onChange);
 
-  const mounted = useRef(false);
-  const [ objectUrl, setObjectUrl ] = useState<string>();
-  const [ file, setFile ] = useState<PrimeFile>();
-
-  useEffect(() => {
-    mounted.current = true;
-    if (initialValue) {
-      const getFile = async () => {
-        const data = await getFileFromUrl(initialValue ?? '', 'imagen.png');
-        const url = URL.createObjectURL(data);
-        if (mounted) {
-          setObjectUrl(url);
-          setFile(Object.assign(data, { objectURL: url }));
-        }
-      };
-      getFile();
-    }
-  }, [ initialValue ]);
-
-  useEffect(() => () => {
-    mounted.current = false;
-    if (objectUrl) {
-      URL.revokeObjectURL(objectUrl);
-    }
-  }, []);
+  const { file } = useFile({
+    url: initialValue || '',
+    name: 'imagen.png',
+  });
 
   const onSelect = () => {
     if (fileUploadRef.current.files.length > 1) {
@@ -109,6 +58,12 @@ export const FileSingleInputApp = ({ accept, onChange, initialValue }: FileSingl
 
     if (isControlled) {
       onChange!(fileUploadRef.current.files[0]);
+    }
+  };
+
+  const onTemplateUpload = async (e: FileUploadHandlerParam) => {
+    if (onUpload) {
+      onUpload(e.files[0], fileUploadRef);
     }
   };
 
@@ -121,6 +76,7 @@ export const FileSingleInputApp = ({ accept, onChange, initialValue }: FileSingl
   return (
     <>
       <Tooltip target=".custom-choose-btn" content="Elegir" position="bottom" />
+      <Tooltip target=".custom-upload-btn" content="Actualizar" position="bottom" />
       <Tooltip target=".custom-cancel-btn" content="Eliminar" position="bottom" />
       <FileUpload
         ref={fileUploadRef}
@@ -132,8 +88,14 @@ export const FileSingleInputApp = ({ accept, onChange, initialValue }: FileSingl
         onClear={onClear}
         headerTemplate={HeaderFileInput}
         itemTemplate={ItemFileInput}
-        emptyTemplate={file ? ItemFileDefault(file) : EmptyLayout}
-        progressBarTemplate={ProgressBarFileInput}
+        emptyTemplate={file
+          ? ItemFileDefault(file)
+          : EmptyLayout}
+        progressBarTemplate={typeof isLoading !== 'undefined'
+          ? ProgressBarFileControlledInput({ isLoading })
+          : ProgressBarFileInput}
+        customUpload
+        uploadHandler={onTemplateUpload}
         chooseOptions={chooseOptions}
         cancelOptions={cancelOptions}
         uploadOptions={uploadOptions}
@@ -144,8 +106,13 @@ export const FileSingleInputApp = ({ accept, onChange, initialValue }: FileSingl
 
 FileSingleInputApp.defaultProps = {
   accept: 'image/*',
-  onChange: () => {},
   initialValue: '',
+  isLoading: undefined,
+  cancelOptions: cancelOptionsDefault,
+  chooseOptions: chooseOptionsDefault,
+  uploadOptions: uploadOptionsDefault,
+  onChange: () => {},
+  onUpload: () => {},
 };
 
 export default FileSingleInputApp;

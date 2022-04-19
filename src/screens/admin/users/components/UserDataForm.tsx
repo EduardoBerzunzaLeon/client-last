@@ -27,6 +27,8 @@ const initialValues = {
   avatar: null,
 };
 
+const uploadOptions = { icon: 'pi pi-fw pi-cloud-upload', iconOnly: true, className: 'hidden' };
+
 export const UserDataForm = ({ user }: Props) => {
   const [ updateUser, { isLoading: isLoadingUpdate }] = useUpdateUserAdminMutation();
   const [ createUser, { isLoading: isLoadingCreate }] = useCreateUserMutation();
@@ -59,7 +61,7 @@ export const UserDataForm = ({ user }: Props) => {
         enableReinitialize
         onSubmit={async (values, { setFieldError }) => {
           const {
-            last: lastUser, first: firstUser, role, avatar, email, gender, ...restData
+            last: lastUser, first: firstUser, role, avatar, email, gender,
           } = values;
 
           const dataSend = new FormData();
@@ -75,16 +77,7 @@ export const UserDataForm = ({ user }: Props) => {
             if (user?.id) {
               await updateUser(dataSend).unwrap();
             } else {
-              const newUser = {
-                name: { first: firstUser, last: lastUser },
-                avatar: '',
-                role: '',
-                email,
-                gender,
-                ...restData,
-              };
-
-              await createUser(newUser).unwrap();
+              await createUser(dataSend).unwrap();
             }
 
             showSuccess({ detail: 'El usuario se actualizo con éxito' });
@@ -115,6 +108,8 @@ export const UserDataForm = ({ user }: Props) => {
                 setFieldValue('avatar', primeFile);
               }}
               initialValue={user?.avatar ?? ''}
+              isLoading={isLoadingUpdate || isLoadingCreate}
+              uploadOptions={uploadOptions}
             />
             <div className="field pt-2 mt-4">
               <InputTextApp
@@ -163,7 +158,8 @@ export const UserDataForm = ({ user }: Props) => {
 
             <div className="field pt-2">
               <ToggleButtonApp
-                name="blocked"
+                name="
+                b "
                 onClassName="color-danger"
                 offClassName="bg-green-500"
                 onIcon="pi pi-lock"

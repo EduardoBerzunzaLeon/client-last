@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-cycle
 import { invalidatesList, providesList, tutorApi } from '../services/tutorApi';
 import { User, UserSingleResponse } from '../../interfaces/api';
-import { CreateUserRequest, UpdateUserRequest } from '../../interfaces/api/requests/userInterface';
+import { UpdateUserRequest } from '../../interfaces/api/requests/userInterface';
 import { ListResponse } from '../../interfaces/api/responses/genericInterface';
 import { Generic } from '../../interfaces/generic';
 
@@ -70,8 +70,8 @@ export const userApi = tutorApi.injectEndpoints({
       },
       invalidatesTags: invalidatesListUsers,
     }),
-    createUser: builder.mutation<UserSingleResponse, CreateUserRequest>({
-      query: ({ ...post }) => ({
+    createUser: builder.mutation<UserSingleResponse, FormData>({
+      query: (post) => ({
         url: 'users/',
         method: 'POST',
         body: post,
