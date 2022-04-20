@@ -15,6 +15,7 @@ import { useGetUsersQuery } from '../../../redux/user/user.api';
 import { User } from '../../../interfaces/api';
 import { Divider } from '../../../components/Divider/Divider';
 import { PasswordForm } from '../profile/components/PasswordForm';
+// eslint-disable-next-line import/no-cycle
 import { UserDataForm } from './components/UserDataForm';
 import useAuth from '../../../hooks/useAuth';
 // import { User } from '../../../interfaces/api';
@@ -39,6 +40,7 @@ const DataTableLazy = () => {
   });
 
   const [ displayModal, setDisplayModal ] = useState(false);
+  const [ userSelected, setUserSelected ] = useState<User | null>(null);
 
   const navigate = useNavigate();
 
@@ -134,7 +136,14 @@ const DataTableLazy = () => {
     return (
       <>
         <Button icon="pi pi-eye" className="p-button-sm p-button-raised p-button-primary mr-1" onClick={() => navigate(`/admin/users/${rowData?.id}`)} />
-        <Button icon="pi pi-pencil" className={classNames('p-button-sm', 'p-button-raised', 'p-button-primary', 'mr-1', { 'p-disabled': isUserLogged })} onClick={() => setDisplayModal(true)} />
+        <Button
+          icon="pi pi-pencil"
+          className={classNames('p-button-sm', 'p-button-raised', 'p-button-primary', 'mr-1', { 'p-disabled': isUserLogged })}
+          onClick={() => {
+            setUserSelected(rowData);
+            setDisplayModal(true);
+          }}
+        />
         <Button
           icon="pi pi-lock"
           className={classNames('p-button-sm', 'p-button-raised', 'p-button-danger', { 'p-disabled': isUserLogged })}
@@ -223,11 +232,20 @@ const DataTableLazy = () => {
           />
         </DataTable>
       </div>
-      <Dialog header="Editar Perfil" className="shadow-5 w-11 md:w-6 lg:w-5" modal visible={displayModal} onHide={() => setDisplayModal(false)}>
+      <Dialog
+        header={userSelected ? 'Editar Usuario' : 'Crear Usuario'}
+        className="shadow-5 w-11 md:w-6 lg:w-5"
+        modal
+        visible={displayModal}
+        onHide={() => {
+          setUserSelected(null);
+          setDisplayModal(false);
+        }}
+      >
         <TabView>
           <TabPanel header="Datos Personales">
             <Divider text="Información Personal" icon="user" />
-            <UserDataForm user={data?.data[0]} />
+            <UserDataForm user={userSelected} />
           </TabPanel>
           <TabPanel header="Cambiar contraseña">
             <PasswordForm userId="123456789" />

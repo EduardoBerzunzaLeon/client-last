@@ -8,14 +8,14 @@ import { errorTranslateAuthForm, processError } from '../../../../utils/form/han
 import { genderRadio } from '../../../../utils/form/radioButtonsObjects';
 
 import { InputTextApp, RadioGroup } from '../../../../components/forms';
-import { User } from '../../../../interfaces/api';
 import { useUpdateUserAdminMutation, useCreateUserMutation } from '../../../../redux/user/user.api';
 import useToast from '../../../../hooks/useToast';
 import { DropdownApp } from '../../../../components/forms/dropdown/DropdownApp';
 import { ToggleButtonApp } from '../../../../components/forms/toggleButton/ToggleButtonApp';
 import { FileSingleInputApp } from '../../../../components/forms/fileInput/FileSingleInputApp';
-
-interface Props { user: User | undefined }
+import { User } from '../../../../interfaces/api';
+// eslint-disable-next-line import/no-cycle
+// import { UserContext } from '../DataTableLazy';
 
 const initialValues = {
   first: '',
@@ -29,7 +29,7 @@ const initialValues = {
 
 const uploadOptions = { icon: 'pi pi-fw pi-cloud-upload', iconOnly: true, className: 'hidden' };
 
-export const UserDataForm = ({ user }: Props) => {
+export const UserDataForm = ({ user }: {user: User | null}) => {
   const [ updateUser, { isLoading: isLoadingUpdate }] = useUpdateUserAdminMutation();
   const [ createUser, { isLoading: isLoadingCreate }] = useCreateUserMutation();
 
