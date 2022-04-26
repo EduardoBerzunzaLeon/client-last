@@ -11,13 +11,16 @@ import { TriStateCheckbox } from 'primereact/tristatecheckbox';
 import { useNavigate } from 'react-router-dom';
 import { Dialog } from 'primereact/dialog';
 import { TabPanel, TabView } from 'primereact/tabview';
-import { useGetUsersQuery } from '../../../redux/user/user.api';
+import { Toast } from 'primereact/toast';
+import { useGetUsersQuery, useUpdateBlockedUserAdminMutation } from '../../../redux/user/user.api';
 import { User } from '../../../interfaces/api';
 import { Divider } from '../../../components/Divider/Divider';
-import { PasswordForm } from '../profile/components/PasswordForm';
 // eslint-disable-next-line import/no-cycle
 import { UserDataForm } from './components/UserDataForm';
 import useAuth from '../../../hooks/useAuth';
+import { AdminPasswordForm } from './components/AdminPasswordForm';
+import useToast from '../../../hooks/useToast';
+import { processError } from '../../../utils/form/handlerErrorsForms';
 // import { User } from '../../../interfaces/api';
 
 const initialFiltersValue = {
@@ -41,6 +44,9 @@ const DataTableLazy = () => {
 
   const [ displayModal, setDisplayModal ] = useState(false);
   const [ userSelected, setUserSelected ] = useState<User | null>(null);
+  const { toast, showError, showSuccess } = useToast();
+
+  const [ updateBlocked, { isLoading: isLoadingMutation }] = useUpdateBlockedUserAdminMutation();
 
   const navigate = useNavigate();
 
@@ -145,9 +151,18 @@ const DataTableLazy = () => {
           }}
         />
         <Button
-          icon="pi pi-lock"
-          className={classNames('p-button-sm', 'p-button-raised', 'p-button-danger', { 'p-disabled': isUserLogged })}
-          onClick={() => console.log({ rowData, isUserLogged })}
+          icon={`pi pi-${rowData.blocked ? 'lock' : 'lock-open'}`}
+          loading={isLoadingMutation}
+          className={classNames('p-button-sm', 'p-button-raised', { 'p-disabled': isUserLogged, 'p-button-danger': rowData.blocked, 'p-button-success': !rowData.blocked })}
+          onClick={async () => {
+            try {
+              const { id, blocked } = rowData;
+              await updateBlocked({ id, blocked: !blocked }).unwrap();
+              showSuccess({ detail: 'Se cambio el status con éxito' });
+            } catch (error) {
+              processError({ error, showError });
+            }
+          }}
         />
 
       </>
@@ -161,6 +176,7 @@ const DataTableLazy = () => {
 
   return (
     <div>
+      <Toast ref={toast} />
       <div className="card">
         <DataTable
           value={data?.data}
@@ -247,9 +263,14 @@ const DataTableLazy = () => {
             <Divider text="Información Personal" icon="user" />
             <UserDataForm user={userSelected} />
           </TabPanel>
-          <TabPanel header="Cambiar contraseña">
-            <PasswordForm userId="123456789" />
-          </TabPanel>
+          {
+           userSelected && (
+           <TabPanel header="Cambiar contraseña">
+
+             <AdminPasswordForm userId={userSelected.id} />
+           </TabPanel>
+           )
+          }
 
         </TabView>
       </Dialog>

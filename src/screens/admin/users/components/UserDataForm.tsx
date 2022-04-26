@@ -59,9 +59,9 @@ export const UserDataForm = ({ user }: {user: User | null}) => {
       <Formik
         initialValues={initialUser}
         enableReinitialize
-        onSubmit={async (values, { setFieldError }) => {
+        onSubmit={async (values, { setFieldError, resetForm }) => {
           const {
-            last: lastUser, first: firstUser, role, avatar, email, gender,
+            last: lastUser, first: firstUser, role, avatar, email, gender, blocked,
           } = values;
 
           const dataSend = new FormData();
@@ -72,15 +72,20 @@ export const UserDataForm = ({ user }: {user: User | null}) => {
           dataSend.append('gender', gender);
           dataSend.append('last', lastUser);
           dataSend.append('role', role.code);
+          dataSend.append('blocked', `${blocked}`);
+
+          let message = 'El usuario se actualizo con éxito';
 
           try {
             if (user?.id) {
               await updateUser(dataSend).unwrap();
             } else {
               await createUser(dataSend).unwrap();
+              message = 'El usuario se creo con éxito';
+              resetForm();
             }
 
-            showSuccess({ detail: 'El usuario se actualizo con éxito' });
+            showSuccess({ detail: message });
           } catch (error) {
             const errors: string = processError({ error, showError });
             errorTranslateAuthForm({ errors, setFieldError });
@@ -100,14 +105,14 @@ export const UserDataForm = ({ user }: {user: User | null}) => {
         })}
       >
         {({
-          isValid, isSubmitting, dirty, setFieldValue,
+          isValid, isSubmitting, dirty, setFieldValue, values,
         }) => (
           <Form>
             <FileSingleInputApp
               onChange={(primeFile) => {
                 setFieldValue('avatar', primeFile);
               }}
-              initialValue={user?.avatar ?? ''}
+              initialValue={user?.avatar ?? values?.avatar ?? ''}
               isLoading={isLoadingUpdate || isLoadingCreate}
               uploadOptions={uploadOptions}
             />

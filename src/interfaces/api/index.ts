@@ -23,4 +23,6 @@ export type {
   UpdateAvatarRequest,
   CreateUserRequest,
   UpdateUserAdminRequest,
+  UpdatePasswordAdminRequest,
+  UpdateBlockedAdminRequest,
 } from './requests/userInterface';

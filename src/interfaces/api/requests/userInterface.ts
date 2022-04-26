@@ -8,6 +8,17 @@ export interface UpdateUserRequest {
     email: string
 }
 
+export interface UpdatePasswordAdminRequest {
+  id: string,
+  password: string,
+  confirmPassword: string;
+}
+
+export interface UpdateBlockedAdminRequest {
+  id: string,
+  blocked: boolean
+}
+
 export interface UpdateAvatarRequest {
     avatar: File
 }

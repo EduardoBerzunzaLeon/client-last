@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-cycle
 import { invalidatesList, providesList, tutorApi } from '../services/tutorApi';
 import { User, UserSingleResponse } from '../../interfaces/api';
-import { UpdateUserRequest } from '../../interfaces/api/requests/userInterface';
+import { UpdatePasswordAdminRequest, UpdateUserRequest, UpdateBlockedAdminRequest } from '../../interfaces/api/requests/userInterface';
 import { ListResponse } from '../../interfaces/api/responses/genericInterface';
 import { Generic } from '../../interfaces/generic';
 
@@ -58,6 +58,22 @@ export const userApi = tutorApi.injectEndpoints({
       }),
       invalidatesTags: invalidatesListUsers,
     }),
+    updatePasswordUserAdmin: builder.mutation<UserSingleResponse, UpdatePasswordAdminRequest>({
+      query: ({ id, ...patch }) => ({
+        url: `users/${id}/password`,
+        method: 'PATCH',
+        body: patch,
+      }),
+      invalidatesTags: invalidatesListUsers,
+    }),
+    updateBlockedUserAdmin: builder.mutation<UserSingleResponse, UpdateBlockedAdminRequest>({
+      query: ({ id, ...patch }) => ({
+        url: `users/${id}/blocked`,
+        method: 'PATCH',
+        body: patch,
+      }),
+      invalidatesTags: invalidatesListUsers,
+    }),
     updateUserAdmin: builder.mutation<UserSingleResponse, FormData>({
       query: (patch) => {
         const id = patch.get('id') || '';
@@ -97,4 +113,6 @@ export const {
   useUploadAvatarMutation,
   useUpdateUserAdminMutation,
   useCreateUserMutation,
+  useUpdatePasswordUserAdminMutation,
+  useUpdateBlockedUserAdminMutation,
 } = userApi;

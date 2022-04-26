@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 import {
   FileUpload,
@@ -47,9 +47,15 @@ export const FileSingleInputApp = ({
   const isControlled = useRef(!!onChange);
 
   const { file } = useFile({
-    url: initialValue || '',
+    url: initialValue,
     name: 'imagen.png',
   });
+
+  useEffect(() => {
+    if (!file && fileUploadRef.current.files) {
+      fileUploadRef.current.clear();
+    }
+  }, [ file ]);
 
   const onSelect = () => {
     if (fileUploadRef.current.files.length > 1) {
