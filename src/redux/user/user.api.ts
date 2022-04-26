@@ -13,6 +13,7 @@ interface Paginator {
   sortField: string | void,
   sortOrder: string | void,
   filters: Generic
+  rows?: number,
 }
 
 const prepareFilters = (filterOptions: Generic) => Object.keys(filterOptions).map((fieldName) => {
@@ -46,8 +47,8 @@ export const userApi = tutorApi.injectEndpoints({
     }),
     getUsers: builder.query<ListResponse<User>, Paginator>({
       query: ({
-        page = '1', sortField = '', sortOrder = '1', filters,
-      }) => `users/?page=${page}&sort=${sortField}&limit=2&sortOrder=${sortOrder}&${prepareFilters(filters)}`,
+        page = '1', sortField = '', sortOrder = '1', filters, rows = 10,
+      }) => `users/?page=${page}&sort=${sortField}&limit=${rows}&sortOrder=${sortOrder}&${prepareFilters(filters)}`,
       providesTags: providesListUser,
     }),
     updateUser: builder.mutation<UserSingleResponse, UpdateUserRequest>({
