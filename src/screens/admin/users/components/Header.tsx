@@ -1,8 +1,8 @@
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { useContext } from 'react';
-// eslint-disable-next-line import/no-cycle
-import { initialFiltersValue, UserContext } from '../../DataTableLazy';
+import { initialFiltersValue } from '../assets/assets';
+import { UserContext } from '../context/userContext';
 
 export const Header = () => {
   const { lazyParams, setLazyParams, setDisplayModal } = useContext(UserContext);

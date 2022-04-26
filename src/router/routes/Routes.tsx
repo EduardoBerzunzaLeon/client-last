@@ -17,7 +17,7 @@ import SendEmailVerifyScreen from '../../screens/blank/sendEmailVerify/SendEmail
 // import UsersScreen from '../../screens/admin/users/UsersScreen';
 import ProfileScreen from '../../screens/admin/profile/ProfileScreen';
 // import { DataTableFilterDemo } from '../../screens/admin/users/DataTableDemo';
-import DataTableLazy from '../../screens/admin/users/DataTableLazy';
+import UsersScreen from '../../screens/admin/users/UsersScreen';
 
 const BlankLayoutLazy = lazy(() => import(/* webpackChunkName: "Auth" */'../../screens/blank/layout/BlankLayout'));
 
@@ -36,8 +36,7 @@ const Routes = () => {
           path: 'home',
         },
         {
-          // element: <UsersScreen />,
-          element: <DataTableLazy />,
+          element: <UsersScreen />,
           path: 'users',
         },
         {

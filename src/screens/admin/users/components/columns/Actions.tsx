@@ -2,11 +2,10 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import classNames from 'classnames';
-
 import { Button } from 'primereact/button';
+
 import { User } from '../../../../../interfaces/api';
-// eslint-disable-next-line import/no-cycle
-import { UserContext } from '../../DataTableLazy';
+import { UserContext } from '../../context/userContext';
 import ButtonBlocked from '../ButtonBlocked';
 
 export const ActionsBody = ({ user }: {user: User}) => {

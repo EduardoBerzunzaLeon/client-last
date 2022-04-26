@@ -5,9 +5,8 @@ import { TabPanel, TabView } from 'primereact/tabview';
 
 import { AdminPasswordForm } from './AdminPasswordForm';
 import { Divider } from '../../../../components/Divider/Divider';
-// eslint-disable-next-line import/no-cycle
-import { UserContext } from '../DataTableLazy';
 import { UserDataForm } from './UserDataForm';
+import { UserContext } from '../context/userContext';
 
 export const UserDialog = () => {
   const {
