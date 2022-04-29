@@ -29,7 +29,7 @@ const initialValues = {
 
 const uploadOptions = { icon: 'pi pi-fw pi-cloud-upload', iconOnly: true, className: 'hidden' };
 
-export const UserDataForm = ({ user }: {user: User | null}) => {
+export const UserDataForm = ({ user }: {user?: User }) => {
   const [ updateUser, { isLoading: isLoadingUpdate }] = useUpdateUserAdminMutation();
   const [ createUser, { isLoading: isLoadingCreate }] = useCreateUserMutation();
 
@@ -189,6 +189,10 @@ export const UserDataForm = ({ user }: {user: User | null}) => {
       </Formik>
     </>
   );
+};
+
+UserDataForm.defaultProps = {
+  user: undefined,
 };
 
 export default UserDataForm;

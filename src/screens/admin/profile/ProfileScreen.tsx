@@ -11,12 +11,12 @@ import { Divider } from '../../../components/Divider/Divider';
 import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
 import { PasswordForm } from './components/PasswordForm';
 import { PersonalDataForm } from './components/PersonalDataForm';
-import { Skeleton } from '../../../components/Skeleton/Skeleton';
 import { useGetUserQuery } from '../../../redux/user/user.api';
 import { User } from '../../../interfaces/api';
 import { ProfileImageForm } from './components/ProfileImageForm';
-import { withSpinnerRTK } from '../../../components/withSpinnerRTK/withSpinnerRTK';
 import useAuth from '../../../hooks/useAuth';
+import { SpinnerRTK } from '../../../components/SpinnerRTK/SpinnerRTK';
+import { SkeletonCompound, SkeletonImage } from '../../../components/Skeleton/SkeletonCompound';
 
 const ProfileScreenMin = ({ data }: {data: User}) => {
   const [ isUserLogged, setIsUserLogged ] = useState(false);
@@ -38,14 +38,17 @@ const ProfileScreenMin = ({ data }: {data: User}) => {
           <Card title="Perfil">
             <div className="flex justify-content-center">
               <figure>
-                <Skeleton classNameSkeleton="border-circle w-8rem h-8rem" imgError="/assets/images/profile.png">
-                  <img
+                <SkeletonCompound
+                  className="border-circle w-8rem h-8rem"
+                >
+                  <SkeletonImage
                     src={data?.avatar}
                     alt="Profile"
                     className="border-circle border-purple-700 border-3 w-8rem h-8rem"
                     referrerPolicy="no-referrer"
                   />
-                </Skeleton>
+                </SkeletonCompound>
+
               </figure>
             </div>
 
@@ -148,9 +151,25 @@ const ProfileScreenMin = ({ data }: {data: User}) => {
 
 const ProfileScreen = () => {
   const { id } = useParams();
-  const Component = withSpinnerRTK(ProfileScreenMin, useGetUserQuery, id ?? '');
 
-  return <Component />;
+  const {
+    data, isError, error, isLoading,
+  } = useGetUserQuery(id ?? '');
+
+  return (
+    <SpinnerRTK
+      data={data}
+      error={error}
+      isError={isError}
+      isLoading={isLoading}
+    >
+      {
+        ({ data: dataSend }) => (
+          <ProfileScreenMin data={dataSend} />
+        )
+      }
+    </SpinnerRTK>
+  );
 };
 
 export default ProfileScreen;

@@ -20,7 +20,7 @@ export const UserDialog = () => {
       modal
       visible={displayModal}
       onHide={() => {
-        setUserSelected(null);
+        setUserSelected(undefined);
         setDisplayModal(false);
       }}
     >
