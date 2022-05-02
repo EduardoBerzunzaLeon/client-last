@@ -2,14 +2,14 @@ import { MouseEvent, useState } from 'react';
 
 import { Button } from 'primereact/button';
 import { CSSTransition } from 'react-transition-group';
+import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 
-import { NavLink } from 'react-router-dom';
 import { closeSider } from '../../../../redux/ui/ui.slice';
 import { setDefaultAuthState } from '../../../../redux/auth/auth.slice';
+import { Skeleton, SkeletonImage } from '../../../../components/Skeleton';
 import { useAppDispatch } from '../../../../redux/hooks';
-import { Skeleton } from '../../../../components/Skeleton/Skeleton';
-import useAuth from '../../../../hooks/useAuth';
+import { useAuth } from '../../../../hooks/useAuth';
 
 export const MenuProfile = () => {
   const dispatch = useAppDispatch();
@@ -34,16 +34,18 @@ export const MenuProfile = () => {
     <div className="layout-sidebar-dark">
       <div className="layout-profile">
         <div className="flex justify-content-center">
-          <figure>
-            <Skeleton classNameSkeleton="border-circle w-6rem h-6rem" imgError="/assets/images/profile.png">
-              <img
-                src={user?.avatar}
-                alt="Profile"
-                className="border-circle border-purple-300 border-3 w-6rem h-6rem m-2"
-                referrerPolicy="no-referrer"
-              />
-            </Skeleton>
-          </figure>
+          <Skeleton
+            className="border-circle w-6rem h-6rem"
+          >
+            <SkeletonImage
+              src={user?.avatar}
+              imgError="/assets/images/profile.png"
+              alt="Profile"
+              className="border-circle border-purple-300 border-3 w-6rem h-6rem m-2"
+              referrerPolicy="no-referrer"
+            />
+          </Skeleton>
+
         </div>
         <Button className="layout-profile-link" onClick={onClick}>
           <span className="username">{user?.name?.first}</span>

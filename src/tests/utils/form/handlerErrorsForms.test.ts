@@ -1,4 +1,4 @@
-import { errorTranslateAuthForm, processError } from '../../../utils/form/handlerErrorsForms';
+import { setAuthFormErrors, processError } from '../../../utils/forms/handlerFormErrors';
 import { errorResponse } from '../../fixtures/testData/fakeUtilsData';
 
 describe('Handler Errors Forms', () => {
@@ -11,7 +11,7 @@ describe('Handler Errors Forms', () => {
 
   test('should call callback with the error lenght', () => {
     const setFieldError = jest.fn();
-    errorTranslateAuthForm({ setFieldError, errors: 'contraseña no es valida. nombre es requerido' });
+    setAuthFormErrors({ setFieldError, errors: 'contraseña no es valida. nombre es requerido' });
     expect(setFieldError).toBeCalledTimes(2);
   });
 });

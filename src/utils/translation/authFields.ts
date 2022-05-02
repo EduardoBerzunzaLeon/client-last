@@ -1,4 +1,4 @@
-export interface TranslateAuthFields {
+export interface AuthFieldsTranslation {
     email: string,
     password: string,
     gender: string,
@@ -7,7 +7,7 @@ export interface TranslateAuthFields {
     name: string
 }
 
-export const translateAuthFields: TranslateAuthFields = {
+export const authFieldsTranslation: AuthFieldsTranslation = {
   email: 'email',
   password: 'contraseña',
   gender: 'genero',
@@ -17,5 +17,5 @@ export const translateAuthFields: TranslateAuthFields = {
 };
 
 export default {
-  translateAuthFields,
+  authFieldsTranslation,
 };

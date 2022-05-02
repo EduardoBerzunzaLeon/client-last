@@ -1,18 +1,19 @@
+import { useState } from 'react';
+
 import { Button } from 'primereact/button';
 import { Form, Formik } from 'formik';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import { useState } from 'react';
-import { errorTranslateAuthForm, processError } from '../../../../utils/form/handlerErrorsForms';
-import { genderRadio } from '../../../../utils/form/radioButtonsObjects';
+import { genderRadio } from '../../../../utils/forms/radioButtonObjects';
 import { InputTextApp, RadioGroup } from '../../../../components/forms';
+import { setAuthFormErrors, processError } from '../../../../utils/forms/handlerFormErrors';
 import { setDataAuth } from '../../../../redux/auth/auth.slice';
 import { UpdateUserRequest } from '../../../../interfaces/api/requests/userInterface';
 import { useAppDispatch } from '../../../../redux/hooks';
 import { User } from '../../../../interfaces/api';
+import { useToast } from '../../../../hooks/useToast';
 import { useUpdateUserMutation } from '../../../../redux/user/user.api';
-import useToast from '../../../../hooks/useToast';
 
 interface Props { user: User, isUserLogged: boolean }
 
@@ -59,7 +60,7 @@ export const PersonalDataForm = ({ user, isUserLogged }: Props) => {
             showSuccess({ detail: 'El usuario se actualizo con éxito' });
           } catch (error) {
             const errors: string = processError({ error, showError });
-            errorTranslateAuthForm({ errors, setFieldError });
+            setAuthFormErrors({ errors, setFieldError });
           }
         }}
         validationSchema={Yup.object({

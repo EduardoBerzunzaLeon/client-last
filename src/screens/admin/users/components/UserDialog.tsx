@@ -5,8 +5,8 @@ import { TabPanel, TabView } from 'primereact/tabview';
 
 import { AdminPasswordForm } from './AdminPasswordForm';
 import { Divider } from '../../../../components/Divider/Divider';
-import { UserDataForm } from './UserDataForm';
 import { UserContext } from '../context/userContext';
+import { UserDataForm } from './UserDataForm';
 
 export const UserDialog = () => {
   const {

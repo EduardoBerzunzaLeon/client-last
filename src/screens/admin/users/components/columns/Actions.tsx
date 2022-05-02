@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import { Button } from 'primereact/button';
 
+import { ButtonBlocked } from '../ButtonBlocked';
 import { User } from '../../../../../interfaces/api';
 import { UserContext } from '../../context/userContext';
-import ButtonBlocked from '../ButtonBlocked';
 
 export const ActionsBody = ({ user }: {user: User}) => {
   const { userAuth, setUserSelected, setDisplayModal } = useContext(UserContext);

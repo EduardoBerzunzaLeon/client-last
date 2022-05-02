@@ -1,12 +1,11 @@
 import { Generic } from '../interfaces/generic';
 
-export const convertObjectToArray = <T>(pos: string, model: Generic) => {
-  const newPosition = pos.split('/');
-  return newPosition.reduce((acc: T[], cur: string) => (
-    (cur in model)
-      ? [ ...acc, model[cur] ]
-      : acc), []);
-};
+export const convertObjectToArray = <T>(modelPropierties: string[], model: Generic) => (
+  modelPropierties.reduce((previous: T[], current: string) => (
+    (current in model)
+      ? [ ...previous, model[current] ]
+      : previous), [])
+);
 
 export default {
   convertObjectToArray,

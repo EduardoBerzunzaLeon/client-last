@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 
-import { Link, useParams } from 'react-router-dom';
 import { Card } from 'primereact/card';
+import { Link, useParams } from 'react-router-dom';
 import { Toast } from 'primereact/toast';
 
+import { Spinner } from '../../../components/spinner/Spinner';
 import { useEmailVerifyMutation } from '../../../redux/auth/auth.api';
-import Spinner from '../../../components/spinner/Spinner';
-import useToast from '../../../hooks/useToast';
+import { useToast } from '../../../hooks/useToast';
 
-const EmailVerifyScreen = () => {
+export const EmailVerifyScreen = () => {
   const { token } = useParams();
   const [ emailVerify, { isLoading, isSuccess, isError }] = useEmailVerifyMutation();
   const { toast, showError, showSuccess } = useToast();

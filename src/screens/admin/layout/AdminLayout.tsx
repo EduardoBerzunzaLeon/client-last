@@ -1,21 +1,20 @@
 import { Outlet } from 'react-router-dom';
 import { Sidebar } from 'primereact/sidebar';
+import { useSelector } from 'react-redux';
+
+import { closeSider } from '../../../redux/ui/ui.slice';
+import { menu } from '../../../utils/menuElement';
+import { MenuProfile } from './components/MenuProfile';
+import { MenuSlideContent } from './components/MenuSlideContent';
+import { MenuTop } from './components/MenuTop';
+import { selectSiderStatus } from '../../../redux/ui/ui.selectors';
+import { useAppDispatch } from '../../../redux/hooks';
 
 import '../../../layout/flags/flags.css';
 import '../../../layout/layout.scss';
 import './adminLayout.scss';
 
-import { useSelector } from 'react-redux';
-import MenuTop from './components/MenuTop';
-
-import { selectSiderStatus } from '../../../redux/ui/ui.selectors';
-import { useAppDispatch } from '../../../redux/hooks';
-import { closeSider } from '../../../redux/ui/ui.slice';
-import { MenuProfile } from './components/MenuProfile';
-import { MenuSlideContent } from './components/MenuSlideContent';
-import { menu } from '../../../utils/menuElement';
-
-const AdminLayout = () => {
+export const AdminLayout = () => {
   const dispatch = useAppDispatch();
   const visible = useSelector(selectSiderStatus);
 

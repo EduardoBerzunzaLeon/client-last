@@ -1,8 +1,9 @@
 import { useState, MouseEvent } from 'react';
+
 import { CSSTransition } from 'react-transition-group';
+import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 
-import { NavLink } from 'react-router-dom';
 import { closeSider } from '../../../../redux/ui/ui.slice';
 import { Menu } from '../../../../utils/menuElement';
 import { useAppDispatch } from '../../../../redux/hooks';
@@ -22,24 +23,23 @@ const Submenu = ({ elements, className = '', root = false }: SubmenuProps) => {
     item: Menu,
     index: number,
   ) => {
-    // avoid processing disabled items
-    if (item.disabled) {
-      event.preventDefault();
-    } else if (item.command) {
-      item.command({ originalEvent: event, item });
-    } else if (index === activeIndex) setActiveIndex(0);
-    else setActiveIndex(index);
-
     if (!item.items) {
       dispatch(closeSider());
     }
 
-    // if (props.onMenuItemClick) {
-    //   props.onMenuItemClick({
-    //     originalEvent: event,
-    //     item: item,
-    //   });
-    // }
+    if (index === activeIndex) {
+      setActiveIndex(0);
+    } else {
+      setActiveIndex(index);
+    }
+
+    if (item.disabled) {
+      event.preventDefault();
+    }
+
+    if (item.command) {
+      item.command({ originalEvent: event, item });
+    }
   };
 
   const renderLinkContent = (item: Menu) => {

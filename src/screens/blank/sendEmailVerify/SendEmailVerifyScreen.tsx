@@ -1,26 +1,27 @@
 import { useEffect } from 'react';
 
-import { Form, Formik } from 'formik';
-import { Link, useLocation } from 'react-router-dom';
-import * as Yup from 'yup';
-
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
+import { Form, Formik } from 'formik';
+import { Link, useLocation } from 'react-router-dom';
 import { Toast } from 'primereact/toast';
+import * as Yup from 'yup';
+
 import { InputTextApp } from '../../../components/forms';
+import { RESET_PASSWORD_URL } from '../../../config/enviroment';
 import { useSendEmailVerifyMutation } from '../../../redux/auth/auth.api';
-import useToast from '../../../hooks/useToast';
+import { useToast } from '../../../hooks/useToast';
 
 interface LocationProps {
     state: { email?: string } | null
 }
 
-const SendEmailVerifyScreen = () => {
+export const SendEmailVerifyScreen = () => {
   const { state } = useLocation() as LocationProps;
+
   const [ sendMail, {
     isLoading, isError, isSuccess,
   }] = useSendEmailVerifyMutation();
-  const url: string = process.env.REACT_APP_RESET_PASSWORD_URL ?? '';
 
   const { toast, showError, showSuccess } = useToast();
 
@@ -38,7 +39,7 @@ const SendEmailVerifyScreen = () => {
     if (state?.email) {
       sendMail({
         email: state.email,
-        url,
+        url: RESET_PASSWORD_URL,
       });
     }
   }, [ sendMail, state ]);
@@ -61,7 +62,7 @@ const SendEmailVerifyScreen = () => {
             initialValues={{ email: state?.email ?? '' }}
             onSubmit={async (values) => {
               try {
-                await sendMail({ ...values, url }).unwrap();
+                await sendMail({ ...values, url: RESET_PASSWORD_URL }).unwrap();
               } catch (error) {
                 showError({ detail: 'No se pudo enviar el correo, favor se cambiar el correo electronico o volverlo a intentar' });
               }

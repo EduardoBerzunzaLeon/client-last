@@ -2,7 +2,7 @@ import { useRef } from 'react';
 
 import { MessageProps } from '../interfaces/ui/hooks/hooksInterface';
 
-const useToast = () => {
+export const useToast = () => {
   const toast = useRef<any>(null);
 
   const showGenericToast = (severity: string, summary: string) => (

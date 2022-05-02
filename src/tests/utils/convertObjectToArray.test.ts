@@ -9,7 +9,8 @@ describe('Convert Object To Array', () => {
       profile: { label: 'Profile' },
     };
 
-    const newArray = convertObjectToArray('users/profile/noexist', items);
+    const modelPropierties = 'users/profile/noexist'.split('/');
+    const newArray = convertObjectToArray(modelPropierties, items);
     expect(newArray).toEqual([{ label: 'Users', extraElement: false }, { label: 'Profile' }]);
   });
 });

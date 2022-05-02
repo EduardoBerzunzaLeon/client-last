@@ -1,6 +1,6 @@
 import { mount } from 'enzyme';
 import { RadioButtonApp } from '../../../../components/forms';
-import { genderRadio } from '../../../../utils/form/radioButtonsObjects';
+import { genderRadio } from '../../../../utils/forms/radioButtonObjects';
 import { renderWithProps } from '../../../fixtures/render';
 
 const mockUseField = jest.fn();

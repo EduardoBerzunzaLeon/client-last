@@ -21,7 +21,8 @@ export const HeaderAdmin = React.memo(({ position, title }: Props) => {
     home: { label: 'Dashboard' },
   };
 
-  const models = convertObjectToArray<MenuItem>(position, items);
+  const modelPropierties = position.split('/');
+  const models = convertObjectToArray<MenuItem>(modelPropierties, items);
 
   const home = {
     icon: 'pi pi-home',

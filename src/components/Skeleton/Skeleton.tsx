@@ -1,46 +1,71 @@
-import React, { useState } from 'react';
+import {
+  CSSProperties,
+  ReactElement,
+  useRef,
+  useState,
+  useMemo,
+} from 'react';
 
 import { Skeleton as PrimeSkeleton } from 'primereact/skeleton';
 
-import { Generic } from '../../interfaces/generic';
+import { SkeletonContext } from './context/SkeletonContext';
+import { SkeletonImage } from './SkeletonImage';
 
-interface Props extends Generic {
-    imgError?: string,
-    classNameSkeleton?:string,
-    children: JSX.Element,
+export interface SkeletonProps {
+    children?: ReactElement | ReactElement[],
+    skeletonTemplate?: () => ReactElement,
+    className?: string,
+    style?: CSSProperties,
+    isExternalLoading?: boolean,
 }
 
-export const Skeleton = <P extends Props>(props: P) => {
-  const [ isLoading, setIsLoading ] = useState(true);
-  const {
-    classNameSkeleton, imgError, children, ...newProps
-  } = props;
+const { Provider } = SkeletonContext;
+
+export const Skeleton = ({
+  children,
+  skeletonTemplate,
+  className,
+  style,
+  isExternalLoading,
+}: SkeletonProps) => {
+  const isSkeletonCustomized = useRef(!!skeletonTemplate);
+  const hasExternalLoading = useRef(typeof isExternalLoading !== 'undefined');
+
+  const [ isLoading, setIsLoading ] = useState<boolean>(
+    hasExternalLoading.current
+      ? isExternalLoading!
+      : true,
+  );
+
+  const renderSkeleton = () => ((isSkeletonCustomized.current)
+    ? skeletonTemplate!()
+    : <PrimeSkeleton className={className} style={style} />);
+
+  const renderChildren = () => ((
+    hasExternalLoading.current && !isExternalLoading
+  ) || !hasExternalLoading.current) && children;
+
+  const value = useMemo(() => ({
+    isLoading, setIsLoading,
+  }), [ isLoading, setIsLoading ]);
 
   return (
-    <>
-      {
-        isLoading && <PrimeSkeleton className={classNameSkeleton || children.props.className} />
-      }
-      {
-        children?.type === 'img'
-          ? React.cloneElement(children, {
-            ...newProps,
-            style: isLoading ? { display: 'none' } : {},
-            onLoad: () => setIsLoading(false),
-            onError: (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
-              setIsLoading(false);
-              // eslint-disable-next-line no-param-reassign
-              event.currentTarget.src = imgError || '/assets/images/profile.png';
-            },
-          })
-          : React.cloneElement(children, {
-            ...newProps,
-            style: isLoading ? { display: 'none' } : {},
-            onLoad: () => setIsLoading(false),
-          })
-      }
-    </>
+    <Provider value={value}>
+      { isLoading && renderSkeleton() }
+      { renderChildren() }
+    </Provider>
   );
 };
 
-export default Skeleton;
+Skeleton.defaultProps = {
+  children: undefined,
+  skeletonTemplate: undefined,
+  className: '',
+  style: {},
+  isExternalLoading: undefined,
+};
+
+export default {
+  Skeleton,
+  SkeletonImage,
+};

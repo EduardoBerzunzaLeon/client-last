@@ -1,12 +1,12 @@
-import { RadioButtonApp, PropsRadioButton } from './RadioButtonApp';
+import { RadioButtonApp, RadioButtonProps } from './RadioButtonApp';
 
 interface Props {
-    radios: Array<PropsRadioButton>,
+    radios: Array<RadioButtonProps>,
 }
 
 export const RadioGroup = ({ radios }: Props) => (
   <div className="flex justify-content-start">
-    {radios.map((r) => <RadioButtonApp key={r.inputId} {...r} />)}
+    {radios.map((radio) => <RadioButtonApp key={radio.inputId} {...radio} />)}
   </div>
 );
 

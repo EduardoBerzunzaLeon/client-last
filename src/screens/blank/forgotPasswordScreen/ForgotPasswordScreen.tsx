@@ -1,19 +1,18 @@
-import { Link } from 'react-router-dom';
-// import { Link, useNavigate } from 'react-router-dom';
-
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { Form, Formik } from 'formik';
+import { Link } from 'react-router-dom';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import { errorTranslateAuthForm, processError } from '../../../utils/form/handlerErrorsForms';
 import { ForgotPasswordRequest } from '../../../interfaces/api/requests/authInterface';
 import { InputTextApp } from '../../../components/forms';
+import { RESET_PASSWORD_URL } from '../../../config/enviroment';
+import { setAuthFormErrors, processError } from '../../../utils/forms/handlerFormErrors';
 import { useForgotPasswordMutation } from '../../../redux/auth/auth.api';
-import useToast from '../../../hooks/useToast';
+import { useToast } from '../../../hooks/useToast';
 
-const ForgotPasswordScreen = () => {
+export const ForgotPasswordScreen = () => {
   const { toast, showError, showSuccess } = useToast();
   const [ sendEmailForgotPassword, { isLoading, isSuccess }] = useForgotPasswordMutation();
 
@@ -36,14 +35,14 @@ const ForgotPasswordScreen = () => {
             onSubmit={async (values, { setFieldError }) => {
               try {
                 const sendData: ForgotPasswordRequest = {
-                  url: process.env.REACT_APP_RESET_PASSWORD_URL ?? '',
+                  url: RESET_PASSWORD_URL,
                   ...values,
                 };
                 const { message } = await sendEmailForgotPassword(sendData).unwrap();
                 showSuccess({ detail: message });
               } catch (error) {
                 const errors: string = processError({ error, showError });
-                errorTranslateAuthForm({ errors, setFieldError });
+                setAuthFormErrors({ errors, setFieldError });
               }
             }}
             validationSchema={Yup.object({

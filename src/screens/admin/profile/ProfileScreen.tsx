@@ -11,12 +11,12 @@ import { Divider } from '../../../components/Divider/Divider';
 import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
 import { PasswordForm } from './components/PasswordForm';
 import { PersonalDataForm } from './components/PersonalDataForm';
+import { ProfileImageForm } from './components/ProfileImageForm';
+import { Skeleton, SkeletonImage } from '../../../components/Skeleton';
+import { SpinnerRTK } from '../../../components/SpinnerRTK/SpinnerRTK';
+import { useAuth } from '../../../hooks/useAuth';
 import { useGetUserQuery } from '../../../redux/user/user.api';
 import { User } from '../../../interfaces/api';
-import { ProfileImageForm } from './components/ProfileImageForm';
-import useAuth from '../../../hooks/useAuth';
-import { SpinnerRTK } from '../../../components/SpinnerRTK/SpinnerRTK';
-import { SkeletonCompound, SkeletonImage } from '../../../components/Skeleton/SkeletonCompound';
 
 const ProfileScreenMin = ({ data }: {data: User}) => {
   const [ isUserLogged, setIsUserLogged ] = useState(false);
@@ -37,19 +37,16 @@ const ProfileScreenMin = ({ data }: {data: User}) => {
         <div className="col-12 md:col-6">
           <Card title="Perfil">
             <div className="flex justify-content-center">
-              <figure>
-                <SkeletonCompound
-                  className="border-circle w-8rem h-8rem"
-                >
-                  <SkeletonImage
-                    src={data?.avatar}
-                    alt="Profile"
-                    className="border-circle border-purple-700 border-3 w-8rem h-8rem"
-                    referrerPolicy="no-referrer"
-                  />
-                </SkeletonCompound>
-
-              </figure>
+              <Skeleton
+                className="border-circle w-8rem h-8rem"
+              >
+                <SkeletonImage
+                  src={data?.avatar}
+                  alt="Profile"
+                  className="border-circle border-purple-700 border-3 w-8rem h-8rem"
+                  referrerPolicy="no-referrer"
+                />
+              </Skeleton>
             </div>
 
             <div className="overflow-hidden text-overflow-ellipsis">
@@ -149,7 +146,7 @@ const ProfileScreenMin = ({ data }: {data: User}) => {
   );
 };
 
-const ProfileScreen = () => {
+export const ProfileScreen = () => {
   const { id } = useParams();
 
   const {

@@ -1,21 +1,21 @@
-import { Link } from 'react-router-dom';
-
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { Form, Formik } from 'formik';
+import { Link } from 'react-router-dom';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import { errorTranslateAuthForm, processError } from '../../../utils/form/handlerErrorsForms';
-import { genderRadio } from '../../../utils/form/radioButtonsObjects';
+import { ACTIVE_URL } from '../../../config/enviroment';
+import { genderRadio } from '../../../utils/forms/radioButtonObjects';
 import { InputTextApp, RadioGroup, withDetailInputPassword } from '../../../components/forms';
 import { RegisterRequest } from '../../../interfaces/api';
+import { setAuthFormErrors, processError } from '../../../utils/forms/handlerFormErrors';
 import { useSignUpMutation } from '../../../redux/auth/auth.api';
-import useToast from '../../../hooks/useToast';
+import { useToast } from '../../../hooks/useToast';
 
 const InputPassword = withDetailInputPassword(InputTextApp);
 
-const RegisterScreen = () => {
+export const RegisterScreen = () => {
   const [ register, { isLoading }] = useSignUpMutation();
   const { toast, showError, showSuccess } = useToast();
 
@@ -41,7 +41,7 @@ const RegisterScreen = () => {
               first,
               last,
             },
-            url: process.env.REACT_APP_ACTIVE_URL ?? '',
+            url: ACTIVE_URL,
             ...dataWithoutName,
           };
 
@@ -51,7 +51,7 @@ const RegisterScreen = () => {
             resetForm();
           } catch (error) {
             const errors: string = processError({ error, showError });
-            errorTranslateAuthForm({ errors, setFieldError });
+            setAuthFormErrors({ errors, setFieldError });
           }
         }}
         validationSchema={Yup.object({

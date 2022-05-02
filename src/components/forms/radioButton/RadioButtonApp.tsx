@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import { Generic } from '../../../interfaces/generic';
 
-export interface PropsRadioButton extends Generic{
+export interface RadioButtonProps extends Generic {
   label: string,
   name: string,
   inputId: string,
@@ -13,7 +13,7 @@ export interface PropsRadioButton extends Generic{
   id?: string,
 }
 
-export const RadioButtonApp = ({ label, ...props }: PropsRadioButton) => {
+export const RadioButtonApp = ({ label, ...props }: RadioButtonProps) => {
   const [ field ] = useField(props);
 
   return (

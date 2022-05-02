@@ -1,20 +1,19 @@
-import { useParams, useNavigate } from 'react-router-dom';
-
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { Form, Formik } from 'formik';
 import { Toast } from 'primereact/toast';
+import { useParams, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
-import { errorTranslateAuthForm, processError } from '../../../utils/form/handlerErrorsForms';
 import { InputTextApp, withDetailInputPassword } from '../../../components/forms';
 import { ResetPasswordRequest } from '../../../interfaces/api';
+import { setAuthFormErrors, processError } from '../../../utils/forms/handlerFormErrors';
 import { useResetPasswordMutation } from '../../../redux/auth/auth.api';
-import useToast from '../../../hooks/useToast';
+import { useToast } from '../../../hooks/useToast';
 
 const InputPassword = withDetailInputPassword(InputTextApp);
 
-const ResetPasswordScreen = () => {
+export const ResetPasswordScreen = () => {
   const { token } = useParams();
 
   const navigate = useNavigate();
@@ -38,7 +37,7 @@ const ResetPasswordScreen = () => {
             await resetPassword({ ...prepareSend }).unwrap();
           } catch (error) {
             const errors: string = processError({ error, showError });
-            errorTranslateAuthForm({ errors, setFieldError });
+            setAuthFormErrors({ errors, setFieldError });
 
             setTimeout(() => {
               navigate('/login');

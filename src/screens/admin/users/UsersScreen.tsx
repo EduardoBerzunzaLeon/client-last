@@ -1,23 +1,24 @@
 import { useState } from 'react';
-import { DataTable, DataTablePFSEvent } from 'primereact/datatable';
-import { Column } from 'primereact/column';
 
-import { useGetUsersQuery } from '../../../redux/user/user.api';
-import { User } from '../../../interfaces/api';
-import useAuth from '../../../hooks/useAuth';
-import { GenderBodyTemplate, GenderRowFilterTemplate } from './components/columns/Gender';
+import { Column } from 'primereact/column';
+import { DataTable, DataTablePFSEvent } from 'primereact/datatable';
+
+import { ActionsBodyTemplate } from './components/columns/Actions';
 import { ActiveBodyTemplate, ActiveRowFilterTemplate } from './components/columns/Active';
 import { EmailBodyTemplate } from './components/columns/Email';
-import { ActionsBodyTemplate } from './components/columns/Actions';
+import { GenderBodyTemplate, GenderRowFilterTemplate } from './components/columns/Gender';
 import { Header } from './components/Header';
-import { UserDialog } from './components/UserDialog';
-import { UserContext } from './context/userContext';
 import { initialFiltersValue } from './assets/assets';
 import { SpinnerRTK } from '../../../components/SpinnerRTK/SpinnerRTK';
+import { useAuth } from '../../../hooks/useAuth';
+import { useGetUsersQuery } from '../../../redux/user/user.api';
+import { User } from '../../../interfaces/api';
+import { UserContext } from './context/userContext';
+import { UserDialog } from './components/UserDialog';
 
 const { Provider } = UserContext;
 
-const UsersScreen = () => {
+export const UsersScreen = () => {
   const [ lazyParams, setLazyParams ] = useState<any>({
     first: 0,
     rows: 10,

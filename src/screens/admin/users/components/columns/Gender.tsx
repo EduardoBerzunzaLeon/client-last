@@ -1,5 +1,6 @@
 import { ColumnFilterElementTemplateOptions } from 'primereact/column';
 import { Dropdown } from 'primereact/dropdown';
+
 import { User } from '../../../../../interfaces/api';
 
 const genders = [

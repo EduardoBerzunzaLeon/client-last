@@ -1,15 +1,15 @@
 import { useRef } from 'react';
 
-import { useNavigate } from 'react-router-dom';
-import { Menu } from 'primereact/menu';
 import { InputText } from 'primereact/inputtext';
+import { Menu } from 'primereact/menu';
+import { useNavigate } from 'react-router-dom';
 
-import { useAppDispatch } from '../../../../redux/hooks';
 import { openSider } from '../../../../redux/ui/ui.slice';
 import { setDefaultAuthState } from '../../../../redux/auth/auth.slice';
-import useAuth from '../../../../hooks/useAuth';
+import { useAppDispatch } from '../../../../redux/hooks';
+import { useAuth } from '../../../../hooks/useAuth';
 
-const MenuTop = () => {
+export const MenuTop = () => {
   const menu = useRef<any>(null);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

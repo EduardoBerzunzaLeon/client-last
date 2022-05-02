@@ -4,10 +4,11 @@ import { ReactFacebookLoginInfo, ReactFacebookFailureResponse } from 'react-face
 import { Toast } from 'primereact/toast';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
-import { processError } from '../../../../utils/form/handlerErrorsForms';
+import { CLIENT_ID_FACEBOOK } from '../../../../config/enviroment';
+import { processError } from '../../../../utils/forms/handlerFormErrors';
 import { SlipButton } from '../../../../components/slipButton/SlipButton';
 import { useSignInWithSocialMutation } from '../../../../redux/auth/auth.api';
-import useToast from '../../../../hooks/useToast';
+import { useToast } from '../../../../hooks/useToast';
 
 export const FacebookButton = () => {
   const [ signInSocial, { isLoading }] = useSignInWithSocialMutation();
@@ -33,7 +34,7 @@ export const FacebookButton = () => {
     <>
       <Toast ref={toast} />
       <FacebookLogin
-        appId={process.env.REACT_APP_CLIENT_ID_FACEBOOK || ''}
+        appId={CLIENT_ID_FACEBOOK}
         callback={responseFacebook}
         render={(renderProps) => (
           <SlipButton

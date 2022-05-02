@@ -1,11 +1,9 @@
-import React from 'react';
-
+import { Skeleton, SkeletonImage } from '../../../../../components/Skeleton';
 import { User } from '../../../../../interfaces/api';
-import { SkeletonCompound, SkeletonImage } from '../../../../../components/Skeleton/SkeletonCompound';
 
 export const EmailBodyTemplate = ({ email, avatar }: User) => (
   <div className="flex align-items-center">
-    <SkeletonCompound
+    <Skeleton
       className="border-circle w-3rem h-3rem"
     >
       <SkeletonImage
@@ -14,9 +12,9 @@ export const EmailBodyTemplate = ({ email, avatar }: User) => (
         className="border-circle  w-3rem h-3rem"
         referrerPolicy="no-referrer"
       />
-    </SkeletonCompound>
+    </Skeleton>
     <span className="ml-2">{email}</span>
   </div>
 );
 
-export default { EmailBodyTemplate };
+export default EmailBodyTemplate;

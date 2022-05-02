@@ -1,12 +1,13 @@
 import { useCallback } from 'react';
 
-import { Toast } from 'primereact/toast';
 import { GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
-import { SlipButton } from '../../../../components/slipButton/SlipButton';
+import { Toast } from 'primereact/toast';
 
-import { processError } from '../../../../utils/form/handlerErrorsForms';
+import { CLIENT_ID_GOOGLE } from '../../../../config/enviroment';
+import { processError } from '../../../../utils/forms/handlerFormErrors';
+import { SlipButton } from '../../../../components/slipButton/SlipButton';
 import { useSignInWithSocialMutation } from '../../../../redux/auth/auth.api';
-import useToast from '../../../../hooks/useToast';
+import { useToast } from '../../../../hooks/useToast';
 
 export const GoogleButton = () => {
   const [ signInSocial, { isLoading }] = useSignInWithSocialMutation();
@@ -40,7 +41,7 @@ export const GoogleButton = () => {
     <>
       <Toast ref={toast} />
       <GoogleLogin
-        clientId={process.env.REACT_APP_CLIENT_ID_GOOGLE || ''}
+        clientId={CLIENT_ID_GOOGLE}
         render={(renderProps) => (
           <SlipButton
             color="purple"
@@ -58,4 +59,4 @@ export const GoogleButton = () => {
   );
 };
 
-export default { GoogleButton };
+export default GoogleButton;

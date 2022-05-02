@@ -1,6 +1,8 @@
+import { useContext } from 'react';
+
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
-import { useContext } from 'react';
+
 import { initialFiltersValue } from '../assets/assets';
 import { UserContext } from '../context/userContext';
 

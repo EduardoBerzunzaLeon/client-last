@@ -3,41 +3,10 @@ import { invalidatesList, providesList, tutorApi } from '../services/tutorApi';
 import { User, UserSingleResponse } from '../../interfaces/api';
 import { UpdatePasswordAdminRequest, UpdateUserRequest, UpdateBlockedAdminRequest } from '../../interfaces/api/requests/userInterface';
 import { ListResponse } from '../../interfaces/api/responses/genericInterface';
-import { Generic } from '../../interfaces/generic';
+import { Paginator, transformQueryWithPaginator } from '../services/paginator.service';
 
 const providesListUser = providesList('Users');
 const invalidatesListUsers = invalidatesList('Users');
-
-interface Paginator {
-  page: string | void,
-  sortField: string | void,
-  sortOrder: string | void,
-  filters: Generic
-  rows?: number,
-}
-
-const prepareFilters = (filterOptions: Generic) => Object.keys(filterOptions).map((fieldName) => {
-  const f = filterOptions[fieldName];
-  // ? Not pass falsy values except boolean false
-  if (f.value || f.value === false) {
-    let matchMode = '[regex]=';
-    if (f.matchMode) {
-      switch (f.matchMode) {
-        case 'contains':
-          matchMode = '[regex]=';
-          break;
-        case 'equals':
-          matchMode = '=';
-          break;
-        default:
-          matchMode = '[regex]=';
-          break;
-      }
-    }
-    return `${fieldName}${matchMode}${encodeURIComponent(f.value)}`.replace('.', '_');
-  }
-  return '';
-}).filter(Boolean).join('&');
 
 export const userApi = tutorApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -46,9 +15,7 @@ export const userApi = tutorApi.injectEndpoints({
       providesTags: (result, error, id) => [{ type: 'Users', id }],
     }),
     getUsers: builder.query<ListResponse<User>, Paginator>({
-      query: ({
-        page = '1', sortField = '', sortOrder = '1', filters, rows = 10,
-      }) => `users/?page=${page}&sort=${sortField}&limit=${rows}&sortOrder=${sortOrder}&${prepareFilters(filters)}`,
+      query: transformQueryWithPaginator('users'),
       providesTags: providesListUser,
     }),
     updateUser: builder.mutation<UserSingleResponse, UpdateUserRequest>({

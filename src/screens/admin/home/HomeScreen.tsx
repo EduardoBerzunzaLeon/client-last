@@ -1,6 +1,6 @@
 import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
 
-const HomeScreen = () => (
+export const HomeScreen = () => (
   <HeaderAdmin position="home" title="Dashboard" />
 );
 

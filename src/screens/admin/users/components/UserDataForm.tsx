@@ -1,21 +1,19 @@
 import { useState } from 'react';
+
 import { Button } from 'primereact/button';
 import { Form, Formik } from 'formik';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import { errorTranslateAuthForm, processError } from '../../../../utils/form/handlerErrorsForms';
-import { genderRadio } from '../../../../utils/form/radioButtonsObjects';
-
-import { InputTextApp, RadioGroup } from '../../../../components/forms';
-import { useUpdateUserAdminMutation, useCreateUserMutation } from '../../../../redux/user/user.api';
-import useToast from '../../../../hooks/useToast';
 import { DropdownApp } from '../../../../components/forms/dropdown/DropdownApp';
-import { ToggleButtonApp } from '../../../../components/forms/toggleButton/ToggleButtonApp';
 import { FileSingleInputApp } from '../../../../components/forms/fileInput/FileSingleInputApp';
+import { genderRadio } from '../../../../utils/forms/radioButtonObjects';
+import { InputTextApp, RadioGroup } from '../../../../components/forms';
+import { setAuthFormErrors, processError } from '../../../../utils/forms/handlerFormErrors';
+import { ToggleButtonApp } from '../../../../components/forms/toggleButton/ToggleButtonApp';
 import { User } from '../../../../interfaces/api';
-// eslint-disable-next-line import/no-cycle
-// import { UserContext } from '../DataTableLazy';
+import { useToast } from '../../../../hooks/useToast';
+import { useUpdateUserAdminMutation, useCreateUserMutation } from '../../../../redux/user/user.api';
 
 const initialValues = {
   first: '',
@@ -88,7 +86,7 @@ export const UserDataForm = ({ user }: {user?: User }) => {
             showSuccess({ detail: message });
           } catch (error) {
             const errors: string = processError({ error, showError });
-            errorTranslateAuthForm({ errors, setFieldError });
+            setAuthFormErrors({ errors, setFieldError });
           }
         }}
         validationSchema={Yup.object({

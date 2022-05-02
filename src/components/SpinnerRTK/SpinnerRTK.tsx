@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import { getDetailError } from '../../redux/services/handlerErrorApi';
+import { getErrorDetail } from '../../redux/services/handlerErrorApi';
 import ErrorCard from '../errorCard/ErrorCard';
 import Spinner from '../spinner/Spinner';
 
@@ -36,7 +36,7 @@ export const SpinnerRTK = <T extends Response>({
     return (
       <ErrorCard
         title="Ocurrio un error en su petición"
-        detail={error ? getDetailError(error) : messageError!}
+        detail={error ? getErrorDetail(error) : messageError!}
       />
     );
   }

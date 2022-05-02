@@ -3,11 +3,11 @@ import React from 'react';
 import { Toast } from 'primereact/toast';
 
 import { FileSingleInputApp } from '../../../../components/forms/fileInput/FileSingleInputApp';
-import { processError } from '../../../../utils/form/handlerErrorsForms';
+import { processError } from '../../../../utils/forms/handlerFormErrors';
 import { setDataAuth } from '../../../../redux/auth/auth.slice';
 import { useAppDispatch } from '../../../../redux/hooks';
+import { useToast } from '../../../../hooks/useToast';
 import { useUploadAvatarMutation } from '../../../../redux/user/user.api';
-import useToast from '../../../../hooks/useToast';
 
 export const ProfileImageForm = () => {
   const [ uploadAvatar, { isLoading }] = useUploadAvatarMutation();

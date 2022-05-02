@@ -1,17 +1,18 @@
-import classNames from 'classnames';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
-import useToast from '../../../../hooks/useToast';
+import classNames from 'classnames';
+
+import { processError } from '../../../../utils/forms/handlerFormErrors';
 import { User } from '../../../../interfaces/api';
+import { useToast } from '../../../../hooks/useToast';
 import { useUpdateBlockedUserAdminMutation } from '../../../../redux/user/user.api';
-import { processError } from '../../../../utils/form/handlerErrorsForms';
 
 interface Props {
     user: User;
     isUserLogged: boolean;
 }
 
-function ButtonBlocked({ user, isUserLogged }: Props) {
+export const ButtonBlocked = ({ user, isUserLogged }: Props) => {
   const [ updateBlocked, { isLoading }] = useUpdateBlockedUserAdminMutation();
 
   const { toast, showError, showSuccess } = useToast();
@@ -37,6 +38,6 @@ function ButtonBlocked({ user, isUserLogged }: Props) {
     </>
 
   );
-}
+};
 
 export default ButtonBlocked;

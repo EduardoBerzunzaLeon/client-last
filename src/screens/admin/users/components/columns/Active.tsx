@@ -1,4 +1,5 @@
 import { ColumnFilterElementTemplateOptions } from 'primereact/column';
+
 import { TriStateCheckbox } from 'primereact/tristatecheckbox';
 import { User } from '../../../../../interfaces/api';
 

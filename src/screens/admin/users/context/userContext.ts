@@ -1,4 +1,5 @@
 import React, { createContext } from 'react';
+
 import { User } from '../../../../interfaces/api';
 
 interface UserContextProps {

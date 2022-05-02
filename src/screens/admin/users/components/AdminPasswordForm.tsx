@@ -4,10 +4,10 @@ import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
 import { InputTextApp, withDetailInputPassword } from '../../../../components/forms';
-import { processError } from '../../../../utils/form/handlerErrorsForms';
+import { processError } from '../../../../utils/forms/handlerFormErrors';
 import { UpdatePasswordAdminRequest } from '../../../../interfaces/api';
+import { useToast } from '../../../../hooks/useToast';
 import { useUpdatePasswordUserAdminMutation } from '../../../../redux/user/user.api';
-import useToast from '../../../../hooks/useToast';
 
 const InputPassword = withDetailInputPassword(InputTextApp);
 
@@ -25,7 +25,6 @@ export const AdminPasswordForm = ({ userId }: {userId: string}) => {
         }}
         onSubmit={async (values, { resetForm }) => {
           const request: UpdatePasswordAdminRequest = { id: userId, ...values };
-          console.log(request);
           try {
             await updatePassword(request).unwrap();
             showSuccess({ detail: 'El usuario se actualizó con éxito' });

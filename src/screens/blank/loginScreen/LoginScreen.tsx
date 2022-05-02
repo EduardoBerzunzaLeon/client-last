@@ -13,18 +13,17 @@ import * as Yup from 'yup';
 import { FacebookButton } from './components/FacebookButton';
 import { GoogleButton } from './components/GoogleButton';
 import { InputTextApp } from '../../../components/forms';
+import { processError } from '../../../utils/forms/handlerFormErrors';
 import { useLoginMutation } from '../../../redux/auth/auth.api';
-
-import useToast from '../../../hooks/useToast';
+import { useToast } from '../../../hooks/useToast';
 
 import './loginScreen.scss';
-import { processError } from '../../../utils/form/handlerErrorsForms';
 
-const LoginScreen = () => {
+export const LoginScreen = () => {
   const navigate = useNavigate();
+  const isMounted = useRef<any>(null);
   const [ login, { isLoading }] = useLoginMutation();
   const { toast, showError } = useToast();
-  const isMounted = useRef<any>(null);
   const [ showGoogle, setShowGoogle ] = useState(false);
 
   // ! DELETE: In production with https: this useEffect is unnecessary
