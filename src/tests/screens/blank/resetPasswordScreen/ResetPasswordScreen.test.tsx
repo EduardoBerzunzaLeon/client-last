@@ -10,7 +10,7 @@ import {
 
 import { mockResetPassword } from '../../../fixtures/mockServer/mockAuthHandler';
 import { renderWithRouter, storeGeneric } from '../../../fixtures/render';
-import { tutorApi } from '../../../../redux/services/tutorApi';
+import { tutorApi } from '../../../../redux/services/tutor.api';
 import * as authApi from '../../../../redux/auth/auth.api';
 import ResetPasswordScreen from '../../../../screens/blank/resetPasswordScreen/ResetPasswordScreen';
 

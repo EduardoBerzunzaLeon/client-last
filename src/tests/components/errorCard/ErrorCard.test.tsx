@@ -1,5 +1,5 @@
 import { shallow } from 'enzyme';
-import ErrorCard from '../../../components/errorCard/ErrorCard';
+import { ErrorCard } from '../../../components/errorCard/ErrorCard';
 
 describe('<ErrorCard />', () => {
   test('should match to snapshot', () => {

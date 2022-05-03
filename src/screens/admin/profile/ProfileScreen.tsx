@@ -7,13 +7,13 @@ import { TabView, TabPanel } from 'primereact/tabview';
 import { useParams } from 'react-router-dom';
 
 import { Badge } from '../../../components/badge/Badge';
-import { Divider } from '../../../components/Divider/Divider';
+import { Divider } from '../../../components/divider/Divider';
 import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
 import { PasswordForm } from './components/PasswordForm';
 import { PersonalDataForm } from './components/PersonalDataForm';
 import { ProfileImageForm } from './components/ProfileImageForm';
-import { Skeleton, SkeletonImage } from '../../../components/Skeleton';
-import { SpinnerRTK } from '../../../components/SpinnerRTK/SpinnerRTK';
+import { Skeleton, SkeletonImage } from '../../../components/skeleton';
+import { SpinnerRTK } from '../../../components/spinnerRTK/SpinnerRTK';
 import { useAuth } from '../../../hooks/useAuth';
 import { useGetUserQuery } from '../../../redux/user/user.api';
 import { User } from '../../../interfaces/api';

@@ -10,9 +10,9 @@ import {
 
 import { mockSendEmailVerify } from '../../../fixtures/mockServer/mockAuthHandler';
 import { renderWithRouter, storeGeneric } from '../../../fixtures/render';
-import { tutorApi } from '../../../../redux/services/tutorApi';
+import { tutorApi } from '../../../../redux/services/tutor.api';
 import * as authApi from '../../../../redux/auth/auth.api';
-import SendEmailVerifyScreen from '../../../../screens/blank/sendEmailVerify/SendEmailVerifyScreen';
+import { SendEmailVerifyScreen } from '../../../../screens/blank/sendEmailVerify/SendEmailVerifyScreen';
 
 const mockLocation = jest.fn();
 

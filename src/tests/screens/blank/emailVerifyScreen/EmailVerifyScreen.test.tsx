@@ -8,7 +8,7 @@ import {
 
 import { mockEmailVerify } from '../../../fixtures/mockServer/mockAuthHandler';
 import { renderWithRouter, storeGeneric } from '../../../fixtures/render';
-import { tutorApi } from '../../../../redux/services/tutorApi';
+import { tutorApi } from '../../../../redux/services/tutor.api';
 import EmailVerifyScreen from '../../../../screens/blank/emailVerify/EmailVerifyScreen';
 
 const server = setupServer(mockEmailVerify);

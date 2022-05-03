@@ -7,24 +7,9 @@ import {
   FetchBaseQueryMeta,
 } from '@reduxjs/toolkit/query/react';
 
-import { ErrorResponse, responsArrayRTK, responseRTK } from '../../interfaces/api';
-
+import { ErrorResponse } from '../../interfaces/api';
 // eslint-disable-next-line import/no-cycle
 import { RootState } from '../store';
-
-export const invalidatesList = <R extends responseRTK, T extends string>(tagType: T) => (
-  resultsWithIds: R | undefined,
-) => [{ type: tagType, id: resultsWithIds?.data.id }];
-
-export const providesList = <R extends responsArrayRTK, T extends string>(
-  tagType: T) => (
-    resultsWithIds: R | undefined,
-  ) => (resultsWithIds
-    ? [
-      { type: tagType, id: 'LIST' },
-      ...resultsWithIds.data.map(({ id }) => ({ type: tagType, id })),
-    ]
-    : [{ type: tagType, id: 'LIST' }]);
 
 export const tutorApi = createApi({
   reducerPath: 'tutorApi',

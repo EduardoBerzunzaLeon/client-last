@@ -12,7 +12,10 @@ describe('<Badge />', () => {
 
     const wrapper = shallow(<Badge
       text={text}
-      matchObject={matchObject}
+      matchObject={{
+        true: 'success',
+        false: 'danger',
+      }}
       match={match}
     />);
 

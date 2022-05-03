@@ -1,26 +1,24 @@
-import type { RouteObject } from 'react-router-dom';
-
 import { lazy } from 'react';
 
 import { useRoutes } from 'react-router-dom';
-
-import { PrivateRoute } from '../PrivateRoute';
-import { PublicRoute } from '../PublicRoute';
+import type { RouteObject } from 'react-router-dom';
 
 import { AdminLayout } from '../../screens/admin/layout/AdminLayout';
 import { EmailVerifyScreen } from '../../screens/blank/emailVerify/EmailVerifyScreen';
 import { ForgotPasswordScreen } from '../../screens/blank/forgotPasswordScreen/ForgotPasswordScreen';
 import { HomeScreen } from '../../screens/admin/home/HomeScreen';
 import { LoginScreen } from '../../screens/blank/loginScreen/LoginScreen';
+import { PrivateRoute } from '../PrivateRoute';
+import { ProfileScreen } from '../../screens/admin/profile/ProfileScreen';
+import { PublicRoute } from '../PublicRoute';
 import { RegisterScreen } from '../../screens/blank/registerScreen/RegisterScreen';
 import { ResetPasswordScreen } from '../../screens/blank/resetPasswordScreen/ResetPasswordScreen';
 import { SendEmailVerifyScreen } from '../../screens/blank/sendEmailVerify/SendEmailVerifyScreen';
-import { ProfileScreen } from '../../screens/admin/profile/ProfileScreen';
 import { UsersScreen } from '../../screens/admin/users/UsersScreen';
 
 const BlankLayoutLazy = lazy(() => import(/* webpackChunkName: "Auth" */'../../screens/blank/layout/BlankLayout'));
 
-const Routes = () => {
+export const Routes = () => {
   const routesObject: RouteObject[] = [
     {
       path: '/admin',

@@ -1,23 +1,12 @@
 import {
-  CSSProperties,
-  ReactElement,
   useRef,
   useState,
   useMemo,
 } from 'react';
 
 import { Skeleton as PrimeSkeleton } from 'primereact/skeleton';
-
 import { SkeletonContext } from './context/SkeletonContext';
-import { SkeletonImage } from './SkeletonImage';
-
-export interface SkeletonProps {
-    children?: ReactElement | ReactElement[],
-    skeletonTemplate?: () => ReactElement,
-    className?: string,
-    style?: CSSProperties,
-    isExternalLoading?: boolean,
-}
+import { SkeletonProps } from './interfaces';
 
 const { Provider } = SkeletonContext;
 
@@ -65,7 +54,4 @@ Skeleton.defaultProps = {
   isExternalLoading: undefined,
 };
 
-export default {
-  Skeleton,
-  SkeletonImage,
-};
+export default { Skeleton };

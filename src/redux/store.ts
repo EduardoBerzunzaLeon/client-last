@@ -2,7 +2,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 
-import { tutorApi } from './services/tutorApi';
+import { tutorApi } from './services/tutor.api';
 import authReducer from './auth/auth.slice';
 import uiReducer from './ui/ui.slice';
 

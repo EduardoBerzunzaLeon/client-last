@@ -10,7 +10,7 @@ import {
 
 import { mockStoreWithMiddlewares, renderWithRouter } from '../../../fixtures/render';
 import { mockGetUser, mockUpdateUser } from '../../../fixtures/mockServer/mockUserHandler';
-import { tutorApi } from '../../../../redux/services/tutorApi';
+import { tutorApi } from '../../../../redux/services/tutor.api';
 import { userLogged } from '../../../fixtures/testData/fakeAuthData';
 import ProfileScreen from '../../../../screens/admin/profile/ProfileScreen';
 

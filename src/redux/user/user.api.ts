@@ -1,9 +1,13 @@
-// eslint-disable-next-line import/no-cycle
-import { invalidatesList, providesList, tutorApi } from '../services/tutorApi';
-import { User, UserSingleResponse } from '../../interfaces/api';
-import { UpdatePasswordAdminRequest, UpdateUserRequest, UpdateBlockedAdminRequest } from '../../interfaces/api/requests/userInterface';
+import { invalidatesList, providesList } from '../services/response.service';
 import { ListResponse } from '../../interfaces/api/responses/genericInterface';
-import { Paginator, transformQueryWithPaginator } from '../services/paginator.service';
+import { Paginator, User, UserSingleResponse } from '../../interfaces/api';
+import { transformQueryWithPaginator } from '../services/paginator.service';
+import { tutorApi } from '../services/tutor.api';
+import {
+  UpdatePasswordAdminRequest,
+  UpdateUserRequest,
+  UpdateBlockedAdminRequest,
+} from '../../interfaces/api/requests/userInterface';
 
 const providesListUser = providesList('Users');
 const invalidatesListUsers = invalidatesList('Users');

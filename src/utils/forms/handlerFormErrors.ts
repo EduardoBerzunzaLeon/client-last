@@ -1,6 +1,6 @@
 import { Generic } from '../../interfaces/generic';
 import { MessageProps } from '../../interfaces/ui/hooks/hooksInterface';
-import { getErrorDetail } from '../../redux/services/handlerErrorApi';
+import { getErrorDetail } from '../../redux/services/error.service';
 import { authFieldsTranslation, AuthFieldsTranslation } from '../translation/authFields';
 
 interface Error {

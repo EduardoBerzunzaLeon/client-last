@@ -1,5 +1,5 @@
 import { FileUploadItemTemplateType } from 'primereact/fileupload';
-import { PrimeFile } from '../../../interfaces/ui/primereact/primeFile';
+import { PrimeFile } from '../../../interfaces/ui/primereact/primeFileInterface';
 
 export const ItemFileInput: FileUploadItemTemplateType = ({ name, objectURL }: PrimeFile) => (
   <img alt={name} role="presentation" className="w-full" src={objectURL} />

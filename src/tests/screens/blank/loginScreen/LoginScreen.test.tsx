@@ -10,7 +10,7 @@ import {
 import LoginScreen from '../../../../screens/blank/loginScreen/LoginScreen';
 import { renderWithRouter, storeGeneric } from '../../../fixtures/render';
 
-import { tutorApi } from '../../../../redux/services/tutorApi';
+import { tutorApi } from '../../../../redux/services/tutor.api';
 import { mockLoginError, mockLoginSuccess } from '../../../fixtures/mockServer/mockAuthHandler';
 
 Storage.prototype.setItem = jest.fn();

@@ -9,7 +9,7 @@ import { EmailBodyTemplate } from './components/columns/Email';
 import { GenderBodyTemplate, GenderRowFilterTemplate } from './components/columns/Gender';
 import { Header } from './components/Header';
 import { initialFiltersValue } from './assets/assets';
-import { SpinnerRTK } from '../../../components/SpinnerRTK/SpinnerRTK';
+import { SpinnerRTK } from '../../../components/spinnerRTK/SpinnerRTK';
 import { useAuth } from '../../../hooks/useAuth';
 import { useGetUsersQuery } from '../../../redux/user/user.api';
 import { User } from '../../../interfaces/api';

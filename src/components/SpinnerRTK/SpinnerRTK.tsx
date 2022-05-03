@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
-import { getErrorDetail } from '../../redux/services/handlerErrorApi';
-import ErrorCard from '../errorCard/ErrorCard';
-import Spinner from '../spinner/Spinner';
+import { getErrorDetail } from '../../redux/services/error.service';
+import { Spinner } from '../spinner/Spinner';
+import { ErrorCard } from '../errorCard/ErrorCard';
 
 interface Response {
     data: any,

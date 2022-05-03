@@ -4,7 +4,7 @@ import { Dialog } from 'primereact/dialog';
 import { TabPanel, TabView } from 'primereact/tabview';
 
 import { AdminPasswordForm } from './AdminPasswordForm';
-import { Divider } from '../../../../components/Divider/Divider';
+import { Divider } from '../../../../components/divider/Divider';
 import { UserContext } from '../context/userContext';
 import { UserDataForm } from './UserDataForm';
 

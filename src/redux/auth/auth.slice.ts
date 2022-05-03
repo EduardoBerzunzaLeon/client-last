@@ -1,9 +1,8 @@
 import { createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
 
-import { User } from '../../interfaces/api';
-// import { userLogged } from '../../tests/fixtures/testData/fakeAuthData';
 // eslint-disable-next-line import/no-cycle
 import { authApi } from './auth.api';
+import { User } from '../../interfaces/api';
 
 export interface AuthState {
   user: User | null,

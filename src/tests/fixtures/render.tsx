@@ -9,7 +9,7 @@ import { authState, uiState } from './testData/fakeStoreData';
 import { setupApiStore } from './redux/setupApiStore';
 import authReducer from '../../redux/auth/auth.slice';
 import uiReducer from '../../redux/ui/ui.slice';
-import { tutorApi } from '../../redux/services/tutorApi';
+import { tutorApi } from '../../redux/services/tutor.api';
 import { persistLogingMiddleware } from '../../redux/auth/auth.middleware';
 
 declare type Middlewares<S> = ReadonlyArray<Middleware<{}, S>>;

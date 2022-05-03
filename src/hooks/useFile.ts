@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { PrimeFile } from '../interfaces/ui/primereact/primeFile';
+
+import { PrimeFile } from '../interfaces/ui/primereact/primeFileInterface';
 
 interface Props {
     name: string,
@@ -7,7 +8,7 @@ interface Props {
     url?: string,
 }
 
-async function getFileFromUrl(url: string, name: string, defaultType = 'image/jpeg') {
+const getFileFromUrl = async (url: string, name: string, defaultType = 'image/jpeg') => {
   const response = await fetch(url);
   if (response.status === 200 && url) {
     const data = await response.blob();
@@ -16,7 +17,7 @@ async function getFileFromUrl(url: string, name: string, defaultType = 'image/jp
     });
   }
   throw new Error('File not found');
-}
+};
 
 export const useFile = ({ url, name, type = 'image/jpeg' }: Props) => {
   const [ file, setFile ] = useState<PrimeFile>();

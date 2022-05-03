@@ -1,6 +1,7 @@
-import classNames from 'classnames';
-import { ErrorMessage, useField } from 'formik';
 import { Dropdown } from 'primereact/dropdown';
+import { ErrorMessage, useField } from 'formik';
+import classNames from 'classnames';
+
 import { Generic } from '../../../interfaces/generic';
 
 interface Props extends Generic{

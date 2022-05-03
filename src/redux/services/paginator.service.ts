@@ -1,21 +1,4 @@
-type MatchMode = 'contains' | 'equals';
-
-interface FiltersValueProps {
-    matchMode: MatchMode,
-    value?: any,
-  }
-
-  interface FilterOptionsProps {
-    [x: string]: FiltersValueProps
-  }
-
-export interface Paginator {
-    page: string | void,
-    sortField: string | void,
-    sortOrder: string | void,
-    filters: FilterOptionsProps
-    rows?: number,
-  }
+import { FilterOptionsProps, MatchMode, Paginator } from '../../interfaces/api';
 
 export const prepareFilters = (filterOptions: FilterOptionsProps) => {
   const filterEquivalence: Record<MatchMode, string> = {

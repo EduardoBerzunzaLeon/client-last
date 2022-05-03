@@ -1,5 +1,5 @@
 import { shallow } from 'enzyme';
-import { Divider } from '../../../components/Divider/Divider';
+import { Divider } from '../../../components/divider/Divider';
 
 describe('<Divider />', () => {
   test('should match to snapshot', () => {

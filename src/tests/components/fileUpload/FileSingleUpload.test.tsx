@@ -9,7 +9,7 @@ import {
 } from '@testing-library/react';
 
 import { storeGeneric, renderWithProps } from '../../fixtures/render';
-import { tutorApi } from '../../../redux/services/tutorApi';
+import { tutorApi } from '../../../redux/services/tutor.api';
 
 import { mockUploadAvatar } from '../../fixtures/mockServer/mockUserHandler';
 import { ProfileImageForm } from '../../../screens/admin/profile/components/ProfileImageForm';

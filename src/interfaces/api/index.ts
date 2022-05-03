@@ -1,4 +1,8 @@
 export type {
+  MatchMode, FiltersValueProps, FilterOptionsProps, Paginator,
+} from './requests/paginatorInterface';
+
+export type {
   genericResponse, responseRTK, responsArrayRTK, ListResponse, SingleResponse,
 } from './responses/genericInterface';
 

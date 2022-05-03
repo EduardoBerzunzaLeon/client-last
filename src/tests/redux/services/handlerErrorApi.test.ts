@@ -1,4 +1,4 @@
-import { getErrorDetail, isAPIResponseError } from '../../../redux/services/handlerErrorApi';
+import { getErrorDetail, isAPIResponseError } from '../../../redux/services/error.service';
 import { errorResponse } from '../../fixtures/testData/fakeUtilsData';
 
 describe('Handler Error API', () => {

@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-cycle
-import { tutorApi } from '../services/tutorApi';
+import { tutorApi } from '../services/tutor.api';
 
 import {
   ForgotPasswordRequest,

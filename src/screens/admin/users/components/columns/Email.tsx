@@ -1,4 +1,4 @@
-import { Skeleton, SkeletonImage } from '../../../../../components/Skeleton';
+import { Skeleton, SkeletonImage } from '../../../../../components/skeleton';
 import { User } from '../../../../../interfaces/api';
 
 export const EmailBodyTemplate = ({ email, avatar }: User) => (
