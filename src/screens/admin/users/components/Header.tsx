@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
@@ -9,14 +9,14 @@ import { UserContext } from '../context/userContext';
 export const Header = () => {
   const { lazyParams, setLazyParams, setDisplayModal } = useContext(UserContext);
 
-  const onGlobalFilterChange = (e: any) => {
+  const onGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    setLazyParams((l: any) => ({
-      ...l,
+    setLazyParams((prev: any) => ({
+      ...prev,
       filters: {
-        ...l.filters,
+        ...prev.filters,
         global: {
-          ...l.filters.global,
+          ...prev.filters.global,
           value,
         },
       },
@@ -31,8 +31,8 @@ export const Header = () => {
           icon="pi pi-filter-slash"
           label="Limpiar Filtros"
           className="p-button-outlined m-2"
-          onClick={() => setLazyParams((l: any) => ({
-            ...l,
+          onClick={() => setLazyParams((prev: any) => ({
+            ...prev,
             filters: { ...initialFiltersValue },
           }))}
         />
