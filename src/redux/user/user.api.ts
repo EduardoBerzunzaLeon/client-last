@@ -1,6 +1,8 @@
 import { invalidatesList, providesList } from '../services/response.service';
-import { ListResponse } from '../../interfaces/api/responses/genericInterface';
-import { Paginator, User, UserSingleResponse } from '../../interfaces/api';
+
+import {
+  Paginator, User, UserSingleResponse, ListResponse,
+} from '../../interfaces/api';
 import { transformQueryWithPaginator } from '../services/paginator.service';
 import { tutorApi } from '../services/tutor.api';
 import {

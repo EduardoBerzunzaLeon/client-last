@@ -3,7 +3,7 @@ export interface genericResponse {
   }
 
 export interface responseRTK {
-    data: genericResponse
+    data: genericResponse | null
   }
 
 export interface responsArrayRTK {
