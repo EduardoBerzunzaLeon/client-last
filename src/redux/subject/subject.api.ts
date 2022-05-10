@@ -1,6 +1,12 @@
 import { tutorApi } from '../services/tutor.api';
 import {
-  Paginator, Subject, ListResponse, UpdateSubjectRequest, SingleResponse, CreateSubjectRequest,
+  Paginator,
+  Subject,
+  ListResponse,
+  UpdateSubjectRequest,
+  SingleResponse,
+  CreateSubjectRequest,
+  SubjectDetail,
 } from '../../interfaces/api';
 import { transformQueryWithPaginator } from '../services/paginator.service';
 import { invalidatesList, providesList } from '../services/response.service';
@@ -10,7 +16,7 @@ const invalidatesListSubjects = invalidatesList('Subjects');
 
 export const subjectApi = tutorApi.injectEndpoints({
   endpoints: (builder) => ({
-    getSubject: builder.query<SingleResponse<Subject>, string>({
+    getSubject: builder.query<SingleResponse<SubjectDetail>, string>({
       query: (id) => `subjects/${id}`,
       providesTags: (result, error, id) => [{ type: 'Subjects', id }],
     }),

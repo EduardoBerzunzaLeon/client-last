@@ -1,6 +1,6 @@
 import { tutorApi } from '../services/tutor.api';
 import {
-  Paginator, Professor, ListResponse, SingleResponse,
+  Paginator, Professor, ListResponse, SingleResponse, ProfessorDetail,
 } from '../../interfaces/api';
 import { transformQueryWithPaginator } from '../services/paginator.service';
 import { invalidatesList, providesList } from '../services/response.service';
@@ -10,7 +10,7 @@ const invalidatesListProfessors = invalidatesList('Professors');
 
 export const professorApi = tutorApi.injectEndpoints({
   endpoints: (builder) => ({
-    getProfessor: builder.query<SingleResponse<Professor>, string>({
+    getProfessor: builder.query<SingleResponse<ProfessorDetail>, string>({
       query: (id) => `Professors/${id}`,
       providesTags: (result, error, id) => [{ type: 'Professors', id }],
     }),

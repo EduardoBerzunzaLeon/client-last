@@ -4,10 +4,10 @@ import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 
 import { initialFiltersValue } from '../assets/assets';
-import { UserContext } from '../context/userContext';
+import { SubjectContext } from '../context/subjectContext';
 
 export const Header = () => {
-  const { lazyParams, setLazyParams, setDisplayModal } = useContext(UserContext);
+  const { lazyParams, setLazyParams, setDisplayModal } = useContext(SubjectContext);
 
   const onGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -38,8 +38,8 @@ export const Header = () => {
         />
         <Button
           type="button"
-          icon="pi pi-user-plus"
-          label="Crear Usuario"
+          icon="pi pi-plus"
+          label="Crear Materia"
           className="p-button-outlined p-button-success m-2"
           onClick={() => setDisplayModal(true)}
         />

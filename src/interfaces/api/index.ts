@@ -31,10 +31,10 @@ export type {
   UpdateBlockedAdminRequest,
 } from './requests/userInterface';
 
-export type { Subject } from './responses/subjectInterface';
+export type { Subject, SubjectDetail } from './responses/subjectInterface';
 
 export type { UpdateSubjectRequest, CreateSubjectRequest } from './requests/subjectInterface';
 
-export type { Professor, CourseProfessor } from './responses/professorInterface';
+export type { Professor, ProfessorDetail, CourseProfessor } from './responses/professorInterface';
 
 export type { UpdateCourseRequest, CreateCourseRequest } from './requests/courseInterface';

@@ -15,6 +15,7 @@ import { RegisterScreen } from '../../screens/blank/registerScreen/RegisterScree
 import { ResetPasswordScreen } from '../../screens/blank/resetPasswordScreen/ResetPasswordScreen';
 import { SendEmailVerifyScreen } from '../../screens/blank/sendEmailVerify/SendEmailVerifyScreen';
 import { UsersScreen } from '../../screens/admin/users/UsersScreen';
+import { SubjectsScreen } from '../../screens/admin/subjects/SubjectsScreen';
 
 const BlankLayoutLazy = lazy(() => import(/* webpackChunkName: "Auth" */'../../screens/blank/layout/BlankLayout'));
 
@@ -40,7 +41,10 @@ export const Routes = () => {
           element: <ProfileScreen />,
           path: 'users/:id',
         },
-
+        {
+          element: <SubjectsScreen />,
+          path: 'subjects',
+        },
       ],
     },
     {

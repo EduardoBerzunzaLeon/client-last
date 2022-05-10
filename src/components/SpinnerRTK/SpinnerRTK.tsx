@@ -17,6 +17,7 @@ interface Props<T> {
     children: (response: T) => ReactElement | ReactElement[],
     messageError?: string,
     messageLoading?: string,
+    classNameSpinner?: string,
 }
 
 export const SpinnerRTK = <T extends Response>({
@@ -27,9 +28,10 @@ export const SpinnerRTK = <T extends Response>({
   error,
   isError,
   isLoading,
+  classNameSpinner,
 }: Props<T>) => {
   if (isLoading) {
-    return <Spinner message={messageLoading!} />;
+    return <Spinner message={messageLoading!} className={classNameSpinner} />;
   }
 
   if (isError || !data) {
@@ -51,6 +53,7 @@ export const SpinnerRTK = <T extends Response>({
 SpinnerRTK.defaultProps = {
   messageError: 'No se encontro la información solicitada',
   messageLoading: 'Cargando Información',
+  classNameSpinner: 'flex flex-column align-items-center justify-content-center h-screen',
 };
 
 export default SpinnerRTK;
