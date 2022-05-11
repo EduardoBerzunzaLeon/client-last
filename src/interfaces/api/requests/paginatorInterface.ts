@@ -1,4 +1,4 @@
-export type MatchMode = 'contains' | 'equals';
+export type MatchMode = 'contains' | 'equals' | 'notEquals';
 
 export interface FiltersValueProps {
     matchMode: MatchMode,
@@ -13,6 +13,7 @@ export interface Paginator {
     page: string | void,
     sortField: string | void,
     sortOrder: string | void,
-    filters: FilterOptionsProps
+    filters: FilterOptionsProps,
+    fields?: string,
     rows?: number,
   }

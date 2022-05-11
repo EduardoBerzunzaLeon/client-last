@@ -1,12 +1,27 @@
 import { useContext } from 'react';
 
 import { Dialog } from 'primereact/dialog';
+import { skipToken } from '@reduxjs/toolkit/dist/query';
 import { TabPanel, TabView } from 'primereact/tabview';
 
 import { SubjectContext } from '../context/subjectContext';
 import { SubjectDataForm } from './SubjectDataForm';
 import { useGetSubjectQuery } from '../../../../redux/subject/subject.api';
 import { SpinnerRTK } from '../../../../components/spinnerRTK/SpinnerRTK';
+import { SingleResponse } from '../../../../interfaces/api/responses/genericInterface';
+import { SubjectDetail } from '../../../../interfaces/api/responses/subjectInterface';
+
+const emptyData: SingleResponse<SubjectDetail> = {
+  status: 'success',
+  data: {
+    id: '',
+    credit: 0,
+    createAt: new Date(),
+    deprecated: false,
+    name: '',
+    semester: 0,
+  },
+};
 
 export const SubjectDialog = () => {
   const {
@@ -14,8 +29,11 @@ export const SubjectDialog = () => {
   } = useContext(SubjectContext);
 
   const {
-    data, isError, error, isLoading,
-  } = useGetSubjectQuery(subjectSelected?.id ?? '');
+    data, isError, error, isLoading, isUninitialized,
+  } = useGetSubjectQuery(subjectSelected?.id ?? skipToken, { refetchOnReconnect: true });
+
+  console.log({ data, subjectSelected, isUninitialized });
+  // console.log({ subjectDialog: data, subjectSelected });
 
   return (
     <Dialog
@@ -29,7 +47,7 @@ export const SubjectDialog = () => {
       }}
     >
       <SpinnerRTK
-        data={data}
+        data={data ?? emptyData}
         error={error}
         isError={isError}
         isLoading={isLoading}
@@ -40,7 +58,7 @@ export const SubjectDialog = () => {
         {({ data: dataSend }) => (
           <TabView>
             <TabPanel header="Información Básica">
-              <SubjectDataForm subjectId={dataSend?.id} />
+              <SubjectDataForm subject={dataSend} />
             </TabPanel>
             {
             subjectSelected && (

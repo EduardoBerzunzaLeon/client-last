@@ -161,8 +161,7 @@ export const UserDataForm = ({ user }: {user?: User }) => {
 
             <div className="field pt-2">
               <ToggleButtonApp
-                name="
-                b "
+                name="blocked"
                 onClassName="color-danger"
                 offClassName="bg-green-500"
                 onIcon="pi pi-lock"

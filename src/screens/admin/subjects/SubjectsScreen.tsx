@@ -38,7 +38,6 @@ export const SubjectsScreen = () => {
       rows: lazyParams.rows,
     },
   );
-
   const onPage = (event: DataTablePFSEvent) => {
     setLazyParams(event);
   };
