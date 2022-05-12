@@ -1,5 +1,5 @@
 import { Form, Formik } from 'formik';
-// import { FilterMatchMode } from 'primereact/api';
+import { FilterMatchMode } from 'primereact/api';
 // import { Dropdown } from 'primereact/dropdown';
 import { Toast } from 'primereact/toast';
 import { useState } from 'react';
@@ -9,7 +9,7 @@ import { DropdownApp } from '../../../../components/forms/dropdown/DropdownApp';
 import { ToggleButtonApp } from '../../../../components/forms/toggleButton/ToggleButtonApp';
 import { useToast } from '../../../../hooks/useToast';
 import { SubjectDetail } from '../../../../interfaces/api';
-// import { useGetSubjectsQuery } from '../../../../redux/subject/subject.api';
+import { useGetSubjectsQuery } from '../../../../redux/subject/subject.api';
 
 const initialValues = {
   credit: 0,
@@ -42,25 +42,32 @@ export const SubjectDataForm = ({ subject }: {subject?: SubjectDetail}) => {
   } : initialValues);
 
   const [ selectedCountry, setSelectedCountry ] = useState<any>(null);
+  const [ isOpen, setIsOpen ] = useState<boolean>(false);
+  const [ skip, setSkip ] = useState<boolean>(true);
 
   const { toast } = useToast();
 
-  // const {
-  //   data,
-  // } = useGetSubjectsQuery({
-  //   page: '0',
-  //   sortField: 'name',
-  //   sortOrder: '1',
-  //   filters: { _id: { value: subject?.id, matchMode: FilterMatchMode.NOT_EQUALS }},
-  //   fields: 'name',
-  // }, { skip: true });
+  const {
+    data,
+  } = useGetSubjectsQuery({
+    page: '0',
+    sortField: 'name',
+    sortOrder: '1',
+    filters: { _id: { value: subject?.id, matchMode: FilterMatchMode.NOT_EQUALS }},
+    fields: 'name',
+  }, { skip });
+
+  console.log(data);
 
   const onCountryChange = (e: {value: any}) => {
     setSelectedCountry(e.value);
   };
 
-  const onSubjectShow = (e: any) => {
-    console.log(e);
+  const onSubjectShow = () => {
+    if (!isOpen) {
+      setSkip((prev) => !prev);
+      setIsOpen((prev) => !prev);
+    }
   };
 
   return (

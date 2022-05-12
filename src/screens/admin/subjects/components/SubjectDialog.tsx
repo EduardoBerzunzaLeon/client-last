@@ -29,11 +29,8 @@ export const SubjectDialog = () => {
   } = useContext(SubjectContext);
 
   const {
-    data, isError, error, isLoading, isUninitialized,
-  } = useGetSubjectQuery(subjectSelected?.id ?? skipToken, { refetchOnReconnect: true });
-
-  console.log({ data, subjectSelected, isUninitialized });
-  // console.log({ subjectDialog: data, subjectSelected });
+    data, isError, error, isFetching,
+  } = useGetSubjectQuery(subjectSelected?.id ?? skipToken);
 
   return (
     <Dialog
@@ -47,10 +44,10 @@ export const SubjectDialog = () => {
       }}
     >
       <SpinnerRTK
-        data={data ?? emptyData}
+        data={subjectSelected?.id ? data : emptyData}
         error={error}
         isError={isError}
-        isLoading={isLoading}
+        isLoading={isFetching}
         messageError="No se encontró la materia"
         messageLoading="Cargando Materia"
         classNameSpinner="flex flex-column align-items-center justify-content-center"

@@ -21,6 +21,6 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src"
-, "src/screens/admin/profile/components/.tsx"  ]
+    "src", "src/screens/admin/profile/components/.tsx"
+   ]
 }
