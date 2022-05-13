@@ -1,15 +1,20 @@
-import { Form, Formik } from 'formik';
-import { FilterMatchMode } from 'primereact/api';
-// import { Dropdown } from 'primereact/dropdown';
-import { Toast } from 'primereact/toast';
 import { useState } from 'react';
+
+import { Button } from 'primereact/button';
+import { FilterMatchMode } from 'primereact/api';
+import { Form, Formik } from 'formik';
+import { Skeleton } from 'primereact/skeleton';
+import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
-import { InputTextApp } from '../../../../components/forms';
+
+import { VirtualScrollerLoadingTemplateOptions } from 'primereact/virtualscroller';
 import { DropdownApp } from '../../../../components/forms/dropdown/DropdownApp';
-import { ToggleButtonApp } from '../../../../components/forms/toggleButton/ToggleButtonApp';
-import { useToast } from '../../../../hooks/useToast';
+import { InputTextApp } from '../../../../components/forms';
 import { SubjectDetail } from '../../../../interfaces/api';
-import { useGetSubjectsQuery } from '../../../../redux/subject/subject.api';
+import { ToggleButtonApp } from '../../../../components/forms/toggleButton/ToggleButtonApp';
+import { useDropdownFilter } from '../../../../hooks/useDropdownFilter';
+import { useGetConsecutiveSubjectsQuery } from '../../../../redux/subject/subject.api';
+import { useToast } from '../../../../hooks/useToast';
 
 const initialValues = {
   credit: 0,
@@ -19,37 +24,35 @@ const initialValues = {
   consecutiveSubject: undefined,
 };
 
-const countries = [
-  { name: 'Australia', code: 'AU' },
-  { name: 'Brazil', code: 'BR' },
-  { name: 'China', code: 'CN' },
-  { name: 'Egypt', code: 'EG' },
-  { name: 'France', code: 'FR' },
-  { name: 'Germany', code: 'DE' },
-  { name: 'India', code: 'IN' },
-  { name: 'Japan', code: 'JP' },
-  { name: 'Spain', code: 'ES' },
-  { name: 'United States', code: 'US' },
-];
+interface Props {
+  subject?: SubjectDetail,
+}
 
-export const SubjectDataForm = ({ subject }: {subject?: SubjectDetail}) => {
+const SkeletonDropdown = ({ even }: VirtualScrollerLoadingTemplateOptions) => (
+  <div className="flex align-items-center p-2" style={{ height: '38px' }}>
+    <Skeleton width={even ? '60%' : '50%'} height="1rem" />
+  </div>
+);
+
+export const SubjectDataForm = ({ subject }: Props) => {
   const [ initialSubject ] = useState(subject ? {
     credit: subject.credit,
     deprecated: subject.deprecated,
     name: subject.name,
     semester: subject.semester,
-    consecutiveSubject: subject.consecutiveSubject,
+    consecutiveSubject: subject.consecutiveSubject ? {
+      name: subject.consecutiveSubject.name,
+      // eslint-disable-next-line no-underscore-dangle
+      id: subject.consecutiveSubject._id,
+    } : undefined,
   } : initialValues);
 
-  const [ selectedCountry, setSelectedCountry ] = useState<any>(null);
-  const [ isOpen, setIsOpen ] = useState<boolean>(false);
   const [ skip, setSkip ] = useState<boolean>(true);
-
   const { toast } = useToast();
 
   const {
-    data,
-  } = useGetSubjectsQuery({
+    data, isLoading,
+  } = useGetConsecutiveSubjectsQuery({
     page: '0',
     sortField: 'name',
     sortOrder: '1',
@@ -57,17 +60,23 @@ export const SubjectDataForm = ({ subject }: {subject?: SubjectDetail}) => {
     fields: 'name',
   }, { skip });
 
-  console.log(data);
+  const { cleanData, onFilter } = useDropdownFilter({
+    field: 'name',
+    data: data?.data,
+    emptyDataMessage: 'No se encontraron materias',
+  });
 
-  const onCountryChange = (e: {value: any}) => {
-    setSelectedCountry(e.value);
-  };
+  const onLazyLoad = () => {
+    // TODO: Check this tomorrow
+    if (cleanData.length) {
+      const testing = cleanData.map((el) => {
+        if (el.name === initialSubject?.consecutiveSubject?.id) {
 
-  const onSubjectShow = () => {
-    if (!isOpen) {
-      setSkip((prev) => !prev);
-      setIsOpen((prev) => !prev);
+        }
+      });
     }
+
+    setSkip(!!data);
   };
 
   return (
@@ -93,7 +102,9 @@ export const SubjectDataForm = ({ subject }: {subject?: SubjectDetail}) => {
         })}
       >
         {
-          () => (
+          ({
+            values, isValid, isSubmitting, dirty,
+          }) => (
             <Form>
               <div className="field pt-2 mt-4">
                 <InputTextApp
@@ -126,10 +137,7 @@ export const SubjectDataForm = ({ subject }: {subject?: SubjectDetail}) => {
               </div>
               <div className="field pt-2">
                 <DropdownApp
-                  value={selectedCountry}
-                  options={countries}
-                  onChange={onCountryChange}
-                  onShow={onSubjectShow}
+                  options={[ ...cleanData, { ...initialSubject.consecutiveSubject }]}
                   id="consecutiveSubject"
                   inputId="consecutiveSubject"
                   name="consecutiveSubject"
@@ -137,22 +145,20 @@ export const SubjectDataForm = ({ subject }: {subject?: SubjectDetail}) => {
                   label="Materia Consecutiva"
                   filter
                   showClear
-                  filterBy="name"
+                  onFilter={onFilter}
+                  showFilterClear
+                  placeholder={cleanData[0]?.selectItemId === 'notFound' && !!values.consecutiveSubject ? 'Seleccione una materia' : ''}
                   className="w-full"
+                  virtualScrollerOptions={{
+                    lazy: true,
+                    onLazyLoad,
+                    itemSize: 1,
+                    showLoader: true,
+                    loading: isLoading,
+                    loadingTemplate: SkeletonDropdown,
+                  }}
                 />
               </div>
-
-              {/* <Dropdown value={selectedItem2} options={lazyItems}
-              // onChange={onLazyItemChange}
-              virtualScrollerOptions={{ lazy: true, onLazyLoad: onLazyLoad,
-                itemSize: 38, showLoader: true,
-                loading: lazyLoading, delay: 250, loadingTemplate: (options) => {
-                    return (
-                        <div className="flex align-items-center p-2" style={{ height: '38px' }}>
-                            <Skeleton width={options.even ? '60%' : '50%'} height="1rem" />
-                        </div>
-                    )}
-                }} placeholder="Select Item"/> */}
 
               <div className="field pt-2">
                 <ToggleButtonApp
@@ -165,7 +171,14 @@ export const SubjectDataForm = ({ subject }: {subject?: SubjectDetail}) => {
                   offLabel="Activo"
                 />
               </div>
-
+              <div className="flex flex-column">
+                <Button
+                  type="submit"
+                  label="Crear / Guardar Materia"
+                  className="mt-2 flex align-items-center justify-content-center"
+                  disabled={!isValid || isSubmitting || !dirty}
+                />
+              </div>
             </Form>
           )
         }

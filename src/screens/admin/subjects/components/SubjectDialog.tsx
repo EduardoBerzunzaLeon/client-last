@@ -43,6 +43,7 @@ export const SubjectDialog = () => {
         setDisplayModal(false);
       }}
     >
+
       <SpinnerRTK
         data={subjectSelected?.id ? data : emptyData}
         error={error}
@@ -59,9 +60,9 @@ export const SubjectDialog = () => {
             </TabPanel>
             {
             subjectSelected && (
-            <TabPanel header="Agregar Materia Obligatoria">
-                {/* <AdminPasswordForm userId={subjectSelected.id} /> */}
-            </TabPanel>
+              <TabPanel header="Agregar Materia Obligatoria">
+                  {/* <AdminPasswordForm userId={subjectSelected.id} /> */}
+              </TabPanel>
             )
             }
 

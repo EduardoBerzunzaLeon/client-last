@@ -15,6 +15,11 @@ export interface Subject {
     deprecatedAt?: Date,
 }
 
+export interface ConsecutiveSubject {
+    id: string,
+    name: string,
+}
+
 export interface SubjectDetail {
     id: string,
     credit: number
