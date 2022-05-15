@@ -5,7 +5,8 @@ import { Form, Formik } from 'formik';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import { DropdownApp } from '../../../../components/forms/dropdown/DropdownApp';
+import { Dropdown } from 'primereact/dropdown';
+
 import { FileSingleInputApp } from '../../../../components/forms/fileInput/FileSingleInputApp';
 import { genderRadio } from '../../../../utils/forms/radioButtonObjects';
 import { InputTextApp, RadioGroup } from '../../../../components/forms';
@@ -14,6 +15,7 @@ import { ToggleButtonApp } from '../../../../components/forms/toggleButton/Toggl
 import { User } from '../../../../interfaces/api';
 import { useToast } from '../../../../hooks/useToast';
 import { useUpdateUserAdminMutation, useCreateUserMutation } from '../../../../redux/user/user.api';
+import { FormElement } from '../../../../components/forms/formElement/FormElement';
 
 const initialValues = {
   first: '',
@@ -146,7 +148,8 @@ export const UserDataForm = ({ user }: {user?: User }) => {
             </div>
 
             <div className="field pt-2">
-              <DropdownApp
+              <FormElement
+                element={Dropdown}
                 id="role"
                 inputId="role"
                 name="role"

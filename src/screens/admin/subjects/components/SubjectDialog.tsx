@@ -15,11 +15,14 @@ const emptyData: SingleResponse<SubjectDetail> = {
   status: 'success',
   data: {
     id: '',
-    credit: 0,
+    credit: 1,
     createAt: new Date(),
     deprecated: false,
     name: '',
-    semester: 0,
+    semester: 1,
+    core: 'Básico',
+    practicalHours: 0,
+    theoreticalHours: 0,
   },
 };
 

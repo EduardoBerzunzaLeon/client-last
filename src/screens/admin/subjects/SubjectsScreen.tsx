@@ -6,6 +6,7 @@ import { Subject } from '../../../interfaces/api';
 import { useGetSubjectsQuery } from '../../../redux/subject/subject.api';
 import { initialFiltersValue } from './assets/assets';
 import { ActionsBodyTemplate } from './components/columns/Actions';
+import { CoreBodyTemplate } from './components/columns/Core';
 import { DeprecatedBodyTemplate, DeprecatedRowFilterTemplate } from './components/columns/Deprecated';
 import { SemestreRowFilterTemplate } from './components/columns/Semester';
 import { Header } from './components/Header';
@@ -79,7 +80,7 @@ export const SubjectsScreen = () => {
                       lazy
                       filterDisplay="row"
                       responsiveLayout="scroll"
-                      globalFilterFields={[ 'name', 'semester', 'credit', 'deprecated' ]}
+                      globalFilterFields={[ 'name', 'semester', 'credit', 'deprecated', 'core' ]}
                       dataKey="id"
                       header={<Header />}
                       paginator
@@ -102,6 +103,16 @@ export const SubjectsScreen = () => {
                         filter
                         filterField="name"
                         filterPlaceholder="Buscar por nombre"
+                      />
+                      <Column
+                        header="Núcleo"
+                        field="core"
+                        sortable
+                        showFilterMenu={false}
+                        filter
+                        filterField="core"
+                        filterPlaceholder="Buscar por nombre"
+                        body={CoreBodyTemplate}
                       />
                       <Column
                         header="Semestre"

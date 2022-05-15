@@ -6,10 +6,12 @@ export const prepareFilters = (filterOptions: FilterOptionsProps) => {
     contains: '[regex]=',
     equals: '=',
     notEquals: '[ne]=',
+    lt: '[lt]=',
   };
 
   return Object.keys(filterOptions).map((fieldName) => {
     const f = filterOptions[fieldName];
+
     // ? Not pass falsy values except boolean false
     if (f.value || f.value === false) {
       const matchMode = filterEquivalence[f.matchMode] ?? '[regex]=';

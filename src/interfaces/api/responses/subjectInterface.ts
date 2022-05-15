@@ -1,4 +1,4 @@
-interface SubjectUnion {
+export interface SubjectUnion {
     _id: string,
     name: string,
     deprecated: boolean,
@@ -6,28 +6,36 @@ interface SubjectUnion {
 
 export interface Subject {
     id: string,
-    credit: number
+    core: string,
     createAt: Date,
+    credit: number
     deprecated: boolean,
     name: string,
+    practicalHours: number,
     semester: number,
-    consecutiveSubject?: string,
+    theoreticalHours: number,
+    totalHours: number,
     deprecatedAt?: Date,
+    requiredSubjects?: string,
 }
 
-export interface ConsecutiveSubject {
+export interface RequiredSubjects {
     id: string,
     name: string,
 }
 
 export interface SubjectDetail {
     id: string,
-    credit: number
+    core: string,
     createAt: Date,
+    credit: number,
     deprecated: boolean,
     name: string,
+    practicalHours: number,
     semester: number,
-    consecutiveSubject?: SubjectUnion,
-    previousSubject?: SubjectUnion,
+    theoreticalHours: number,
+    totalHours?: number,
+    correlativeSubjects?: [SubjectUnion],
     deprecatedAt?: Date,
+    requiredSubjects?: [SubjectUnion],
 }

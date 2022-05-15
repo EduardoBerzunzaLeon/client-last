@@ -7,7 +7,7 @@ import {
   SingleResponse,
   CreateSubjectRequest,
   SubjectDetail,
-  ConsecutiveSubject,
+  RequiredSubjects,
 } from '../../interfaces/api';
 import { transformQueryWithPaginator } from '../services/paginator.service';
 import { invalidatesList, providesList } from '../services/response.service';
@@ -25,7 +25,7 @@ export const subjectApi = tutorApi.injectEndpoints({
       query: transformQueryWithPaginator('subjects'),
       providesTags: providesListSubject,
     }),
-    getConsecutiveSubjects: builder.query<ListResponse<ConsecutiveSubject>, Paginator>({
+    getConsecutiveSubjects: builder.query<ListResponse<RequiredSubjects>, Paginator>({
       query: transformQueryWithPaginator('subjects'),
       providesTags: providesListSubject,
     }),

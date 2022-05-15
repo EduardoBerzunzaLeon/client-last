@@ -9,13 +9,11 @@ interface SelectItem {
   interface Props<T>{
       field: keyof T,
       data?: any[],
-      emptyDataMessage?: string,
   }
 
 export const useDropdownFilter = <T>({
   field,
   data,
-  emptyDataMessage = 'No se encontró información',
 } : Props<T>) => {
   const [ cleanData, setCleanData ] = useState<SelectItem[]>(data ?? []);
 
@@ -37,12 +35,6 @@ export const useDropdownFilter = <T>({
 
       if (filteredData.length) {
         setCleanData(filteredData);
-      } else {
-        setCleanData([{
-          [field]: emptyDataMessage,
-          selectItemId: 'notFound',
-          disabled: true,
-        }]);
       }
     }
   };

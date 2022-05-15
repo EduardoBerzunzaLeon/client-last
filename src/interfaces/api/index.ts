@@ -31,7 +31,9 @@ export type {
   UpdateBlockedAdminRequest,
 } from './requests/userInterface';
 
-export type { Subject, SubjectDetail, ConsecutiveSubject } from './responses/subjectInterface';
+export type {
+  Subject, SubjectDetail, RequiredSubjects, SubjectUnion,
+} from './responses/subjectInterface';
 
 export type { UpdateSubjectRequest, CreateSubjectRequest } from './requests/subjectInterface';
 
