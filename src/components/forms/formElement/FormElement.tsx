@@ -22,18 +22,6 @@ export const FormElement = ({ label, element, ...props }: Props) => {
   const showErrorClass = meta.error && meta.touched;
   const classname = classNames(props.className, { 'p-invalid': showErrorClass });
 
-  if (props?.options?.length === 0) {
-    field.value = [];
-  }
-
-  // useEffect(() => {
-  //   console.log({ options: props.options });
-  //   if (props?.options?.length === 0) {
-  //     field.value = [];
-  //     console.log({ field });
-  //   }
-  // }, [ props.options ]);
-
   return (
     <>
       <span className="p-float-label">

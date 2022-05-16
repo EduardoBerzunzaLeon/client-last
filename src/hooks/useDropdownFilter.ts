@@ -2,8 +2,10 @@ import { DropdownFilterParams } from 'primereact/dropdown';
 import { useState, useEffect } from 'react';
 
 interface SelectItem {
+    id: string;
     disabled?: boolean,
     selectItemId?: string,
+    name?: string,
   }
 
   interface Props<T>{

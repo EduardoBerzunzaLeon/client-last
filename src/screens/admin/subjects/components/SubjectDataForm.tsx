@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import React, { useState } from 'react';
 
 import { Button } from 'primereact/button';
 import { FilterMatchMode } from 'primereact/api';
@@ -49,7 +49,6 @@ const processSubject = (requiredSubjects: SubjectUnion[]) => {
 };
 
 export const SubjectDataForm = ({ subject }: Props) => {
-  const ref = useRef<any>(null);
   const [ initialSubject ] = useState({
     credit: subject.credit,
     deprecated: subject.deprecated,
@@ -65,7 +64,6 @@ export const SubjectDataForm = ({ subject }: Props) => {
 
   const [ skip, setSkip ] = useState<boolean>(true);
   const [ semester, setSemester ] = useState(subject.semester);
-  // const [ requiredSubjects, setRequiredSubjects ] = useState(subject.requiredSubjects);
   const { toast } = useToast();
 
   const {
@@ -76,7 +74,7 @@ export const SubjectDataForm = ({ subject }: Props) => {
     sortOrder: '1',
     filters: {
       _id: { value: subject?.id, matchMode: FilterMatchMode.NOT_EQUALS },
-      semester: { value: semester, matchMode: FilterMatchMode.LESS_THAN },
+      semester: { value: semester || 1, matchMode: FilterMatchMode.LESS_THAN },
     },
     fields: 'name',
   }, { skip });
@@ -86,21 +84,10 @@ export const SubjectDataForm = ({ subject }: Props) => {
     data: data?.data,
   });
 
-  // const onLazyLoad = () => {
-  //   if (!ref.current.values.semester) {
-  //     setCleanData([]);
-  //     ref.current.values.requiredSubjects = [];
-  //   } else {
-  //     setSemester(ref.current.values.semester);
-  //     setSkip(!semester);
-  //   }
-  // };
-
   return (
     <>
       <Toast ref={toast} />
       <Formik
-        innerRef={ref}
         initialValues={initialSubject}
         onSubmit={(values: any) => {
           console.log(values);
@@ -139,7 +126,7 @@ export const SubjectDataForm = ({ subject }: Props) => {
       >
         {
           ({
-            values, isValid, isSubmitting, dirty,
+            values, isValid, isSubmitting, dirty, setFieldValue, handleChange,
           }) => (
             <Form>
 
@@ -157,6 +144,10 @@ export const SubjectDataForm = ({ subject }: Props) => {
                   label="Semestre*"
                   id="semester"
                   name="semester"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setFieldValue('requiredSubjects', []);
+                    handleChange(e);
+                  }}
                   className="w-full"
                   icon="pi pi-pencil"
                   keyfilter="pint"
@@ -211,7 +202,7 @@ export const SubjectDataForm = ({ subject }: Props) => {
               <div className="field pt-2">
                 <FormElement
                   element={MultiSelect}
-                  options={cleanData.length
+                  options={cleanData.length || semester !== initialSubject.semester
                     ? [ ...cleanData ]
                     : initialSubject.requiredSubjects
                     ?? []}
@@ -231,13 +222,11 @@ export const SubjectDataForm = ({ subject }: Props) => {
                   virtualScrollerOptions={{
                     lazy: true,
                     onLazyLoad: () => {
-                      console.log({ data });
-                      if (!ref.current.values.semester) {
+                      if (!values.semester) {
                         setCleanData([]);
-                      } else {
-                        setSemester(ref.current.values.semester);
-                        setSkip(false);
                       }
+                      setSemester(Number(values?.semester || 1));
+                      setSkip(false);
                     },
                     itemSize: 1,
                     showLoader: true,
@@ -246,7 +235,6 @@ export const SubjectDataForm = ({ subject }: Props) => {
                   }}
                 />
               </div>
-
               <div className="field pt-2">
                 <ToggleButtonApp
                   name="deprecated"
