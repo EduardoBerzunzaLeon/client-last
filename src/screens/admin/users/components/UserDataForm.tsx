@@ -74,14 +74,14 @@ export const UserDataForm = ({ user }: {user?: User }) => {
           dataSend.append('role', role.code);
           dataSend.append('blocked', `${blocked}`);
 
-          let message = 'El usuario se actualizo con éxito';
+          let message = 'El usuario se actualizó con éxito';
 
           try {
             if (user?.id) {
               await updateUser(dataSend).unwrap();
             } else {
               await createUser(dataSend).unwrap();
-              message = 'El usuario se creo con éxito';
+              message = 'El usuario se creó con éxito';
               resetForm();
             }
 

@@ -2,6 +2,7 @@ import { Generic } from '../../interfaces/generic';
 import { MessageProps } from '../../interfaces/ui/hooks/hooksInterface';
 import { getErrorDetail } from '../../redux/services/error.service';
 import { authFieldsTranslation, AuthFieldsTranslation } from '../translation/authFields';
+import { subjectFieldsTranslation, SubjectFieldsTranslation } from '../translation/subjectFields';
 
 interface Error {
   errors: string,
@@ -37,5 +38,8 @@ export const handlerFormErrors = <T extends Generic>(errorTranslation: T) => (
 };
 
 export const setAuthFormErrors = handlerFormErrors<AuthFieldsTranslation>(authFieldsTranslation);
+export const setSubjectFormErrors = handlerFormErrors<SubjectFieldsTranslation>(
+  subjectFieldsTranslation,
+);
 
 export default { handlerFormErrors, setAuthFormErrors };

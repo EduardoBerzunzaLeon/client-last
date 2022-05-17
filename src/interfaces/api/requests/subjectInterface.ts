@@ -1,10 +1,22 @@
 export interface UpdateSubjectRequest {
     id: string,
-    credit?: number
-    depreacted?: boolean,
+    credit?: number,
+    deprecated?: boolean,
     name?: string,
     semester?: number,
-    consecutiveSubject?: string,
+    practicalHours?: number,
+    theoreticalHours?: number,
+    core: string,
+    requiredSubjects?: string[] | [],
 }
 
-export type CreateSubjectRequest = Omit<UpdateSubjectRequest, 'id'>;
+export interface CreateSubjectRequest {
+    credit: number,
+    deprecated: boolean,
+    name: string,
+    semester: number,
+    practicalHours: number,
+    theoreticalHours: number,
+    core: string,
+    requiredSubjects?: string[] | [],
+}

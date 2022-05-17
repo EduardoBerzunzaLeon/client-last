@@ -66,7 +66,7 @@ export const userApi = tutorApi.injectEndpoints({
         method: 'POST',
         body: post,
       }),
-      invalidatesTags: invalidatesListUsers,
+      invalidatesTags: [ 'Users' ],
     }),
     uploadAvatar: builder.mutation<UserSingleResponse, FormData>({
       query: (body) => ({

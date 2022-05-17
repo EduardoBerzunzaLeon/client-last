@@ -32,7 +32,7 @@ export const SubjectDialog = () => {
   } = useContext(SubjectContext);
 
   const {
-    data, isError, error, isFetching,
+    data, isError, error, isLoading,
   } = useGetSubjectQuery(subjectSelected?.id ?? skipToken);
 
   return (
@@ -51,7 +51,7 @@ export const SubjectDialog = () => {
         data={subjectSelected?.id ? data : emptyData}
         error={error}
         isError={isError}
-        isLoading={isFetching}
+        isLoading={isLoading}
         messageError="No se encontró la materia"
         messageLoading="Cargando Materia"
         classNameSpinner="flex flex-column align-items-center justify-content-center"

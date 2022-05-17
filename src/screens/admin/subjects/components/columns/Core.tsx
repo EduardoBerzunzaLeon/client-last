@@ -9,7 +9,7 @@ export const CoreBodyTemplate = ({ core }: Subject) => (
       sustantivo: 'success',
       integral: 'info',
     }}
-    match={core.toString()}
+    match={core.toString().toLowerCase()}
   />
 );
 

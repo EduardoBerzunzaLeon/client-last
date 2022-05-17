@@ -13,14 +13,15 @@ import { Dropdown } from 'primereact/dropdown';
 import { MultiSelect } from 'primereact/multiselect';
 
 import { InputTextApp } from '../../../../components/forms';
-import { SubjectDetail, SubjectUnion } from '../../../../interfaces/api';
+import { RequiredSubjects, SubjectDetail, SubjectUnion } from '../../../../interfaces/api';
 // import { SubjectDetail } from '../../../../interfaces/api';
 import { ToggleButtonApp } from '../../../../components/forms/toggleButton/ToggleButtonApp';
 import { useDropdownFilter } from '../../../../hooks/useDropdownFilter';
-import { useGetConsecutiveSubjectsQuery } from '../../../../redux/subject/subject.api';
+import { useCreateSubjectMutation, useGetConsecutiveSubjectsQuery, useUpdateSubjectMutation } from '../../../../redux/subject/subject.api';
 import { useToast } from '../../../../hooks/useToast';
 import { FormElement } from '../../../../components/forms/formElement/FormElement';
 import { ucWords } from '../../../../utils/stringUtils';
+import { processError, setSubjectFormErrors } from '../../../../utils/forms/handlerFormErrors';
 
 interface Props {
   subject: SubjectDetail,
@@ -38,7 +39,7 @@ const cores = [
   { name: 'Integral', code: 'integral' },
 ];
 
-const processSubject = (requiredSubjects: SubjectUnion[]) => {
+const processSubject = (requiredSubjects: SubjectUnion[]): RequiredSubjects[] => {
   const subjects = requiredSubjects.map((subject) => ({
     // eslint-disable-next-line no-underscore-dangle
     id: subject._id,
@@ -64,7 +65,10 @@ export const SubjectDataForm = ({ subject }: Props) => {
 
   const [ skip, setSkip ] = useState<boolean>(true);
   const [ semester, setSemester ] = useState(subject.semester);
-  const { toast } = useToast();
+  const { toast, showSuccess, showError } = useToast();
+
+  const [ createSubject, { isLoading: isLoadingCreate }] = useCreateSubjectMutation();
+  const [ updateSubject, { isLoading: isLoadingUpdate }] = useUpdateSubjectMutation();
 
   const {
     data, isLoading,
@@ -89,8 +93,38 @@ export const SubjectDataForm = ({ subject }: Props) => {
       <Toast ref={toast} />
       <Formik
         initialValues={initialSubject}
-        onSubmit={(values: any) => {
-          console.log(values);
+        onSubmit={async (values, { setFieldError, resetForm }) => {
+          const { core, requiredSubjects, ...rest } = values;
+          const { code: coreDB } = core;
+
+          let requiredSubjectsDB: string[] | [] = [];
+          if (requiredSubjects?.length) {
+            requiredSubjectsDB = requiredSubjects.map((
+              { id }: RequiredSubjects,
+            ) => id);
+          }
+
+          const dataSend = {
+            core: coreDB,
+            requiredSubjects: requiredSubjectsDB,
+            ...rest,
+          };
+          let message = 'La materia se actualizó con éxito';
+
+          try {
+            if (subject.id) {
+              await updateSubject({ id: subject.id, ...dataSend }).unwrap();
+            } else {
+              await createSubject(dataSend).unwrap();
+              message = 'La materia se creó con éxito';
+              resetForm();
+            }
+            setSkip(true);
+            showSuccess({ detail: message });
+          } catch (error) {
+            const errors: string = processError({ error, showError });
+            setSubjectFormErrors({ errors, setFieldError });
+          }
         }}
         validationSchema={Yup.object({
           name: Yup.string()
@@ -251,6 +285,7 @@ export const SubjectDataForm = ({ subject }: Props) => {
                   type="submit"
                   label="Crear / Guardar Materia"
                   className="mt-2 flex align-items-center justify-content-center"
+                  loading={isLoadingCreate || isLoadingUpdate}
                   disabled={!isValid || isSubmitting || !dirty}
                 />
               </div>

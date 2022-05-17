@@ -43,7 +43,7 @@ export const subjectApi = tutorApi.injectEndpoints({
         method: 'POST',
         body: post,
       }),
-      invalidatesTags: invalidatesListSubjects,
+      invalidatesTags: [ 'Subjects' ],
     }),
     deleteSubject: builder.mutation<SingleResponse<null>, string>({
       query: (id) => ({
