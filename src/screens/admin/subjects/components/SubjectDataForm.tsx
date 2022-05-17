@@ -269,6 +269,7 @@ export const SubjectDataForm = ({ subject }: Props) => {
                   }}
                 />
               </div>
+
               <div className="field pt-2">
                 <ToggleButtonApp
                   name="deprecated"
@@ -296,9 +297,5 @@ export const SubjectDataForm = ({ subject }: Props) => {
     </>
   );
 };
-
-// SubjectDataForm.defaultProps = {
-//   subject: undefined,
-// };
 
 export default SubjectDataForm;

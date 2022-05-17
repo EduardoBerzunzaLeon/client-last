@@ -50,7 +50,7 @@ export const subjectApi = tutorApi.injectEndpoints({
         url: `subjects/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: invalidatesListSubjects,
+      invalidatesTags: [ 'Subjects' ],
     }),
   }),
 });

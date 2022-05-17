@@ -1,4 +1,4 @@
-export type MatchMode = 'contains' | 'equals' | 'notEquals' | 'lt';
+export type MatchMode = 'contains' | 'equals' | 'notEquals' | 'lt' | 'gt';
 
 export interface FiltersValueProps {
     matchMode: MatchMode,

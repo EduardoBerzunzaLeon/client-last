@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { Dialog } from 'primereact/dialog';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
@@ -10,6 +10,7 @@ import { useGetSubjectQuery } from '../../../../redux/subject/subject.api';
 import { SpinnerRTK } from '../../../../components/spinnerRTK/SpinnerRTK';
 import { SingleResponse } from '../../../../interfaces/api/responses/genericInterface';
 import { SubjectDetail } from '../../../../interfaces/api/responses/subjectInterface';
+import { CorrelativeSubjectForm } from './CorrelativeSubjectForm';
 
 const emptyData: SingleResponse<SubjectDetail> = {
   status: 'success',
@@ -31,8 +32,15 @@ export const SubjectDialog = () => {
     subjectSelected, displayModal, setSubjectSelected, setDisplayModal,
   } = useContext(SubjectContext);
 
+  const [ id, setId ] = useState<string>();
+
+  useEffect(() => {
+    setId(subjectSelected?.id ?? '');
+  }, []);
+
+  // Verify when is updated check isLoading and when open is itFeching
   const {
-    data, isError, error, isLoading,
+    data, isError, error, isFetching,
   } = useGetSubjectQuery(subjectSelected?.id ?? skipToken);
 
   return (
@@ -51,7 +59,7 @@ export const SubjectDialog = () => {
         data={subjectSelected?.id ? data : emptyData}
         error={error}
         isError={isError}
-        isLoading={isLoading}
+        isLoading={isFetching && id !== subjectSelected?.id}
         messageError="No se encontró la materia"
         messageLoading="Cargando Materia"
         classNameSpinner="flex flex-column align-items-center justify-content-center"
@@ -62,9 +70,13 @@ export const SubjectDialog = () => {
               <SubjectDataForm subject={dataSend} />
             </TabPanel>
             {
-            subjectSelected && (
+            dataSend?.id && (
               <TabPanel header="Agregar Materia Obligatoria">
-                  {/* <AdminPasswordForm userId={subjectSelected.id} /> */}
+                <CorrelativeSubjectForm
+                  id={dataSend.id}
+                  semester={dataSend.semester}
+                  correlativeSubjects={dataSend.correlativeSubjects ?? []}
+                />
               </TabPanel>
             )
             }

@@ -7,6 +7,7 @@ export const prepareFilters = (filterOptions: FilterOptionsProps) => {
     equals: '=',
     notEquals: '[ne]=',
     lt: '[lt]=',
+    gt: '[gt]=',
   };
 
   return Object.keys(filterOptions).map((fieldName) => {
