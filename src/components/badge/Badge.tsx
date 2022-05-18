@@ -10,6 +10,7 @@ interface Props <T>{
     match: keyof T,
     text: string
     matchObject?: T,
+    className?: string,
 }
 
 const matchObjectDefault: MatchObject = {
@@ -25,14 +26,16 @@ export const Badge = ({
   match,
   text,
   matchObject = matchObjectDefault,
+  className,
 }: Props<MatchObject>) => (
-  <span className={`custom-badge status-${matchObject[match]}`}>
+  <span className={`custom-badge status-${matchObject[match]} ${className}`}>
     {text.trim()}
   </span>
 );
 
 Badge.defaultProps = {
   matchObject: matchObjectDefault,
+  className: '',
 };
 
 export default Badge;

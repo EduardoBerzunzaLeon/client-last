@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { confirmDialog } from 'primereact/confirmdialog';
 import { Button } from 'primereact/button';
@@ -12,12 +11,11 @@ import { processError } from '../../../../../utils/forms/handlerFormErrors';
 import { useToast } from '../../../../../hooks/useToast';
 
 export const ActionsBody = ({ subject }: { subject: Subject }) => {
-  const { setSubjectSelected, setDisplayModal } = useContext(SubjectContext);
+  const { setSubjectSelected, setDisplayModal, setIsOpenDetailModal } = useContext(SubjectContext);
   const [ deleteSubject, { isLoading }] = useDeleteSubjectMutation();
 
   // FIXME: Don´t destoy modal after table updated
   const { id } = subject;
-  const navigate = useNavigate();
   const { toast, showSuccess, showError } = useToast();
 
   const accept = async () => {
@@ -27,6 +25,11 @@ export const ActionsBody = ({ subject }: { subject: Subject }) => {
     } catch (error) {
       processError({ error, showError });
     }
+  };
+
+  const handleViewDetail = () => {
+    setIsOpenDetailModal(true);
+    setSubjectSelected(subject);
   };
 
   const handleUpdate = () => {
@@ -47,7 +50,11 @@ export const ActionsBody = ({ subject }: { subject: Subject }) => {
   return (
     <>
       <Toast ref={toast} />
-      <Button icon="pi pi-eye" className="p-button-sm p-button-raised p-button-primary mr-1" onClick={() => navigate(`/admin/users/${id}`)} />
+      <Button
+        icon="pi pi-eye"
+        className="p-button-sm p-button-raised p-button-primary mr-1"
+        onClick={handleViewDetail}
+      />
       <Button
         icon="pi pi-pencil"
         className="p-button-sm p-button-raised p-button-primary mr-1"

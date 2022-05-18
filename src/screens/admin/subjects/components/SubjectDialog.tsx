@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { Dialog } from 'primereact/dialog';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
@@ -17,7 +17,7 @@ const emptyData: SingleResponse<SubjectDetail> = {
   data: {
     id: '',
     credit: 1,
-    createAt: new Date(),
+    createdAt: new Date(),
     deprecated: false,
     name: '',
     semester: 1,
@@ -32,25 +32,22 @@ export const SubjectDialog = () => {
     subjectSelected, displayModal, setSubjectSelected, setDisplayModal,
   } = useContext(SubjectContext);
 
-  const mounted = useRef<any>();
-
-  // Verify when is updated check isLoading and when open is itFeching
-  useEffect(() => {
-    mounted.current = subjectSelected?.id;
-  }, [ displayModal ]);
+  const [ skip, setSkip ] = useState(false);
 
   const {
     data, isError, error, isFetching,
   } = useGetSubjectQuery(subjectSelected?.id ?? skipToken);
 
-  console.log({
-    mounted: mounted.current,
-    subjectId: subjectSelected?.id,
-    subject: subjectSelected,
-    displayModal,
-  });
+  useEffect(() => {
+    if (!isFetching && data) {
+      setSkip(true);
+    }
 
-  console.log(!mounted.current || mounted.current !== subjectSelected?.id);
+    if (!subjectSelected) {
+      setSkip(false);
+    }
+  }, [ isFetching, subjectSelected ]);
+
   return (
     <Dialog
       header={subjectSelected ? 'Editar Materia' : 'Crear Materia'}
@@ -67,7 +64,7 @@ export const SubjectDialog = () => {
         data={subjectSelected?.id ? data : emptyData}
         error={error}
         isError={isError}
-        isLoading={isFetching && (!mounted.current || mounted.current !== subjectSelected?.id)}
+        isLoading={isFetching && !skip}
         messageError="No se encontró la materia"
         messageLoading="Cargando Materia"
         classNameSpinner="flex flex-column align-items-center justify-content-center"

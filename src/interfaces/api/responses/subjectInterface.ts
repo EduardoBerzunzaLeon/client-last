@@ -27,7 +27,7 @@ export interface RequiredSubjects {
 export interface SubjectDetail {
     id: string,
     core: string,
-    createAt: Date,
+    createdAt: Date,
     credit: number,
     deprecated: boolean,
     name: string,

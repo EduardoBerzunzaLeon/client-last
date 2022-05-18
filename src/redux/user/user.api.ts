@@ -74,7 +74,7 @@ export const userApi = tutorApi.injectEndpoints({
         method: 'PATCH',
         body,
       }),
-      invalidatesTags: invalidatesListUsers,
+      invalidatesTags: [ 'Users' ],
     }),
   }),
   overrideExisting: false,

@@ -10,6 +10,7 @@ import { CoreBodyTemplate } from './components/columns/Core';
 import { DeprecatedBodyTemplate, DeprecatedRowFilterTemplate } from './components/columns/Deprecated';
 import { SemestreRowFilterTemplate } from './components/columns/Semester';
 import { Header } from './components/Header';
+import SubjectDetailDialog from './components/SubjectDetailDialog';
 import { SubjectDialog } from './components/SubjectDialog';
 import { SubjectContext } from './context/subjectContext';
 
@@ -26,6 +27,7 @@ export const SubjectsScreen = () => {
   });
 
   const [ displayModal, setDisplayModal ] = useState(false);
+  const [ isOpenDetailModal, setIsOpenDetailModal ] = useState(false);
   const [ subjectSelected, setSubjectSelected ] = useState<Subject>();
 
   const {
@@ -66,11 +68,13 @@ export const SubjectsScreen = () => {
             ({ data: dataSend }) => (
               <Provider value={{
                 displayModal,
+                isOpenDetailModal,
                 lazyParams,
                 subjectSelected,
                 setDisplayModal,
                 setLazyParams,
                 setSubjectSelected,
+                setIsOpenDetailModal,
               }}
               >
                 <div>
@@ -151,6 +155,7 @@ export const SubjectsScreen = () => {
                     </DataTable>
                   </div>
                   <SubjectDialog />
+                  <SubjectDetailDialog />
                 </div>
               </Provider>
             )

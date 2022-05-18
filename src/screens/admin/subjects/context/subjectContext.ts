@@ -4,9 +4,11 @@ import { Subject } from '../../../../interfaces/api';
 
 interface SubjectContextProps {
     displayModal: boolean,
+    isOpenDetailModal: boolean,
     lazyParams: any,
     subjectSelected: Subject | undefined,
     setDisplayModal: (value: React.SetStateAction<boolean>) => void,
+    setIsOpenDetailModal: (value: React.SetStateAction<boolean>) => void,
     setLazyParams: (value: React.SetStateAction<any>) => void
     setSubjectSelected: (value: React.SetStateAction<Subject | undefined>) => void,
   }
