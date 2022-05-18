@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 
 import { Dialog } from 'primereact/dialog';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
@@ -32,17 +32,25 @@ export const SubjectDialog = () => {
     subjectSelected, displayModal, setSubjectSelected, setDisplayModal,
   } = useContext(SubjectContext);
 
-  const [ id, setId ] = useState<string>();
-
-  useEffect(() => {
-    setId(subjectSelected?.id ?? '');
-  }, []);
+  const mounted = useRef<any>();
 
   // Verify when is updated check isLoading and when open is itFeching
+  useEffect(() => {
+    mounted.current = subjectSelected?.id;
+  }, [ displayModal ]);
+
   const {
     data, isError, error, isFetching,
   } = useGetSubjectQuery(subjectSelected?.id ?? skipToken);
 
+  console.log({
+    mounted: mounted.current,
+    subjectId: subjectSelected?.id,
+    subject: subjectSelected,
+    displayModal,
+  });
+
+  console.log(!mounted.current || mounted.current !== subjectSelected?.id);
   return (
     <Dialog
       header={subjectSelected ? 'Editar Materia' : 'Crear Materia'}
@@ -59,7 +67,7 @@ export const SubjectDialog = () => {
         data={subjectSelected?.id ? data : emptyData}
         error={error}
         isError={isError}
-        isLoading={isFetching && id !== subjectSelected?.id}
+        isLoading={isFetching && (!mounted.current || mounted.current !== subjectSelected?.id)}
         messageError="No se encontró la materia"
         messageLoading="Cargando Materia"
         classNameSpinner="flex flex-column align-items-center justify-content-center"

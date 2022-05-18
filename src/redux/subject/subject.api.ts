@@ -8,12 +8,12 @@ import {
   CreateSubjectRequest,
   SubjectDetail,
   RequiredSubjects,
+  UpdateCorrelativeSubjectRequest,
 } from '../../interfaces/api';
 import { transformQueryWithPaginator } from '../services/paginator.service';
-import { invalidatesList, providesList } from '../services/response.service';
+import { providesList } from '../services/response.service';
 
 const providesListSubject = providesList('Subjects');
-const invalidatesListSubjects = invalidatesList('Subjects');
 
 export const subjectApi = tutorApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -35,8 +35,19 @@ export const subjectApi = tutorApi.injectEndpoints({
         method: 'PATCH',
         body: patch,
       }),
-      invalidatesTags: invalidatesListSubjects,
+      invalidatesTags: [ 'Subjects' ],
     }),
+    updateCorrelativeSubjects: builder.mutation<
+      SingleResponse<Subject>,
+      UpdateCorrelativeSubjectRequest
+      >({
+        query: ({ id, ...patch }) => ({
+          url: `subjects/${id}/correlative`,
+          method: 'PATCH',
+          body: patch,
+        }),
+        invalidatesTags: [ 'Subjects' ],
+      }),
     createSubject: builder.mutation<SingleResponse<Subject>, CreateSubjectRequest>({
       query: (post) => ({
         url: 'subjects/',
@@ -62,4 +73,5 @@ export const {
   useUpdateSubjectMutation,
   useCreateSubjectMutation,
   useDeleteSubjectMutation,
+  useUpdateCorrelativeSubjectsMutation,
 } = subjectApi;

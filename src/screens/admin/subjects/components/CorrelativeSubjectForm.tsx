@@ -10,9 +10,10 @@ import { useState } from 'react';
 import { useToast } from '../../../../hooks/useToast';
 import { FormElement } from '../../../../components/forms/formElement/FormElement';
 import { RequiredSubjects, SubjectUnion } from '../../../../interfaces/api';
-import { useGetConsecutiveSubjectsQuery } from '../../../../redux/subject/subject.api';
+import { useGetConsecutiveSubjectsQuery, useUpdateCorrelativeSubjectsMutation } from '../../../../redux/subject/subject.api';
 import { useDropdownFilter } from '../../../../hooks/useDropdownFilter';
 import { ucWords } from '../../../../utils/stringUtils';
+import { processError, setSubjectFormErrors } from '../../../../utils/forms/handlerFormErrors';
 
 const SkeletonDropdown = ({ even }: VirtualScrollerLoadingTemplateOptions) => (
   <div className="flex align-items-center p-2" style={{ height: '38px' }}>
@@ -37,8 +38,10 @@ interface Props {
 }
 
 export const CorrelativeSubjectForm = ({ id, semester, correlativeSubjects }: Props) => {
-  const { toast } = useToast();
+  const { toast, showSuccess, showError } = useToast();
   const [ skip, setSkip ] = useState<boolean>(true);
+
+  const [ updateSubject, { isLoading: isLoadingUpdate }] = useUpdateCorrelativeSubjectsMutation();
 
   const {
     data, isLoading,
@@ -63,8 +66,27 @@ export const CorrelativeSubjectForm = ({ id, semester, correlativeSubjects }: Pr
       <Toast ref={toast} />
       <Formik
         initialValues={{ correlativeSubjects: [ ...processSubject(correlativeSubjects) ]}}
-        onSubmit={(values: any) => {
-          console.log(values);
+        onSubmit={async (values, { setFieldError }) => {
+          let correlativeSubjectsDB: string[] | [] = [];
+          if (values.correlativeSubjects?.length) {
+            correlativeSubjectsDB = values.correlativeSubjects.map((
+              { id: subjectId }: RequiredSubjects,
+            ) => subjectId);
+          }
+
+          const dataSend = {
+            id,
+            correlativeSubjects: correlativeSubjectsDB,
+          };
+
+          try {
+            await updateSubject(dataSend).unwrap();
+            setSkip(true);
+            showSuccess({ detail: 'Se ha actualizadó las materias correlativas' });
+          } catch (error) {
+            const errors: string = processError({ error, showError });
+            setSubjectFormErrors({ errors, setFieldError });
+          }
         }}
         validationSchema={Yup.object({
           correlativeSubjects: Yup.array().nullable(true),
@@ -116,6 +138,7 @@ export const CorrelativeSubjectForm = ({ id, semester, correlativeSubjects }: Pr
                      label="Actualizar Materias Correlativas"
                      className="mt-2 flex align-items-center justify-content-center"
                      disabled={!isValid || isSubmitting || !dirty}
+                     loading={isLoadingUpdate}
                    />
                  </div>
                </Form>

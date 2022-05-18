@@ -35,7 +35,7 @@ export type {
   Subject, SubjectDetail, RequiredSubjects, SubjectUnion,
 } from './responses/subjectInterface';
 
-export type { UpdateSubjectRequest, CreateSubjectRequest } from './requests/subjectInterface';
+export type { UpdateSubjectRequest, CreateSubjectRequest, UpdateCorrelativeSubjectRequest } from './requests/subjectInterface';
 
 export type { Professor, ProfessorDetail, CourseProfessor } from './responses/professorInterface';
 

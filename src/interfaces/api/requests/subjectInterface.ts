@@ -20,3 +20,8 @@ export interface CreateSubjectRequest {
     core: string,
     requiredSubjects?: string[] | [],
 }
+
+export interface UpdateCorrelativeSubjectRequest {
+    id: string,
+    correlativeSubjects: string[] | []
+}
