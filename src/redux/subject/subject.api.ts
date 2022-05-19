@@ -12,6 +12,7 @@ import {
 } from '../../interfaces/api';
 import { transformQueryWithPaginator } from '../services/paginator.service';
 import { providesList } from '../services/response.service';
+import { SubjectCompleteData } from '../../interfaces/api/responses/subjectInterface';
 
 const providesListSubject = providesList('Subjects');
 
@@ -28,6 +29,10 @@ export const subjectApi = tutorApi.injectEndpoints({
     getConsecutiveSubjects: builder.query<ListResponse<RequiredSubjects>, Paginator>({
       query: transformQueryWithPaginator('subjects'),
       providesTags: providesListSubject,
+    }),
+    getSubjectsForExcel: builder.query<ListResponse<SubjectCompleteData>, null>({
+      query: () => 'subjects/excel',
+      providesTags: [ 'Subjects' ],
     }),
     updateSubject: builder.mutation<SingleResponse<Subject>, UpdateSubjectRequest>({
       query: ({ id, ...patch }) => ({
@@ -69,6 +74,7 @@ export const subjectApi = tutorApi.injectEndpoints({
 export const {
   useGetSubjectQuery,
   useGetSubjectsQuery,
+  useGetSubjectsForExcelQuery,
   useGetConsecutiveSubjectsQuery,
   useUpdateSubjectMutation,
   useCreateSubjectMutation,

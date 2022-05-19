@@ -39,3 +39,21 @@ export interface SubjectDetail {
     deprecatedAt?: Date,
     requiredSubjects?: [SubjectUnion],
 }
+
+export interface SubjectCompleteData {
+
+    id: string,
+    core: string,
+    correlativeSubjects: string,
+    createdAt: Date,
+    credit: number,
+    deprecated: boolean,
+    name: string,
+    practicalHours: number,
+    requiredSubjects: string,
+    semester: number,
+    theoreticalHours: number,
+    totalHours: number,
+    deprecatedAt?: Date,
+
+}

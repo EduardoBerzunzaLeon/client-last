@@ -5,6 +5,7 @@ import { InputText } from 'primereact/inputtext';
 
 import { initialFiltersValue } from '../assets/assets';
 import { SubjectContext } from '../context/subjectContext';
+import { ExcelButton } from './ExcelButton';
 
 export const Header = () => {
   const { lazyParams, setLazyParams, setDisplayModal } = useContext(SubjectContext);
@@ -43,6 +44,7 @@ export const Header = () => {
           className="p-button-outlined p-button-success m-2"
           onClick={() => setDisplayModal(true)}
         />
+        <ExcelButton />
       </div>
       <span className="p-input-icon-left m-2 overflow-hidden">
         <i className="pi pi-search" />

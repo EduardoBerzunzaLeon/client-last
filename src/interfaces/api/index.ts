@@ -32,7 +32,7 @@ export type {
 } from './requests/userInterface';
 
 export type {
-  Subject, SubjectDetail, RequiredSubjects, SubjectUnion,
+  Subject, SubjectDetail, RequiredSubjects, SubjectUnion, SubjectCompleteData,
 } from './responses/subjectInterface';
 
 export type { UpdateSubjectRequest, CreateSubjectRequest, UpdateCorrelativeSubjectRequest } from './requests/subjectInterface';
