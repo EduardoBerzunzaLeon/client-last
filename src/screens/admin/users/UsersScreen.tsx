@@ -1,63 +1,43 @@
 import { useState } from 'react';
 
 import { Column } from 'primereact/column';
-import { DataTable, DataTablePFSEvent } from 'primereact/datatable';
+import { DataTable } from 'primereact/datatable';
 
 import { ActionsBodyTemplate } from './components/columns/Actions';
-import { ActiveBodyTemplate, ActiveRowFilterTemplate } from './components/columns/Active';
+import { ActiveBodyTemplate } from './components/columns/Active';
 import { EmailBodyTemplate } from './components/columns/Email';
 import { GenderBodyTemplate, GenderRowFilterTemplate } from './components/columns/Gender';
 import { Header } from './components/Header';
 import { initialFiltersValue } from './assets/assets';
 import { SpinnerRTK } from '../../../components/spinnerRTK/SpinnerRTK';
-import { useAuth } from '../../../hooks/useAuth';
-import { useGetUsersQuery } from '../../../redux/user/user.api';
+import { TriStateFilterTemplate } from '../../../components/datatable/TriStateFilterTemplate';
 import { User } from '../../../interfaces/api';
 import { UserContext } from './context/userContext';
 import { UserDialog } from './components/UserDialog';
 
+import { useAuth } from '../../../hooks/useAuth';
+import { useGetUsersQuery } from '../../../redux/user/user.api';
+import { useLazyParams } from '../../../hooks/useLazyParams';
+
 const { Provider } = UserContext;
 
 export const UsersScreen = () => {
-  const [ lazyParams, setLazyParams ] = useState<any>({
-    first: 0,
-    rows: 10,
-    page: 0,
-    sortField: '',
-    sortOrder: null,
-    filters: { ...initialFiltersValue },
-  });
+  const {
+    lazyParams,
+    setLazyParams,
+    onPage,
+    onSort,
+    onFilter,
+    paginatorValues,
+  } = useLazyParams(initialFiltersValue);
 
   const [ displayModal, setDisplayModal ] = useState(false);
   const [ userSelected, setUserSelected ] = useState<User>();
-
   const { user: userAuth } = useAuth();
 
   const {
     data, isError, error, isLoading, isFetching,
-  } = useGetUsersQuery(
-    {
-      page: lazyParams.page + 1,
-      sortField: lazyParams.sortField,
-      sortOrder: lazyParams.sortOrder,
-      filters: lazyParams.filters,
-      rows: lazyParams.rows,
-    },
-  );
-
-  const onPage = (event: DataTablePFSEvent) => {
-    setLazyParams(event);
-  };
-
-  const onSort = (event: DataTablePFSEvent) => {
-    setLazyParams(event);
-  };
-
-  const onFilter = (event: DataTablePFSEvent) => {
-    // eslint-disable-next-line no-param-reassign
-    event.first = 0;
-    setLazyParams(event);
-  };
+  } = useGetUsersQuery(paginatorValues);
 
   return (
     <SpinnerRTK
@@ -146,7 +126,7 @@ export const UsersScreen = () => {
                     style={{ minWidth: '6rem' }}
                     body={ActiveBodyTemplate}
                     filter
-                    filterElement={ActiveRowFilterTemplate}
+                    filterElement={TriStateFilterTemplate}
                   />
                   <Column
                     body={ActionsBodyTemplate}
@@ -160,9 +140,7 @@ export const UsersScreen = () => {
           </Provider>
         )
       }
-
     </SpinnerRTK>
-
   );
 };
 

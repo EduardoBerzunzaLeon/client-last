@@ -1,5 +1,5 @@
 export type {
-  MatchMode, FiltersValueProps, FilterOptionsProps, Paginator,
+  FilterOptionsProps, Paginator,
 } from './requests/paginatorInterface';
 
 export type {

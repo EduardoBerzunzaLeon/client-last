@@ -1,22 +1,35 @@
-import { FilterOptionsProps, MatchMode, Paginator } from '../../interfaces/api';
+import { DataTableFilterMatchModeType } from 'primereact/datatable';
+import { FilterOptionsProps, Paginator } from '../../interfaces/api';
 import { Generic } from '../../interfaces/generic';
 
 export const prepareFilters = (filterOptions: FilterOptionsProps) => {
-  const filterEquivalence: Record<MatchMode, string> = {
+  const filterEquivalence: Record<DataTableFilterMatchModeType, string> = {
     contains: '[regex]=',
     equals: '=',
     notEquals: '[ne]=',
     lt: '[lt]=',
     gt: '[gt]=',
+    startsWith: '[regex]=',
+    notContains: '[regex]=',
+    endsWith: '[regex]=',
+    in: '[in]=',
+    lte: '[lte]=',
+    gte: '[gte]=',
+    between: '[between]=',
+    dateIs: '[regex]=',
+    dateIsNot: '[regex]=',
+    dateBefore: '[regex]=',
+    dateAfter: '[regex]=',
+    custom: '[regex]=',
   };
 
   return Object.keys(filterOptions).map((fieldName) => {
-    const f = filterOptions[fieldName];
+    const filter = filterOptions[fieldName];
 
     // ? Not pass falsy values except boolean false
-    if (f.value || f.value === false) {
-      const matchMode = filterEquivalence[f.matchMode] ?? '[regex]=';
-      return `${fieldName}${matchMode}${encodeURIComponent(f.value)}`
+    if ('value' in filter && (filter.value || filter.value === false)) {
+      const matchMode = filterEquivalence[filter.matchMode] ?? '[regex]=';
+      return `${fieldName}${matchMode}${encodeURIComponent(filter.value)}`
         .replace('.', '/');
     }
     return '';
@@ -24,7 +37,7 @@ export const prepareFilters = (filterOptions: FilterOptionsProps) => {
 };
 
 export const transformQueryWithPaginator = (path: string) => ({
-  page = '1',
+  page = 1,
   sortField,
   sortOrder,
   filters,

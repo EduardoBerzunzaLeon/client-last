@@ -1,30 +1,35 @@
-import { Column } from 'primereact/column';
-import { DataTable, DataTablePFSEvent } from 'primereact/datatable';
 import { useState } from 'react';
-import { SpinnerRTK } from '../../../components/spinnerRTK/SpinnerRTK';
-import { Subject } from '../../../interfaces/api';
-import { useGetSubjectsQuery } from '../../../redux/subject/subject.api';
-import { initialFiltersValue } from './assets/assets';
+
+import { Column } from 'primereact/column';
+import { DataTable } from 'primereact/datatable';
+
 import { ActionsBodyTemplate } from './components/columns/Actions';
 import { CoreBodyTemplate } from './components/columns/Core';
-import { DeprecatedBodyTemplate, DeprecatedRowFilterTemplate } from './components/columns/Deprecated';
-import { SemestreRowFilterTemplate } from './components/columns/Semester';
+import { DeprecatedBodyTemplate } from './components/columns/Deprecated';
 import { Header } from './components/Header';
-import SubjectDetailDialog from './components/SubjectDetailDialog';
-import { SubjectDialog } from './components/SubjectDialog';
+import { initialFiltersValue } from './assets/assets';
+import { IntegerFilterTemplate } from '../../../components/datatable/IntegerFilterTemplate';
+import { SpinnerRTK } from '../../../components/spinnerRTK/SpinnerRTK';
+import { Subject } from '../../../interfaces/api';
 import { SubjectContext } from './context/subjectContext';
+import { SubjectDetailDialog } from './components/SubjectDetailDialog';
+import { SubjectDialog } from './components/SubjectDialog';
+import { TriStateFilterTemplate } from '../../../components/datatable/TriStateFilterTemplate';
+
+import { useGetSubjectsQuery } from '../../../redux/subject/subject.api';
+import { useLazyParams } from '../../../hooks/useLazyParams';
 
 const { Provider } = SubjectContext;
 
 export const SubjectsScreen = () => {
-  const [ lazyParams, setLazyParams ] = useState<any>({
-    first: 0,
-    rows: 10,
-    page: 0,
-    sortField: '',
-    sortOrder: null,
-    filters: { ...initialFiltersValue },
-  });
+  const {
+    lazyParams,
+    setLazyParams,
+    onPage,
+    onSort,
+    onFilter,
+    paginatorValues,
+  } = useLazyParams(initialFiltersValue);
 
   const [ displayModal, setDisplayModal ] = useState(false);
   const [ isOpenDetailModal, setIsOpenDetailModal ] = useState(false);
@@ -32,28 +37,7 @@ export const SubjectsScreen = () => {
 
   const {
     data, isError, error, isLoading, isFetching,
-  } = useGetSubjectsQuery(
-    {
-      page: lazyParams.page + 1,
-      sortField: lazyParams.sortField,
-      sortOrder: lazyParams.sortOrder,
-      filters: lazyParams.filters,
-      rows: lazyParams.rows,
-    },
-  );
-  const onPage = (event: DataTablePFSEvent) => {
-    setLazyParams(event);
-  };
-
-  const onSort = (event: DataTablePFSEvent) => {
-    setLazyParams(event);
-  };
-
-  const onFilter = (event: DataTablePFSEvent) => {
-    // eslint-disable-next-line no-param-reassign
-    event.first = 0;
-    setLazyParams(event);
-  };
+  } = useGetSubjectsQuery(paginatorValues);
 
   return (
     <SpinnerRTK
@@ -125,7 +109,7 @@ export const SubjectsScreen = () => {
                         sortable
                         filter
                         showFilterMenu={false}
-                        filterElement={SemestreRowFilterTemplate}
+                        filterElement={IntegerFilterTemplate}
                         filterPlaceholder="Buscar por semestre"
                       />
                       <Column
@@ -135,7 +119,7 @@ export const SubjectsScreen = () => {
                         sortable
                         filter
                         showFilterMenu={false}
-                        filterElement={SemestreRowFilterTemplate}
+                        filterElement={IntegerFilterTemplate}
                         filterPlaceholder="Buscar por creditos"
                       />
                       <Column
@@ -145,7 +129,7 @@ export const SubjectsScreen = () => {
                         style={{ minWidth: '6rem' }}
                         body={DeprecatedBodyTemplate}
                         filter
-                        filterElement={DeprecatedRowFilterTemplate}
+                        filterElement={TriStateFilterTemplate}
                       />
                       <Column
                         body={ActionsBodyTemplate}

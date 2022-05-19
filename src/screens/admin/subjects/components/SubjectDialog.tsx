@@ -4,13 +4,14 @@ import { Dialog } from 'primereact/dialog';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
 import { TabPanel, TabView } from 'primereact/tabview';
 
+import { CorrelativeSubjectForm } from './CorrelativeSubjectForm';
+import { SingleResponse } from '../../../../interfaces/api/responses/genericInterface';
+import { SpinnerRTK } from '../../../../components/spinnerRTK/SpinnerRTK';
 import { SubjectContext } from '../context/subjectContext';
 import { SubjectDataForm } from './SubjectDataForm';
-import { useGetSubjectQuery } from '../../../../redux/subject/subject.api';
-import { SpinnerRTK } from '../../../../components/spinnerRTK/SpinnerRTK';
-import { SingleResponse } from '../../../../interfaces/api/responses/genericInterface';
 import { SubjectDetail } from '../../../../interfaces/api/responses/subjectInterface';
-import { CorrelativeSubjectForm } from './CorrelativeSubjectForm';
+
+import { useGetSubjectQuery } from '../../../../redux/subject/subject.api';
 
 const emptyData: SingleResponse<SubjectDetail> = {
   status: 'success',
@@ -40,10 +41,13 @@ export const SubjectDialog = () => {
 
   useEffect(() => {
     if (!isFetching && data) {
+      console.log({ frist: 'true' });
       setSkip(true);
     }
 
     if (!subjectSelected) {
+      console.log({ second: 'false' });
+      console.log({ skip, customSkip: (!isFetching && !!data) && !!subjectSelected });
       setSkip(false);
     }
   }, [ isFetching, subjectSelected ]);
@@ -59,12 +63,11 @@ export const SubjectDialog = () => {
         setDisplayModal(false);
       }}
     >
-
       <SpinnerRTK
         data={subjectSelected?.id ? data : emptyData}
         error={error}
         isError={isError}
-        isLoading={isFetching && !skip}
+        isLoading={(isFetching && !skip)}
         messageError="No se encontró la materia"
         messageLoading="Cargando Materia"
         classNameSpinner="flex flex-column align-items-center justify-content-center"
@@ -85,12 +88,9 @@ export const SubjectDialog = () => {
               </TabPanel>
             )
             }
-
           </TabView>
         )}
-
       </SpinnerRTK>
-
     </Dialog>
   );
 };

@@ -73,9 +73,9 @@ export const SubjectDataForm = ({ subject }: Props) => {
   const {
     data, isLoading,
   } = useGetConsecutiveSubjectsQuery({
-    page: '0',
+    page: 0,
     sortField: 'name',
-    sortOrder: '1',
+    sortOrder: 1,
     filters: {
       _id: { value: subject?.id, matchMode: FilterMatchMode.NOT_EQUALS },
       semester: { value: semester || 1, matchMode: FilterMatchMode.LESS_THAN },

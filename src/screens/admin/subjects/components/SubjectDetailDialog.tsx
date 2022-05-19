@@ -10,7 +10,7 @@ import { Badge } from '../../../../components/badge/Badge';
 import { SpanDetail } from '../../../../components/spanDetail/SpanDetail';
 import { SubjectsList } from './SubjectsList';
 
-export const SubjectDialog = () => {
+export const SubjectDetailDialog = () => {
   const {
     subjectSelected, isOpenDetailModal, setSubjectSelected, setIsOpenDetailModal,
   } = useContext(SubjectContext);
@@ -145,4 +145,4 @@ export const SubjectDialog = () => {
   );
 };
 
-export default SubjectDialog;
+export default SubjectDetailDialog;

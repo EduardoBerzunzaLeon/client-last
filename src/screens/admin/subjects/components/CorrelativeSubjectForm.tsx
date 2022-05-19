@@ -46,9 +46,9 @@ export const CorrelativeSubjectForm = ({ id, semester, correlativeSubjects }: Pr
   const {
     data, isLoading,
   } = useGetConsecutiveSubjectsQuery({
-    page: '0',
+    page: 0,
     sortField: 'name',
-    sortOrder: '1',
+    sortOrder: 1,
     filters: {
       _id: { value: id, matchMode: FilterMatchMode.NOT_EQUALS },
       semester: { value: semester, matchMode: FilterMatchMode.GREATER_THAN },

@@ -1,6 +1,3 @@
-import { ColumnFilterElementTemplateOptions } from 'primereact/column';
-
-import { TriStateCheckbox } from 'primereact/tristatecheckbox';
 import { Badge } from '../../../../../components/badge/Badge';
 import { Subject } from '../../../../../interfaces/api';
 
@@ -15,17 +12,4 @@ export const DeprecatedBodyTemplate = ({ deprecated }: Subject) => (
   />
 );
 
-export const DeprecatedRowFilterTemplate = ({
-  value,
-  filterApplyCallback,
-}: ColumnFilterElementTemplateOptions) => (
-  <TriStateCheckbox
-    value={value}
-    onChange={(e) => filterApplyCallback(e.value)}
-  />
-);
-
-export default {
-  DeprecatedBodyTemplate,
-  DeprecatedRowFilterTemplate,
-};
+export default DeprecatedBodyTemplate;
