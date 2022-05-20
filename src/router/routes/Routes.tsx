@@ -9,13 +9,14 @@ import { ForgotPasswordScreen } from '../../screens/blank/forgotPasswordScreen/F
 import { HomeScreen } from '../../screens/admin/home/HomeScreen';
 import { LoginScreen } from '../../screens/blank/loginScreen/LoginScreen';
 import { PrivateRoute } from '../PrivateRoute';
+import { ProfessorsScreen } from '../../screens/admin/professors/ProfessorsScreen';
 import { ProfileScreen } from '../../screens/admin/profile/ProfileScreen';
 import { PublicRoute } from '../PublicRoute';
 import { RegisterScreen } from '../../screens/blank/registerScreen/RegisterScreen';
 import { ResetPasswordScreen } from '../../screens/blank/resetPasswordScreen/ResetPasswordScreen';
 import { SendEmailVerifyScreen } from '../../screens/blank/sendEmailVerify/SendEmailVerifyScreen';
-import { UsersScreen } from '../../screens/admin/users/UsersScreen';
 import { SubjectsScreen } from '../../screens/admin/subjects/SubjectsScreen';
+import { UsersScreen } from '../../screens/admin/users/UsersScreen';
 
 const BlankLayoutLazy = lazy(() => import(/* webpackChunkName: "Auth" */'../../screens/blank/layout/BlankLayout'));
 
@@ -44,6 +45,10 @@ export const Routes = () => {
         {
           element: <SubjectsScreen />,
           path: 'subjects',
+        },
+        {
+          element: <ProfessorsScreen />,
+          path: 'professors',
         },
       ],
     },

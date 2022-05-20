@@ -18,6 +18,7 @@ import { TriStateFilterTemplate } from '../../../components/datatable/TriStateFi
 
 import { useGetSubjectsQuery } from '../../../redux/subject/subject.api';
 import { useLazyParams } from '../../../hooks/useLazyParams';
+import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
 
 const { Provider } = SubjectContext;
 
@@ -62,6 +63,7 @@ export const SubjectsScreen = () => {
               }}
               >
                 <div>
+                  <HeaderAdmin position="subjects/" title="Gestionar Materias" />
                   <div className="card">
                     <DataTable
                       value={dataSend}

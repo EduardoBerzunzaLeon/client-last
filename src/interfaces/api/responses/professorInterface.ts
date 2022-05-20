@@ -24,8 +24,8 @@ export interface Professor {
     avatar?: string,
     active: boolean,
     createdAt: Date,
-    subjects: [string] | [],
-    courses: [string ] | [],
+    subjects: string[] | [],
+    courses: string[] | [],
 }
 
 export interface ProfessorDetail {

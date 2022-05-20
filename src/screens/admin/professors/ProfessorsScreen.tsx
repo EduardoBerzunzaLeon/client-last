@@ -1,28 +1,24 @@
-import { useState } from 'react';
-
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
-
+import { useState } from 'react';
+import { TriStateFilterTemplate } from '../../../components/datatable/TriStateFilterTemplate';
+import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
+import { SpinnerRTK } from '../../../components/spinnerRTK/SpinnerRTK';
+import { useLazyParams } from '../../../hooks/useLazyParams';
+import { Professor } from '../../../interfaces/api';
+import { useGetProfessorsQuery } from '../../../redux/professor/professor.api';
+import { initialFiltersValue } from './assets/assets';
 import { ActionsBodyTemplate } from './components/columns/Actions';
 import { ActiveBodyTemplate } from './components/columns/Active';
 import { EmailBodyTemplate } from './components/columns/Email';
 import { GenderBodyTemplate, GenderRowFilterTemplate } from './components/columns/Gender';
 import { Header } from './components/Header';
-import { initialFiltersValue } from './assets/assets';
-import { SpinnerRTK } from '../../../components/spinnerRTK/SpinnerRTK';
-import { TriStateFilterTemplate } from '../../../components/datatable/TriStateFilterTemplate';
-import { User } from '../../../interfaces/api';
-import { UserContext } from './context/userContext';
-import { UserDialog } from './components/UserDialog';
+import { ProfessorDialog } from './components/ProfessorDialog';
+import { ProfessorContext } from './context/professorContext';
 
-import { useAuth } from '../../../hooks/useAuth';
-import { useGetUsersQuery } from '../../../redux/user/user.api';
-import { useLazyParams } from '../../../hooks/useLazyParams';
-import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
+const { Provider } = ProfessorContext;
 
-const { Provider } = UserContext;
-
-export const UsersScreen = () => {
+export const ProfessorsScreen = () => {
   const {
     lazyParams,
     setLazyParams,
@@ -33,12 +29,11 @@ export const UsersScreen = () => {
   } = useLazyParams(initialFiltersValue);
 
   const [ displayModal, setDisplayModal ] = useState(false);
-  const [ userSelected, setUserSelected ] = useState<User>();
-  const { user: userAuth } = useAuth();
+  const [ professorSelected, setProfessorSelected ] = useState<Professor>();
 
   const {
     data, isError, error, isLoading, isFetching,
-  } = useGetUsersQuery(paginatorValues);
+  } = useGetProfessorsQuery(paginatorValues);
 
   return (
     <SpinnerRTK
@@ -54,15 +49,14 @@ export const UsersScreen = () => {
           <Provider value={{
             displayModal,
             lazyParams,
-            userAuth,
-            userSelected,
+            professorSelected,
             setDisplayModal,
             setLazyParams,
-            setUserSelected,
+            setProfessorSelected,
           }}
           >
             <div>
-              <HeaderAdmin position="users/" title="Gestionar Usuarios" />
+              <HeaderAdmin position="professors/" title="Gestionar Tutores" />
               <div className="card">
                 <DataTable
                   value={dataSend}
@@ -137,7 +131,7 @@ export const UsersScreen = () => {
                   />
                 </DataTable>
               </div>
-              <UserDialog />
+              <ProfessorDialog />
             </div>
           </Provider>
         )
@@ -146,4 +140,4 @@ export const UsersScreen = () => {
   );
 };
 
-export default UsersScreen;
+export default ProfessorsScreen;

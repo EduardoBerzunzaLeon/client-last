@@ -7485,7 +7485,7 @@ primeflex@^3.1.2:
 
 primeicons@^5.0.0:
   version "5.0.0"
-  resolved "https://registry.npmjs.org/primeicons/-/primeicons-5.0.0.tgz"
+  resolved "https://registry.yarnpkg.com/primeicons/-/primeicons-5.0.0.tgz#73a0b6028a77c58a9eeb331ad13aaf085e8451ee"
   integrity sha512-heygWF0X5HFI1otlZE62pp6ye7sZ8om78J9au2BRkg8O7Y8AHTZ9qKMRzchZUHLe8zUAvdi6hZzzm9XxgwIExw==
 
 primereact@^7.2.1:

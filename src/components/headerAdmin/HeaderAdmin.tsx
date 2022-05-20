@@ -17,6 +17,8 @@ export const HeaderAdmin = React.memo(({ position, title }: Props) => {
 
   const items: Generic = {
     users: { label: 'Usuarios', command: () => { navigate('/admin/users'); } },
+    subjects: { label: 'Materias', command: () => { navigate('/admin/subjects'); } },
+    professors: { label: 'Tutores', command: () => { navigate('/admin/professors'); } },
     profile: { label: 'Perfil' },
     home: { label: 'Dashboard' },
   };

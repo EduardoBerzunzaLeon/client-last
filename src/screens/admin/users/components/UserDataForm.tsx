@@ -61,7 +61,13 @@ export const UserDataForm = ({ user }: {user?: User }) => {
         enableReinitialize
         onSubmit={async (values, { setFieldError, resetForm }) => {
           const {
-            last: lastUser, first: firstUser, role, avatar, email, gender, blocked,
+            last: lastUser,
+            first: firstUser,
+            role,
+            avatar,
+            email,
+            gender,
+            blocked,
           } = values;
 
           const dataSend = new FormData();

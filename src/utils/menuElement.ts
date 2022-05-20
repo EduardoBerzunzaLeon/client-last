@@ -26,6 +26,7 @@ export const menu: Menu[] = [
   { label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/admin' },
   { label: 'Usuarios', icon: 'pi pi-fw pi-users', to: '/admin/users' },
   { label: 'Materias', icon: 'pi pi-fw pi-book', to: '/admin/subjects' },
+  { label: 'Tutores', icon: 'pi pi-fw pi-id-card', to: '/admin/professors' },
   {
     label: 'Pages',
     icon: 'pi pi-fw pi-clone',

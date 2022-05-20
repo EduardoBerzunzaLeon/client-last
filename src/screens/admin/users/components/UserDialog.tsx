@@ -1,10 +1,9 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { Dialog } from 'primereact/dialog';
 import { TabPanel, TabView } from 'primereact/tabview';
 
 import { AdminPasswordForm } from './AdminPasswordForm';
-import { Divider } from '../../../../components/divider/Divider';
 import { UserContext } from '../context/userContext';
 import { UserDataForm } from './UserDataForm';
 
@@ -13,9 +12,19 @@ export const UserDialog = () => {
     userSelected, displayModal, setUserSelected, setDisplayModal,
   } = useContext(UserContext);
 
+  const [ title, setTitle ] = useState('');
+
+  useEffect(() => {
+    (displayModal && !userSelected)
+      && setTitle('Crear Usuario');
+
+    (displayModal && userSelected)
+      && setTitle('Editar Usuario');
+  }, [ displayModal, userSelected ]);
+
   return (
     <Dialog
-      header={userSelected ? 'Editar Usuario' : 'Crear Usuario'}
+      header={title}
       className="shadow-5 w-11 md:w-6 lg:w-5"
       modal
       visible={displayModal}
@@ -26,7 +35,6 @@ export const UserDialog = () => {
     >
       <TabView>
         <TabPanel header="Datos Personales">
-          <Divider text="Información Personal" icon="user" />
           <UserDataForm user={userSelected} />
         </TabPanel>
         {
