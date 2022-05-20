@@ -1,27 +1,25 @@
 import React, { useState } from 'react';
 
 import { Button } from 'primereact/button';
+import { Dropdown } from 'primereact/dropdown';
 import { FilterMatchMode } from 'primereact/api';
 import { Form, Formik } from 'formik';
+import { MultiSelect } from 'primereact/multiselect';
 import { Skeleton } from 'primereact/skeleton';
 import { Toast } from 'primereact/toast';
+import { VirtualScrollerLoadingTemplateOptions } from 'primereact/virtualscroller';
 import * as Yup from 'yup';
 
-import { VirtualScrollerLoadingTemplateOptions } from 'primereact/virtualscroller';
-import { Dropdown } from 'primereact/dropdown';
-
-import { MultiSelect } from 'primereact/multiselect';
-
-import { InputTextApp } from '../../../../components/forms';
-import { RequiredSubjects, SubjectDetail, SubjectUnion } from '../../../../interfaces/api';
-// import { SubjectDetail } from '../../../../interfaces/api';
-import { ToggleButtonApp } from '../../../../components/forms/toggleButton/ToggleButtonApp';
-import { useDropdownFilter } from '../../../../hooks/useDropdownFilter';
-import { useCreateSubjectMutation, useGetConsecutiveSubjectsQuery, useUpdateSubjectMutation } from '../../../../redux/subject/subject.api';
-import { useToast } from '../../../../hooks/useToast';
+import { convertAdditionalSubjects } from '../assets/convertAdditionalSubjects';
 import { FormElement } from '../../../../components/forms/formElement/FormElement';
-import { ucWords } from '../../../../utils/stringUtils';
+import { InputTextApp } from '../../../../components/forms';
 import { processError, setSubjectFormErrors } from '../../../../utils/forms/handlerFormErrors';
+import { RequiredSubjects, SubjectDetail } from '../../../../interfaces/api';
+import { ToggleButtonApp } from '../../../../components/forms/toggleButton/ToggleButtonApp';
+
+import { useCreateSubjectMutation, useGetConsecutiveSubjectsQuery, useUpdateSubjectMutation } from '../../../../redux/subject/subject.api';
+import { useDropdownFilter } from '../../../../hooks/useDropdownFilter';
+import { useToast } from '../../../../hooks/useToast';
 
 interface Props {
   subject: SubjectDetail,
@@ -39,18 +37,8 @@ const cores = [
   { name: 'Integral', code: 'integral' },
 ];
 
-const processSubject = (requiredSubjects: SubjectUnion[]): RequiredSubjects[] => {
-  const subjects = requiredSubjects.map((subject) => ({
-    // eslint-disable-next-line no-underscore-dangle
-    id: subject._id,
-    name: ucWords(subject.name),
-  }));
-
-  return subjects;
-};
-
 export const SubjectDataForm = ({ subject }: Props) => {
-  const [ initialSubject ] = useState({
+  const [ initialSubject, setInitialSubject ] = useState({
     credit: subject.credit,
     deprecated: subject.deprecated,
     name: subject.name,
@@ -59,7 +47,7 @@ export const SubjectDataForm = ({ subject }: Props) => {
     practicalHours: subject.practicalHours,
     theoreticalHours: subject.theoreticalHours,
     requiredSubjects: subject.requiredSubjects
-      ? [ ...processSubject(subject.requiredSubjects) ]
+      ? convertAdditionalSubjects(subject.requiredSubjects)
       : undefined,
   });
 
@@ -93,6 +81,7 @@ export const SubjectDataForm = ({ subject }: Props) => {
       <Toast ref={toast} />
       <Formik
         initialValues={initialSubject}
+        enableReinitialize
         onSubmit={async (values, { setFieldError, resetForm }) => {
           const { core, requiredSubjects, ...rest } = values;
           const { code: coreDB } = core;
@@ -120,6 +109,7 @@ export const SubjectDataForm = ({ subject }: Props) => {
               resetForm();
             }
             setSkip(true);
+            setInitialSubject({ ...values });
             showSuccess({ detail: message });
           } catch (error) {
             const errors: string = processError({ error, showError });

@@ -1,4 +1,6 @@
-import { useContext, useEffect, useState } from 'react';
+import {
+  useContext, useEffect, useState,
+} from 'react';
 
 import { Dialog } from 'primereact/dialog';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
@@ -33,41 +35,47 @@ export const SubjectDialog = () => {
     subjectSelected, displayModal, setSubjectSelected, setDisplayModal,
   } = useContext(SubjectContext);
 
-  const [ skip, setSkip ] = useState(false);
+  const [ isLoading, setIsLoading ] = useState(true);
+  const [ title, setTitle ] = useState('');
 
   const {
     data, isError, error, isFetching,
   } = useGetSubjectQuery(subjectSelected?.id ?? skipToken);
 
   useEffect(() => {
-    if (!isFetching && data) {
-      console.log({ frist: 'true' });
-      setSkip(true);
-    }
+    (displayModal && !subjectSelected)
+      && setTitle('Crear Materia');
 
-    if (!subjectSelected) {
-      console.log({ second: 'false' });
-      console.log({ skip, customSkip: (!isFetching && !!data) && !!subjectSelected });
-      setSkip(false);
-    }
+    (displayModal && subjectSelected)
+      && setTitle('Editar Materia');
+  }, [ displayModal, subjectSelected ]);
+
+  useEffect(() => {
+    (!isFetching && data)
+      && setIsLoading(false);
+
+    (!subjectSelected)
+      && setIsLoading(true);
   }, [ isFetching, subjectSelected ]);
+
+  const onHide = () => {
+    setSubjectSelected(undefined);
+    setDisplayModal(false);
+  };
 
   return (
     <Dialog
-      header={subjectSelected ? 'Editar Materia' : 'Crear Materia'}
+      header={title}
       className="shadow-5 w-11 md:w-6 lg:w-5"
       modal
       visible={displayModal}
-      onHide={() => {
-        setSubjectSelected(undefined);
-        setDisplayModal(false);
-      }}
+      onHide={onHide}
     >
       <SpinnerRTK
         data={subjectSelected?.id ? data : emptyData}
         error={error}
         isError={isError}
-        isLoading={(isFetching && !skip)}
+        isLoading={isFetching && isLoading}
         messageError="No se encontró la materia"
         messageLoading="Cargando Materia"
         classNameSpinner="flex flex-column align-items-center justify-content-center"

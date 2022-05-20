@@ -33,7 +33,7 @@ export const UserDataForm = ({ user }: {user?: User }) => {
   const [ updateUser, { isLoading: isLoadingUpdate }] = useUpdateUserAdminMutation();
   const [ createUser, { isLoading: isLoadingCreate }] = useCreateUserMutation();
 
-  const [ initialUser ] = useState(user
+  const [ initialUser, setInitialUser ] = useState(user
     ? {
       first: user.name.first,
       last: user.name.last,
@@ -86,6 +86,7 @@ export const UserDataForm = ({ user }: {user?: User }) => {
             }
 
             showSuccess({ detail: message });
+            setInitialUser({ ...values });
           } catch (error) {
             const errors: string = processError({ error, showError });
             setAuthFormErrors({ errors, setFieldError });

@@ -1,9 +1,12 @@
-import { Button } from 'primereact/button';
 import { useEffect, useState } from 'react';
-import { useGetSubjectsForExcelQuery } from '../../../../redux/subject/subject.api';
+
+import { Button } from 'primereact/button';
+
 import { exportExcel } from '../../../../utils/exports/exportExcel';
 
-const headers = [[ 'ID', 'Nombre', 'Semestre', 'Deprecado', 'Materias Requeridas', 'Materias Correlativas', 'Creditos', 'Horas Practicas', 'Horas Teóricas', 'Horas Totales', ' Núcleo Academico' ]];
+import { useGetSubjectsForExcelQuery } from '../../../../redux/subject/subject.api';
+
+const headers = [[ 'ID', 'Nombre', 'Semestre', 'Creado el', 'Deprecado', 'Materias Requeridas', 'Materias Correlativas', 'Creditos', 'Horas Practicas', 'Horas Teóricas', 'Horas Totales', ' Núcleo Academico' ]];
 
 export const ExcelButton = () => {
   const [ skip, setSkip ] = useState(true);

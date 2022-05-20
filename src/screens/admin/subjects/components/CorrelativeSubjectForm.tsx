@@ -1,35 +1,27 @@
-import { Form, Formik } from 'formik';
-import { Button } from 'primereact/button';
-import { Toast } from 'primereact/toast';
-import * as Yup from 'yup';
-import { MultiSelect } from 'primereact/multiselect';
-import { VirtualScrollerLoadingTemplateOptions } from 'primereact/virtualscroller';
-import { Skeleton } from 'primereact/skeleton';
-import { FilterMatchMode } from 'primereact/api';
 import { useState } from 'react';
-import { useToast } from '../../../../hooks/useToast';
+
+import { Button } from 'primereact/button';
+import { FilterMatchMode } from 'primereact/api';
+import { Form, Formik } from 'formik';
+import { MultiSelect } from 'primereact/multiselect';
+import { Skeleton } from 'primereact/skeleton';
+import { Toast } from 'primereact/toast';
+import { VirtualScrollerLoadingTemplateOptions } from 'primereact/virtualscroller';
+import * as Yup from 'yup';
+
+import { convertAdditionalSubjects } from '../assets/convertAdditionalSubjects';
 import { FormElement } from '../../../../components/forms/formElement/FormElement';
-import { RequiredSubjects, SubjectUnion } from '../../../../interfaces/api';
-import { useGetConsecutiveSubjectsQuery, useUpdateCorrelativeSubjectsMutation } from '../../../../redux/subject/subject.api';
-import { useDropdownFilter } from '../../../../hooks/useDropdownFilter';
-import { ucWords } from '../../../../utils/stringUtils';
 import { processError, setSubjectFormErrors } from '../../../../utils/forms/handlerFormErrors';
+import { RequiredSubjects, SubjectUnion } from '../../../../interfaces/api';
+import { useDropdownFilter } from '../../../../hooks/useDropdownFilter';
+import { useGetConsecutiveSubjectsQuery, useUpdateCorrelativeSubjectsMutation } from '../../../../redux/subject/subject.api';
+import { useToast } from '../../../../hooks/useToast';
 
 const SkeletonDropdown = ({ even }: VirtualScrollerLoadingTemplateOptions) => (
   <div className="flex align-items-center p-2" style={{ height: '38px' }}>
     <Skeleton width={even ? '60%' : '50%'} height="1rem" />
   </div>
 );
-
-const processSubject = (requiredSubjects: SubjectUnion[]): RequiredSubjects[] => {
-  const subjects = requiredSubjects.map((subject) => ({
-    // eslint-disable-next-line no-underscore-dangle
-    id: subject._id,
-    name: ucWords(subject.name),
-  }));
-
-  return subjects;
-};
 
 interface Props {
     id: string,
@@ -40,6 +32,10 @@ interface Props {
 export const CorrelativeSubjectForm = ({ id, semester, correlativeSubjects }: Props) => {
   const { toast, showSuccess, showError } = useToast();
   const [ skip, setSkip ] = useState<boolean>(true);
+  const [
+    initialValues,
+    setInitialValues,
+  ] = useState({ correlativeSubjects: convertAdditionalSubjects(correlativeSubjects) });
 
   const [ updateSubject, { isLoading: isLoadingUpdate }] = useUpdateCorrelativeSubjectsMutation();
 
@@ -65,7 +61,8 @@ export const CorrelativeSubjectForm = ({ id, semester, correlativeSubjects }: Pr
     <>
       <Toast ref={toast} />
       <Formik
-        initialValues={{ correlativeSubjects: [ ...processSubject(correlativeSubjects) ]}}
+        initialValues={initialValues}
+        enableReinitialize
         onSubmit={async (values, { setFieldError }) => {
           let correlativeSubjectsDB: string[] | [] = [];
           if (values.correlativeSubjects?.length) {
@@ -83,6 +80,7 @@ export const CorrelativeSubjectForm = ({ id, semester, correlativeSubjects }: Pr
             await updateSubject(dataSend).unwrap();
             setSkip(true);
             showSuccess({ detail: 'Se ha actualizadó las materias correlativas' });
+            setInitialValues({ ...values });
           } catch (error) {
             const errors: string = processError({ error, showError });
             setSubjectFormErrors({ errors, setFieldError });
@@ -103,7 +101,7 @@ export const CorrelativeSubjectForm = ({ id, semester, correlativeSubjects }: Pr
                      element={MultiSelect}
                      options={cleanData.length
                        ? [ ...cleanData ]
-                       : [ ...processSubject(correlativeSubjects) ]
+                       : initialValues.correlativeSubjects
                        ?? []}
                      id="correlativeSubjects"
                      inputId="correlativeSubjects"
