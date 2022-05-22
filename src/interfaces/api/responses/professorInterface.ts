@@ -43,3 +43,14 @@ export interface ProfessorDetail {
     subjects: [SubjectProfessor] | [],
     courses: [CourseProfessor] | [],
 }
+
+export interface ProfessorsDataToExcel {
+  id: string,
+  name: string,
+  email: number,
+  gender: string,
+  active: string,
+  createdAt: Date,
+  subjects: string,
+  courses: string,
+}

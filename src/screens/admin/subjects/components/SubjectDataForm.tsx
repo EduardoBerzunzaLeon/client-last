@@ -103,13 +103,13 @@ export const SubjectDataForm = ({ subject }: Props) => {
           try {
             if (subject.id) {
               await updateSubject({ id: subject.id, ...dataSend }).unwrap();
+              setInitialSubject({ ...values });
             } else {
               await createSubject(dataSend).unwrap();
               message = 'La materia se creó con éxito';
               resetForm();
             }
             setSkip(true);
-            setInitialSubject({ ...values });
             showSuccess({ detail: message });
           } catch (error) {
             const errors: string = processError({ error, showError });

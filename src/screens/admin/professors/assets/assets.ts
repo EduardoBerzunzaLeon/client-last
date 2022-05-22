@@ -10,4 +10,9 @@ export const initialFiltersValue: DataTableFilterMeta = {
   active: { value: null, matchMode: FilterMatchMode.EQUALS },
 };
 
-export default initialFiltersValue;
+export const initialFiltersCoursesValue: DataTableFilterMeta = {
+  name: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  impartedAt: { value: null, matchMode: FilterMatchMode.CONTAINS },
+};
+
+export default { initialFiltersValue, initialFiltersCoursesValue };

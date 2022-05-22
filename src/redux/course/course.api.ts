@@ -25,7 +25,7 @@ export const CourseApi = tutorApi.injectEndpoints({
     }),
     updateCourse: builder.mutation<SingleResponse<CourseProfessor>, UpdateCourseRequest>({
       query: ({ id, ...patch }) => ({
-        url: `Courses/${id}`,
+        url: `courses/${id}`,
         method: 'PATCH',
         body: patch,
       }),
@@ -33,7 +33,7 @@ export const CourseApi = tutorApi.injectEndpoints({
     }),
     createCourse: builder.mutation<SingleResponse<CourseProfessor>, CreateCourseRequest>({
       query: (post) => ({
-        url: 'Courses/',
+        url: 'courses/',
         method: 'POST',
         body: post,
       }),
@@ -41,7 +41,7 @@ export const CourseApi = tutorApi.injectEndpoints({
     }),
     deleteCourse: builder.mutation<SingleResponse<null>, string>({
       query: (id) => ({
-        url: `Courses/${id}`,
+        url: `courses/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: invalidatesListCourses,

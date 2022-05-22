@@ -1,6 +1,13 @@
 import { tutorApi } from '../services/tutor.api';
 import {
-  Paginator, Professor, ListResponse, SingleResponse, ProfessorDetail,
+  Paginator,
+  Professor,
+  ListResponse,
+  SingleResponse,
+  ProfessorDetail,
+  UpdateActiveProfessor,
+  ProfessorsDataToExcel,
+  Course,
 } from '../../interfaces/api';
 import { transformQueryWithPaginator } from '../services/paginator.service';
 import { invalidatesList, providesList } from '../services/response.service';
@@ -11,23 +18,39 @@ const invalidatesListProfessors = invalidatesList('Professors');
 export const professorApi = tutorApi.injectEndpoints({
   endpoints: (builder) => ({
     getProfessor: builder.query<SingleResponse<ProfessorDetail>, string>({
-      query: (id) => `Professors/${id}`,
+      query: (id) => `professors/${id}`,
       providesTags: (result, error, id) => [{ type: 'Professors', id }],
     }),
     getProfessors: builder.query<ListResponse<Professor>, Paginator>({
       query: transformQueryWithPaginator('Professors'),
       providesTags: providesListSubject,
     }),
+    getProfessorsForExcel: builder.query<ListResponse<ProfessorsDataToExcel>, null>({
+      query: () => 'professors/excel',
+      providesTags: [ 'Subjects' ],
+    }),
+    getCoursesByProfessor: builder.query<ListResponse<Course>, string>({
+      query: (id) => `professors/${id}/courses`,
+      providesTags: (result, error, id) => [{ type: 'Professors', id }],
+    }),
     updateProfessor: builder.mutation<SingleResponse<Professor>, FormData>({
       query: (patch) => {
         const id = patch.get('id') || '';
 
         return {
-          url: `Professors/${id}`,
+          url: `professors/${id}`,
           method: 'PATCH',
           body: patch,
         };
       },
+      invalidatesTags: invalidatesListProfessors,
+    }),
+    updateActive: builder.mutation<SingleResponse<Professor>, UpdateActiveProfessor>({
+      query: ({ id, ...patch }) => ({
+        url: `professors/${id}/active`,
+        method: 'PATCH',
+        body: patch,
+      }),
       invalidatesTags: invalidatesListProfessors,
     }),
     createProfessor: builder.mutation<SingleResponse<Professor>, FormData>({
@@ -36,7 +59,7 @@ export const professorApi = tutorApi.injectEndpoints({
         method: 'POST',
         body: post,
       }),
-      invalidatesTags: invalidatesListProfessors,
+      invalidatesTags: [ 'Professors' ],
     }),
     deleteProfessor: builder.mutation<SingleResponse<null>, string>({
       query: (id) => ({
@@ -51,7 +74,10 @@ export const professorApi = tutorApi.injectEndpoints({
 export const {
   useGetProfessorQuery,
   useGetProfessorsQuery,
+  useGetCoursesByProfessorQuery,
+  useGetProfessorsForExcelQuery,
   useUpdateProfessorMutation,
+  useUpdateActiveMutation,
   useCreateProfessorMutation,
   useDeleteProfessorMutation,
 } = professorApi;

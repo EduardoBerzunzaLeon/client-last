@@ -74,8 +74,8 @@ export const ProfessorDialog = () => {
         error={error}
         isError={isError}
         isLoading={isFetching && isLoading}
-        messageError="No se encontró la materia"
-        messageLoading="Cargando Materia"
+        messageError="No se encontró el tutor"
+        messageLoading="Cargando Tutor"
         classNameSpinner="flex flex-column align-items-center justify-content-center"
       >
 

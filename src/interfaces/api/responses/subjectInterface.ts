@@ -41,7 +41,6 @@ export interface SubjectDetail {
 }
 
 export interface SubjectCompleteData {
-
     id: string,
     core: string,
     correlativeSubjects: string,
@@ -55,5 +54,4 @@ export interface SubjectCompleteData {
     theoreticalHours: number,
     totalHours: number,
     deprecatedAt?: Date,
-
 }

@@ -37,6 +37,10 @@ export type {
 
 export type { UpdateSubjectRequest, CreateSubjectRequest, UpdateCorrelativeSubjectRequest } from './requests/subjectInterface';
 
-export type { Professor, ProfessorDetail, CourseProfessor } from './responses/professorInterface';
+export type {
+  Professor, ProfessorDetail, CourseProfessor, ProfessorsDataToExcel,
+} from './responses/professorInterface';
+export type { UpdateActiveProfessor } from './requests/professorInterface';
 
 export type { UpdateCourseRequest, CreateCourseRequest } from './requests/courseInterface';
+export type { Course } from './responses/courseinterface';

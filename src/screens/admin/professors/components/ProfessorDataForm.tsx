@@ -34,33 +34,38 @@ interface Generic {
 
 const convertModelToFormData = (model: Generic, form?: FormData, namespace = ''): FormData => {
   const formData = form || new FormData();
-  // eslint-disable-next-line no-restricted-syntax
-  for (const propertyName in model) {
-    // eslint-disable-next-line no-prototype-builtins
-    if (!model.hasOwnProperty(propertyName) || (!model[propertyName] && model[propertyName] !== 0 && model[propertyName] !== '')) {
-      // eslint-disable-next-line no-continue
-      continue;
-    }
-    const formKey = namespace ? `${namespace}` : propertyName;
-    console.log(formKey);
-    if (model[propertyName] instanceof Date) {
-      formData.append(formKey, model[propertyName].toISOString());
-    } else if (model[propertyName] instanceof Array) {
-      model[propertyName].forEach((element: any, index: number) => {
-        const tempFormKey = `${formKey}[${index}]`;
-        convertModelToFormData(element, formData, tempFormKey);
-      });
-    } else if (typeof model[propertyName] === 'object' && !(model[propertyName] instanceof File)) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      convertModelToFormData(model[propertyName], formData, formKey);
-    } else formData.append(formKey, model[propertyName].toString());
+
+  if (typeof model === 'string') {
+    formData.append(namespace, model);
+  } else {
+    Object.keys(model).forEach((key) => {
+      if (!model[key]) {
+        return;
+      }
+      const formKey = namespace ? `${namespace}` : key;
+      if (model[key] instanceof Date) {
+        formData.append(formKey, model[key].toISOString());
+      } else if (model[key] instanceof Array) {
+        model[key].forEach((element: any, index: number) => {
+          const tempFormKey = `${formKey}[${index}]`;
+          convertModelToFormData(element, formData, tempFormKey);
+        });
+      } else if (typeof model[key] === 'object' && !(model[key] instanceof File)) {
+        convertModelToFormData(model[key], formData, formKey);
+      } else if (model[key] instanceof File) {
+        formData.append(formKey, model[key]);
+      } else {
+        formData.append(formKey, model[key].toString());
+      }
+    });
   }
+
   return formData;
 };
 
 const uploadOptions = { icon: 'pi pi-fw pi-cloud-upload', iconOnly: true, className: 'hidden' };
 
-export const ProfessorDataForm = ({ professor }: {professor: ProfessorDetail }) => {
+export const ProfessorDataForm = ({ professor }: { professor: ProfessorDetail }) => {
   const [ updateProfessor, { isLoading: isLoadingUpdate }] = useUpdateProfessorMutation();
   const [ createProfessor, { isLoading: isLoadingCreate }] = useCreateProfessorMutation();
 
@@ -105,15 +110,6 @@ export const ProfessorDataForm = ({ professor }: {professor: ProfessorDetail }) 
         initialValues={initialProfessor}
         enableReinitialize
         onSubmit={async (values, { setFieldError, resetForm }) => {
-          // const {
-          //   last: lastProfessor,
-          //   first: firstProfessor,
-          //   avatar,
-          //   email,
-          //   gender,
-          //   active,
-          //   subjects,
-          // } = values;
           const { subjects, ...rest } = values;
 
           let subjectsDB: string[] | [] = [];
@@ -123,24 +119,15 @@ export const ProfessorDataForm = ({ professor }: {professor: ProfessorDetail }) 
             ) => id);
           }
 
-          console.log(subjectsDB);
-
-          const dataSend = convertModelToFormData({ subjects: subjectsDB, id: professor?.id || '', ...rest });
-
-          // const dataSend = new FormData();
-          // dataSend.append('avatar', avatar || '');
-          // dataSend.append('id', professor?.id || '');
-          // dataSend.append('first', firstProfessor);
-          // dataSend.append('email', email);
-          // dataSend.append('gender', gender);
-          // dataSend.append('last', lastProfessor);
-          // dataSend.append('active', `${active}`);
+          const prepareData = { subjects: subjectsDB, id: professor?.id || '', ...rest };
+          const dataSend = convertModelToFormData(prepareData);
 
           let message = 'El profesor se actualizó con éxito';
 
           try {
             if (professor?.id) {
               await updateProfessor(dataSend).unwrap();
+              setInitialProfessor({ ...values });
             } else {
               await createProfessor(dataSend).unwrap();
               message = 'El profesor se creó con éxito';
@@ -148,7 +135,6 @@ export const ProfessorDataForm = ({ professor }: {professor: ProfessorDetail }) 
             }
 
             showSuccess({ detail: message });
-            setInitialProfessor({ ...values });
           } catch (error) {
             const errors: string = processError({ error, showError });
             setAuthFormErrors({ errors, setFieldError });

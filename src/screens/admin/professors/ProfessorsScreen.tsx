@@ -12,6 +12,7 @@ import { ActionsBodyTemplate } from './components/columns/Actions';
 import { ActiveBodyTemplate } from './components/columns/Active';
 import { EmailBodyTemplate } from './components/columns/Email';
 import { GenderBodyTemplate, GenderRowFilterTemplate } from './components/columns/Gender';
+import { CoursesDialog } from './components/CoursesDialog';
 import { Header } from './components/Header';
 import { ProfessorDialog } from './components/ProfessorDialog';
 import { ProfessorContext } from './context/professorContext';
@@ -29,6 +30,7 @@ export const ProfessorsScreen = () => {
   } = useLazyParams(initialFiltersValue);
 
   const [ displayModal, setDisplayModal ] = useState(false);
+  const [ displayCoursesModal, setDisplayCoursesModal ] = useState(false);
   const [ professorSelected, setProfessorSelected ] = useState<Professor>();
 
   const {
@@ -48,9 +50,11 @@ export const ProfessorsScreen = () => {
         ({ data: dataSend }) => (
           <Provider value={{
             displayModal,
+            displayCoursesModal,
             lazyParams,
             professorSelected,
             setDisplayModal,
+            setDisplayCoursesModal,
             setLazyParams,
             setProfessorSelected,
           }}
@@ -127,11 +131,12 @@ export const ProfessorsScreen = () => {
                   <Column
                     body={ActionsBodyTemplate}
                     exportable={false}
-                    style={{ minWidth: '12rem' }}
+                    style={{ minWidth: '13rem' }}
                   />
                 </DataTable>
               </div>
               <ProfessorDialog />
+              <CoursesDialog />
             </div>
           </Provider>
         )
