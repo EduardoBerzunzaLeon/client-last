@@ -8,7 +8,7 @@ import { useToast } from '../../../../../hooks/useToast';
 import { useDeleteCourseMutation } from '../../../../../redux/course/course.api';
 
 export const ActionsBody = ({ course }: { course: Course }) => {
-  const [ deleteSubject, { isLoading }] = useDeleteCourseMutation();
+  const [ deleteCourse, { isLoading }] = useDeleteCourseMutation();
 
   // FIXME: Don´t destoy modal after table updated
   const { id } = course;
@@ -16,7 +16,7 @@ export const ActionsBody = ({ course }: { course: Course }) => {
 
   const accept = async () => {
     try {
-      await deleteSubject(id).unwrap();
+      await deleteCourse(id).unwrap();
       showSuccess({ detail: `La materia ${course.name} ha sido eliminada` });
     } catch (error) {
       processError({ error, showError });
@@ -48,7 +48,14 @@ export const ActionsBody = ({ course }: { course: Course }) => {
 
 export const ActionsCoursesBodyTemplate = (course: Course) => <ActionsBody course={course} />;
 
+export const ImpartedAtBodyTemplate = ({ impartedAt }: Course) => (
+  <>
+    {impartedAt.toString().slice(0, 10)}
+  </>
+);
+
 export default {
   ActionsBody,
   ActionsCoursesBodyTemplate,
+  ImpartedAtBodyTemplate,
 };

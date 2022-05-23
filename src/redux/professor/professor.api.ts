@@ -31,7 +31,7 @@ export const professorApi = tutorApi.injectEndpoints({
     }),
     getCoursesByProfessor: builder.query<ListResponse<Course>, string>({
       query: (id) => `professors/${id}/courses`,
-      providesTags: (result, error, id) => [{ type: 'Professors', id }],
+      providesTags: (result, error, id) => [{ type: 'Professors', id }, 'Courses' ],
     }),
     updateProfessor: builder.mutation<SingleResponse<Professor>, FormData>({
       query: (patch) => {

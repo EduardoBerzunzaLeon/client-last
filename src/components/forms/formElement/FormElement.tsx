@@ -7,8 +7,8 @@ import { Generic } from '../../../interfaces/generic';
 interface Props extends Generic{
     label: string,
     name: string,
-    options: any[],
-    optionLabel: string,
+    options?: any[],
+    optionLabel?: string,
     className?: string,
     element: React.ComponentType<any>
     dropdownIcon?: string,
@@ -40,6 +40,8 @@ FormElement.defaultProps = {
   dropdownIcon: 'pi pi-chevron-down',
   id: '',
   placeholder: '',
+  options: [],
+  optionLabel: '',
 };
 
 export default FormElement;

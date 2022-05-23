@@ -2,30 +2,48 @@ import { Form, Formik } from 'formik';
 import { Button } from 'primereact/button';
 import { Calendar } from 'primereact/calendar';
 import { Toast } from 'primereact/toast';
-import { useState } from 'react';
 import * as Yup from 'yup';
 import { InputTextApp } from '../../../../components/forms';
+import { FormElement } from '../../../../components/forms/formElement/FormElement';
 import { useToast } from '../../../../hooks/useToast';
+import { CreateCourseRequest } from '../../../../interfaces/api';
+import { useCreateCourseMutation } from '../../../../redux/course/course.api';
+import { processError, setSubjectFormErrors } from '../../../../utils/forms/handlerFormErrors';
 
 const initialCourse = {
   name: '',
-  impartedAt: '',
+  impartedAt: new Date(),
 };
 
-export const CourseDataForm = () => {
-  const [ date3, setDate3 ] = useState<Date | Date[] | undefined>(undefined);
-  const { toast } = useToast();
+export const CourseDataForm = ({ professorId }: { professorId?: string}) => {
+  const [ createCourse, { isLoading: isLoadingCreate }] = useCreateCourseMutation();
+
+  const { toast, showSuccess, showError } = useToast();
   return (
     <div>
       <Toast ref={toast} />
       <h4>Nuevo Curso</h4>
       <Formik
         initialValues={initialCourse}
-        onSubmit={() => { console.log('submitting'); }}
+        onSubmit={async (values, { setFieldError, resetForm }) => {
+          if (professorId) {
+            const dataSend: CreateCourseRequest = { ...values, professor: professorId };
+
+            try {
+              await createCourse(dataSend).unwrap();
+              resetForm();
+
+              showSuccess({ detail: 'Curso creado con exitó' });
+            } catch (error) {
+              const errors: string = processError({ error, showError });
+              setSubjectFormErrors({ errors, setFieldError });
+            }
+          }
+        }}
         validationSchema={Yup.object({
           name: Yup.string()
             .required('Requerido'),
-          impartedAt: Yup.string()
+          impartedAt: Yup.date()
             .required('Requerido'),
         })}
       >
@@ -42,8 +60,14 @@ export const CourseDataForm = () => {
             </div>
 
             <div className="field pt-2 mt-4">
-              <label htmlFor="impartedAt">Impartido el</label>
-              <Calendar id="impartedAt" value={date3} onChange={(e) => setDate3(e.value)} showIcon className="w-full" />
+              <FormElement
+                element={Calendar}
+                label="Impartido el*"
+                name="impartedAt"
+                id="impartedAt"
+                showIcon
+                className="w-full"
+              />
             </div>
 
             <div className="flex flex-column">
@@ -51,6 +75,7 @@ export const CourseDataForm = () => {
                 type="submit"
                 label="Agregar Curso"
                 className="mt-2 flex align-items-center justify-content-center"
+                loading={isLoadingCreate}
                 disabled={!isValid || isSubmitting || !dirty}
               />
             </div>
@@ -60,6 +85,10 @@ export const CourseDataForm = () => {
 
     </div>
   );
+};
+
+CourseDataForm.defaultProps = {
+  professorId: '',
 };
 
 export default CourseDataForm;

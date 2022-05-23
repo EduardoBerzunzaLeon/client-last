@@ -1,13 +1,11 @@
 import { tutorApi } from '../services/tutor.api';
 import {
-  Paginator,
   ListResponse,
   UpdateCourseRequest,
   SingleResponse,
   CreateCourseRequest,
   CourseProfessor,
 } from '../../interfaces/api';
-import { transformQueryWithPaginator } from '../services/paginator.service';
 import { invalidatesList, providesList } from '../services/response.service';
 
 const providesListCourse = providesList('Courses');
@@ -19,8 +17,8 @@ export const CourseApi = tutorApi.injectEndpoints({
       query: (id) => `courses/${id}`,
       providesTags: (result, error, id) => [{ type: 'Courses', id }],
     }),
-    getCourses: builder.query<ListResponse<CourseProfessor>, Paginator>({
-      query: transformQueryWithPaginator('courses'),
+    getCourses: builder.query<ListResponse<CourseProfessor>, string>({
+      query: (path) => path,
       providesTags: providesListCourse,
     }),
     updateCourse: builder.mutation<SingleResponse<CourseProfessor>, UpdateCourseRequest>({
@@ -37,14 +35,14 @@ export const CourseApi = tutorApi.injectEndpoints({
         method: 'POST',
         body: post,
       }),
-      invalidatesTags: invalidatesListCourses,
+      invalidatesTags: [ 'Courses' ],
     }),
     deleteCourse: builder.mutation<SingleResponse<null>, string>({
       query: (id) => ({
         url: `courses/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: invalidatesListCourses,
+      invalidatesTags: [ 'Courses' ],
     }),
   }),
 });
