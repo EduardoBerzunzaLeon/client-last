@@ -25,7 +25,7 @@ export const ActionsBody = ({ professor }: { professor: Professor }) => {
         tooltip="Ver Tutor"
         tooltipOptions={{ position: 'top' }}
         className="p-button-sm p-button-raised p-button-primary mr-1"
-        onClick={() => navigate(`/admin/users/${id}`)}
+        onClick={() => navigate(`/admin/professors/${id}`)}
       />
       <Button
         icon="pi pi-pencil"

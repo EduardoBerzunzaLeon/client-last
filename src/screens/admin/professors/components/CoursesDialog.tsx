@@ -49,8 +49,6 @@ export const CoursesDialog = () => {
     data, isError, error, isFetching,
   } = useGetCoursesQuery(transformQueryWithPaginator('courses')(paginatorValues), { skip: !professorSelected });
 
-  console.log(data);
-
   useEffect(() => {
     (!isFetching && data)
       && setIsLoading(false);
@@ -58,10 +56,6 @@ export const CoursesDialog = () => {
     (!professorSelected)
       && setIsLoading(true);
   }, [ isFetching, professorSelected ]);
-
-  useEffect(() => {
-    console.log('changeDATA');
-  }, [ data ]);
 
   useEffect(() => {
     if (professorSelected) {
@@ -108,6 +102,7 @@ export const CoursesDialog = () => {
             {({ data: dataSend, total }) => (
               <DataTable
                 value={dataSend}
+                lazy
                 filterDisplay="row"
                 responsiveLayout="scroll"
                 dataKey="id"
@@ -137,9 +132,9 @@ export const CoursesDialog = () => {
                   header="Impartido el"
                   filterField="impartedAt"
                   dataType="date"
-                  filterPlaceholder="Buscar por nombre"
                   body={ImpartedAtBodyTemplate}
                   filter
+                  showFilterMenu={false}
                   filterElement={ImpartedAtRowFilterTemplate}
                 />
                 <Column
