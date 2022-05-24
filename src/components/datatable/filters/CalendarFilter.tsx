@@ -1,7 +1,7 @@
 import { Calendar } from 'primereact/calendar';
 import { ColumnFilterElementTemplateOptions } from 'primereact/column';
 
-export const ImpartedAtRowFilterTemplate = ({
+export const CalendarFilter = ({
   value,
   filterApplyCallback,
   filterCallback,
@@ -21,4 +21,4 @@ export const ImpartedAtRowFilterTemplate = ({
   />
 );
 
-export default { ImpartedAtRowFilterTemplate };
+export default { CalendarFilter };

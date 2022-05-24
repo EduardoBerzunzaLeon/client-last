@@ -3,9 +3,9 @@ import React, { useContext } from 'react';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 
-import { initialFiltersValue } from '../assets/assets';
-import { ProfessorContext } from '../context/professorContext';
-import { ExcelProfessorButton } from './ExcelProfessorButton';
+import { initialFiltersValue } from '../../assets/assets';
+import { ProfessorContext } from '../../context/professorContext';
+import { ExcelButtonProfessors } from '../ExcelButtonProfessors';
 
 export const Header = () => {
   const { lazyParams, setLazyParams, setDisplayModal } = useContext(ProfessorContext);
@@ -45,7 +45,7 @@ export const Header = () => {
           onClick={() => setDisplayModal(true)}
         />
 
-        <ExcelProfessorButton />
+        <ExcelButtonProfessors />
       </div>
       <span className="p-input-icon-left m-2 overflow-hidden">
         <i className="pi pi-search" />

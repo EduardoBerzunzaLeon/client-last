@@ -22,8 +22,8 @@ export const subjectApi = tutorApi.injectEndpoints({
       query: (id) => `subjects/${id}`,
       providesTags: (result, error, id) => [{ type: 'Subjects', id }],
     }),
-    getSubjects: builder.query<ListResponse<Subject>, Paginator>({
-      query: transformQueryWithPaginator('subjects'),
+    getSubjects: builder.query<ListResponse<Subject>, string>({
+      query: (path) => path,
       providesTags: providesListSubject,
     }),
     getConsecutiveSubjects: builder.query<ListResponse<RequiredSubjects>, Paginator>({

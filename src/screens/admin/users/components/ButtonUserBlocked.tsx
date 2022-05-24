@@ -12,7 +12,7 @@ interface Props {
     isUserLogged: boolean;
 }
 
-export const ButtonBlocked = ({ user, isUserLogged }: Props) => {
+export const ButtonUserBlocked = ({ user, isUserLogged }: Props) => {
   const [ updateBlocked, { isLoading }] = useUpdateBlockedUserAdminMutation();
 
   const { toast, showError, showSuccess } = useToast();
@@ -40,4 +40,4 @@ export const ButtonBlocked = ({ user, isUserLogged }: Props) => {
   );
 };
 
-export default ButtonBlocked;
+export default ButtonUserBlocked;

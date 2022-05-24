@@ -24,6 +24,8 @@ export const useFile = ({ url, name, type = 'image/jpeg' }: Props) => {
   const [ objectUrl, setObjectUrl ] = useState<string>();
   const mounted = useRef(false);
 
+  console.log(objectUrl);
+
   useEffect(() => {
     mounted.current = true;
 
@@ -43,13 +45,14 @@ export const useFile = ({ url, name, type = 'image/jpeg' }: Props) => {
       }
     };
     getFile();
-  }, [ url ]);
+  }, [ name, type, url ]);
 
   useEffect(() => () => {
     mounted.current = false;
     if (objectUrl) {
       URL.revokeObjectURL(objectUrl);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {

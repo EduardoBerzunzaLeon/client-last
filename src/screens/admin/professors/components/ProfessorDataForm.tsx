@@ -19,8 +19,8 @@ import { useCreateProfessorMutation, useUpdateProfessorMutation } from '../../..
 import { useGetConsecutiveSubjectsQuery } from '../../../../redux/subject/subject.api';
 import { useDropdownFilter } from '../../../../hooks/useDropdownFilter';
 import { FormElement } from '../../../../components/forms/formElement/FormElement';
-import { convertAdditionalSubjects } from '../assets/convertAdittionalSubjects';
 import { ToggleButtonApp } from '../../../../components/forms/toggleButton/ToggleButtonApp';
+import { convertAdditionalSubjects } from '../../../../utils/convertAdditionalSubjects';
 
 const SkeletonDropdown = ({ even }: VirtualScrollerLoadingTemplateOptions) => (
   <div className="flex align-items-center p-2" style={{ height: '38px' }}>

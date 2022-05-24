@@ -3,14 +3,15 @@ import { useState } from 'react';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 
+import {
+  ActiveBody, GenderBody, GenderFilter, TriStateFilter,
+} from '../../../components/datatable';
 import { ActionsBodyTemplate } from './components/columns/Actions';
-import { ActiveBodyTemplate } from './components/columns/Active';
 import { EmailBodyTemplate } from './components/columns/Email';
-import { GenderBodyTemplate, GenderRowFilterTemplate } from './components/columns/Gender';
 import { Header } from './components/Header';
+import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
 import { initialFiltersValue } from './assets/assets';
 import { SpinnerRTK } from '../../../components/spinnerRTK/SpinnerRTK';
-import { TriStateFilterTemplate } from '../../../components/datatable/TriStateFilterTemplate';
 import { User } from '../../../interfaces/api';
 import { UserContext } from './context/userContext';
 import { UserDialog } from './components/UserDialog';
@@ -18,7 +19,6 @@ import { UserDialog } from './components/UserDialog';
 import { useAuth } from '../../../hooks/useAuth';
 import { useGetUsersQuery } from '../../../redux/user/user.api';
 import { useLazyParams } from '../../../hooks/useLazyParams';
-import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
 
 const { Provider } = UserContext;
 
@@ -29,8 +29,8 @@ export const UsersScreen = () => {
     onPage,
     onSort,
     onFilter,
-    paginatorValues,
-  } = useLazyParams(initialFiltersValue);
+    paginatorURL,
+  } = useLazyParams(initialFiltersValue, 'users');
 
   const [ displayModal, setDisplayModal ] = useState(false);
   const [ userSelected, setUserSelected ] = useState<User>();
@@ -38,7 +38,7 @@ export const UsersScreen = () => {
 
   const {
     data, isError, error, isLoading, isFetching,
-  } = useGetUsersQuery(paginatorValues);
+  } = useGetUsersQuery(paginatorURL);
 
   return (
     <SpinnerRTK
@@ -117,8 +117,8 @@ export const UsersScreen = () => {
                     header="Sexo"
                     filter
                     filterPlaceholder="Buscar por sexo"
-                    body={GenderBodyTemplate}
-                    filterElement={GenderRowFilterTemplate}
+                    body={GenderBody}
+                    filterElement={GenderFilter}
                     showFilterMenu={false}
                   />
                   <Column
@@ -126,9 +126,9 @@ export const UsersScreen = () => {
                     header="Activo"
                     dataType="boolean"
                     style={{ minWidth: '6rem' }}
-                    body={ActiveBodyTemplate}
+                    body={ActiveBody}
                     filter
-                    filterElement={TriStateFilterTemplate}
+                    filterElement={TriStateFilter}
                   />
                   <Column
                     body={ActionsBodyTemplate}

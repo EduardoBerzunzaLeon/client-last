@@ -10,7 +10,7 @@ import { Toast } from 'primereact/toast';
 import { VirtualScrollerLoadingTemplateOptions } from 'primereact/virtualscroller';
 import * as Yup from 'yup';
 
-import { convertAdditionalSubjects } from '../assets/convertAdditionalSubjects';
+import { convertAdditionalSubjects } from '../../../../utils/convertAdditionalSubjects';
 import { FormElement } from '../../../../components/forms/formElement/FormElement';
 import { InputTextApp } from '../../../../components/forms';
 import { processError, setSubjectFormErrors } from '../../../../utils/forms/handlerFormErrors';

@@ -1,7 +1,7 @@
 import { ColumnFilterElementTemplateOptions } from 'primereact/column';
 import { TriStateCheckbox } from 'primereact/tristatecheckbox';
 
-export const TriStateFilterTemplate = ({
+export const TriStateFilter = ({
   value,
   filterApplyCallback,
 }: ColumnFilterElementTemplateOptions) => (
@@ -11,4 +11,4 @@ export const TriStateFilterTemplate = ({
   />
 );
 
-export default TriStateFilterTemplate;
+export default TriStateFilter;

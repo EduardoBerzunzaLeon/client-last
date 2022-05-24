@@ -1,9 +1,11 @@
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
-import { Professor } from '../../../../interfaces/api';
-import { useUpdateActiveMutation } from '../../../../redux/professor/professor.api';
-import { useToast } from '../../../../hooks/useToast';
+
 import { processError } from '../../../../utils/forms/handlerFormErrors';
+import { Professor } from '../../../../interfaces/api';
+
+import { useToast } from '../../../../hooks/useToast';
+import { useUpdateActiveMutation } from '../../../../redux/professor/professor.api';
 
 interface Props {
     professor: Professor;

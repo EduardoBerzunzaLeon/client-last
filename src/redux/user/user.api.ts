@@ -1,9 +1,8 @@
 import { invalidatesList, providesList } from '../services/response.service';
 
 import {
-  Paginator, User, UserSingleResponse, ListResponse,
+  User, UserSingleResponse, ListResponse,
 } from '../../interfaces/api';
-import { transformQueryWithPaginator } from '../services/paginator.service';
 import { tutorApi } from '../services/tutor.api';
 import {
   UpdatePasswordAdminRequest,
@@ -20,8 +19,8 @@ export const userApi = tutorApi.injectEndpoints({
       query: (id) => `users/${id}`,
       providesTags: (result, error, id) => [{ type: 'Users', id }],
     }),
-    getUsers: builder.query<ListResponse<User>, Paginator>({
-      query: transformQueryWithPaginator('users'),
+    getUsers: builder.query<ListResponse<User>, string>({
+      query: (path) => path,
       providesTags: providesListUser,
     }),
     updateUser: builder.mutation<UserSingleResponse, UpdateUserRequest>({

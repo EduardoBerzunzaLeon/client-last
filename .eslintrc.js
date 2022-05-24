@@ -34,7 +34,7 @@ module.exports = {
     ecmaVersion: 13,
     sourceType: 'module',
   },
-  plugins: [ 'react', '@typescript-eslint', 'jest' ],
+  plugins: [ 'react', 'react-hooks', '@typescript-eslint', 'jest' ],
   rules: {
     'react/jsx-filename-extension': [
       RULES.ERROR,
@@ -81,6 +81,8 @@ module.exports = {
     ],
     'jsx-a11y/label-has-associated-control': RULES.OFF,
     'react/jsx-props-no-spreading': RULES.OFF,
+    'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
+    'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
     'import/no-extraneous-dependencies': [ RULES.ERROR, { devDependencies: true }],
   },
 };

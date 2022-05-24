@@ -1,14 +1,12 @@
 import { ColumnFilterElementTemplateOptions } from 'primereact/column';
 import { Dropdown } from 'primereact/dropdown';
 
-import { Professor } from '../../../../../interfaces/api';
-
 const genders = [
   { label: 'Masculino', value: 'M' },
   { label: 'Femenino', value: 'F' },
 ];
 
-export const GenderRowFilterTemplate = ({
+export const GenderFilter = ({
   value,
   filterApplyCallback,
 }: ColumnFilterElementTemplateOptions) => (
@@ -24,6 +22,4 @@ export const GenderRowFilterTemplate = ({
   />
 );
 
-export const GenderBodyTemplate = ({ gender }: Professor) => <span>{gender === 'M' ? 'Masculino' : 'Femenino'}</span>;
-
-export default { GenderRowFilterTemplate, GenderBodyTemplate };
+export default GenderFilter;

@@ -8,13 +8,12 @@ import { CoreBodyTemplate } from './components/columns/Core';
 import { DeprecatedBodyTemplate } from './components/columns/Deprecated';
 import { Header } from './components/Header';
 import { initialFiltersValue } from './assets/assets';
-import { IntegerFilterTemplate } from '../../../components/datatable/IntegerFilterTemplate';
+import { IntegerFilter, TriStateFilter } from '../../../components/datatable';
 import { SpinnerRTK } from '../../../components/spinnerRTK/SpinnerRTK';
 import { Subject } from '../../../interfaces/api';
 import { SubjectContext } from './context/subjectContext';
 import { SubjectDetailDialog } from './components/SubjectDetailDialog';
 import { SubjectDialog } from './components/SubjectDialog';
-import { TriStateFilterTemplate } from '../../../components/datatable/TriStateFilterTemplate';
 
 import { useGetSubjectsQuery } from '../../../redux/subject/subject.api';
 import { useLazyParams } from '../../../hooks/useLazyParams';
@@ -29,8 +28,8 @@ export const SubjectsScreen = () => {
     onPage,
     onSort,
     onFilter,
-    paginatorValues,
-  } = useLazyParams(initialFiltersValue);
+    paginatorURL,
+  } = useLazyParams(initialFiltersValue, 'subjects');
 
   const [ displayModal, setDisplayModal ] = useState(false);
   const [ isOpenDetailModal, setIsOpenDetailModal ] = useState(false);
@@ -38,7 +37,7 @@ export const SubjectsScreen = () => {
 
   const {
     data, isError, error, isLoading, isFetching,
-  } = useGetSubjectsQuery(paginatorValues);
+  } = useGetSubjectsQuery(paginatorURL);
 
   return (
     <SpinnerRTK
@@ -111,7 +110,7 @@ export const SubjectsScreen = () => {
                         sortable
                         filter
                         showFilterMenu={false}
-                        filterElement={IntegerFilterTemplate}
+                        filterElement={IntegerFilter}
                         filterPlaceholder="Buscar por semestre"
                       />
                       <Column
@@ -121,7 +120,7 @@ export const SubjectsScreen = () => {
                         sortable
                         filter
                         showFilterMenu={false}
-                        filterElement={IntegerFilterTemplate}
+                        filterElement={IntegerFilter}
                         filterPlaceholder="Buscar por creditos"
                       />
                       <Column
@@ -131,7 +130,7 @@ export const SubjectsScreen = () => {
                         style={{ minWidth: '6rem' }}
                         body={DeprecatedBodyTemplate}
                         filter
-                        filterElement={TriStateFilterTemplate}
+                        filterElement={TriStateFilter}
                       />
                       <Column
                         body={ActionsBodyTemplate}

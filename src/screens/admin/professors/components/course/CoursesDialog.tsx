@@ -6,15 +6,14 @@ import { Dialog } from 'primereact/dialog';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { addLocale, locale } from 'primereact/api';
-import { ProfessorContext } from '../context/professorContext';
-import { SpinnerRTK } from '../../../../components/spinnerRTK/SpinnerRTK';
-import { ActionsCoursesBodyTemplate, ImpartedAtBodyTemplate } from './columns/ActionsCourses';
+import { ProfessorContext } from '../../context/professorContext';
+import { SpinnerRTK } from '../../../../../components/spinnerRTK/SpinnerRTK';
+import { ActionsCoursesBodyTemplate, ImpartedAtBodyTemplate } from '../columns/ActionsCourses';
 import { CourseDataForm } from './CourseDataForm';
-import { useLazyParams } from '../../../../hooks/useLazyParams';
-import { initialFiltersCoursesValue } from '../assets/assets';
-import { useGetCoursesQuery } from '../../../../redux/course/course.api';
-import { ImpartedAtRowFilterTemplate } from './columns/ImpartedAt';
-import { transformQueryWithPaginator } from '../../../../redux/services/paginator.service';
+import { useLazyParams } from '../../../../../hooks/useLazyParams';
+import { initialFiltersCoursesValue } from '../../assets/assets';
+import { useGetCoursesQuery } from '../../../../../redux/course/course.api';
+import { CalendarFilter } from '../../../../../components/datatable/filters/CalendarFilter';
 
 addLocale('es', {
   firstDayOfWeek: 1,
@@ -42,12 +41,12 @@ export const CoursesDialog = () => {
     onPage,
     onSort,
     onFilter,
-    paginatorValues,
-  } = useLazyParams(initialFiltersCoursesValue(professorSelected?.id));
+    paginatorURL,
+  } = useLazyParams(initialFiltersCoursesValue, 'courses');
 
   const {
     data, isError, error, isFetching,
-  } = useGetCoursesQuery(transformQueryWithPaginator('courses')(paginatorValues), { skip: !professorSelected });
+  } = useGetCoursesQuery(paginatorURL, { skip: !professorSelected });
 
   useEffect(() => {
     (!isFetching && data)
@@ -55,7 +54,7 @@ export const CoursesDialog = () => {
 
     (!professorSelected)
       && setIsLoading(true);
-  }, [ isFetching, professorSelected ]);
+  }, [ data, isFetching, professorSelected ]);
 
   useEffect(() => {
     if (professorSelected) {
@@ -70,7 +69,7 @@ export const CoursesDialog = () => {
         },
       }));
     }
-  }, [ professorSelected ]);
+  }, [ professorSelected, setLazyParams ]);
 
   return (
     <Dialog
@@ -135,7 +134,7 @@ export const CoursesDialog = () => {
                   body={ImpartedAtBodyTemplate}
                   filter
                   showFilterMenu={false}
-                  filterElement={ImpartedAtRowFilterTemplate}
+                  filterElement={CalendarFilter}
                 />
                 <Column
                   body={ActionsCoursesBodyTemplate}

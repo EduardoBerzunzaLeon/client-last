@@ -1,5 +1,5 @@
-import { RequiredSubjects, SubjectUnion } from '../../../../interfaces/api';
-import { ucWords } from '../../../../utils/stringUtils';
+import { RequiredSubjects, SubjectUnion } from '../interfaces/api';
+import { ucWords } from './stringUtils';
 
 export const convertAdditionalSubjects = (requiredSubjects: SubjectUnion[]): RequiredSubjects[] => {
   const subjects = requiredSubjects.map((subject) => ({

@@ -10,10 +10,10 @@ export const initialFiltersValue: DataTableFilterMeta = {
   active: { value: null, matchMode: FilterMatchMode.EQUALS },
 };
 
-export const initialFiltersCoursesValue = (professorId?: string): DataTableFilterMeta => ({
+export const initialFiltersCoursesValue: DataTableFilterMeta = {
   name: { value: null, matchMode: FilterMatchMode.CONTAINS },
   impartedAt: { value: null, matchMode: FilterMatchMode.BETWEEN },
-  professor: { value: professorId, matchMode: FilterMatchMode.EQUALS },
-});
+  professor: { value: null, matchMode: FilterMatchMode.EQUALS },
+};
 
 export default { initialFiltersValue, initialFiltersCoursesValue };

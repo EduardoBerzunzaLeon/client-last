@@ -1,7 +1,7 @@
 import { ColumnFilterElementTemplateOptions } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
 
-export const IntegerFilterTemplate = ({
+export const IntegerFilter = ({
   value,
   filterApplyCallback,
 }: ColumnFilterElementTemplateOptions) => (
@@ -16,4 +16,4 @@ export const IntegerFilterTemplate = ({
   />
 );
 
-export default { IntegerFilterTemplate };
+export default { IntegerFilter };

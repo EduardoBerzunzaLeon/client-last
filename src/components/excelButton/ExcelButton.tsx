@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react';
-
 import { Button } from 'primereact/button';
+import { useEffect, useState } from 'react';
+import { exportExcel } from '../../utils/exports/exportExcel';
 
-import { exportExcel } from '../../../../utils/exports/exportExcel';
+interface Props {
+    hookRTK: any;
+    headers: any[][],
+    label?: string,
+}
 
-import { useGetSubjectsForExcelQuery } from '../../../../redux/subject/subject.api';
-
-const headers = [[ 'ID', 'Nombre', 'Semestre', 'Creado el', 'Deprecado', 'Materias Requeridas', 'Materias Correlativas', 'Creditos', 'Horas Practicas', 'Horas Teóricas', 'Horas Totales', ' Núcleo Academico' ]];
-
-export const ExcelButton = () => {
+export const ExcelButton = ({ hookRTK, label, headers }: Props) => {
   const [ skip, setSkip ] = useState(true);
   const [ isLoading, setIsLoading ] = useState(false);
-  const { data } = useGetSubjectsForExcelQuery(null, { skip });
+  const { data } = hookRTK(null, { skip });
 
   useEffect(() => {
     if (data && isLoading) {
@@ -20,7 +20,7 @@ export const ExcelButton = () => {
         setIsLoading(false);
       }
     }
-  }, [ data, isLoading ]);
+  }, [ data, isLoading, headers ]);
 
   const handleClick = () => {
     if (skip) {
@@ -33,12 +33,16 @@ export const ExcelButton = () => {
     <Button
       type="button"
       icon="pi pi-file-excel"
-      label="Exportar Excel"
+      label={label}
       className="p-button p-button-success m-2"
       loading={isLoading}
       onClick={handleClick}
     />
   );
+};
+
+ExcelButton.defaultProps = {
+  label: 'Exportar Excel',
 };
 
 export default ExcelButton;

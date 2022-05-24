@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import { Button } from 'primereact/button';
 
-import { ButtonBlocked } from '../ButtonBlocked';
+import { ButtonUserBlocked } from '../ButtonUserBlocked';
 import { User } from '../../../../../interfaces/api';
 import { UserContext } from '../../context/userContext';
 
@@ -25,7 +25,7 @@ export const ActionsBody = ({ user }: {user: User}) => {
           setDisplayModal(true);
         }}
       />
-      <ButtonBlocked user={user} isUserLogged={isUserLogged} />
+      <ButtonUserBlocked user={user} isUserLogged={isUserLogged} />
     </>
   );
 };

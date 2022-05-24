@@ -1,21 +1,23 @@
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import { useState } from 'react';
-import { TriStateFilterTemplate } from '../../../components/datatable/TriStateFilterTemplate';
-import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
-import { SpinnerRTK } from '../../../components/spinnerRTK/SpinnerRTK';
-import { useLazyParams } from '../../../hooks/useLazyParams';
-import { Professor } from '../../../interfaces/api';
-import { useGetProfessorsQuery } from '../../../redux/professor/professor.api';
-import { initialFiltersValue } from './assets/assets';
+
+import {
+  ActiveBody, GenderBody, GenderFilter, TriStateFilter,
+} from '../../../components/datatable';
 import { ActionsBodyTemplate } from './components/columns/Actions';
-import { ActiveBodyTemplate } from './components/columns/Active';
+import { CoursesDialog } from './components/course/CoursesDialog';
 import { EmailBodyTemplate } from './components/columns/Email';
-import { GenderBodyTemplate, GenderRowFilterTemplate } from './components/columns/Gender';
-import { CoursesDialog } from './components/CoursesDialog';
-import { Header } from './components/Header';
-import { ProfessorDialog } from './components/ProfessorDialog';
+import { Header } from './components/columns/Header';
+import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
+import { initialFiltersValue } from './assets/assets';
+import { Professor } from '../../../interfaces/api';
 import { ProfessorContext } from './context/professorContext';
+import { ProfessorDialog } from './components/ProfessorDialog';
+import { SpinnerRTK } from '../../../components/spinnerRTK/SpinnerRTK';
+
+import { useGetProfessorsQuery } from '../../../redux/professor/professor.api';
+import { useLazyParams } from '../../../hooks/useLazyParams';
 
 const { Provider } = ProfessorContext;
 
@@ -26,8 +28,8 @@ export const ProfessorsScreen = () => {
     onPage,
     onSort,
     onFilter,
-    paginatorValues,
-  } = useLazyParams(initialFiltersValue);
+    paginatorURL,
+  } = useLazyParams(initialFiltersValue, 'professors');
 
   const [ displayModal, setDisplayModal ] = useState(false);
   const [ displayCoursesModal, setDisplayCoursesModal ] = useState(false);
@@ -35,7 +37,7 @@ export const ProfessorsScreen = () => {
 
   const {
     data, isError, error, isLoading, isFetching,
-  } = useGetProfessorsQuery(paginatorValues);
+  } = useGetProfessorsQuery(paginatorURL);
 
   return (
     <SpinnerRTK
@@ -64,69 +66,69 @@ export const ProfessorsScreen = () => {
               <div className="card">
                 <DataTable
                   value={dataSend}
-                  lazy
-                  filterDisplay="row"
-                  header={<Header />}
-                  responsiveLayout="scroll"
-                  globalFilterFields={[ 'name.first', 'name.last', 'email', 'gender' ]}
                   dataKey="id"
-                  paginator
+                  filterDisplay="row"
+                  filters={lazyParams.filters}
                   first={lazyParams.first}
-                  rows={lazyParams.rows}
-                  totalRecords={7}
+                  globalFilterFields={[ 'name.first', 'name.last', 'email', 'gender' ]}
+                  header={<Header />}
+                  lazy
+                  loading={isFetching}
+                  onFilter={onFilter}
                   onPage={onPage}
                   onSort={onSort}
+                  paginator
+                  responsiveLayout="scroll"
+                  rows={lazyParams.rows}
                   sortField={lazyParams.sortField}
                   sortOrder={lazyParams.sortOrder}
-                  onFilter={onFilter}
-                  filters={lazyParams.filters}
-                  loading={isFetching}
+                  totalRecords={7}
                 >
                   <Column
-                    header="Nombre"
                     field="name.first"
-                    sortable
-                    showFilterMenu={false}
                     filter
                     filterField="name.first"
                     filterPlaceholder="Buscar por nombre"
+                    header="Nombre"
+                    showFilterMenu={false}
+                    sortable
                   />
                   <Column
-                    header="Apellido"
-                    filterField="name.last"
                     field="name.last"
-                    sortable
                     filter
-                    showFilterMenu={false}
+                    filterField="name.last"
                     filterPlaceholder="Buscar por apellido"
-                  />
-                  <Column
-                    header="Email"
-                    field="email"
-                    filterField="email"
-                    body={EmailBodyTemplate}
+                    header="Apellido"
+                    showFilterMenu={false}
                     sortable
+                  />
+                  <Column
+                    body={EmailBodyTemplate}
+                    field="email"
                     filter
-                    showFilterMenu={false}
+                    filterField="email"
                     filterPlaceholder="Buscar por correo"
+                    header="Email"
+                    showFilterMenu={false}
+                    sortable
                   />
                   <Column
+                    body={GenderBody}
                     field="gender"
-                    header="Sexo"
                     filter
+                    filterElement={GenderFilter}
                     filterPlaceholder="Buscar por sexo"
-                    body={GenderBodyTemplate}
-                    filterElement={GenderRowFilterTemplate}
+                    header="Sexo"
                     showFilterMenu={false}
                   />
                   <Column
-                    field="active"
-                    header="Activo"
+                    body={ActiveBody}
                     dataType="boolean"
-                    style={{ minWidth: '6rem' }}
-                    body={ActiveBodyTemplate}
+                    field="active"
                     filter
-                    filterElement={TriStateFilterTemplate}
+                    filterElement={TriStateFilter}
+                    header="Activo"
+                    style={{ minWidth: '6rem' }}
                   />
                   <Column
                     body={ActionsBodyTemplate}
