@@ -1,3 +1,4 @@
+import { DataTablePFSEvent } from 'primereact/datatable';
 import React, { createContext } from 'react';
 
 import { Professor } from '../../../../interfaces/api';
@@ -5,7 +6,7 @@ import { Professor } from '../../../../interfaces/api';
 interface ProfessorContextProps {
     displayCoursesModal: boolean,
     displayModal: boolean,
-    lazyParams: any,
+    lazyParams: DataTablePFSEvent,
     professorSelected: Professor | undefined,
     setDisplayCoursesModal: (value: React.SetStateAction<boolean>) => void,
     setDisplayModal: (value: React.SetStateAction<boolean>) => void,

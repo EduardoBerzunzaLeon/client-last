@@ -22,6 +22,7 @@ const getFileFromUrl = async (url: string, name: string, defaultType = 'image/jp
 export const useFile = ({ url, name, type = 'image/jpeg' }: Props) => {
   const [ file, setFile ] = useState<PrimeFile>();
   const [ objectUrl, setObjectUrl ] = useState<string>();
+  const [ isLoaded, setIsLoaded ] = useState<boolean>(false);
 
   useEffect(() => {
     const getFile = async () => {
@@ -39,15 +40,17 @@ export const useFile = ({ url, name, type = 'image/jpeg' }: Props) => {
     getFile();
   }, [ name, type, url ]);
 
-  useEffect(() => () => {
-    if (objectUrl) {
+  useEffect(() => {
+    if (isLoaded && objectUrl) {
       URL.revokeObjectURL(objectUrl);
     }
-  }, [ objectUrl ]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ isLoaded ]);
 
   return {
     file,
     setFile,
+    setIsLoaded,
   };
 };
 

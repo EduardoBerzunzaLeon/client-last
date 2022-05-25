@@ -1,5 +1,6 @@
-import { DataTableFilterMeta } from 'primereact/datatable';
+// import { DataTableFilterMeta } from 'primereact/datatable';
 import { FilterMatchMode } from 'primereact/api';
+import { DataTableFilterMeta } from 'primereact/datatable';
 
 export const initialFiltersValue: DataTableFilterMeta = {
   global: { value: '', matchMode: FilterMatchMode.CONTAINS },

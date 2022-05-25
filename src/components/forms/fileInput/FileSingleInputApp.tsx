@@ -46,7 +46,7 @@ export const FileSingleInputApp = ({
   const fileUploadRef = useRef<any>(null);
   const isControlled = useRef(!!onChange);
 
-  const { file } = useFile({
+  const { file, setIsLoaded } = useFile({
     url: initialValue,
     name: 'imagen.png',
   });
@@ -65,6 +65,8 @@ export const FileSingleInputApp = ({
     if (isControlled) {
       onChange!(fileUploadRef.current.files[0]);
     }
+
+    setIsLoaded(true);
   };
 
   const onTemplateUpload = async (e: FileUploadHandlerParam) => {

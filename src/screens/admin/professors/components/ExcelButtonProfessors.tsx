@@ -8,6 +8,7 @@ export const ExcelButtonProfessors = () => (
   <ExcelButton
     hookRTK={useGetProfessorsForExcelQuery}
     headers={headers}
+    fileName="maestros"
   />
 );
 

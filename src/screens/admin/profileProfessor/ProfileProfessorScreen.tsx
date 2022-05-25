@@ -1,17 +1,16 @@
-import { useParams } from 'react-router-dom';
-import { skipToken } from '@reduxjs/toolkit/dist/query';
 import { Card } from 'primereact/card';
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
-import { FilterMatchMode } from 'primereact/api';
-import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
-import { useGetProfessorQuery } from '../../../redux/professor/professor.api';
-import { SpinnerRTK } from '../../../components/spinnerRTK/SpinnerRTK';
-import { SkeletonImage, Skeleton } from '../../../components/skeleton';
-import { Divider } from '../../../components/divider/Divider';
+import { skipToken } from '@reduxjs/toolkit/dist/query';
+import { useParams } from 'react-router-dom';
+
 import { Badge } from '../../../components/badge/Badge';
-import { SubjectsList } from '../subjects/components/SubjectsList';
-import { ImpartedAtBodyTemplate } from '../professors/components/columns/ActionsCourses';
+import { Divider } from '../../../components/divider/Divider';
+import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
+import { SkeletonImage, Skeleton } from '../../../components/skeleton';
+import { SpinnerRTK } from '../../../components/spinnerRTK/SpinnerRTK';
+import { SubjectsList } from '../../../components/subject/SubjectsList';
+
+import { useGetProfessorQuery } from '../../../redux/professor/professor.api';
+import CoursesTable from './components/CoursesTable';
 
 export const ProfileProfessorScreen = () => {
   const { id } = useParams();
@@ -93,39 +92,7 @@ export const ProfileProfessorScreen = () => {
             </div>
 
             <div className="col-12 md:col-4">
-              <Card title="Cursos">
-                <DataTable
-                  value={dataSend.courses}
-                  responsiveLayout="scroll"
-                  paginator
-                  sortMode="multiple"
-                  rows={5}
-                  filters={{
-                    name: { value: null, matchMode: FilterMatchMode.CONTAINS },
-                    impartedAt: { value: null, matchMode: FilterMatchMode.CONTAINS },
-                  }}
-                  filterDisplay="row"
-                  emptyMessage="No se encontraron cursos"
-                >
-                  <Column
-                    field="name"
-                    header="Curso"
-                    sortable
-                    filter
-                    showFilterMenu={false}
-                    filterPlaceholder="Buscar por nombre"
-                  />
-                  <Column
-                    field="impartedAt"
-                    header="Impartido el"
-                    body={ImpartedAtBodyTemplate}
-                    sortable
-                    filter
-                    showFilterMenu={false}
-                    filterPlaceholder="Buscar por Fecha"
-                  />
-                </DataTable>
-              </Card>
+              <CoursesTable courses={dataSend.courses} />
             </div>
 
           </div>

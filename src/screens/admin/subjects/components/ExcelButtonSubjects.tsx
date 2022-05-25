@@ -8,6 +8,7 @@ export const ExcelButtonSubjects = () => (
   <ExcelButton
     hookRTK={useGetSubjectsForExcelQuery}
     headers={headers}
+    fileName="materias"
   />
 );
 

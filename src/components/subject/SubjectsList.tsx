@@ -1,8 +1,8 @@
-import { Badge } from '../../../../components/badge/Badge';
-import { Divider } from '../../../../components/divider/Divider';
-import { SpanDetail } from '../../../../components/spanDetail/SpanDetail';
-import { SubjectUnion } from '../../../../interfaces/api';
-import { ucWords } from '../../../../utils/stringUtils';
+import { Badge } from '../badge/Badge';
+import { Divider } from '../divider/Divider';
+import { SpanDetail } from '../spanDetail/SpanDetail';
+import { SubjectUnion } from '../../interfaces/api';
+import { ucWords } from '../../utils/stringUtils';
 
 interface Props {
     subjects: SubjectUnion[],

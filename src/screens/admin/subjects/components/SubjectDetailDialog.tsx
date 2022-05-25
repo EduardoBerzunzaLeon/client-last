@@ -8,7 +8,7 @@ import { useGetSubjectQuery } from '../../../../redux/subject/subject.api';
 import { SpinnerRTK } from '../../../../components/spinnerRTK/SpinnerRTK';
 import { Badge } from '../../../../components/badge/Badge';
 import { SpanDetail } from '../../../../components/spanDetail/SpanDetail';
-import { SubjectsList } from './SubjectsList';
+import { SubjectsList } from '../../../../components/subject/SubjectsList';
 
 export const SubjectDetailDialog = () => {
   const {

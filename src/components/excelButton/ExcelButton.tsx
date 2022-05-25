@@ -5,22 +5,25 @@ import { exportExcel } from '../../utils/exports/exportExcel';
 interface Props {
     hookRTK: any;
     headers: any[][],
+    fileName: string,
     label?: string,
 }
 
-export const ExcelButton = ({ hookRTK, label, headers }: Props) => {
+export const ExcelButton = ({
+  hookRTK, headers, fileName, label,
+}: Props) => {
   const [ skip, setSkip ] = useState(true);
   const [ isLoading, setIsLoading ] = useState(false);
   const { data } = hookRTK(null, { skip });
 
   useEffect(() => {
     if (data && isLoading) {
-      const finished = exportExcel(data.data, 'materias', headers);
+      const finished = exportExcel(data.data, fileName, headers);
       if (finished) {
         setIsLoading(false);
       }
     }
-  }, [ data, isLoading, headers ]);
+  }, [ data, isLoading, headers, fileName ]);
 
   const handleClick = () => {
     if (skip) {
