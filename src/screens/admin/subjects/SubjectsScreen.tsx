@@ -25,6 +25,7 @@ export const SubjectsScreen = () => {
   const {
     lazyParams,
     setLazyParams,
+    setFilterValue,
     onPage,
     onSort,
     onFilter,
@@ -57,6 +58,7 @@ export const SubjectsScreen = () => {
                 subjectSelected,
                 setDisplayModal,
                 setLazyParams,
+                setFilterValue,
                 setSubjectSelected,
                 setIsOpenDetailModal,
               }}

@@ -9,7 +9,8 @@ interface ProfessorContextProps {
     professorSelected: Professor | undefined,
     setDisplayCoursesModal: (value: React.SetStateAction<boolean>) => void,
     setDisplayModal: (value: React.SetStateAction<boolean>) => void,
-    setLazyParams: (value: React.SetStateAction<any>) => void
+    setLazyParams: (value: React.SetStateAction<any>) => void,
+    setFilterValue: (fieldName: string, value: any) => void,
     setProfessorSelected: (value: React.SetStateAction<Professor | undefined>) => void,
   }
 

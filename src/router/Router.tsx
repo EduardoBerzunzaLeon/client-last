@@ -19,13 +19,13 @@ export const Router = () => {
     if (isError) {
       dispatch(setDefaultAuthState());
     }
-  }, [ isError ]);
+  }, [ isError, dispatch ]);
 
   useEffect(() => {
     if (token) {
       setSkip((prev) => !prev);
     }
-  }, [ token ]);
+  }, []);
 
   return (
     <div>

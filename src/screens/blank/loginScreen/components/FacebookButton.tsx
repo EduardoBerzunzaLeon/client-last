@@ -28,7 +28,8 @@ export const FacebookButton = () => {
     } else {
       showError({ detail: 'Ocurrio un error en el servicio de Facebook, favor de intentarlo mas tarde.' });
     }
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ ]);
 
   return (
     <>

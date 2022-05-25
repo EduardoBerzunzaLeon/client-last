@@ -1,5 +1,5 @@
 import {
-  useContext, useEffect, useState,
+  useContext,
 } from 'react';
 
 import { Dialog } from 'primereact/dialog';
@@ -14,6 +14,8 @@ import { SubjectDataForm } from './SubjectDataForm';
 import { SubjectDetail } from '../../../../interfaces/api/responses/subjectInterface';
 
 import { useGetSubjectQuery } from '../../../../redux/subject/subject.api';
+import { useTitle } from '../../../../hooks/useTitle';
+import { useModalLogin } from '../../../../hooks/useModalLogin';
 
 const emptyData: SingleResponse<SubjectDetail> = {
   status: 'success',
@@ -35,28 +37,22 @@ export const SubjectDialog = () => {
     subjectSelected, displayModal, setSubjectSelected, setDisplayModal,
   } = useContext(SubjectContext);
 
-  const [ isLoading, setIsLoading ] = useState(true);
-  const [ title, setTitle ] = useState('');
-
   const {
     data, isError, error, isFetching,
   } = useGetSubjectQuery(subjectSelected?.id ?? skipToken);
 
-  useEffect(() => {
-    (displayModal && !subjectSelected)
-      && setTitle('Crear Materia');
+  const { title } = useTitle({
+    createTitle: 'Crear Materia',
+    updateTitle: 'Editar Materia',
+    displayModal,
+    hasEntitySelected: !!subjectSelected,
+  });
 
-    (displayModal && subjectSelected)
-      && setTitle('Editar Materia');
-  }, [ displayModal, subjectSelected ]);
-
-  useEffect(() => {
-    (!isFetching && data)
-      && setIsLoading(false);
-
-    (!subjectSelected)
-      && setIsLoading(true);
-  }, [ isFetching, subjectSelected ]);
+  const { isLoading } = useModalLogin({
+    isFetching,
+    hasData: !!data,
+    hasEntitySelected: !!subjectSelected,
+  });
 
   const onHide = () => {
     setSubjectSelected(undefined);

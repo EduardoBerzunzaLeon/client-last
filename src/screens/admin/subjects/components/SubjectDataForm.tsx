@@ -5,9 +5,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { FilterMatchMode } from 'primereact/api';
 import { Form, Formik } from 'formik';
 import { MultiSelect } from 'primereact/multiselect';
-import { Skeleton } from 'primereact/skeleton';
 import { Toast } from 'primereact/toast';
-import { VirtualScrollerLoadingTemplateOptions } from 'primereact/virtualscroller';
 import * as Yup from 'yup';
 
 import { convertAdditionalSubjects } from '../../../../utils/convertAdditionalSubjects';
@@ -15,6 +13,7 @@ import { FormElement } from '../../../../components/forms/formElement/FormElemen
 import { InputTextApp } from '../../../../components/forms';
 import { processError, setSubjectFormErrors } from '../../../../utils/forms/handlerFormErrors';
 import { RequiredSubjects, SubjectDetail } from '../../../../interfaces/api';
+import { SkeletonDropdown } from '../../../../components/skeletonDropdown/SkeletonDropdown';
 import { ToggleButtonApp } from '../../../../components/forms/toggleButton/ToggleButtonApp';
 
 import { useCreateSubjectMutation, useGetConsecutiveSubjectsQuery, useUpdateSubjectMutation } from '../../../../redux/subject/subject.api';
@@ -24,12 +23,6 @@ import { useToast } from '../../../../hooks/useToast';
 interface Props {
   subject: SubjectDetail,
 }
-
-const SkeletonDropdown = ({ even }: VirtualScrollerLoadingTemplateOptions) => (
-  <div className="flex align-items-center p-2" style={{ height: '38px' }}>
-    <Skeleton width={even ? '60%' : '50%'} height="1rem" />
-  </div>
-);
 
 const cores = [
   { name: 'Básico', code: 'básico' },

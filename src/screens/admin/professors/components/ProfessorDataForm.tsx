@@ -1,69 +1,39 @@
 import { useState } from 'react';
 
 import { Button } from 'primereact/button';
+import { FilterMatchMode } from 'primereact/api';
 import { Form, Formik } from 'formik';
+import { MultiSelect } from 'primereact/multiselect';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import { FilterMatchMode } from 'primereact/api';
-import { VirtualScrollerLoadingTemplateOptions } from 'primereact/virtualscroller';
-import { Skeleton } from 'primereact/skeleton';
-import { MultiSelect } from 'primereact/multiselect';
+import { convertAdditionalSubjects } from '../../../../utils/convertAdditionalSubjects';
+import { convertModelToFormData } from '../../../../utils/convertModelToFormData';
 import { FileSingleInputApp } from '../../../../components/forms/fileInput/FileSingleInputApp';
+import { FormElement } from '../../../../components/forms/formElement/FormElement';
 import { genderRadio } from '../../../../utils/forms/radioButtonObjects';
 import { InputTextApp, RadioGroup } from '../../../../components/forms';
-import { setAuthFormErrors, processError } from '../../../../utils/forms/handlerFormErrors';
-import { ProfessorDetail, RequiredSubjects } from '../../../../interfaces/api';
+import { Paginator, ProfessorDetail, RequiredSubjects } from '../../../../interfaces/api';
+import { setProfessorFormErrors, processError } from '../../../../utils/forms/handlerFormErrors';
+import { SkeletonDropdown } from '../../../../components/skeletonDropdown/SkeletonDropdown';
+import { ToggleButtonApp } from '../../../../components/forms/toggleButton/ToggleButtonApp';
+
 import { useToast } from '../../../../hooks/useToast';
 import { useCreateProfessorMutation, useUpdateProfessorMutation } from '../../../../redux/professor/professor.api';
 import { useGetConsecutiveSubjectsQuery } from '../../../../redux/subject/subject.api';
 import { useDropdownFilter } from '../../../../hooks/useDropdownFilter';
-import { FormElement } from '../../../../components/forms/formElement/FormElement';
-import { ToggleButtonApp } from '../../../../components/forms/toggleButton/ToggleButtonApp';
-import { convertAdditionalSubjects } from '../../../../utils/convertAdditionalSubjects';
-
-const SkeletonDropdown = ({ even }: VirtualScrollerLoadingTemplateOptions) => (
-  <div className="flex align-items-center p-2" style={{ height: '38px' }}>
-    <Skeleton width={even ? '60%' : '50%'} height="1rem" />
-  </div>
-);
-
-interface Generic {
-  [x: string]: any
-}
-
-const convertModelToFormData = (model: Generic, form?: FormData, namespace = ''): FormData => {
-  const formData = form || new FormData();
-
-  if (typeof model === 'string') {
-    formData.append(namespace, model);
-  } else {
-    Object.keys(model).forEach((key) => {
-      if (!model[key]) {
-        return;
-      }
-      const formKey = namespace ? `${namespace}` : key;
-      if (model[key] instanceof Date) {
-        formData.append(formKey, model[key].toISOString());
-      } else if (model[key] instanceof Array) {
-        model[key].forEach((element: any, index: number) => {
-          const tempFormKey = `${formKey}[${index}]`;
-          convertModelToFormData(element, formData, tempFormKey);
-        });
-      } else if (typeof model[key] === 'object' && !(model[key] instanceof File)) {
-        convertModelToFormData(model[key], formData, formKey);
-      } else if (model[key] instanceof File) {
-        formData.append(formKey, model[key]);
-      } else {
-        formData.append(formKey, model[key].toString());
-      }
-    });
-  }
-
-  return formData;
-};
 
 const uploadOptions = { icon: 'pi pi-fw pi-cloud-upload', iconOnly: true, className: 'hidden' };
+
+const initialFilters: Paginator = {
+  page: 0,
+  sortField: 'name',
+  sortOrder: 1,
+  fields: 'name',
+  filters: {
+    id: { value: 1, matchMode: FilterMatchMode.NOT_EQUALS },
+  },
+};
 
 export const ProfessorDataForm = ({ professor }: { professor: ProfessorDetail }) => {
   const [ updateProfessor, { isLoading: isLoadingUpdate }] = useUpdateProfessorMutation();
@@ -85,15 +55,7 @@ export const ProfessorDataForm = ({ professor }: { professor: ProfessorDetail })
 
   const {
     data, isLoading,
-  } = useGetConsecutiveSubjectsQuery({
-    page: 0,
-    sortField: 'name',
-    sortOrder: 1,
-    fields: 'name',
-    filters: {
-      id: { value: 1, matchMode: FilterMatchMode.NOT_EQUALS },
-    },
-  }, { skip });
+  } = useGetConsecutiveSubjectsQuery(initialFilters, { skip });
 
   const { toast, showError, showSuccess } = useToast();
 
@@ -105,12 +67,11 @@ export const ProfessorDataForm = ({ professor }: { professor: ProfessorDetail })
   return (
     <>
       <Toast ref={toast} />
-
       <Formik
         initialValues={initialProfessor}
         enableReinitialize
         onSubmit={async (values, { setFieldError, resetForm }) => {
-          const { subjects, ...rest } = values;
+          const { subjects, active, ...rest } = values;
 
           let subjectsDB: string[] | [] = [];
           if (subjects?.length) {
@@ -119,7 +80,10 @@ export const ProfessorDataForm = ({ professor }: { professor: ProfessorDetail })
             ) => id);
           }
 
-          const prepareData = { subjects: subjectsDB, id: professor?.id || '', ...rest };
+          const prepareData = {
+            subjects: subjectsDB, id: professor?.id || '', active: `${active}`, ...rest,
+          };
+
           const dataSend = convertModelToFormData(prepareData);
 
           let message = 'El profesor se actualizó con éxito';
@@ -137,7 +101,7 @@ export const ProfessorDataForm = ({ professor }: { professor: ProfessorDetail })
             showSuccess({ detail: message });
           } catch (error) {
             const errors: string = processError({ error, showError });
-            setAuthFormErrors({ errors, setFieldError });
+            setProfessorFormErrors({ errors, setFieldError });
           }
         }}
         validationSchema={Yup.object({
@@ -233,7 +197,7 @@ export const ProfessorDataForm = ({ professor }: { professor: ProfessorDetail })
 
             <div className="field pt-2">
               <ToggleButtonApp
-                name="blocked"
+                name="active"
                 onClassName="bg-green-500"
                 offClassName="color-danger"
                 onIcon="pi pi-lock"

@@ -8,7 +8,8 @@ interface UserContextProps {
     userAuth: User | null,
     userSelected: User | undefined,
     setDisplayModal: (value: React.SetStateAction<boolean>) => void,
-    setLazyParams: (value: React.SetStateAction<any>) => void
+    setLazyParams: (value: React.SetStateAction<any>) => void,
+    setFilterValue: (fieldName: string, value: any) => void,
     setUserSelected: (value: React.SetStateAction<User | undefined>) => void,
   }
 

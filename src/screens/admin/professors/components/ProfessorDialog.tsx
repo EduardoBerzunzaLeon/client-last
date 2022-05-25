@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 
 import { Dialog } from 'primereact/dialog';
 import { TabPanel, TabView } from 'primereact/tabview';
@@ -9,6 +9,9 @@ import { ProfessorDataForm } from './ProfessorDataForm';
 import { useGetProfessorQuery } from '../../../../redux/professor/professor.api';
 import { SpinnerRTK } from '../../../../components/spinnerRTK/SpinnerRTK';
 import { ProfessorDetail, SingleResponse } from '../../../../interfaces/api';
+
+import { useTitle } from '../../../../hooks/useTitle';
+import { useModalLogin } from '../../../../hooks/useModalLogin';
 
 const emptyData: SingleResponse<ProfessorDetail> = {
   status: 'success',
@@ -33,30 +36,22 @@ export const ProfessorDialog = () => {
     professorSelected, displayModal, setProfessorSelected, setDisplayModal,
   } = useContext(ProfessorContext);
 
-  const [ isLoading, setIsLoading ] = useState(true);
-
   const {
     data, isError, error, isFetching,
   } = useGetProfessorQuery(professorSelected?.id ?? skipToken);
 
-  // TODO: Implements custom hook to manage title.
-  const [ title, setTitle ] = useState('');
+  const { title } = useTitle({
+    createTitle: 'Crear Tutor',
+    updateTitle: 'Editar Tutor',
+    displayModal,
+    hasEntitySelected: !!professorSelected,
+  });
 
-  useEffect(() => {
-    (displayModal && !professorSelected)
-      && setTitle('Crear Tutor');
-
-    (displayModal && professorSelected)
-      && setTitle('Editar Tutor');
-  }, [ displayModal, professorSelected ]);
-
-  useEffect(() => {
-    (!isFetching && data)
-      && setIsLoading(false);
-
-    (!professorSelected)
-      && setIsLoading(true);
-  }, [ isFetching, professorSelected ]);
+  const { isLoading } = useModalLogin({
+    isFetching,
+    hasData: !!data,
+    hasEntitySelected: !!professorSelected,
+  });
 
   return (
     <Dialog

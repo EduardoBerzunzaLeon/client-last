@@ -33,6 +33,7 @@ export const SendEmailVerifyScreen = () => {
     if (isSuccess) {
       showSuccess({ detail: 'Cuenta verificada con éxito' });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ isError, isSuccess ]);
 
   useEffect(() => {

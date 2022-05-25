@@ -26,6 +26,7 @@ export const UsersScreen = () => {
   const {
     lazyParams,
     setLazyParams,
+    setFilterValue,
     onPage,
     onSort,
     onFilter,
@@ -58,6 +59,7 @@ export const UsersScreen = () => {
             userSelected,
             setDisplayModal,
             setLazyParams,
+            setFilterValue,
             setUserSelected,
           }}
           >

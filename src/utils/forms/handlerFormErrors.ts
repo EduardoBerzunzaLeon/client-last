@@ -1,7 +1,9 @@
 import { Generic } from '../../interfaces/generic';
-import { MessageProps } from '../../interfaces/ui/hooks/hooksInterface';
 import { getErrorDetail } from '../../redux/services/error.service';
+import { MessageProps } from '../../interfaces/ui/hooks/hooksInterface';
+
 import { authFieldsTranslation, AuthFieldsTranslation } from '../translation/authFields';
+import { professorFieldsTranslation, ProfessorFieldsTranslation } from '../translation/professorField';
 import { subjectFieldsTranslation, SubjectFieldsTranslation } from '../translation/subjectFields';
 
 interface Error {
@@ -41,5 +43,10 @@ export const setAuthFormErrors = handlerFormErrors<AuthFieldsTranslation>(authFi
 export const setSubjectFormErrors = handlerFormErrors<SubjectFieldsTranslation>(
   subjectFieldsTranslation,
 );
+export const setProfessorFormErrors = handlerFormErrors<ProfessorFieldsTranslation>(
+  professorFieldsTranslation,
+);
 
-export default { handlerFormErrors, setAuthFormErrors };
+export default {
+  handlerFormErrors, setAuthFormErrors, setSubjectFormErrors, setProfessorFormErrors,
+};

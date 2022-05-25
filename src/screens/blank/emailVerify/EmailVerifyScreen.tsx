@@ -21,7 +21,7 @@ export const EmailVerifyScreen = () => {
     if (isSuccess) {
       showSuccess({ detail: 'Cuenta verificada con éxito' });
     }
-  }, [ isError, isSuccess ]);
+  }, [ isError, isSuccess, showError, showSuccess ]);
 
   useEffect(() => {
     if (token) {

@@ -8,20 +8,14 @@ import { SubjectContext } from '../context/subjectContext';
 import { ExcelButtonSubjects } from './ExcelButtonSubjects';
 
 export const Header = () => {
-  const { lazyParams, setLazyParams, setDisplayModal } = useContext(SubjectContext);
+  // Pass the context
+  const {
+    lazyParams, setLazyParams, setFilterValue, setDisplayModal,
+  } = useContext(SubjectContext);
 
   const onGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    setLazyParams((prev: any) => ({
-      ...prev,
-      filters: {
-        ...prev.filters,
-        global: {
-          ...prev.filters.global,
-          value,
-        },
-      },
-    }));
+    setFilterValue('global', value);
   };
 
   return (
@@ -44,6 +38,7 @@ export const Header = () => {
           className="p-button-outlined p-button-success m-2"
           onClick={() => setDisplayModal(true)}
         />
+        {/* TODO: Do a header render props */}
         <ExcelButtonSubjects />
       </div>
       <span className="p-input-icon-left m-2 overflow-hidden">

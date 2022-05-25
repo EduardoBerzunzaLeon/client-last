@@ -7,20 +7,13 @@ import { initialFiltersValue } from '../assets/assets';
 import { UserContext } from '../context/userContext';
 
 export const Header = () => {
-  const { lazyParams, setLazyParams, setDisplayModal } = useContext(UserContext);
+  const {
+    lazyParams, setLazyParams, setFilterValue, setDisplayModal,
+  } = useContext(UserContext);
 
   const onGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    setLazyParams((prev: any) => ({
-      ...prev,
-      filters: {
-        ...prev.filters,
-        global: {
-          ...prev.filters.global,
-          value,
-        },
-      },
-    }));
+    setFilterValue('global', value);
   };
 
   return (

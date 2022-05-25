@@ -3,25 +3,18 @@ import React, { useContext } from 'react';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 
-import { initialFiltersValue } from '../../assets/assets';
-import { ProfessorContext } from '../../context/professorContext';
-import { ExcelButtonProfessors } from '../ExcelButtonProfessors';
+import { initialFiltersValue } from '../assets/assets';
+import { ProfessorContext } from '../context/professorContext';
+import { ExcelButtonProfessors } from './ExcelButtonProfessors';
 
 export const Header = () => {
-  const { lazyParams, setLazyParams, setDisplayModal } = useContext(ProfessorContext);
+  const {
+    lazyParams, setLazyParams, setFilterValue, setDisplayModal,
+  } = useContext(ProfessorContext);
 
   const onGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    setLazyParams((prev: any) => ({
-      ...prev,
-      filters: {
-        ...prev.filters,
-        global: {
-          ...prev.filters.global,
-          value,
-        },
-      },
-    }));
+    setFilterValue('global', value);
   };
 
   return (

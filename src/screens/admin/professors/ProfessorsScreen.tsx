@@ -8,7 +8,7 @@ import {
 import { ActionsBodyTemplate } from './components/columns/Actions';
 import { CoursesDialog } from './components/course/CoursesDialog';
 import { EmailBodyTemplate } from './components/columns/Email';
-import { Header } from './components/columns/Header';
+import { Header } from './components/Header';
 import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
 import { initialFiltersValue } from './assets/assets';
 import { Professor } from '../../../interfaces/api';
@@ -25,6 +25,7 @@ export const ProfessorsScreen = () => {
   const {
     lazyParams,
     setLazyParams,
+    setFilterValue,
     onPage,
     onSort,
     onFilter,
@@ -58,6 +59,7 @@ export const ProfessorsScreen = () => {
             setDisplayModal,
             setDisplayCoursesModal,
             setLazyParams,
+            setFilterValue,
             setProfessorSelected,
           }}
           >

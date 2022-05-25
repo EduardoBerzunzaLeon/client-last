@@ -38,9 +38,23 @@ export const useLazyParams = (initialFiltersValue: DataTableFilterMeta, path?: s
     setLazyParams(event);
   };
 
+  const setFilterValue = (fieldName: string, value: any) => {
+    setLazyParams((prev: any) => ({
+      ...prev,
+      filters: {
+        ...prev.filters,
+        [fieldName]: {
+          ...prev.filters[fieldName],
+          value,
+        },
+      },
+    }));
+  };
+
   return {
     lazyParams,
     setLazyParams,
+    setFilterValue,
     onPage,
     onSort,
     onFilter,

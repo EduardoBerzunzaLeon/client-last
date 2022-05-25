@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 
 import { Dialog } from 'primereact/dialog';
 import { TabPanel, TabView } from 'primereact/tabview';
@@ -6,21 +6,19 @@ import { TabPanel, TabView } from 'primereact/tabview';
 import { AdminPasswordForm } from './AdminPasswordForm';
 import { UserContext } from '../context/userContext';
 import { UserDataForm } from './UserDataForm';
+import { useTitle } from '../../../../hooks/useTitle';
 
 export const UserDialog = () => {
   const {
     userSelected, displayModal, setUserSelected, setDisplayModal,
   } = useContext(UserContext);
 
-  const [ title, setTitle ] = useState('');
-
-  useEffect(() => {
-    (displayModal && !userSelected)
-      && setTitle('Crear Usuario');
-
-    (displayModal && userSelected)
-      && setTitle('Editar Usuario');
-  }, [ displayModal, userSelected ]);
+  const { title } = useTitle({
+    createTitle: 'Crear Usuario',
+    updateTitle: 'Editar Usuario',
+    displayModal,
+    hasEntitySelected: !!userSelected,
+  });
 
   return (
     <Dialog

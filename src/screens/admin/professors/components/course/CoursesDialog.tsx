@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 
 import { Dialog } from 'primereact/dialog';
 
@@ -14,6 +14,7 @@ import { useLazyParams } from '../../../../../hooks/useLazyParams';
 import { initialFiltersCoursesValue } from '../../assets/assets';
 import { useGetCoursesQuery } from '../../../../../redux/course/course.api';
 import { CalendarFilter } from '../../../../../components/datatable/filters/CalendarFilter';
+import { useModalLogin } from '../../../../../hooks/useModalLogin';
 
 addLocale('es', {
   firstDayOfWeek: 1,
@@ -33,11 +34,9 @@ export const CoursesDialog = () => {
     professorSelected, displayCoursesModal, setProfessorSelected, setDisplayCoursesModal,
   } = useContext(ProfessorContext);
 
-  const [ isLoading, setIsLoading ] = useState(true);
-
   const {
     lazyParams,
-    setLazyParams,
+    setFilterValue,
     onPage,
     onSort,
     onFilter,
@@ -48,28 +47,18 @@ export const CoursesDialog = () => {
     data, isError, error, isFetching,
   } = useGetCoursesQuery(paginatorURL, { skip: !professorSelected });
 
-  useEffect(() => {
-    (!isFetching && data)
-      && setIsLoading(false);
-
-    (!professorSelected)
-      && setIsLoading(true);
-  }, [ data, isFetching, professorSelected ]);
+  const { isLoading } = useModalLogin({
+    isFetching,
+    hasData: !!data,
+    hasEntitySelected: !!professorSelected,
+  });
 
   useEffect(() => {
     if (professorSelected) {
-      setLazyParams((prev: any) => ({
-        ...prev,
-        filters: {
-          ...prev.filters,
-          professor: {
-            ...prev.filters.professor,
-            value: professorSelected.id,
-          },
-        },
-      }));
+      setFilterValue('professor', professorSelected.id);
     }
-  }, [ professorSelected, setLazyParams ]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ professorSelected ]);
 
   return (
     <Dialog

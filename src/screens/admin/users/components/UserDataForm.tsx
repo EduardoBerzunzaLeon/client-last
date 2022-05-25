@@ -16,6 +16,7 @@ import { User } from '../../../../interfaces/api';
 import { useToast } from '../../../../hooks/useToast';
 import { useUpdateUserAdminMutation, useCreateUserMutation } from '../../../../redux/user/user.api';
 import { FormElement } from '../../../../components/forms/formElement/FormElement';
+import { convertModelToFormData } from '../../../../utils/convertModelToFormData';
 
 const initialValues = {
   first: '',
@@ -61,30 +62,23 @@ export const UserDataForm = ({ user }: {user?: User }) => {
         enableReinitialize
         onSubmit={async (values, { setFieldError, resetForm }) => {
           const {
-            last: lastUser,
-            first: firstUser,
             role,
-            avatar,
-            email,
-            gender,
             blocked,
+            ...rest
           } = values;
 
-          const dataSend = new FormData();
-          dataSend.append('avatar', avatar || '');
-          dataSend.append('id', user?.id || '');
-          dataSend.append('first', firstUser);
-          dataSend.append('email', email);
-          dataSend.append('gender', gender);
-          dataSend.append('last', lastUser);
-          dataSend.append('role', role.code);
-          dataSend.append('blocked', `${blocked}`);
+          const prepareData = {
+            role: role.code, blocked: `${blocked}`, id: user?.id, ...rest,
+          };
+
+          const dataSend = convertModelToFormData(prepareData);
 
           let message = 'El usuario se actualizó con éxito';
 
           try {
             if (user?.id) {
               await updateUser(dataSend).unwrap();
+              setInitialUser({ ...values });
             } else {
               await createUser(dataSend).unwrap();
               message = 'El usuario se creó con éxito';
@@ -92,7 +86,6 @@ export const UserDataForm = ({ user }: {user?: User }) => {
             }
 
             showSuccess({ detail: message });
-            setInitialUser({ ...values });
           } catch (error) {
             const errors: string = processError({ error, showError });
             setAuthFormErrors({ errors, setFieldError });

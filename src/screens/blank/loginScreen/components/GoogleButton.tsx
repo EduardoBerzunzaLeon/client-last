@@ -26,6 +26,7 @@ export const GoogleButton = () => {
     } else {
       showError({ detail: 'Ocurrio un error en el servicio de Google, favor de intentarlo mas tarde.' });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const responseErrorGoogle = useCallback((
@@ -35,6 +36,7 @@ export const GoogleButton = () => {
       response.error !== 'idpiframe_initialization_failed'
         && showError({ detail: 'Ocurrio un error en el servicio de Google, favor de intentarlo mas tarde.' });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
