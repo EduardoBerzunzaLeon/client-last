@@ -65,7 +65,7 @@ const ProfileScreenMin = ({ data }: {data: User}) => {
             </div>
 
             {
-             (userAuth?.role === 'admin' || isUserLogged)
+             (userAuth?.roles.includes('admin') || isUserLogged)
              && (
              <div className="flex flex-column">
                <Button
@@ -86,8 +86,8 @@ const ProfileScreenMin = ({ data }: {data: User}) => {
         <div className="col-12 md:col-6">
           <Card title="Datos del sistema">
             <div className="overflow-hidden text-overflow-ellipsis">
-              <Divider text="Rol" icon="shield" />
-              <span className="font-semibold">{data.role}</span>
+              <Divider text="Roles" icon="shield" />
+              <span className="font-semibold flex">{data.roles.join(', ').toUpperCase()}</span>
             </div>
 
             <div className="overflow-hidden text-overflow-ellipsis py-1">

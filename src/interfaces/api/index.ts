@@ -9,7 +9,7 @@ export type {
 export type { Error, ErrorResponse } from './responses/errorInterface';
 
 export type {
-  User, UserResponse, ForgotPasswordResponse, UserSingleResponse,
+  User, UserResponse, ForgotPasswordResponse, UserSingleResponse, AllowedRoles,
 } from './responses/userInterface';
 
 export type {

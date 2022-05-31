@@ -2,28 +2,29 @@ import { useState } from 'react';
 
 import { Button } from 'primereact/button';
 import { Form, Formik } from 'formik';
+import { MultiSelect } from 'primereact/multiselect';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import { Dropdown } from 'primereact/dropdown';
-
+import { convertModelToFormData } from '../../../../utils/convertModelToFormData';
+import { convertRoles, roles } from '../../../../utils/convertRolesUsers';
 import { FileSingleInputApp } from '../../../../components/forms/fileInput/FileSingleInputApp';
+import { FormElement } from '../../../../components/forms/formElement/FormElement';
 import { genderRadio } from '../../../../utils/forms/radioButtonObjects';
 import { InputTextApp, RadioGroup } from '../../../../components/forms';
 import { setAuthFormErrors, processError } from '../../../../utils/forms/handlerFormErrors';
 import { ToggleButtonApp } from '../../../../components/forms/toggleButton/ToggleButtonApp';
 import { User } from '../../../../interfaces/api';
+
 import { useToast } from '../../../../hooks/useToast';
 import { useUpdateUserAdminMutation, useCreateUserMutation } from '../../../../redux/user/user.api';
-import { FormElement } from '../../../../components/forms/formElement/FormElement';
-import { convertModelToFormData } from '../../../../utils/convertModelToFormData';
 
 const initialValues = {
   first: '',
   last: '',
   gender: '',
   email: '',
-  role: { name: 'Usuario', code: 'user' },
+  roles: [{ name: 'Lector', code: 'reader' }],
   blocked: false,
   avatar: null,
 };
@@ -41,17 +42,12 @@ export const UserDataForm = ({ user }: {user?: User }) => {
       gender: user.gender,
       email: user.email,
       blocked: user.blocked,
-      role: { name: user.role === 'admin' ? 'Administrador' : 'Usuario', code: user.role },
+      roles: convertRoles(user.roles),
       avatar: null,
     }
     : initialValues);
 
   const { toast, showError, showSuccess } = useToast();
-
-  const roles = [
-    { name: 'Usuario', code: 'user' },
-    { name: 'Administrador', code: 'admin' },
-  ];
 
   return (
     <>
@@ -62,13 +58,15 @@ export const UserDataForm = ({ user }: {user?: User }) => {
         enableReinitialize
         onSubmit={async (values, { setFieldError, resetForm }) => {
           const {
-            role,
+            roles: savedRoles,
             blocked,
             ...rest
           } = values;
 
+          const rolesDB: string[] = savedRoles.map(({ code }) => code);
+
           const prepareData = {
-            role: role.code, blocked: `${blocked}`, id: user?.id, ...rest,
+            roles: rolesDB, blocked: `${blocked}`, id: user?.id, ...rest,
           };
 
           const dataSend = convertModelToFormData(prepareData);
@@ -101,7 +99,7 @@ export const UserDataForm = ({ user }: {user?: User }) => {
             .required('Requerido'),
           gender: Yup.string()
             .required('Requerido'),
-          role: Yup.object().required('Requerido'),
+          roles: Yup.array().required('Requerido'),
         })}
       >
         {({
@@ -149,14 +147,15 @@ export const UserDataForm = ({ user }: {user?: User }) => {
 
             <div className="field pt-2">
               <FormElement
-                element={Dropdown}
-                id="role"
-                inputId="role"
-                name="role"
+                element={MultiSelect}
                 options={roles}
+                id="roles"
+                inputId="roles"
+                name="roles"
                 optionLabel="name"
+                label="Roles"
                 className="w-full"
-                label="Rol"
+                display="chip"
               />
             </div>
 

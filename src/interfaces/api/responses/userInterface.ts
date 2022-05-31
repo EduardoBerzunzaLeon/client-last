@@ -1,3 +1,5 @@
+export type AllowedRoles = 'admin' | 'professor' | 'reader' | 'student' | 'mentor';
+
 export interface User {
     id: string,
     email: string,
@@ -7,7 +9,7 @@ export interface User {
     },
     fullname: string,
     gender: string,
-    role: string,
+    roles: AllowedRoles[],
     avatar?: string,
     active: boolean,
     blocked: boolean

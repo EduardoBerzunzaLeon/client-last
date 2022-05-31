@@ -1,4 +1,4 @@
-import { User } from '../responses/userInterface';
+import { AllowedRoles, User } from '../responses/userInterface';
 import { Name } from './authInterface';
 
 export interface UpdateUserRequest {
@@ -31,7 +31,7 @@ export interface UpdateUserAdminRequest {
       last: string,
     },
     gender: string,
-    role: string,
+    roles: AllowedRoles[],
     avatar?: FormData,
     blocked: boolean
   }

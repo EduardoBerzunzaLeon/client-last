@@ -12,7 +12,7 @@ import { mockStoreWithMiddlewares, renderWithRouter } from '../../../fixtures/re
 import { mockGetUser, mockUpdateUser } from '../../../fixtures/mockServer/mockUserHandler';
 import { tutorApi } from '../../../../redux/services/tutor.api';
 import { userLogged } from '../../../fixtures/testData/fakeAuthData';
-import ProfileScreen from '../../../../screens/admin/profile/ProfileScreen';
+import { ProfileScreen } from '../../../../screens/admin/profile/ProfileScreen';
 
 const server = setupServer(mockGetUser, mockUpdateUser);
 const storeRef = mockStoreWithMiddlewares();
@@ -64,7 +64,7 @@ describe('<ProfileScreen />', () => {
         expect(container.querySelectorAll('.custom-badge').length).toBe(2);
         expect(queryByText(userLogged.data.fullname)).toBeInTheDocument();
         expect(queryByText(userLogged.data.email)).toBeInTheDocument();
-        expect(queryByText(userLogged.data.role)).toBeInTheDocument();
+        expect(queryByText(userLogged.data.roles[0])).toBeInTheDocument();
         expect(queryByText('Hombre')).toBeInTheDocument();
       });
 

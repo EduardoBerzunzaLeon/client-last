@@ -10,7 +10,7 @@ export const userLogged: UserResponse = {
     },
     fullname: 'test lastTest',
     gender: 'M',
-    role: 'Admin',
+    roles: [ 'admin' ],
     avatar: 'https:/url/myimage.jpg',
     active: true,
     blocked: false,
