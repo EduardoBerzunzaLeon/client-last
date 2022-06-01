@@ -38,9 +38,13 @@ const COURSE_PERMISSIONS = {
   canCreate: [ Admin, Professor ],
 };
 
-export type Modules = 'user' | 'professor' | 'subject' | 'course';
+interface Permissions {
 
-const PERMISSIONS_LIST = {
+}
+
+export type ModulesName = 'user' | 'professor' | 'subject' | 'course';
+
+const PERMISSIONS_LIST: Record<ModulesName, > = {
   user: USER_PERMISSIONS,
   professor: PROFESSOR_PERMISSIONS,
   subject: SUBJECT_PERMISSIONS,
