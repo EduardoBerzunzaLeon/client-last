@@ -9,10 +9,11 @@ import { MenuItem } from '../../interfaces/ui/primereact/menuItemInterface';
 
 interface Props {
   position: string,
-  title: string
+  title: string,
+  hasBreadcumbs: boolean,
 }
 
-export const HeaderAdmin = React.memo(({ position, title }: Props) => {
+export const HeaderAdmin = React.memo(({ position, title, hasBreadcumbs }: Props) => {
   const navigate = useNavigate();
 
   const items: Generic = {
@@ -37,7 +38,7 @@ export const HeaderAdmin = React.memo(({ position, title }: Props) => {
   return (
     <div className="flex justify-content-between flex-wrap card-container">
       <h2 className="p-card-title font-bold">{title}</h2>
-      <BreadCrumb model={models} home={home} />
+      { hasBreadcumbs && (<BreadCrumb model={models} home={home} />) }
     </div>
   );
 });

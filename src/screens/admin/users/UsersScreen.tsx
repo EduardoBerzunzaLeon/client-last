@@ -64,7 +64,7 @@ export const UsersScreen = () => {
           }}
           >
             <div>
-              <HeaderAdmin position="users/" title="Gestionar Usuarios" />
+              <HeaderAdmin position="users/" title="Gestionar Usuarios" hasBreadcumbs />
               <div className="card">
                 <DataTable
                   value={dataSend}

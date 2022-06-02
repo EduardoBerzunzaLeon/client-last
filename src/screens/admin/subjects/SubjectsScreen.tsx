@@ -64,7 +64,7 @@ export const SubjectsScreen = () => {
               }}
               >
                 <div>
-                  <HeaderAdmin position="subjects/" title="Gestionar Materias" />
+                  <HeaderAdmin position="subjects/" title="Gestionar Materias" hasBreadcumbs />
                   <div className="card">
                     <DataTable
                       value={dataSend}

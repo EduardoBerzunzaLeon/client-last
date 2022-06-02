@@ -1,6 +1,11 @@
-import { Button } from 'primereact/button';
 import { useEffect, useState } from 'react';
+
+import { Button } from 'primereact/button';
+
+import { Toast } from 'primereact/toast';
 import { exportExcel } from '../../utils/exports/exportExcel';
+
+import { useToast } from '../../hooks/useToast';
 
 interface Props {
     hookRTK: any;
@@ -14,7 +19,9 @@ export const ExcelButton = ({
 }: Props) => {
   const [ skip, setSkip ] = useState(true);
   const [ isLoading, setIsLoading ] = useState(false);
-  const { data } = hookRTK(null, { skip });
+  const { data, isError } = hookRTK(null, { skip });
+
+  const { toast, showError } = useToast();
 
   useEffect(() => {
     if (data && isLoading) {
@@ -23,7 +30,13 @@ export const ExcelButton = ({
         setIsLoading(false);
       }
     }
-  }, [ data, isLoading, headers, fileName ]);
+
+    if (isError && isLoading) {
+      showError({ detail: 'Ocurrio un error, favor de intentarlo más tarde' });
+      setIsLoading(false);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ data, isLoading, headers, fileName, isError ]);
 
   const handleClick = () => {
     if (skip) {
@@ -33,14 +46,17 @@ export const ExcelButton = ({
   };
 
   return (
-    <Button
-      type="button"
-      icon="pi pi-file-excel"
-      label={label}
-      className="p-button p-button-success m-2"
-      loading={isLoading}
-      onClick={handleClick}
-    />
+    <>
+      <Toast ref={toast} />
+      <Button
+        type="button"
+        icon="pi pi-file-excel"
+        label={label}
+        className="p-button p-button-success m-2"
+        loading={isLoading}
+        onClick={handleClick}
+      />
+    </>
   );
 };
 

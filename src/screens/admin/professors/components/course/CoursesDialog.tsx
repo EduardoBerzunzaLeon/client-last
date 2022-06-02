@@ -1,11 +1,10 @@
 import { useContext, useEffect } from 'react';
 
+import { addLocale, locale } from 'primereact/api';
+import { Column } from 'primereact/column';
+import { DataTable } from 'primereact/datatable';
 import { Dialog } from 'primereact/dialog';
 
-// import { skipToken } from '@reduxjs/toolkit/dist/query';
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
-import { addLocale, locale } from 'primereact/api';
 import { ProfessorContext } from '../../context/professorContext';
 import { SpinnerRTK } from '../../../../../components/spinnerRTK/SpinnerRTK';
 import { ActionsCoursesBodyTemplate, ImpartedAtBodyTemplate } from '../columns/ActionsCourses';
@@ -14,6 +13,7 @@ import { useLazyParams } from '../../../../../hooks/useLazyParams';
 import { initialFiltersCoursesValue } from '../../assets/assets';
 import { useGetCoursesQuery } from '../../../../../redux/course/course.api';
 import { CalendarFilter } from '../../../../../components/datatable/filters/CalendarFilter';
+
 import { useModalLogin } from '../../../../../hooks/useModalLogin';
 
 addLocale('es', {

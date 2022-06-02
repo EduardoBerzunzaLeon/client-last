@@ -20,6 +20,7 @@ describe('<HeaderAdmin />', () => {
         <HeaderAdmin
           position="users/profile"
           title="Personal Information"
+          hasBreadcumbs
         />
       </MemoryRouter>,
     );

@@ -19,12 +19,12 @@ export const ActionsBody = ({ professor }: { professor: Professor }) => {
 
   const navigate = useNavigate();
 
-  const handleViewDetail = () => {
+  const handleUpdate = () => {
     setProfessorSelected(professor);
     setDisplayModal(true);
   };
 
-  const handleUpdate = () => {
+  const handleUpdateCourse = () => {
     setProfessorSelected(professor);
     setDisplayCoursesModal(true);
   };
@@ -36,7 +36,7 @@ export const ActionsBody = ({ professor }: { professor: Professor }) => {
         tooltip="Ver Tutor"
         tooltipOptions={{ position: 'top' }}
         className="p-button-sm p-button-raised p-button-primary mr-1"
-        onClick={() => navigate(`/admin/professors/${id}`)}
+        onClick={() => navigate(`/admin/users/${id}`, { state: { root: 'professors' }})}
       />
       <PermissionsGate
         module="professor"
@@ -47,7 +47,7 @@ export const ActionsBody = ({ professor }: { professor: Professor }) => {
           className="p-button-sm p-button-raised p-button-primary mr-1"
           tooltip="Editar Tutor"
           tooltipOptions={{ position: 'top' }}
-          onClick={handleViewDetail}
+          onClick={handleUpdate}
         />
       </PermissionsGate>
       <PermissionsGate
@@ -59,7 +59,7 @@ export const ActionsBody = ({ professor }: { professor: Professor }) => {
           className="p-button-sm p-button-raised p-button-primary mr-1"
           tooltip="Editar Curso del Tutor"
           tooltipOptions={{ position: 'top' }}
-          onClick={handleUpdate}
+          onClick={handleUpdateCourse}
         />
       </PermissionsGate>
       <PermissionsGate

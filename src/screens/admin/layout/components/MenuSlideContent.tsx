@@ -103,7 +103,6 @@ const Submenu = ({ elements, className = '', root = false }: SubmenuProps) => {
               isMe={item.isMe}
             >
               <>
-
                 {item.items && root === true && <div className="arrow" />}
                 {renderLink(item, i)}
                 {

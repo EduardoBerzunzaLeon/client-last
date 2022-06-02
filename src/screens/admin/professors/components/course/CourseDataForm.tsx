@@ -27,7 +27,7 @@ export const CourseDataForm = ({ professorId }: { professorId?: string}) => {
         initialValues={initialCourse}
         onSubmit={async (values, { setFieldError, resetForm }) => {
           if (professorId) {
-            const dataSend: CreateCourseRequest = { ...values, professor: professorId };
+            const dataSend: CreateCourseRequest = { ...values, user: professorId };
 
             try {
               await createCourse(dataSend).unwrap();

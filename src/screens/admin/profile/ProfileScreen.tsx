@@ -4,7 +4,7 @@ import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { Dialog } from 'primereact/dialog';
 import { TabView, TabPanel } from 'primereact/tabview';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import { Badge } from '../../../components/badge/Badge';
 import { Divider } from '../../../components/divider/Divider';
@@ -18,11 +18,19 @@ import { useAuth } from '../../../hooks/useAuth';
 import { useGetUserQuery } from '../../../redux/user/user.api';
 import { User } from '../../../interfaces/api';
 import { PermissionsGate } from '../../../components/authorization/PermissionGate';
+import { ProfileProfessorScreen } from '../profileProfessor/ProfileProfessorScreen';
+
+interface LocationProps {
+  state: { root?: string } | null
+}
 
 const ProfileScreenMin = ({ data }: {data: User}) => {
   const [ isUserLogged, setIsUserLogged ] = useState(false);
   const [ displayModal, setDisplayModal ] = useState(false);
+  const [ breadcrumbRoute, setBreadcrumbRoute ] = useState<string>('users/profile');
   const { user: userAuth } = useAuth();
+
+  const { state } = useLocation() as LocationProps;
 
   useEffect(() => {
     if (data) {
@@ -30,10 +38,16 @@ const ProfileScreenMin = ({ data }: {data: User}) => {
     }
   }, [ userAuth, data ]);
 
+  useEffect(() => {
+    if (state?.root) {
+      setBreadcrumbRoute(`${state.root}/profile`);
+    }
+  }, [ state ]);
+
   return (
     <>
-      <HeaderAdmin position="users/profile" title="Información Personal" />
-      <div className="grid">
+      <HeaderAdmin position={breadcrumbRoute} title="Información Personal" hasBreadcumbs />
+      <div className="grid mb-4">
 
         <div className="col-12 md:col-6">
           <Card title="Perfil">
@@ -118,6 +132,8 @@ const ProfileScreenMin = ({ data }: {data: User}) => {
         </div>
 
       </div>
+
+      {data?.roles.includes('professor') && (<ProfileProfessorScreen />)}
 
       <Dialog header="Editar Perfil" className="shadow-5 w-11 md:w-6 lg:w-5" modal visible={displayModal} onHide={() => setDisplayModal(false)}>
         <TabView>

@@ -2,7 +2,7 @@ export interface UpdateCourseRequest {
     id: string,
     impartedAt: Date,
     name: string,
-    professor: string
+    user: string
 }
 
 export type CreateCourseRequest = Omit<UpdateCourseRequest, 'id'>;
