@@ -6,7 +6,8 @@ export const Header = () => (
   <GenericHeader
     context={UserContext}
     initialFiltersValue={initialFiltersValue}
-    createTitle="Crear Materia"
+    createTitle="Crear Usuario"
+    module="user"
   />
 );
 

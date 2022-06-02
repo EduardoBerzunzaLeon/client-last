@@ -1,4 +1,5 @@
 import { MouseEvent } from 'react';
+import { ModulesName, PermissionsName } from '../components/authorization/permissions';
 
 interface Command {
   originalEvent: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>,
@@ -9,6 +10,9 @@ interface Command {
 export interface Menu {
   label: string;
   icon: string;
+  module: ModulesName;
+  permission: PermissionsName,
+  isMe?: boolean,
   to?: string;
   badge?: string;
   disabled?: boolean;
@@ -23,76 +27,86 @@ export interface Menu {
 }
 
 export const menu: Menu[] = [
-  { label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/admin' },
-  { label: 'Usuarios', icon: 'pi pi-fw pi-users', to: '/admin/users' },
-  { label: 'Materias', icon: 'pi pi-fw pi-book', to: '/admin/subjects' },
-  { label: 'Tutores', icon: 'pi pi-fw pi-id-card', to: '/admin/professors' },
   {
-    label: 'Pages',
-    icon: 'pi pi-fw pi-clone',
-    items: [
-      { label: 'Crud', icon: 'pi pi-fw pi-user-edit', to: '/crud' },
-      {
-        label: 'Calendar',
-        icon: 'pi pi-fw pi-calendar-plus',
-        to: '/calendar',
-      },
-      { label: 'Timeline', icon: 'pi pi-fw pi-calendar', to: '/timeline' },
-      { label: 'Empty Page', icon: 'pi pi-fw pi-circle-off', to: '/empty' },
-    ],
+    label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/admin', module: 'user', permission: 'canView', isMe: true,
   },
   {
-    label: 'Menu Hierarchy',
-    icon: 'pi pi-fw pi-search',
-    items: [
-      {
-        label: 'Submenu 1',
-        icon: 'pi pi-fw pi-bookmark',
-        items: [
-          {
-            label: 'Submenu 1.1',
-            icon: 'pi pi-fw pi-bookmark',
-            items: [
-              { label: 'Submenu 1.1.1', icon: 'pi pi-fw pi-bookmark' },
-              { label: 'Submenu 1.1.2', icon: 'pi pi-fw pi-bookmark' },
-              { label: 'Submenu 1.1.3', icon: 'pi pi-fw pi-bookmark' },
-            ],
-          },
-          {
-            label: 'Submenu 1.2',
-            icon: 'pi pi-fw pi-bookmark',
-            items: [
-              { label: 'Submenu 1.2.1', icon: 'pi pi-fw pi-bookmark' },
-              { label: 'Submenu 1.2.2', icon: 'pi pi-fw pi-bookmark' },
-            ],
-          },
-        ],
-      },
-      {
-        label: 'Submenu 2',
-        icon: 'pi pi-fw pi-bookmark',
-        items: [
-          {
-            label: 'Submenu 2.1',
-            icon: 'pi pi-fw pi-bookmark',
-            items: [
-              { label: 'Submenu 2.1.1', icon: 'pi pi-fw pi-bookmark' },
-              { label: 'Submenu 2.1.2', icon: 'pi pi-fw pi-bookmark' },
-              { label: 'Submenu 2.1.3', icon: 'pi pi-fw pi-bookmark' },
-            ],
-          },
-          {
-            label: 'Submenu 2.2',
-            icon: 'pi pi-fw pi-bookmark',
-            items: [
-              { label: 'Submenu 2.2.1', icon: 'pi pi-fw pi-bookmark' },
-              { label: 'Submenu 2.2.2', icon: 'pi pi-fw pi-bookmark' },
-            ],
-          },
-        ],
-      },
-    ],
+    label: 'Usuarios', icon: 'pi pi-fw pi-users', to: '/admin/users', module: 'user', permission: 'canView',
   },
+  {
+    label: 'Materias', icon: 'pi pi-fw pi-book', to: '/admin/subjects', module: 'subject', permission: 'canView',
+  },
+  {
+    label: 'Tutores', icon: 'pi pi-fw pi-id-card', to: '/admin/professors', module: 'professor', permission: 'canView',
+  },
+
 ];
 
 export default { menu };
+
+// {
+//   label: 'Pages',
+//   icon: 'pi pi-fw pi-clone',
+//   items: [
+//     { label: 'Crud', icon: 'pi pi-fw pi-user-edit', to: '/crud' },
+//     {
+//       label: 'Calendar',
+//       icon: 'pi pi-fw pi-calendar-plus',
+//       to: '/calendar',
+//     },
+//     { label: 'Timeline', icon: 'pi pi-fw pi-calendar', to: '/timeline' },
+//     { label: 'Empty Page', icon: 'pi pi-fw pi-circle-off', to: '/empty' },
+//   ],
+// },
+// {
+//   label: 'Menu Hierarchy',
+//   icon: 'pi pi-fw pi-search',
+//   items: [
+//     {
+//       label: 'Submenu 1',
+//       icon: 'pi pi-fw pi-bookmark',
+//       items: [
+//         {
+//           label: 'Submenu 1.1',
+//           icon: 'pi pi-fw pi-bookmark',
+//           items: [
+//             { label: 'Submenu 1.1.1', icon: 'pi pi-fw pi-bookmark' },
+//             { label: 'Submenu 1.1.2', icon: 'pi pi-fw pi-bookmark' },
+//             { label: 'Submenu 1.1.3', icon: 'pi pi-fw pi-bookmark' },
+//           ],
+//         },
+//         {
+//           label: 'Submenu 1.2',
+//           icon: 'pi pi-fw pi-bookmark',
+//           items: [
+//             { label: 'Submenu 1.2.1', icon: 'pi pi-fw pi-bookmark' },
+//             { label: 'Submenu 1.2.2', icon: 'pi pi-fw pi-bookmark' },
+//           ],
+//         },
+//       ],
+//     },
+//     {
+//       label: 'Submenu 2',
+//       icon: 'pi pi-fw pi-bookmark',
+//       items: [
+//         {
+//           label: 'Submenu 2.1',
+//           icon: 'pi pi-fw pi-bookmark',
+//           items: [
+//             { label: 'Submenu 2.1.1', icon: 'pi pi-fw pi-bookmark' },
+//             { label: 'Submenu 2.1.2', icon: 'pi pi-fw pi-bookmark' },
+//             { label: 'Submenu 2.1.3', icon: 'pi pi-fw pi-bookmark' },
+//           ],
+//         },
+//         {
+//           label: 'Submenu 2.2',
+//           icon: 'pi pi-fw pi-bookmark',
+//           items: [
+//             { label: 'Submenu 2.2.1', icon: 'pi pi-fw pi-bookmark' },
+//             { label: 'Submenu 2.2.2', icon: 'pi pi-fw pi-bookmark' },
+//           ],
+//         },
+//       ],
+//     },
+//   ],
+// },

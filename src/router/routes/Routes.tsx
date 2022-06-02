@@ -18,8 +18,17 @@ import { SendEmailVerifyScreen } from '../../screens/blank/sendEmailVerify/SendE
 import { SubjectsScreen } from '../../screens/admin/subjects/SubjectsScreen';
 import { UsersScreen } from '../../screens/admin/users/UsersScreen';
 import { ProfileProfessorScreen } from '../../screens/admin/profileProfessor/ProfileProfessorScreen';
+import { PermissionsGate } from '../../components/authorization/PermissionGate';
+import { ErrorCard } from '../../components/errorCard/ErrorCard';
 
 const BlankLayoutLazy = lazy(() => import(/* webpackChunkName: "Auth" */'../../screens/blank/layout/BlankLayout'));
+
+const fallback = (
+  <ErrorCard
+    title="Ocurrio un error en su petición"
+    detail="No tiene permiso para realizar esta operación"
+  />
+);
 
 export const Routes = () => {
   const routesObject: RouteObject[] = [
@@ -36,7 +45,7 @@ export const Routes = () => {
           path: 'home',
         },
         {
-          element: <UsersScreen />,
+          element: <PermissionsGate fallback={fallback} module="user" permission="canView"><UsersScreen /></PermissionsGate>,
           path: 'users',
         },
         {
@@ -44,15 +53,15 @@ export const Routes = () => {
           path: 'users/:id',
         },
         {
-          element: <SubjectsScreen />,
+          element: <PermissionsGate fallback={fallback} module="subject" permission="canView"><SubjectsScreen /></PermissionsGate>,
           path: 'subjects',
         },
         {
-          element: <ProfessorsScreen />,
+          element: <PermissionsGate fallback={fallback} module="professor" permission="canView"><ProfessorsScreen /></PermissionsGate>,
           path: 'professors',
         },
         {
-          element: <ProfileProfessorScreen />,
+          element: <PermissionsGate fallback={fallback} module="professor" permission="canView"><ProfileProfessorScreen /></PermissionsGate>,
           path: 'professors/:id',
         },
       ],

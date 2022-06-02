@@ -1,40 +1,64 @@
-import { cloneElement } from 'react';
-import { useAuth } from '../../hooks/useAuth';
+import { cloneElement, useMemo } from 'react';
+
+import { AllowedRoles } from '../../interfaces/api';
 import { Generic } from '../../interfaces/generic';
-import { ErrorCard } from '../errorCard/ErrorCard';
-import PERMISSIONS_LIST from './permissions';
+import PERMISSIONS_LIST, { ModulesName, PermissionsName } from './permissions';
+
+import { useAuth } from '../../hooks/useAuth';
 
 interface Props {
     children: JSX.Element,
+    module: ModulesName,
+    permission: PermissionsName,
+    errorProps?: Generic,
     fallback?: JSX.Element | string,
-    errorProps: Generic,
-    to: string
+    isMe?: boolean,
 }
 
-export default function PermissionsGate({
+interface HasPermission {
+  allowedRoles: AllowedRoles[],
+  roles: AllowedRoles[],
+}
+
+const hasPermissions = ({ allowedRoles, roles }: HasPermission): boolean => {
+  if (roles.length <= 0 || allowedRoles.length <= 0) {
+    return false;
+  }
+
+  return !!roles.map((role) => allowedRoles.includes(role)).find((val) => val === true);
+};
+
+export function PermissionsGate({
   children,
   fallback,
   errorProps,
-  to,
+  module,
+  permission,
+  isMe,
 }: Props) {
-  const { user: { roles }} = useAuth();
+  const { user } = useAuth();
 
-  const permission: string[] = PERMISSIONS_LIST[to];
+  const allowedRoles: AllowedRoles[] = PERMISSIONS_LIST[module][permission];
 
-  const permissionGranted = hasPermission({ permissions, scopes });
+  const memoizedHasPermission = useMemo(() => {
+    const roles = user?.roles ?? [];
+    return hasPermissions({ allowedRoles, roles });
+  }, [ allowedRoles, user ]);
+
+  const permissionGranted = isMe || memoizedHasPermission;
 
   // eslint-disable-next-line react/jsx-no-useless-fragment
   if (!permissionGranted && !errorProps) return <>{fallback}</>;
 
   if (!permissionGranted && errorProps) return cloneElement(children, { ...errorProps });
 
-  // eslint-disable-next-line react/jsx-no-useless-fragment
-  return <>{children}</>;
+  return children;
 }
 
 PermissionsGate.defaultProps = {
-  fallback: <ErrorCard
-    title="Ocurrio un error en su petición"
-    detail="No tiene permiso para realizar esta operación"
-  />,
+  fallback: undefined,
+  errorProps: undefined,
+  isMe: undefined,
 };
+
+export default PermissionsGate;

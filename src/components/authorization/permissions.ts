@@ -1,4 +1,13 @@
-const ROLES_LIST = {
+import { AllowedRoles } from '../../interfaces/api';
+
+export type ModulesName = 'user' | 'professor' | 'subject' | 'course';
+export type PermissionsName = 'canView' | 'canDelete' | 'canUpdate' | 'canCreate';
+
+interface Roles {
+  [x: string]: AllowedRoles;
+}
+
+const ROLES_LIST: Roles = {
   Admin: 'admin',
   Professor: 'professor',
   Reader: 'reader',
@@ -10,41 +19,35 @@ const {
   Admin, Professor, Reader,
 } = ROLES_LIST;
 
-const USER_PERMISSIONS = {
+const USER_PERMISSIONS: Record<PermissionsName, AllowedRoles[]> = {
   canView: [ Admin, Reader ],
   canDelete: [ Admin ],
   canUpdate: [ Admin ],
   canCreate: [ Admin ],
 };
 
-const PROFESSOR_PERMISSIONS = {
+const PROFESSOR_PERMISSIONS: Record<PermissionsName, AllowedRoles[]> = {
   canView: [ Admin, Reader ],
   canDelete: [ Admin ],
   canUpdate: [ Admin ],
   canCreate: [ Admin ],
 };
 
-const SUBJECT_PERMISSIONS = {
+const SUBJECT_PERMISSIONS: Record<PermissionsName, AllowedRoles[]> = {
   canView: [ Admin, Reader, Professor ],
   canDelete: [ Admin ],
   canUpdate: [ Admin ],
   canCreate: [ Admin ],
 };
 
-const COURSE_PERMISSIONS = {
+const COURSE_PERMISSIONS: Record<PermissionsName, AllowedRoles[]> = {
   canView: [ Admin, Reader, Professor ],
   canDelete: [ Admin, Professor ],
   canUpdate: [ Admin, Professor ],
   canCreate: [ Admin, Professor ],
 };
 
-interface Permissions {
-
-}
-
-export type ModulesName = 'user' | 'professor' | 'subject' | 'course';
-
-const PERMISSIONS_LIST: Record<ModulesName, > = {
+const PERMISSIONS_LIST: Record<ModulesName, Record<PermissionsName, AllowedRoles[]>> = {
   user: USER_PERMISSIONS,
   professor: PROFESSOR_PERMISSIONS,
   subject: SUBJECT_PERMISSIONS,

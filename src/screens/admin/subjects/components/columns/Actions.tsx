@@ -1,13 +1,15 @@
 import { useContext } from 'react';
 
-import { confirmDialog } from 'primereact/confirmdialog';
 import { Button } from 'primereact/button';
-
+import { confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
-import { SubjectContext } from '../../context/subjectContext';
-import { Subject } from '../../../../../interfaces/api';
-import { useDeleteSubjectMutation } from '../../../../../redux/subject/subject.api';
+
+import { PermissionsGate } from '../../../../../components/authorization/PermissionGate';
 import { processError } from '../../../../../utils/forms/handlerFormErrors';
+import { Subject } from '../../../../../interfaces/api';
+import { SubjectContext } from '../../context/subjectContext';
+import { useDeleteSubjectMutation } from '../../../../../redux/subject/subject.api';
+
 import { useToast } from '../../../../../hooks/useToast';
 
 export const ActionsBody = ({ subject }: { subject: Subject }) => {
@@ -55,17 +57,27 @@ export const ActionsBody = ({ subject }: { subject: Subject }) => {
         className="p-button-sm p-button-raised p-button-primary mr-1"
         onClick={handleViewDetail}
       />
-      <Button
-        icon="pi pi-pencil"
-        className="p-button-sm p-button-raised p-button-primary mr-1"
-        onClick={handleUpdate}
-      />
-      <Button
-        icon="pi pi-trash"
-        className="p-button-sm p-button-raised p-button-danger"
-        onClick={handleDelete}
-        loading={isLoading}
-      />
+      <PermissionsGate
+        module="subject"
+        permission="canUpdate"
+      >
+        <Button
+          icon="pi pi-pencil"
+          className="p-button-sm p-button-raised p-button-primary mr-1"
+          onClick={handleUpdate}
+        />
+      </PermissionsGate>
+      <PermissionsGate
+        module="subject"
+        permission="canDelete"
+      >
+        <Button
+          icon="pi pi-trash"
+          className="p-button-sm p-button-raised p-button-danger"
+          onClick={handleDelete}
+          loading={isLoading}
+        />
+      </PermissionsGate>
     </>
   );
 };

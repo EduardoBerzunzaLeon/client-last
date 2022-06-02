@@ -8,6 +8,7 @@ export const Header = () => (
     context={SubjectContext}
     initialFiltersValue={initialFiltersValue}
     createTitle="Crear Materia"
+    module="subject"
   >
     <ExcelButtonSubjects />
   </GenericHeader>

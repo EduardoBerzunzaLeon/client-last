@@ -8,6 +8,8 @@ import {
   DataTableFilterMeta,
   DataTableFilterMetaData,
 } from 'primereact/datatable';
+import { ModulesName } from '../authorization/permissions';
+import { PermissionsGate } from '../authorization/PermissionGate';
 
 interface HeaderGenericContext {
     lazyParams: DataTablePFSEvent,
@@ -20,11 +22,12 @@ interface Props<T> {
     context: React.Context<T>,
     initialFiltersValue: DataTableFilterMeta,
     createTitle: string,
+    module: ModulesName,
     children?: ReactElement | ReactElement[],
 }
 
 export const Header = <T extends HeaderGenericContext>({
-  context, initialFiltersValue, children, createTitle,
+  context, initialFiltersValue, children, createTitle, module,
 }: Props<T>) => {
   const {
     lazyParams, setLazyParams, setFilterValue, setDisplayModal,
@@ -49,13 +52,18 @@ export const Header = <T extends HeaderGenericContext>({
           }))}
 
         />
-        <Button
-          type="button"
-          icon="pi pi-plus"
-          label={createTitle}
-          className="p-button-outlined p-button-success m-2"
-          onClick={() => setDisplayModal(true)}
-        />
+        <PermissionsGate
+          module={module}
+          permission="canCreate"
+        >
+          <Button
+            type="button"
+            icon="pi pi-plus"
+            label={createTitle}
+            className="p-button-outlined p-button-success m-2"
+            onClick={() => setDisplayModal(true)}
+          />
+        </PermissionsGate>
         { children }
       </div>
       <span className="p-input-icon-left m-2 overflow-hidden">

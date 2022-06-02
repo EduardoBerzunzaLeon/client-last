@@ -7,6 +7,7 @@ import classnames from 'classnames';
 import { closeSider } from '../../../../redux/ui/ui.slice';
 import { Menu } from '../../../../utils/menuElement';
 import { useAppDispatch } from '../../../../redux/hooks';
+import { PermissionsGate } from '../../../../components/authorization/PermissionGate';
 
 export interface SubmenuProps {
     elements: Menu[];
@@ -94,12 +95,18 @@ const Submenu = ({ elements, className = '', root = false }: SubmenuProps) => {
         const styleClass = classnames({
           'active-menuitem': active && !item.to,
         });
-
         return (
           <li className={styleClass} key={item.label}>
-            {item.items && root === true && <div className="arrow" />}
-            {renderLink(item, i)}
-            {
+            <PermissionsGate
+              module={item.module}
+              permission={item.permission}
+              isMe={item.isMe}
+            >
+              <>
+
+                {item.items && root === true && <div className="arrow" />}
+                {renderLink(item, i)}
+                {
                 item.items && (
                 <CSSTransition
                   classNames="p-toggleable-content"
@@ -111,6 +118,8 @@ const Submenu = ({ elements, className = '', root = false }: SubmenuProps) => {
                 </CSSTransition>
                 )
             }
+              </>
+            </PermissionsGate>
           </li>
         );
       });

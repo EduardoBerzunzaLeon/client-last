@@ -8,6 +8,7 @@ export const Header = () => (
     context={ProfessorContext}
     initialFiltersValue={initialFiltersValue}
     createTitle="Crear Tutor"
+    module="professor"
   >
     <ExcelButtonProfessors />
   </GenericHeader>

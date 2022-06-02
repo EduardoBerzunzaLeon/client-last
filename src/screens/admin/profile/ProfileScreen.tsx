@@ -17,6 +17,7 @@ import { SpinnerRTK } from '../../../components/spinnerRTK/SpinnerRTK';
 import { useAuth } from '../../../hooks/useAuth';
 import { useGetUserQuery } from '../../../redux/user/user.api';
 import { User } from '../../../interfaces/api';
+import { PermissionsGate } from '../../../components/authorization/PermissionGate';
 
 const ProfileScreenMin = ({ data }: {data: User}) => {
   const [ isUserLogged, setIsUserLogged ] = useState(false);
@@ -64,22 +65,22 @@ const ProfileScreenMin = ({ data }: {data: User}) => {
               <span className="font-semibold">{data.gender === 'M' ? 'Hombre' : 'Mujer'}</span>
             </div>
 
-            {
-             (userAuth?.roles.includes('admin') || isUserLogged)
-             && (
-             <div className="flex flex-column">
-               <Button
-                 type="button"
-                 label="Editar Perfil"
-                 className="mt-3 flex align-items-center justify-content-center"
-                 icon="pi pi-pencil"
-                 iconPos="right"
-                 onClick={() => setDisplayModal(true)}
-               />
-             </div>
-             )
-            }
-
+            <PermissionsGate
+              module="user"
+              permission="canUpdate"
+              isMe={isUserLogged}
+            >
+              <div className="flex flex-column">
+                <Button
+                  type="button"
+                  label="Editar Perfil"
+                  className="mt-3 flex align-items-center justify-content-center"
+                  icon="pi pi-pencil"
+                  iconPos="right"
+                  onClick={() => setDisplayModal(true)}
+                />
+              </div>
+            </PermissionsGate>
           </Card>
         </div>
 
@@ -133,12 +134,12 @@ const ProfileScreenMin = ({ data }: {data: User}) => {
             <PersonalDataForm user={data} isUserLogged={isUserLogged} />
           </TabPanel>
           {
-              (isUserLogged) && (
-                <TabPanel header="Cambiar contraseña">
-                  <PasswordForm userId={data.id} />
-                </TabPanel>
-              )
-            }
+            (isUserLogged) && (
+              <TabPanel header="Cambiar contraseña">
+                <PasswordForm userId={data.id} />
+              </TabPanel>
+            )
+          }
 
         </TabView>
       </Dialog>
