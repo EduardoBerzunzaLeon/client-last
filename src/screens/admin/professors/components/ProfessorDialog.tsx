@@ -77,7 +77,7 @@ export const ProfessorDialog = () => {
         {({ data: dataSend }) => (
           <TabView>
             <TabPanel header="Datos Personales">
-              <ProfessorDataForm professor={dataSend} />
+              <ProfessorDataForm professor={dataSend} buttonLabel={title} />
             </TabPanel>
           </TabView>
         )}

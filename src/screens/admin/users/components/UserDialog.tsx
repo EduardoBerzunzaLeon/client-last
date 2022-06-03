@@ -33,7 +33,7 @@ export const UserDialog = () => {
     >
       <TabView>
         <TabPanel header="Datos Personales">
-          <UserDataForm user={userSelected} />
+          <UserDataForm user={userSelected} buttonLabel={title} />
         </TabPanel>
         {
            userSelected && (

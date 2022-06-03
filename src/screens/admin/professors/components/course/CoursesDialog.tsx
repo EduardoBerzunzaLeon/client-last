@@ -1,33 +1,19 @@
 import { useContext, useEffect } from 'react';
 
-import { addLocale, locale } from 'primereact/api';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import { Dialog } from 'primereact/dialog';
 
+import { ActionsCoursesBodyTemplate, ImpartedAtBodyTemplate } from '../columns/ActionsCourses';
+import { CalendarFilter } from '../../../../../components/datatable/filters/CalendarFilter';
+import { CourseDataForm } from './CourseDataForm';
+import { initialFiltersCoursesValue } from '../../assets/assets';
 import { ProfessorContext } from '../../context/professorContext';
 import { SpinnerRTK } from '../../../../../components/spinnerRTK/SpinnerRTK';
-import { ActionsCoursesBodyTemplate, ImpartedAtBodyTemplate } from '../columns/ActionsCourses';
-import { CourseDataForm } from './CourseDataForm';
-import { useLazyParams } from '../../../../../hooks/useLazyParams';
-import { initialFiltersCoursesValue } from '../../assets/assets';
 import { useGetCoursesQuery } from '../../../../../redux/course/course.api';
-import { CalendarFilter } from '../../../../../components/datatable/filters/CalendarFilter';
+import { useLazyParams } from '../../../../../hooks/useLazyParams';
 
 import { useModalLogin } from '../../../../../hooks/useModalLogin';
-
-addLocale('es', {
-  firstDayOfWeek: 1,
-  dayNames: [ 'domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado' ],
-  dayNamesShort: [ 'dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb' ],
-  dayNamesMin: [ 'D', 'L', 'M', 'X', 'J', 'V', 'S' ],
-  monthNames: [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ],
-  monthNamesShort: [ 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic' ],
-  today: 'Hoy',
-  clear: 'Limpiar',
-});
-
-locale('es');
 
 export const CoursesDialog = () => {
   const {

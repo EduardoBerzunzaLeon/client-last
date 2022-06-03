@@ -17,13 +17,12 @@ import { Paginator, ProfessorDetail, RequiredSubjects } from '../../../../interf
 import { setProfessorFormErrors, processError } from '../../../../utils/forms/handlerFormErrors';
 import { SkeletonDropdown } from '../../../../components/skeletonDropdown/SkeletonDropdown';
 import { ToggleButtonApp } from '../../../../components/forms/toggleButton/ToggleButtonApp';
+import { uploadOptions } from '../../../../components/forms/fileInput/buttonOptions';
 
 import { useToast } from '../../../../hooks/useToast';
 import { useCreateProfessorMutation, useUpdateProfessorMutation } from '../../../../redux/professor/professor.api';
 import { useGetConsecutiveSubjectsQuery } from '../../../../redux/subject/subject.api';
 import { useDropdownFilter } from '../../../../hooks/useDropdownFilter';
-
-const uploadOptions = { icon: 'pi pi-fw pi-cloud-upload', iconOnly: true, className: 'hidden' };
 
 const initialFilters: Paginator = {
   page: 0,
@@ -35,7 +34,12 @@ const initialFilters: Paginator = {
   },
 };
 
-export const ProfessorDataForm = ({ professor }: { professor: ProfessorDetail }) => {
+interface Props {
+  buttonLabel: string
+  professor: ProfessorDetail,
+}
+
+export const ProfessorDataForm = ({ professor, buttonLabel }: Props) => {
   const [ updateProfessor, { isLoading: isLoadingUpdate }] = useUpdateProfessorMutation();
   const [ createProfessor, { isLoading: isLoadingCreate }] = useCreateProfessorMutation();
 
@@ -210,7 +214,7 @@ export const ProfessorDataForm = ({ professor }: { professor: ProfessorDetail })
             <div className="flex flex-column">
               <Button
                 type="submit"
-                label="Cambiar Datos Personales"
+                label={buttonLabel}
                 className="mt-2 flex align-items-center justify-content-center"
                 loading={isLoadingUpdate || isLoadingCreate}
                 disabled={!isValid || isSubmitting || !dirty}

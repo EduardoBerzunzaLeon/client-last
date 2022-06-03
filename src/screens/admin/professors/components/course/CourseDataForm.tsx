@@ -1,14 +1,16 @@
-import { Form, Formik } from 'formik';
 import { Button } from 'primereact/button';
 import { Calendar } from 'primereact/calendar';
+import { Form, Formik } from 'formik';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
-import { InputTextApp } from '../../../../../components/forms';
-import { FormElement } from '../../../../../components/forms/formElement/FormElement';
-import { useToast } from '../../../../../hooks/useToast';
+
 import { CreateCourseRequest } from '../../../../../interfaces/api';
-import { useCreateCourseMutation } from '../../../../../redux/course/course.api';
+import { FormElement } from '../../../../../components/forms/formElement/FormElement';
+import { InputTextApp } from '../../../../../components/forms';
 import { processError, setSubjectFormErrors } from '../../../../../utils/forms/handlerFormErrors';
+
+import { useCreateCourseMutation } from '../../../../../redux/course/course.api';
+import { useToast } from '../../../../../hooks/useToast';
 
 const initialCourse = {
   name: '',
