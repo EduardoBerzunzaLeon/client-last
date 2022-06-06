@@ -1899,7 +1899,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-transition-group@^4.4.4":
+"@types/react-transition-group@^4.4.1", "@types/react-transition-group@^4.4.4":
   version "4.4.4"
   resolved "https://registry.npmjs.org/@types/react-transition-group/-/react-transition-group-4.4.4.tgz"
   integrity sha512-7gAPz7anVK5xzbeQW9wFBDg7G++aPLAFY0QaSMOou9rJZpbuI58WAuJrgu+qR92l61grlnCUe7AFX8KGahAgug==
@@ -7493,10 +7493,13 @@ primeicons@^5.0.0:
   resolved "https://registry.yarnpkg.com/primeicons/-/primeicons-5.0.0.tgz#73a0b6028a77c58a9eeb331ad13aaf085e8451ee"
   integrity sha512-heygWF0X5HFI1otlZE62pp6ye7sZ8om78J9au2BRkg8O7Y8AHTZ9qKMRzchZUHLe8zUAvdi6hZzzm9XxgwIExw==
 
-primereact@^7.2.1:
-  version "7.2.1"
-  resolved "https://registry.npmjs.org/primereact/-/primereact-7.2.1.tgz"
-  integrity sha512-7GU8ZyPbP3yDd53X4hmJpz/162c8iM4dGVGZTUo5er1kHAtNJpvelXrcPaN3ELrTIF7VH4LCxpTsqHvTxn0EsQ==
+primereact@^8.1.1:
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/primereact/-/primereact-8.1.1.tgz#0a8ad53d4cfd4d50e879617dc9a878cfc0b1efdf"
+  integrity sha512-D2zzpoRHyv/3jw3TmqNWh55/geInebULYNmT+DD1k4i1tVHFZE1DG1EQqC/Wl7AJmcNOS1mgHgYJWsO3/YXzLw==
+  dependencies:
+    "@types/react-transition-group" "^4.4.1"
+    react-transition-group "^4.4.1"
 
 process-nextick-args@~2.0.0:
   version "2.0.1"
@@ -7813,7 +7816,7 @@ react-test-renderer@^17.0.0:
     react-shallow-renderer "^16.13.1"
     scheduler "^0.20.2"
 
-react-transition-group@^4.4.2:
+react-transition-group@^4.4.1, react-transition-group@^4.4.2:
   version "4.4.2"
   resolved "https://registry.npmjs.org/react-transition-group/-/react-transition-group-4.4.2.tgz"
   integrity sha512-/RNYfRAMlZwDSr6z4zNKV6xu53/e2BuaBbGhbyYIXTrmgu/bGHzmqOs7mJSJBHy9Ud+ApHx3QjrkKSp1pxvlFg==
