@@ -34,12 +34,11 @@ export const menu: Menu[] = [
     label: 'Usuarios', icon: 'pi pi-fw pi-users', to: '/admin/users', module: 'user', permission: 'canView',
   },
   {
-    label: 'Materias', icon: 'pi pi-fw pi-book', to: '/admin/subjects', module: 'subject', permission: 'canView',
-  },
-  {
     label: 'Tutores', icon: 'pi pi-fw pi-id-card', to: '/admin/professors', module: 'professor', permission: 'canView',
   },
-
+  {
+    label: 'Materias', icon: 'pi pi-fw pi-book', to: '/admin/subjects', module: 'subject', permission: 'canView',
+  },
 ];
 
 export default { menu };

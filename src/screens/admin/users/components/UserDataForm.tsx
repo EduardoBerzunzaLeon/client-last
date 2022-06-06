@@ -14,6 +14,7 @@ import { genderRadio } from '../../../../utils/forms/radioButtonObjects';
 import { InputTextApp, RadioGroup } from '../../../../components/forms';
 import { setAuthFormErrors, processError } from '../../../../utils/forms/handlerFormErrors';
 import { ToggleButtonApp } from '../../../../components/forms/toggleButton/ToggleButtonApp';
+import { uploadOptions } from '../../../../components/forms/fileInput/buttonOptions';
 import { User } from '../../../../interfaces/api';
 
 import { useToast } from '../../../../hooks/useToast';
@@ -29,9 +30,12 @@ const initialValues = {
   avatar: null,
 };
 
-const uploadOptions = { icon: 'pi pi-fw pi-cloud-upload', iconOnly: true, className: 'hidden' };
+interface Props {
+  buttonLabel: string,
+  user?: User
+}
 
-export const UserDataForm = ({ user }: {user?: User }) => {
+export const UserDataForm = ({ buttonLabel, user }: Props) => {
   const [ updateUser, { isLoading: isLoadingUpdate }] = useUpdateUserAdminMutation();
   const [ createUser, { isLoading: isLoadingCreate }] = useCreateUserMutation();
 
@@ -176,7 +180,7 @@ export const UserDataForm = ({ user }: {user?: User }) => {
             <div className="flex flex-column">
               <Button
                 type="submit"
-                label="Cambiar Datos Personales"
+                label={buttonLabel}
                 className="mt-2 flex align-items-center justify-content-center"
                 loading={isLoadingUpdate || isLoadingCreate}
                 disabled={!isValid || isSubmitting || !dirty}

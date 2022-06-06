@@ -79,7 +79,7 @@ export const SubjectDialog = () => {
         {({ data: dataSend }) => (
           <TabView>
             <TabPanel header="Información Básica">
-              <SubjectDataForm subject={dataSend} />
+              <SubjectDataForm subject={dataSend} buttonLabel={title} />
             </TabPanel>
             {
             dataSend?.id && (

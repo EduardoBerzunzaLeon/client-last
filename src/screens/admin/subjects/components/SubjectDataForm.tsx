@@ -21,6 +21,7 @@ import { useDropdownFilter } from '../../../../hooks/useDropdownFilter';
 import { useToast } from '../../../../hooks/useToast';
 
 interface Props {
+  buttonLabel: string,
   subject: SubjectDetail,
 }
 
@@ -30,7 +31,7 @@ const cores = [
   { name: 'Integral', code: 'integral' },
 ];
 
-export const SubjectDataForm = ({ subject }: Props) => {
+export const SubjectDataForm = ({ subject, buttonLabel }: Props) => {
   const [ initialSubject, setInitialSubject ] = useState({
     credit: subject.credit,
     deprecated: subject.deprecated,
@@ -267,7 +268,7 @@ export const SubjectDataForm = ({ subject }: Props) => {
               <div className="flex flex-column">
                 <Button
                   type="submit"
-                  label="Crear / Guardar Materia"
+                  label={buttonLabel}
                   className="mt-2 flex align-items-center justify-content-center"
                   loading={isLoadingCreate || isLoadingUpdate}
                   disabled={!isValid || isSubmitting || !dirty}

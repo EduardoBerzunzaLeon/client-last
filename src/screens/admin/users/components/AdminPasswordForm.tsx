@@ -11,7 +11,11 @@ import { useUpdatePasswordUserAdminMutation } from '../../../../redux/user/user.
 
 const InputPassword = withDetailInputPassword(InputTextApp);
 
-export const AdminPasswordForm = ({ userId }: {userId: string}) => {
+interface Props {
+  userId: string,
+}
+
+export const AdminPasswordForm = ({ userId }: Props) => {
   const [ updatePassword, { isLoading }] = useUpdatePasswordUserAdminMutation();
   const { toast, showError, showSuccess } = useToast();
 
