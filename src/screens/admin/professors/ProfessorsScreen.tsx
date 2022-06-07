@@ -46,8 +46,8 @@ export const ProfessorsScreen = () => {
       error={error}
       isError={isError}
       isLoading={isLoading}
-      messageError="No se encontró usuarios"
-      messageLoading="Cargando Usuarios"
+      messageError="No se encontrarón profesores"
+      messageLoading="Cargando Profesores"
     >
       {
         ({ data: dataSend }) => (
