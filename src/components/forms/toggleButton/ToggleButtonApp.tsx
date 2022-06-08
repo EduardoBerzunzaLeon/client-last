@@ -15,7 +15,7 @@ interface Props extends Generic{
     onLabel?: string,
 }
 
-export const ToggleButtonApp = ({ ...props }: Props) => {
+export const ToggleButtonApp = ({ onClassName, offClassName, ...props }: Props) => {
   const [ field, meta ] = useField(props);
 
   const showErrorClass = meta.error && meta.touched;
@@ -29,7 +29,7 @@ export const ToggleButtonApp = ({ ...props }: Props) => {
         {...restField}
         checked={value}
         className={`${classname} 
-          ${field.value ? props.onClassName : props.offClassName}`}
+          ${field.value ? onClassName : offClassName}`}
       />
       <ErrorMessage name={props.name}>
         {(msg: string) => <small className="p-error">{msg}</small>}

@@ -47,7 +47,7 @@ export const UserDataForm = ({ buttonLabel, user }: Props) => {
       email: user.email,
       blocked: user.blocked,
       roles: convertRoles(user.roles),
-      avatar: null,
+      avatar: user.avatar,
     }
     : initialValues);
 
@@ -114,7 +114,7 @@ export const UserDataForm = ({ buttonLabel, user }: Props) => {
               onChange={(primeFile) => {
                 setFieldValue('avatar', primeFile);
               }}
-              initialValue={user?.avatar ?? values?.avatar ?? ''}
+              initialValue={initialUser?.avatar ?? values?.avatar ?? ''}
               isLoading={isLoadingUpdate || isLoadingCreate}
               uploadOptions={uploadOptions}
             />
