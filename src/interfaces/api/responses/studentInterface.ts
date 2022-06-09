@@ -1,15 +1,16 @@
-interface StudentStatus {
+export interface StudentStatus {
     _id: string,
     createdAt: Date,
     status: 'regular' | 'baja' | 'baja temporal' | 'egresado',
 }
 
-interface StudentProfessor {
-    _id: string,
+export interface StudentProfessor {
+    id: string,
     name: {
         first: string,
         last: string,
-    }
+    },
+    avatar: string
 }
 
 export interface StudentResume {
@@ -19,6 +20,7 @@ export interface StudentResume {
     enrollment: string,
     currentSemester: number,
     userId: string,
+    avatar: string,
     name: {
         first: string,
         last: string,
