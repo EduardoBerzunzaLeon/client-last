@@ -44,3 +44,5 @@ export type { UpdateActiveProfessor } from './requests/professorInterface';
 
 export type { UpdateCourseRequest, CreateCourseRequest } from './requests/courseInterface';
 export type { Course } from './responses/courseinterface';
+
+export type { StudentResume } from './responses/studentInterface';

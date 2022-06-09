@@ -20,6 +20,7 @@ import { UsersScreen } from '../../screens/admin/users/UsersScreen';
 import { ProfileProfessorScreen } from '../../screens/admin/profileProfessor/ProfileProfessorScreen';
 import { PermissionsGate } from '../../components/authorization/PermissionGate';
 import { ErrorCard } from '../../components/errorCard/ErrorCard';
+import { StudentsScreen } from '../../screens/admin/students/StudentsScreen';
 
 const BlankLayoutLazy = lazy(() => import(/* webpackChunkName: "Auth" */'../../screens/blank/layout/BlankLayout'));
 
@@ -63,6 +64,10 @@ export const Routes = () => {
         {
           element: <PermissionsGate fallback={fallback} module="professor" permission="canView"><ProfileProfessorScreen /></PermissionsGate>,
           path: 'professors/:id',
+        },
+        {
+          element: <PermissionsGate fallback={fallback} module="student" permission="canView"><StudentsScreen /></PermissionsGate>,
+          path: 'students',
         },
       ],
     },

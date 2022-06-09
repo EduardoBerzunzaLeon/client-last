@@ -31,7 +31,7 @@ export const tutorApi = createApi({
   }) as BaseQueryFn<string | FetchArgs,
     unknown, FetchBaseQueryError | ErrorResponse, {}, FetchBaseQueryMeta>,
   keepUnusedDataFor: process.env.NODE_ENV !== 'test' ? 60 : 0,
-  tagTypes: [ 'Auth', 'Users', 'Subjects', 'Professors', 'Courses' ],
+  tagTypes: [ 'Auth', 'Users', 'Subjects', 'Professors', 'Courses', 'Students' ],
   endpoints: () => ({}),
 });
 

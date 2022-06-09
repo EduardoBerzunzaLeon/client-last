@@ -30,7 +30,7 @@ export const prepareFilters = (filterOptions: FilterOptionsProps) => {
     if ('value' in filter && (filter.value || filter.value === false)) {
       const matchMode = filterEquivalence[filter.matchMode] ?? '[regex]=';
       return `${fieldName}${matchMode}${encodeURIComponent(filter.value)}`
-        .replace('.', '/');
+        .replace('.', '-');
     }
     return '';
   }).filter(Boolean).join('&');

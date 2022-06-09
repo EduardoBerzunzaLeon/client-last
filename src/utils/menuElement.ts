@@ -37,6 +37,9 @@ export const menu: Menu[] = [
     label: 'Tutores', icon: 'pi pi-fw pi-id-card', to: '/admin/professors', module: 'professor', permission: 'canView',
   },
   {
+    label: 'Alumnos', icon: 'pi pi-fw pi-table', to: '/admin/students', module: 'student', permission: 'canView',
+  },
+  {
     label: 'Materias', icon: 'pi pi-fw pi-book', to: '/admin/subjects', module: 'subject', permission: 'canView',
   },
 ];
