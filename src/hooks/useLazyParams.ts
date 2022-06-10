@@ -7,7 +7,7 @@ export const useLazyParams = (initialFiltersValue: DataTableFilterMeta, path?: s
   const [ lazyParams, setLazyParams ] = useState<DataTablePFSEvent>({
     multiSortMeta: null,
     first: 0,
-    rows: 10,
+    rows: 1,
     page: 0,
     sortField: '',
     sortOrder: null,
@@ -25,6 +25,8 @@ export const useLazyParams = (initialFiltersValue: DataTableFilterMeta, path?: s
   const paginatorURL:string = transformQueryWithPaginator(path || '')(paginatorValues);
 
   const onPage = (event: DataTablePFSEvent) => {
+    // eslint-disable-next-line no-param-reassign
+    event.page = event.page ? event.page + 1 : 0;
     setLazyParams(event);
   };
 

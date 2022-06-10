@@ -6,7 +6,7 @@ interface Props {
     hasEntitySelected: boolean,
 }
 
-export const useModalLogin = ({
+export const useModalLoading = ({
   isFetching,
   hasData,
   hasEntitySelected,
@@ -24,4 +24,4 @@ export const useModalLogin = ({
   return { isLoading };
 };
 
-export default useModalLogin;
+export default useModalLoading;

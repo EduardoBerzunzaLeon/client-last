@@ -15,7 +15,7 @@ import { SubjectDetail } from '../../../../interfaces/api/responses/subjectInter
 
 import { useGetSubjectQuery } from '../../../../redux/subject/subject.api';
 import { useTitle } from '../../../../hooks/useTitle';
-import { useModalLogin } from '../../../../hooks/useModalLogin';
+import { useModalLoading } from '../../../../hooks/useModalLoading';
 
 const emptyData: SingleResponse<SubjectDetail> = {
   status: 'success',
@@ -48,7 +48,7 @@ export const SubjectDialog = () => {
     hasEntitySelected: !!subjectSelected,
   });
 
-  const { isLoading } = useModalLogin({
+  const { isLoading } = useModalLoading({
     isFetching,
     hasData: !!data,
     hasEntitySelected: !!subjectSelected,

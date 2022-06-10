@@ -62,5 +62,8 @@ export const transformQueryWithPaginator = (path: string) => ({
     ? `&${options[key]}=${values[key]}`
     : '')).join('');
 
-  return `${path}/?page=${page}${result}&${prepareFilters(filters)}`;
+  const prepareFiltersElements = prepareFilters(filters);
+  const sanitizeFiltersParams = prepareFiltersElements ? `&${prepareFiltersElements}` : '';
+
+  return `${path}/?page=${page}${result}${sanitizeFiltersParams}`;
 };

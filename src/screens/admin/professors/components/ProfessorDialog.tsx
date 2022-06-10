@@ -11,7 +11,7 @@ import { SpinnerRTK } from '../../../../components/spinnerRTK/SpinnerRTK';
 import { ProfessorDetail, SingleResponse } from '../../../../interfaces/api';
 
 import { useTitle } from '../../../../hooks/useTitle';
-import { useModalLogin } from '../../../../hooks/useModalLogin';
+import { useModalLoading } from '../../../../hooks/useModalLoading';
 
 const emptyData: SingleResponse<ProfessorDetail> = {
   status: 'success',
@@ -47,7 +47,7 @@ export const ProfessorDialog = () => {
     hasEntitySelected: !!professorSelected,
   });
 
-  const { isLoading } = useModalLogin({
+  const { isLoading } = useModalLoading({
     isFetching,
     hasData: !!data,
     hasEntitySelected: !!professorSelected,

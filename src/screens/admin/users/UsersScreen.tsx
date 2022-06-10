@@ -51,7 +51,7 @@ export const UsersScreen = () => {
       messageLoading="Cargando Usuarios"
     >
       {
-        ({ data: dataSend }) => (
+        ({ data: dataSend, total }) => (
           <Provider value={{
             displayModal,
             lazyParams,
@@ -77,7 +77,7 @@ export const UsersScreen = () => {
                   paginator
                   first={lazyParams.first}
                   rows={lazyParams.rows}
-                  totalRecords={7}
+                  totalRecords={total}
                   onPage={onPage}
                   onSort={onSort}
                   sortField={lazyParams.sortField}

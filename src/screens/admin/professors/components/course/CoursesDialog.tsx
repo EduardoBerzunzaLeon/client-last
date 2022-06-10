@@ -13,7 +13,7 @@ import { SpinnerRTK } from '../../../../../components/spinnerRTK/SpinnerRTK';
 import { useGetCoursesQuery } from '../../../../../redux/course/course.api';
 import { useLazyParams } from '../../../../../hooks/useLazyParams';
 
-import { useModalLogin } from '../../../../../hooks/useModalLogin';
+import { useModalLoading } from '../../../../../hooks/useModalLoading';
 
 export const CoursesDialog = () => {
   const {
@@ -33,7 +33,7 @@ export const CoursesDialog = () => {
     data, isError, error, isFetching,
   } = useGetCoursesQuery(paginatorURL, { skip: !professorSelected });
 
-  const { isLoading } = useModalLogin({
+  const { isLoading } = useModalLoading({
     isFetching,
     hasData: !!data,
     hasEntitySelected: !!professorSelected,

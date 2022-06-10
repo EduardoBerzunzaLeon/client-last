@@ -2,87 +2,25 @@ import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import { useState } from 'react';
 
-import {
-  GenderBody, GenderFilter, createSelectFilter,
-} from '../../../components/datatable';
 import { ActionsBodyTemplate } from './components/columns/Actions';
+import { AtRiskBody, AtRiskFilter } from './components/columns/AtRisk';
+import { GenderBody, GenderFilter } from '../../../components/datatable';
 import { Header } from './components/Header';
 import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
 import { initialFiltersValue } from './assets/assets';
-import { StudentContext } from './context/studentContext';
+import { NameBodyTemplate } from './components/columns/Name';
+import { ProfessorBodyTemplate } from './components/columns/Professor';
+import { SemesterFilter } from './components/columns/Semester';
 import { SpinnerRTK } from '../../../components/spinnerRTK/SpinnerRTK';
-import { StudentResume, StudentStatus } from '../../../interfaces/api';
+import { StatusBody, StatusFilter } from './components/columns/Status';
+import { StudentContext } from './context/studentContext';
+import { StudentResume } from '../../../interfaces/api';
+import { StudentDialog } from './components/StudentDialog';
 
 import { useLazyParams } from '../../../hooks/useLazyParams';
 import { useGetStudentsQuery } from '../../../redux/student/student.api';
-import { Badge } from '../../../components/badge/Badge';
-import { NameBodyTemplate } from './components/columns/Name';
-import { ProfessorBodyTemplate } from './components/columns/Professor';
-
-const semesterOptions = [
-  { label: 'Semestre 1', value: '1' },
-  { label: 'Semestre 2', value: '2' },
-  { label: 'Semestre 3', value: '3' },
-  { label: 'Semestre 4', value: '4' },
-  { label: 'Semestre 5', value: '5' },
-  { label: 'Semestre 6', value: '6' },
-  { label: 'Semestre 7', value: '7' },
-  { label: 'Semestre 8', value: '8' },
-  { label: 'Semestre 9', value: '9' },
-];
-
-const atRiskOptions = [
-  { label: 'No', value: 'no' },
-  { label: 'Último intento', value: 'ultimo intento' },
-  { label: 'Única materia', value: 'unica materia' },
-  { label: 'No termina', value: 'no termina' },
-];
-
-const statusOptions = [
-  { label: 'Regular', value: 'regular' },
-  { label: 'Baja', value: 'baja' },
-  { label: 'Baja Temporal', value: 'baja temporal' },
-  { label: 'Egresado', value: 'egresado' },
-];
 
 const { Provider } = StudentContext;
-const SemesterFilter = createSelectFilter({ options: semesterOptions, placeholder: 'Elige el semestre' });
-const AtRiskFilter = createSelectFilter({ options: atRiskOptions, placeholder: 'Elige el riesgo' });
-const StatusFilter = createSelectFilter({ options: statusOptions, placeholder: 'Elige el status' });
-
-const AtRiskBody = ({ atRisk }: { atRisk: string }) => {
-  const atRiskCleaned = atRisk.replaceAll(' ', '');
-
-  return (
-    <Badge
-      text={atRisk}
-      matchObject={{
-        no: 'success',
-        ultimointento: 'danger',
-        unicamateria: 'danger',
-        notermina: 'danger',
-      }}
-      match={atRiskCleaned}
-    />
-  );
-};
-
-const StatusBody = ({ status }: { status: StudentStatus }) => {
-  const atRiskCleaned = status.status.replaceAll(' ', '');
-
-  return (
-    <Badge
-      text={status.status}
-      matchObject={{
-        regular: 'warning',
-        baja: 'danger',
-        bajatemporal: 'danger',
-        egresado: 'success',
-      }}
-      match={atRiskCleaned}
-    />
-  );
-};
 
 export const StudentsScreen = () => {
   const {
@@ -112,7 +50,7 @@ export const StudentsScreen = () => {
       messageLoading="Cargando Alumnos"
     >
       {
-        ({ data: dataSend }) => (
+        ({ data: dataSend, total }) => (
           <Provider value={{
             displayModal,
             lazyParams,
@@ -144,7 +82,7 @@ export const StudentsScreen = () => {
                   rows={lazyParams.rows}
                   sortField={lazyParams.sortField}
                   sortOrder={lazyParams.sortOrder}
-                  totalRecords={7}
+                  totalRecords={total}
                 >
                   <Column
                     field="enrollment"
@@ -242,6 +180,7 @@ export const StudentsScreen = () => {
                     style={{ minWidth: '13rem' }}
                   />
                 </DataTable>
+                <StudentDialog />
               </div>
             </div>
           </Provider>
