@@ -10,7 +10,7 @@ import {
 } from '../../interfaces/api';
 import { invalidatesList, providesList } from '../services/response.service';
 
-const providesListSubject = providesList('Professors');
+const providesListProfessor = providesList('Professors');
 const invalidatesListProfessors = invalidatesList('Professors');
 
 export const professorApi = tutorApi.injectEndpoints({
@@ -21,7 +21,11 @@ export const professorApi = tutorApi.injectEndpoints({
     }),
     getProfessors: builder.query<ListResponse<Professor>, string>({
       query: (path) => path,
-      providesTags: providesListSubject,
+      providesTags: providesListProfessor,
+    }),
+    getProfessorsByFullName: builder.query<ListResponse<Professor>, string>({
+      query: (fullName) => `professors/fullName/${fullName}`,
+      providesTags: providesListProfessor,
     }),
     getProfessorsForExcel: builder.query<ListResponse<ProfessorsDataToExcel>, null>({
       query: () => 'professors/excel',
@@ -72,6 +76,7 @@ export const professorApi = tutorApi.injectEndpoints({
 export const {
   useGetProfessorQuery,
   useGetProfessorsQuery,
+  useGetProfessorsByFullNameQuery,
   useGetCoursesByProfessorQuery,
   useGetProfessorsForExcelQuery,
   useUpdateProfessorMutation,

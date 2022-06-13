@@ -12,6 +12,12 @@ export interface SubjectProfessor {
   semester: number
 }
 
+export interface ProfessorFullName {
+  id: string,
+  fullName: string,
+  avatar: string,
+}
+
 export interface Professor {
     id: string,
     email: string,

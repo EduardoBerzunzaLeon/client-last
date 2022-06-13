@@ -1,4 +1,3 @@
-// import { skipToken } from '@reduxjs/toolkit/dist/query';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
 import { Dialog } from 'primereact/dialog';
 import { useContext } from 'react';
@@ -7,8 +6,7 @@ import { useModalLoading } from '../../../../hooks/useModalLoading';
 import { useTitle } from '../../../../hooks/useTitle';
 import { useGetStudentsQuery } from '../../../../redux/student/student.api';
 import { StudentContext } from '../context/studentContext';
-
-// undefined,
+import { StudentDataForm } from './StudentDataForm';
 
 export const StudentDialog = () => {
   const {
@@ -67,7 +65,7 @@ export const StudentDialog = () => {
       >
 
         {({ data: dataSend }) => (
-          <h1>{JSON.stringify(dataSend)}</h1>
+          <StudentDataForm student={dataSend} />
         )}
       </SpinnerRTK>
     </Dialog>
