@@ -2,7 +2,7 @@ import { AutoComplete } from 'primereact/autocomplete';
 import { useState, useEffect } from 'react';
 import { TextImageBody } from '../../../../components/datatable';
 
-import { StudentResume } from '../../../../interfaces/api';
+import { Professor, StudentResume } from '../../../../interfaces/api';
 import { useGetProfessorsByFullNameQuery, useGetProfessorsQuery } from '../../../../redux/professor/professor.api';
 
 interface Props {
@@ -15,16 +15,20 @@ interface ProfessorItem {
   avatar: string
 }
 
-const prepareData = <T extends ProfessorItem>(data: T[]) => data.map((p) => ({
+const prepareData = (data: Professor[]): ProfessorItem[] => data.map((p) => ({
   fullname: p.fullname,
   value: p.id,
-  avatar: p.avatar,
+  avatar: p.avatar || '',
 }));
 
+const itemTemplate = (item: any) => (
+  <TextImageBody text={item.fullname} imageURL={item.avatar} />
+);
+
 export const StudentDataForm = ({ student }: Props) => {
-  console.log(student);
-  const [ selectedItem, setSelectedItem ] = useState<any>(null);
-  const [ filteredItems, setFilteredItems ] = useState<any>(null);
+  console.log({ student });
+  const [ selectedItem, setSelectedItem ] = useState<ProfessorItem | null>(null);
+  const [ filteredItems, setFilteredItems ] = useState<ProfessorItem[] | []>([]);
   const [ query, setQuery ] = useState<string>('');
 
   const {
@@ -37,41 +41,23 @@ export const StudentDataForm = ({ student }: Props) => {
     isLoading: isLoadingSpecific,
   } = useGetProfessorsByFullNameQuery(query, { skip: !query });
 
-  const itemTemplate = (item: any) => (
-    <TextImageBody text={item.fullname} imageURL={item.avatar} />
-  );
-
   useEffect(() => {
-    let dataPrepare: any[] = [];
     if (query && !isLoadingSpecific) {
-      if (professors?.data) {
-        dataPrepare = professors.data.map((p) => ({
-          fullname: p.fullname,
-          value: p.id,
-          avatar: p.avatar,
-        }));
-      }
-    } else if (data?.data && !isLoading) {
-      dataPrepare = data.data.map((p) => ({
-        fullname: p.fullname,
-        value: p.id,
-        avatar: p.avatar,
-      }));
+      setFilteredItems(prepareData(professors?.data ?? []));
+    } else if (!isLoading) {
+      setFilteredItems(prepareData(data?.data ?? []));
     }
-    setFilteredItems(dataPrepare);
-  }, [ query, isLoading, isLoadingSpecific, data, professors ]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    query,
+    isLoading,
+    isLoadingSpecific,
+  ]);
 
   const searchItems = (event: any) => {
+    console.log('clicked');
     if (query === '' && event.query === '') {
-      let dataPrepare: any[] = [];
-
-      if (data) {
-        dataPrepare = data?.data.map((p) => ({
-          fullname: p.fullname,
-          value: p.id,
-          avatar: p.avatar,
-        }));
-      }
+      const dataPrepare = prepareData(data?.data ?? []);
       setFilteredItems(dataPrepare);
     } else {
       setQuery(event.query.trim());
@@ -97,11 +83,12 @@ export const StudentDataForm = ({ student }: Props) => {
           }}
           field="fullname"
           dropdown
+          forceSelection
           itemTemplate={itemTemplate}
           onChange={(e) => setSelectedItem(e.value)}
           onHide={onHide}
           className="w-full"
-          forceSelection
+          aria-label="Professors"
           panelClassName="overflow-hidden"
         />
       </div>
