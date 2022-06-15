@@ -7,7 +7,7 @@ export const useLazyParams = (initialFiltersValue: DataTableFilterMeta, path?: s
   const [ lazyParams, setLazyParams ] = useState<DataTablePFSEvent>({
     multiSortMeta: null,
     first: 0,
-    rows: 1,
+    rows: 10,
     page: 0,
     sortField: '',
     sortOrder: null,

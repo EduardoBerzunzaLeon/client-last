@@ -57,7 +57,7 @@ export const professorApi = tutorApi.injectEndpoints({
     }),
     createProfessor: builder.mutation<SingleResponse<Professor>, FormData>({
       query: (post) => ({
-        url: 'Professors/',
+        url: 'professors/',
         method: 'POST',
         body: post,
       }),
@@ -65,7 +65,7 @@ export const professorApi = tutorApi.injectEndpoints({
     }),
     deleteProfessor: builder.mutation<SingleResponse<null>, string>({
       query: (id) => ({
-        url: `Professors/${id}`,
+        url: `professors/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: invalidatesListProfessors,

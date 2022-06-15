@@ -1,6 +1,7 @@
 import { Generic } from '../interfaces/generic';
 
 export const convertModelToFormData = (model: Generic, form?: FormData, namespace = ''): FormData => {
+  console.log(model);
   const formData = form || new FormData();
 
   if (typeof model === 'string') {

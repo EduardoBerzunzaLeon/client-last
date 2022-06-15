@@ -65,7 +65,9 @@ export const StudentDialog = () => {
       >
 
         {({ data: dataSend }) => (
-          <StudentDataForm student={dataSend} />
+          <div className="formgrid">
+            <StudentDataForm student={dataSend} />
+          </div>
         )}
       </SpinnerRTK>
     </Dialog>

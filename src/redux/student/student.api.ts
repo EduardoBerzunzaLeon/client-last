@@ -2,6 +2,7 @@ import { tutorApi } from '../services/tutor.api';
 import {
   StudentResume,
   ListResponse,
+  SingleResponse,
 } from '../../interfaces/api';
 
 import { providesList } from '../services/response.service';
@@ -14,9 +15,18 @@ export const studentApi = tutorApi.injectEndpoints({
       query: (path) => path,
       providesTags: providesListStudent,
     }),
+    createStudent: builder.mutation<SingleResponse<StudentResume>, FormData>({
+      query: (post) => ({
+        url: 'students/',
+        method: 'POST',
+        body: post,
+      }),
+      invalidatesTags: [ 'Students' ],
+    }),
   }),
 });
 
 export const {
   useGetStudentsQuery,
+  useCreateStudentMutation,
 } = studentApi;

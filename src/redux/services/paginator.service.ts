@@ -42,7 +42,7 @@ export const transformQueryWithPaginator = (path: string) => ({
   sortOrder,
   filters,
   fields,
-  rows,
+  rows = 10,
 }: Paginator): string => {
   const options: Generic = {
     fields: 'fields',
