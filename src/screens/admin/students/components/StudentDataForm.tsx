@@ -1,4 +1,4 @@
-import { AutoComplete } from 'primereact/autocomplete';
+import { AutoComplete, AutoCompleteCompleteMethodParams } from 'primereact/autocomplete';
 import { useState, useEffect } from 'react';
 import { TextImageBody } from '../../../../components/datatable';
 
@@ -54,11 +54,12 @@ export const StudentDataForm = ({ student }: Props) => {
     isLoadingSpecific,
   ]);
 
-  const searchItems = (event: any) => {
-    console.log('clicked');
-    if (query === '' && event.query === '') {
-      const dataPrepare = prepareData(data?.data ?? []);
-      setFilteredItems(dataPrepare);
+  // TODO: convert this in customhook or a customcomponent
+  const searchItems = (event: AutoCompleteCompleteMethodParams) => {
+    if (event.originalEvent.type === 'click' && query) {
+      setFilteredItems([]);
+    } else if (!query && !event.query) {
+      setFilteredItems(prepareData(data?.data ?? []));
     } else {
       setQuery(event.query.trim());
     }
