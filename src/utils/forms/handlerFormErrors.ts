@@ -5,6 +5,7 @@ import { MessageProps } from '../../interfaces/ui/hooks/hooksInterface';
 import { authFieldsTranslation, AuthFieldsTranslation } from '../translation/authFields';
 import { professorFieldsTranslation, ProfessorFieldsTranslation } from '../translation/professorField';
 import { subjectFieldsTranslation, SubjectFieldsTranslation } from '../translation/subjectFields';
+import { studentFieldsTranslation, StudentFieldsTranslation } from '../translation/studentField';
 
 interface Error {
   errors: string,
@@ -47,6 +48,14 @@ export const setProfessorFormErrors = handlerFormErrors<ProfessorFieldsTranslati
   professorFieldsTranslation,
 );
 
+export const setStudentFormErrors = handlerFormErrors<StudentFieldsTranslation>(
+  studentFieldsTranslation,
+);
+
 export default {
-  handlerFormErrors, setAuthFormErrors, setSubjectFormErrors, setProfessorFormErrors,
+  handlerFormErrors,
+  setAuthFormErrors,
+  setSubjectFormErrors,
+  setProfessorFormErrors,
+  setStudentFormErrors,
 };

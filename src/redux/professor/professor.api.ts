@@ -7,6 +7,7 @@ import {
   UpdateActiveProfessor,
   ProfessorsDataToExcel,
   Course,
+  UserSingleResponse,
 } from '../../interfaces/api';
 import { invalidatesList, providesList } from '../services/response.service';
 
@@ -55,7 +56,7 @@ export const professorApi = tutorApi.injectEndpoints({
       }),
       invalidatesTags: invalidatesListProfessors,
     }),
-    createProfessor: builder.mutation<SingleResponse<Professor>, FormData>({
+    createProfessor: builder.mutation<UserSingleResponse, FormData>({
       query: (post) => ({
         url: 'professors/',
         method: 'POST',

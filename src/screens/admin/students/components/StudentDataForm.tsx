@@ -13,6 +13,7 @@ import { useToast } from '../../../../hooks/useToast';
 import { StudentResume } from '../../../../interfaces/api';
 import { useCreateStudentMutation } from '../../../../redux/student/student.api';
 import { convertModelToFormData } from '../../../../utils/convertModelToFormData';
+import { processError, setStudentFormErrors } from '../../../../utils/forms/handlerFormErrors';
 import { genderRadio } from '../../../../utils/forms/radioButtonObjects';
 
 import { AutoCompleteProfessors } from './professor/AutoCompleteProfessors';
@@ -41,14 +42,14 @@ const initialValues = {
 export const StudentDataForm = ({ student }: Props) => {
   const [ createStudent, { isLoading: isLoadingCreate }] = useCreateStudentMutation();
 
-  const { toast, showSuccess } = useToast();
+  const { toast, showSuccess, showError } = useToast();
 
   return (
     <div>
       <Toast ref={toast} />
       <Formik
         initialValues={initialValues}
-        onSubmit={async (values) => {
+        onSubmit={async (values, { setFieldError, resetForm }) => {
           const {
             currentSemester,
             classroom,
@@ -72,19 +73,19 @@ export const StudentDataForm = ({ student }: Props) => {
           const dataSend = convertModelToFormData(prepareData);
           let message = 'El alumno se actualizó con éxito';
 
-          console.log({ prepareData, dataSend });
-
           try {
             if (student) {
               console.log(student);
             } else {
               await createStudent(dataSend).unwrap();
               message = 'El alumno se creó con éxito';
+              resetForm();
             }
 
             showSuccess({ detail: message });
           } catch (error) {
-            console.log(error);
+            const errors: string = processError({ error, showError });
+            setStudentFormErrors({ errors, setFieldError });
           }
         }}
         validationSchema={Yup.object({

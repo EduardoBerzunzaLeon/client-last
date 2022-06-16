@@ -1,7 +1,6 @@
 import { Generic } from '../interfaces/generic';
 
 export const convertModelToFormData = (model: Generic, form?: FormData, namespace = ''): FormData => {
-  console.log(model);
   const formData = form || new FormData();
 
   if (typeof model === 'string') {
@@ -11,7 +10,7 @@ export const convertModelToFormData = (model: Generic, form?: FormData, namespac
       if (!model[key]) {
         return;
       }
-      const formKey = namespace ? `${namespace}` : key;
+      const formKey = namespace ? `${namespace}[${key}]` : key;
       if (model[key] instanceof Date) {
         formData.append(formKey, model[key].toISOString());
       } else if (model[key] instanceof Array) {

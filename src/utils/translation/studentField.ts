@@ -1,0 +1,47 @@
+export interface StudentFieldsTranslation {
+    email: string,
+    password: string,
+    gender: string,
+    first: string,
+    last: string,
+    name: string,
+    active: string,
+    subjects: string,
+    professor: string,
+    professorsHistory: string,
+    comments: string,
+    enrollment: string,
+    currentSemester: string,
+    statusHistory: string,
+    status: string,
+    createdAt: string,
+    modifiedAt: string,
+    classroom: string,
+    atRisk: string,
+}
+
+export const studentFieldsTranslation: StudentFieldsTranslation = {
+  email: 'email',
+  password: 'contraseña',
+  gender: 'genero',
+  first: 'nombre',
+  last: 'apellido',
+  name: 'nombre completo',
+  active: 'activo',
+  subjects: 'materias',
+  professor: 'tutor',
+  professorsHistory: 'historial de tutores',
+  comments: 'comentarios',
+  enrollment: 'matricula',
+  currentSemester: 'semestre actual',
+  statusHistory: 'historial de estatus',
+  status: 'estatus',
+  createdAt: 'creado el',
+  modifiedAt: 'modificado el',
+  classroom: 'grupo',
+  atRisk: 'en riesgo',
+};
+
+export default {
+  studentFieldsTranslation,
+};
