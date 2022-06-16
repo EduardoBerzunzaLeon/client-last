@@ -35,7 +35,7 @@ const initialFilters: Paginator = {
 };
 
 interface Props {
-  buttonLabel: string
+  buttonLabel: string,
   professor: ProfessorDetail,
 }
 

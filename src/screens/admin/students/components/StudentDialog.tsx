@@ -4,9 +4,40 @@ import { useContext } from 'react';
 import { SpinnerRTK } from '../../../../components/spinnerRTK/SpinnerRTK';
 import { useModalLoading } from '../../../../hooks/useModalLoading';
 import { useTitle } from '../../../../hooks/useTitle';
+import { StudentResume } from '../../../../interfaces/api';
 import { useGetStudentsQuery } from '../../../../redux/student/student.api';
 import { StudentContext } from '../context/studentContext';
 import { StudentDataForm } from './StudentDataForm';
+
+const initialValues: StudentResume = {
+  name: {
+    first: '',
+    last: '',
+  },
+  atRisk: 'no',
+  id: '',
+  email: '',
+  gender: 'M',
+  enrollment: '',
+  avatar: '',
+  currentSemester: 1,
+  classroom: 'A',
+  active: true,
+  status: {
+    createdAt: new Date(),
+    _id: '',
+    status: 'regular',
+  },
+  studentId: '',
+  professor: {
+    name: {
+      first: '',
+      last: '',
+    },
+    id: '',
+    avatar: '',
+  },
+};
 
 export const StudentDialog = () => {
   const {
@@ -48,6 +79,7 @@ export const StudentDialog = () => {
       header={title}
       className="shadow-5 w-11 md:w-6 lg:w-5"
       modal
+      blockScroll
       visible={displayModal}
       onHide={() => {
         setStudentSelected(undefined);
@@ -59,14 +91,14 @@ export const StudentDialog = () => {
         error={error}
         isError={isError}
         isLoading={isFetching && isLoading}
-        messageError="No se encontró el tutor"
-        messageLoading="Cargando Tutor"
+        messageError="No se encontró el alumno"
+        messageLoading="Cargando Alumno"
         classNameSpinner="flex flex-column align-items-center justify-content-center"
       >
 
         {({ data: dataSend }) => (
           <div className="formgrid">
-            <StudentDataForm student={dataSend} />
+            <StudentDataForm student={dataSend ?? initialValues} buttonLabel={title} />
           </div>
         )}
       </SpinnerRTK>

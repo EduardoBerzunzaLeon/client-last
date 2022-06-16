@@ -20,6 +20,7 @@ export const HeaderAdmin = React.memo(({ position, title, hasBreadcumbs }: Props
     users: { label: 'Usuarios', command: () => { navigate('/admin/users'); } },
     subjects: { label: 'Materias', command: () => { navigate('/admin/subjects'); } },
     professors: { label: 'Tutores', command: () => { navigate('/admin/professors'); } },
+    students: { label: 'Alumnos', command: () => { navigate('/admin/students'); } },
     profile: { label: 'Perfil' },
     professor: { label: 'Maestro' },
     home: { label: 'Dashboard' },

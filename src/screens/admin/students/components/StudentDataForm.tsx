@@ -1,6 +1,7 @@
 import { Form, Formik } from 'formik';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
+import { useState } from 'react';
 import * as Yup from 'yup';
 import { Divider } from '../../../../components/divider/Divider';
 import { InputTextApp, RadioGroup } from '../../../../components/forms';
@@ -11,7 +12,7 @@ import { ToggleButtonApp } from '../../../../components/forms/toggleButton/Toggl
 import { useToast } from '../../../../hooks/useToast';
 
 import { StudentResume } from '../../../../interfaces/api';
-import { useCreateStudentMutation } from '../../../../redux/student/student.api';
+import { useCreateStudentMutation, useUpdateStudentMutation } from '../../../../redux/student/student.api';
 import { convertModelToFormData } from '../../../../utils/convertModelToFormData';
 import { processError, setStudentFormErrors } from '../../../../utils/forms/handlerFormErrors';
 import { genderRadio } from '../../../../utils/forms/radioButtonObjects';
@@ -19,28 +20,29 @@ import { genderRadio } from '../../../../utils/forms/radioButtonObjects';
 import { AutoCompleteProfessors } from './professor/AutoCompleteProfessors';
 
 interface Props {
-    student: StudentResume | undefined;
+    buttonLabel: string,
+    student: StudentResume,
 }
 
-const initialValues = {
-  first: '',
-  last: '',
-  email: '',
-  gender: null,
-  enrollment: '',
-  avatar: null,
-  currentSemester: 1,
-  classroom: 'A',
-  active: true,
-  professor: {
-    fullname: '',
-    value: '',
-    avatar: '',
-  },
-};
-
-export const StudentDataForm = ({ student }: Props) => {
+export const StudentDataForm = ({ student, buttonLabel }: Props) => {
+  const [ initialStudent, setInitialStudent ] = useState({
+    first: student.name.first,
+    last: student.name.last,
+    gender: student.id ? student.gender : null,
+    email: student.email,
+    active: student.active,
+    avatar: null,
+    enrollment: student.enrollment,
+    currentSemester: student.currentSemester,
+    classroom: student.classroom || 'A',
+    professor: {
+      fullname: `${student.professor.name.first} ${student.professor.name.last ? ` ${student.professor.name.last}` : ''}`,
+      value: student.professor.id,
+      avatar: student.professor.avatar,
+    },
+  });
   const [ createStudent, { isLoading: isLoadingCreate }] = useCreateStudentMutation();
+  const [ updateStudent, { isLoading: isLoadingUpdate }] = useUpdateStudentMutation();
 
   const { toast, showSuccess, showError } = useToast();
 
@@ -48,7 +50,8 @@ export const StudentDataForm = ({ student }: Props) => {
     <div>
       <Toast ref={toast} />
       <Formik
-        initialValues={initialValues}
+        initialValues={initialStudent}
+        enableReinitialize
         onSubmit={async (values, { setFieldError, resetForm }) => {
           const {
             currentSemester,
@@ -66,6 +69,7 @@ export const StudentDataForm = ({ student }: Props) => {
               enrollment,
               professor: professorId,
             },
+            id: student?.id || '',
             active: `${active}`,
             ...personalData,
           };
@@ -74,8 +78,9 @@ export const StudentDataForm = ({ student }: Props) => {
           let message = 'El alumno se actualizó con éxito';
 
           try {
-            if (student) {
-              console.log(student);
+            if (student.id) {
+              await updateStudent(dataSend).unwrap();
+              setInitialStudent({ ...values });
             } else {
               await createStudent(dataSend).unwrap();
               message = 'El alumno se creó con éxito';
@@ -117,7 +122,7 @@ export const StudentDataForm = ({ student }: Props) => {
               onChange={(primeFile) => {
                 setFieldValue('avatar', primeFile);
               }}
-              initialValue={values?.avatar ?? ''}
+              initialValue={student?.avatar ?? values?.avatar ?? ''}
               uploadOptions={uploadOptions}
             />
 
@@ -180,7 +185,7 @@ export const StudentDataForm = ({ student }: Props) => {
                 />
               </div>
 
-              <div className="col-12 md:col-6 pr-1 pl-1">
+              <div className="col-12 md:col-6 pr-1 pl-1 md:mt-0 mt-3">
                 <InputTextApp
                   label="Grupo"
                   name="classroom"
@@ -191,12 +196,13 @@ export const StudentDataForm = ({ student }: Props) => {
               </div>
             </div>
 
-            <div className="field pt-2 mt-2">
+            <div className="field pt-2 mt-3">
               <FormElement
                 element={AutoCompleteProfessors}
                 label="Tutor"
                 id="professor"
                 name="professor"
+                disabled={!!student.id}
               />
             </div>
 
@@ -215,9 +221,9 @@ export const StudentDataForm = ({ student }: Props) => {
             <div className="flex flex-column">
               <Button
                 type="submit"
-                label="Testing"
+                label={buttonLabel}
                 className="mt-2 flex align-items-center justify-content-center"
-                loading={isLoadingCreate}
+                loading={isLoadingUpdate || isLoadingCreate}
                 disabled={!isValid || isSubmitting || !dirty}
               />
             </div>

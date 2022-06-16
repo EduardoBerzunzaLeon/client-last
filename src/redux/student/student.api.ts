@@ -2,12 +2,13 @@ import { tutorApi } from '../services/tutor.api';
 import {
   StudentResume,
   ListResponse,
-  UserSingleResponse,
+  SingleResponse,
 } from '../../interfaces/api';
 
-import { providesList } from '../services/response.service';
+import { invalidatesList, providesList } from '../services/response.service';
 
 const providesListStudent = providesList('Students');
+const invalidatesListStudents = invalidatesList('Students');
 
 export const studentApi = tutorApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -15,7 +16,7 @@ export const studentApi = tutorApi.injectEndpoints({
       query: (path) => path,
       providesTags: providesListStudent,
     }),
-    createStudent: builder.mutation<UserSingleResponse, FormData>({
+    createStudent: builder.mutation<SingleResponse<StudentResume>, FormData>({
       query: (post) => ({
         url: 'students/',
         method: 'POST',
@@ -23,10 +24,22 @@ export const studentApi = tutorApi.injectEndpoints({
       }),
       invalidatesTags: [ 'Students' ],
     }),
+    updateStudent: builder.mutation<SingleResponse<StudentResume>, FormData>({
+      query: (patch) => {
+        const id = patch.get('id') || '';
+        return {
+          url: `students/${id}`,
+          method: 'PATCH',
+          body: patch,
+        };
+      },
+      invalidatesTags: invalidatesListStudents,
+    }),
   }),
 });
 
 export const {
   useGetStudentsQuery,
   useCreateStudentMutation,
+  useUpdateStudentMutation,
 } = studentApi;

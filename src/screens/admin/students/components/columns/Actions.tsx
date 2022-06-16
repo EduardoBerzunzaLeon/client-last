@@ -26,19 +26,19 @@ export const ActionsBody = ({ student }: { student: StudentResume }) => {
     <>
       <Button
         icon="pi pi-eye"
-        tooltip="Ver Tutor"
+        tooltip="Ver Alumno"
         tooltipOptions={{ position: 'top' }}
         className="p-button-sm p-button-raised p-button-primary mr-1"
         onClick={() => navigate(`/admin/users/${id}`, { state: { root: 'students' }})}
       />
       <PermissionsGate
-        module="professor"
+        module="student"
         permission="canUpdate"
       >
         <Button
           icon="pi pi-pencil"
           className="p-button-sm p-button-raised p-button-primary mr-1"
-          tooltip="Editar Tutor"
+          tooltip="Editar Alumno"
           tooltipOptions={{ position: 'top' }}
           onClick={handleUpdate}
         />

@@ -62,7 +62,7 @@ export const StudentsScreen = () => {
           }}
           >
             <div>
-              <HeaderAdmin position="professors/" title="Gestionar Tutores" hasBreadcumbs />
+              <HeaderAdmin position="students/" title="Gestionar Alumnos" hasBreadcumbs />
               <div className="card">
                 <DataTable
                   value={dataSend}
@@ -90,6 +90,15 @@ export const StudentsScreen = () => {
                     filterField="enrollment"
                     filterPlaceholder="Buscar por matricula"
                     header="Matricula"
+                    showFilterMenu={false}
+                    sortable
+                  />
+                  <Column
+                    field="classroom"
+                    filter
+                    filterField="classroom"
+                    filterPlaceholder="Buscar por grupo"
+                    header="Grupo"
                     showFilterMenu={false}
                     sortable
                   />

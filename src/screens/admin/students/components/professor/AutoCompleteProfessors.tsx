@@ -18,14 +18,15 @@ const prepareData = (data: Professor[]): ProfessorItem[] => data.map((p) => ({
 
 interface Props {
     value: any,
-    onChange(e: AutoCompleteChangeParams): void;
+    onChange(e: AutoCompleteChangeParams): void,
+    disabled?: boolean,
 }
 
 const itemTemplate = (item: any) => (
   <TextImageBody text={item.fullname} imageURL={item.avatar} />
 );
 
-export const AutoCompleteProfessors = ({ value, onChange }: Props) => {
+export const AutoCompleteProfessors = ({ value, onChange, disabled }: Props) => {
   const [ filteredItems, setFilteredItems ] = useState<ProfessorItem[] | []>([]);
   const [ query, setQuery ] = useState<string>('');
 
@@ -50,6 +51,8 @@ export const AutoCompleteProfessors = ({ value, onChange }: Props) => {
     query,
     isLoading,
     isLoadingSpecific,
+    professors,
+    data,
   ]);
 
   const searchItems = (event: AutoCompleteCompleteMethodParams) => {
@@ -87,8 +90,13 @@ export const AutoCompleteProfessors = ({ value, onChange }: Props) => {
       className="w-full"
       aria-label="Professors"
       panelClassName="overflow-hidden"
+      disabled={disabled}
     />
   );
+};
+
+AutoCompleteProfessors.defaultProps = {
+  disabled: false,
 };
 
 export default AutoCompleteProfessors;
