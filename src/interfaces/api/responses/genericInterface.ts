@@ -20,3 +20,7 @@ export interface SingleResponse<T> {
     status: string,
     data: T
 }
+
+export interface EmptyResponse {
+    status: string,
+}

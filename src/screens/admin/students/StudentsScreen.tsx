@@ -19,6 +19,7 @@ import { StudentDialog } from './components/StudentDialog';
 
 import { useLazyParams } from '../../../hooks/useLazyParams';
 import { useGetStudentsQuery } from '../../../redux/student/student.api';
+import { ProfessorsHistoryDialog } from './components/professorsHistory/ProfessorsHistoryDialog';
 
 const { Provider } = StudentContext;
 
@@ -34,6 +35,7 @@ export const StudentsScreen = () => {
   } = useLazyParams(initialFiltersValue, 'students');
 
   const [ displayModal, setDisplayModal ] = useState(false);
+  const [ displayProfessorsHistoryModal, setDisplayProfessorsHistoryModal ] = useState(false);
   const [ studentSelected, setStudentSelected ] = useState<StudentResume>();
 
   const {
@@ -53,11 +55,13 @@ export const StudentsScreen = () => {
         ({ data: dataSend, total }) => (
           <Provider value={{
             displayModal,
+            displayProfessorsHistoryModal,
             lazyParams,
             studentSelected,
             setDisplayModal,
-            setLazyParams,
+            setDisplayProfessorsHistoryModal,
             setFilterValue,
+            setLazyParams,
             setStudentSelected,
           }}
           >
@@ -190,6 +194,7 @@ export const StudentsScreen = () => {
                   />
                 </DataTable>
                 <StudentDialog />
+                <ProfessorsHistoryDialog />
               </div>
             </div>
           </Provider>

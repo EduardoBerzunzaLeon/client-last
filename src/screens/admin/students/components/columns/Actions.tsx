@@ -11,6 +11,7 @@ export const ActionsBody = ({ student }: { student: StudentResume }) => {
   const {
     setStudentSelected,
     setDisplayModal,
+    setDisplayProfessorsHistoryModal,
   } = useContext(StudentContext);
 
   const { id } = student;
@@ -20,6 +21,11 @@ export const ActionsBody = ({ student }: { student: StudentResume }) => {
   const handleUpdate = () => {
     setStudentSelected(student);
     setDisplayModal(true);
+  };
+
+  const handleShowProfessorsHistory = () => {
+    setStudentSelected(student);
+    setDisplayProfessorsHistoryModal(true);
   };
 
   return (
@@ -35,13 +41,23 @@ export const ActionsBody = ({ student }: { student: StudentResume }) => {
         module="student"
         permission="canUpdate"
       >
-        <Button
-          icon="pi pi-pencil"
-          className="p-button-sm p-button-raised p-button-primary mr-1"
-          tooltip="Editar Alumno"
-          tooltipOptions={{ position: 'top' }}
-          onClick={handleUpdate}
-        />
+        <>
+          <Button
+            icon="pi pi-pencil"
+            className="p-button-sm p-button-raised p-button-primary mr-1"
+            tooltip="Editar Alumno"
+            tooltipOptions={{ position: 'top' }}
+            onClick={handleUpdate}
+          />
+          <Button
+            icon="pi pi-history"
+            className="p-button-sm p-button-raised p-button-primary mr-1"
+            tooltip="Ver Historial de Tutores"
+            tooltipOptions={{ position: 'top' }}
+            onClick={handleShowProfessorsHistory}
+          />
+        </>
+
       </PermissionsGate>
     </>
   );

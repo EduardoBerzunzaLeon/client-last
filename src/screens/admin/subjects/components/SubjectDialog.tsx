@@ -64,6 +64,7 @@ export const SubjectDialog = () => {
       header={title}
       className="shadow-5 w-11 md:w-6 lg:w-5"
       modal
+      blockScroll
       visible={displayModal}
       onHide={onHide}
     >

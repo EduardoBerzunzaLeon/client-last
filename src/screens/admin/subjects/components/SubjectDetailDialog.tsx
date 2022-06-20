@@ -24,6 +24,7 @@ export const SubjectDetailDialog = () => {
       header="Detalle de la Materia"
       className="shadow-5 w-11 md:w-7 text-purple-700"
       modal
+      blockScroll
       visible={isOpenDetailModal}
       onHide={() => {
         setSubjectSelected(undefined);

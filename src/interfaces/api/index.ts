@@ -3,7 +3,12 @@ export type {
 } from './requests/paginatorInterface';
 
 export type {
-  genericResponse, responseRTK, responsArrayRTK, ListResponse, SingleResponse,
+  genericResponse,
+  responseRTK,
+  responsArrayRTK,
+  ListResponse,
+  SingleResponse,
+  EmptyResponse,
 } from './responses/genericInterface';
 
 export type { Error, ErrorResponse } from './responses/errorInterface';
@@ -49,4 +54,12 @@ export type { UpdateActiveProfessor } from './requests/professorInterface';
 export type { UpdateCourseRequest, CreateCourseRequest } from './requests/courseInterface';
 export type { Course } from './responses/courseinterface';
 
-export type { StudentResume, StudentStatus, StudentProfessor } from './responses/studentInterface';
+export type {
+  StudentResume, StudentStatus, StudentProfessor, StudentProfessorInHistory, ProfessorInHistory,
+} from './responses/studentInterface';
+
+export type {
+  RequestAddProfessorInHistory,
+  RequestUpdateProfessorInHistory,
+  RequestDeleteProfessorInHistory,
+} from './requests/studentInterface';

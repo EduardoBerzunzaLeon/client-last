@@ -31,3 +31,17 @@ export interface StudentResume {
     gender: 'M' | 'F',
     professor: StudentProfessor
 }
+
+export interface ProfessorInHistory {
+    createdAt: Date,
+    id: string,
+    professor: StudentProfessor,
+    comments: string,
+    dischargeAt?: Date,
+    idProfessorBefore?: string
+}
+
+export interface StudentProfessorInHistory {
+    id: string,
+    professorsHistory: ProfessorInHistory[],
+}
