@@ -63,6 +63,7 @@ export const ProfessorsHistoryDialog = () => {
         onHide={() => {
           setStudentSelected(undefined);
           setDisplayProfessorsHistoryModal(false);
+          setProfessorSelected(undefined);
         }}
       >
 

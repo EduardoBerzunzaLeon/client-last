@@ -3,16 +3,18 @@ import { Button } from 'primereact/button';
 import { Calendar } from 'primereact/calendar';
 import * as Yup from 'yup';
 import { InputTextarea } from 'primereact/inputtextarea';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Toast } from 'primereact/toast';
+import { skipToken } from '@reduxjs/toolkit/dist/query';
 import { InputTextApp } from '../../../../../components/forms';
 import { FormElement } from '../../../../../components/forms/formElement/FormElement';
 import { AutoCompleteProfessors } from '../professor/AutoCompleteProfessors';
 // import { ProfessorsHistoryContext } from './context/professorsHistoryContext';
 import { ProfessorInHistory } from '../../../../../interfaces/api';
-import { useCreateProfessorInHistoryMutation } from '../../../../../redux/student/student.api';
+import { useCreateProfessorInHistoryMutation, useGetProfessorsHistoryQuery, useUpdateProfessorInHistoryMutation } from '../../../../../redux/student/student.api';
 import { StudentContext } from '../../context/studentContext';
 import { useToast } from '../../../../../hooks/useToast';
+import { ProfessorsHistoryContext } from './context/professorsHistoryContext';
 
 const initialProfessor = {
   fullname: '',
@@ -25,25 +27,64 @@ interface Props {
 }
 
 export const ProfessorHistoryDataForm = ({ lastProfessor }: Props) => {
-  // const {
-  //   professorSelected,
-  // } = useContext(ProfessorsHistoryContext);
-  const { toast, showSuccess } = useToast();
+  const {
+    professorSelected,
+    setProfessorSelected,
+  } = useContext(ProfessorsHistoryContext);
 
   const {
     studentSelected,
   } = useContext(StudentContext);
 
-  const [ initialValues ] = useState({
-    currentProfessor:
-      `${lastProfessor?.professor?.name.first} ${lastProfessor?.professor?.name.last}`
-      || '',
+  const { toast, showSuccess } = useToast();
+
+  const [ createProfessor, { isLoading: isLoadingCreate }] = useCreateProfessorInHistoryMutation();
+  const [ updateProfessor, { isLoading: isLoadingUpdate }] = useUpdateProfessorInHistoryMutation();
+
+  const {
+    professorBefore,
+  } = useGetProfessorsHistoryQuery(studentSelected?.id ?? skipToken, {
+    selectFromResult: ({
+      // eslint-disable-next-line no-shadow
+      data,
+    }) => ({
+      professorBefore: data?.data.professorsHistory.find((
+        professor,
+      ) => professor.id === professorSelected?.idProfessorBefore),
+    }),
+  });
+
+  const [ initialValues, setInitialValues ] = useState({
+    currentProfessor: `${lastProfessor?.professor?.name.first} ${lastProfessor?.professor?.name.last}` || '',
     professor: initialProfessor,
     createdAt: new Date(),
     comments: '',
   });
 
-  const [ createProfessor, { isLoading: isLoadingCreate }] = useCreateProfessorInHistoryMutation();
+  useEffect(() => {
+    if (professorBefore && professorSelected) {
+      setInitialValues({
+        professor: {
+          fullname: `${professorSelected?.professor?.name.first} ${professorSelected?.professor?.name.last}`,
+          value: professorSelected?.professor.id,
+          avatar: professorSelected?.professor.avatar,
+        },
+        currentProfessor: `${professorBefore?.professor?.name.first} ${professorBefore?.professor?.name.last}`,
+        createdAt: new Date(professorSelected.createdAt),
+        comments: professorBefore.comments,
+      });
+    }
+
+    if (!professorSelected) {
+      setInitialValues({
+        currentProfessor: `${lastProfessor?.professor?.name.first} ${lastProfessor?.professor?.name.last}` || '',
+        professor: initialProfessor,
+        createdAt: new Date(),
+        comments: '',
+      });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ professorBefore, professorSelected ]);
 
   return (
     <>
@@ -51,6 +92,7 @@ export const ProfessorHistoryDataForm = ({ lastProfessor }: Props) => {
       <h4>Agregar Tutor</h4>
       <Formik
         initialValues={initialValues}
+        enableReinitialize
         onSubmit={async (values, { resetForm }) => {
           const { professor: { value: newProfessorId }, createdAt, comments } = values;
           const dataSend = {
@@ -64,9 +106,18 @@ export const ProfessorHistoryDataForm = ({ lastProfessor }: Props) => {
           let message = 'El alumno se actualizó con éxito';
 
           try {
-            if (false) {
-            //   await updateStudent(dataSend).unwrap();
-            //   setInitialStudent({ ...values });
+            if (professorSelected) {
+              const dataUpdate = {
+                userId: dataSend.userId,
+                professorHistoryId: professorSelected.id,
+                professorId: newProfessorId,
+                comments,
+                createdAt,
+                professorBeforeId: professorBefore?.id || '',
+              };
+
+              await updateProfessor(dataUpdate).unwrap();
+              setInitialValues({ ...values });
             } else {
               await createProfessor(dataSend).unwrap();
               message = 'El tutor se agregó con éxito';
@@ -134,18 +185,30 @@ export const ProfessorHistoryDataForm = ({ lastProfessor }: Props) => {
                   />
                 </div>
 
-                <div className="flex flex-column">
+                <div className="flex flex-column sm:flex-row justify-content-between">
+                  {
+                    professorSelected && (
+                    <Button
+                      type="button"
+                      label="Cancelar Actualización"
+                      className="flex p-button-danger align-items-center justify-content-center w-full sm:w-6 mr-2 mb-2 sm:mb-0"
+                      loading={isLoadingCreate || isLoadingUpdate}
+                      onClick={() => setProfessorSelected(undefined)}
+                    />
+                    )
+                  }
+
                   <Button
                     type="submit"
-                    label="Agregar Tutor"
-                    className="mt-2 flex align-items-center justify-content-center"
+                    label={professorSelected ? 'Actualizar Tutor' : 'Cambiar Tutor'}
+                    className={`flex align-items-center justify-content-center w-full ${!professorSelected ? '' : 'sm:w-6'}`}
                     disabled={!isValid || isSubmitting || !dirty}
-                    loading={isLoadingCreate}
+                    loading={isLoadingCreate || isLoadingUpdate}
                   />
                 </div>
               </Form>
             )
-        }
+          }
       </Formik>
 
     </>
@@ -153,3 +216,4 @@ export const ProfessorHistoryDataForm = ({ lastProfessor }: Props) => {
 };
 
 export default ProfessorHistoryDataForm;
+// className="mt-2 flex align-items-center justify-content-center"

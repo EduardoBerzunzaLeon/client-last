@@ -7,12 +7,16 @@ import { ProfessorInHistory } from '../../../../../../interfaces/api';
 import { useDeleteProfessorInHistoryMutation } from '../../../../../../redux/student/student.api';
 import { processError } from '../../../../../../utils/forms/handlerFormErrors';
 import { StudentContext } from '../../../context/studentContext';
+import { ProfessorsHistoryContext } from '../context/professorsHistoryContext';
 
 export const ActionsBody = ({ professorInHistory }: { professorInHistory: ProfessorInHistory }) => {
   const [ deleteSubject, { isLoading }] = useDeleteProfessorInHistoryMutation();
+
   const {
     studentSelected,
   } = useContext(StudentContext);
+
+  const { setProfessorSelected } = useContext(ProfessorsHistoryContext);
 
   const { dischargeAt, id, professor } = professorInHistory;
   const { toast, showSuccess, showError } = useToast();
@@ -20,6 +24,7 @@ export const ActionsBody = ({ professorInHistory }: { professorInHistory: Profes
   const accept = async () => {
     try {
       await deleteSubject({ userId: studentSelected?.id ?? '', professorHistoryId: id }).unwrap();
+      setProfessorSelected(undefined);
       showSuccess({ detail: `El tutor ${professor.name.first} ${professor.name.last} ha sido desvinculado` });
     } catch (error) {
       processError({ error, showError });
@@ -36,6 +41,10 @@ export const ActionsBody = ({ professorInHistory }: { professorInHistory: Profes
     });
   };
 
+  const handleUpdate = () => {
+    setProfessorSelected(professorInHistory);
+  };
+
   return (
     <>
       <Toast ref={toast} />
@@ -45,6 +54,7 @@ export const ActionsBody = ({ professorInHistory }: { professorInHistory: Profes
         tooltipOptions={{ position: 'top' }}
         className="p-button-sm p-button-raised p-button-primary mr-1"
         disabled={!!dischargeAt}
+        onClick={handleUpdate}
       />
       <Button
         icon="pi pi-trash"
