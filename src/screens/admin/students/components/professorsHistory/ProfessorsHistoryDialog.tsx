@@ -8,7 +8,7 @@ import { useModalLoading } from '../../../../../hooks/useModalLoading';
 import { ProfessorInHistory } from '../../../../../interfaces/api';
 import { useGetProfessorsHistoryQuery } from '../../../../../redux/student/student.api';
 import { StudentContext } from '../../context/studentContext';
-import { ActionsBody } from './columns/Actions';
+import { ActionsBodyTemplate } from './columns/Actions';
 import { NameHistoryBodyTemplate } from './columns/Name';
 import { ProfessorsHistoryContext } from './context/professorsHistoryContext';
 import { ProfessorHistoryDataForm } from './ProfessorHistoryDataForm';
@@ -110,7 +110,7 @@ export const ProfessorsHistoryDialog = () => {
                   />
 
                   <Column
-                    body={ActionsBody}
+                    body={ActionsBodyTemplate}
                     exportable={false}
                     style={{ minWidth: '8rem' }}
                   />

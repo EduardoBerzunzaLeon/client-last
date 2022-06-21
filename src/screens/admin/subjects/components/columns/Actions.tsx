@@ -16,7 +16,6 @@ export const ActionsBody = ({ subject }: { subject: Subject }) => {
   const { setSubjectSelected, setDisplayModal, setIsOpenDetailModal } = useContext(SubjectContext);
   const [ deleteSubject, { isLoading }] = useDeleteSubjectMutation();
 
-  // FIXME: Don´t destoy modal after table updated
   const { id } = subject;
   const { toast, showSuccess, showError } = useToast();
 
