@@ -1,25 +1,25 @@
+import { useContext } from 'react';
+
 import { Button } from 'primereact/button';
 import { confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
-import { useContext } from 'react';
-import { useToast } from '../../../../../../hooks/useToast';
-import { ProfessorInHistory } from '../../../../../../interfaces/api';
-import { useDeleteProfessorInHistoryMutation } from '../../../../../../redux/student/student.api';
+
 import { processError } from '../../../../../../utils/forms/handlerFormErrors';
-import { StudentContext } from '../../../context/studentContext';
+import { ProfessorInHistory } from '../../../../../../interfaces/api';
 import { ProfessorsHistoryContext } from '../context/professorsHistoryContext';
+import { StudentContext } from '../../../context/studentContext';
+
+import { useDeleteProfessorInHistoryMutation } from '../../../../../../redux/student/student.api';
+import { useToast } from '../../../../../../hooks/useToast';
 
 export const ActionsBody = ({ professorInHistory }: { professorInHistory: ProfessorInHistory }) => {
-  const [ deleteSubject, { isLoading }] = useDeleteProfessorInHistoryMutation();
-
-  const {
-    studentSelected,
-  } = useContext(StudentContext);
-
+  const { studentSelected } = useContext(StudentContext);
   const { setProfessorSelected } = useContext(ProfessorsHistoryContext);
 
-  const { dischargeAt, id, professor } = professorInHistory;
+  const [ deleteSubject, { isLoading }] = useDeleteProfessorInHistoryMutation();
   const { toast, showSuccess, showError } = useToast();
+
+  const { dischargeAt, id, professor } = professorInHistory;
 
   const accept = async () => {
     try {
@@ -33,8 +33,8 @@ export const ActionsBody = ({ professorInHistory }: { professorInHistory: Profes
 
   const handleDelete = () => {
     confirmDialog({
-      message: '¿Estas seguro en disvincular este tutor?, el proceso no es REVERSIBLE',
-      header: 'Confirmación de eliminación',
+      message: '¿Estas seguro en desvincular este tutor?, el proceso es IRREVERSIBLE',
+      header: 'Confirmación de desvinculación ',
       icon: 'pi pi-info-circle',
       acceptClassName: 'p-button-danger',
       accept,

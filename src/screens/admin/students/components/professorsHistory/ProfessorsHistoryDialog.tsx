@@ -1,17 +1,20 @@
-import { skipToken } from '@reduxjs/toolkit/dist/query';
+import { useContext, useState } from 'react';
+
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import { Dialog } from 'primereact/dialog';
-import { useContext, useEffect, useState } from 'react';
-import { SpinnerRTK } from '../../../../../components/spinnerRTK/SpinnerRTK';
-import { useModalLoading } from '../../../../../hooks/useModalLoading';
-import { ProfessorInHistory } from '../../../../../interfaces/api';
-import { useGetProfessorsHistoryQuery } from '../../../../../redux/student/student.api';
-import { StudentContext } from '../../context/studentContext';
+import { skipToken } from '@reduxjs/toolkit/dist/query';
+
 import { ActionsBodyTemplate } from './columns/Actions';
 import { NameHistoryBodyTemplate } from './columns/Name';
-import { ProfessorsHistoryContext } from './context/professorsHistoryContext';
 import { ProfessorHistoryDataForm } from './ProfessorHistoryDataForm';
+import { ProfessorInHistory } from '../../../../../interfaces/api';
+import { ProfessorsHistoryContext } from './context/professorsHistoryContext';
+import { SpinnerRTK } from '../../../../../components/spinnerRTK/SpinnerRTK';
+import { StudentContext } from '../../context/studentContext';
+
+import { useGetProfessorsHistoryQuery } from '../../../../../redux/student/student.api';
+import { useModalLoading } from '../../../../../hooks/useModalLoading';
 
 const createdAtBody = ({ createdAt }: ProfessorInHistory) => `${createdAt}`.slice(0, 10);
 const dischargeAtBody = ({ dischargeAt }: ProfessorInHistory) => (dischargeAt ? `${dischargeAt}`.slice(0, 10) : '');
@@ -27,7 +30,6 @@ export const ProfessorsHistoryDialog = () => {
   } = useContext(StudentContext);
 
   const [ professorSelected, setProfessorSelected ] = useState<ProfessorInHistory>();
-  const [ lastProfessor, setLastProfessor ] = useState<ProfessorInHistory>();
 
   const {
     data, isError, error, isFetching,
@@ -39,22 +41,12 @@ export const ProfessorsHistoryDialog = () => {
     hasEntitySelected: !!studentSelected,
   });
 
-  useEffect(() => {
-    if (data?.data) {
-      const [ professor ] = data.data.professorsHistory.slice(-1);
-      setLastProfessor(professor);
-    }
-  }, [ data ]);
-
   return (
     <Provider value={{
       professorSelected,
-      lastProfessor,
       setProfessorSelected,
-      setLastProfessor,
     }}
     >
-
       <Dialog
         header="Historial de Tutores"
         className="shadow-5 w-11"
@@ -66,14 +58,13 @@ export const ProfessorsHistoryDialog = () => {
           setProfessorSelected(undefined);
         }}
       >
-
         <SpinnerRTK
           data={data}
           error={error}
           isError={isError}
           isLoading={isFetching && isLoading}
-          messageError="No se encontraron cursos"
-          messageLoading="Cargando Cursos"
+          messageError="No se encontraron tutores"
+          messageLoading="Cargando Tutores"
           classNameSpinner="flex flex-column align-items-center justify-content-center"
         >
 

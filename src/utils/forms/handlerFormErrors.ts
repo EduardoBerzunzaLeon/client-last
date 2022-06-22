@@ -6,6 +6,7 @@ import { authFieldsTranslation, AuthFieldsTranslation } from '../translation/aut
 import { professorFieldsTranslation, ProfessorFieldsTranslation } from '../translation/professorField';
 import { subjectFieldsTranslation, SubjectFieldsTranslation } from '../translation/subjectFields';
 import { studentFieldsTranslation, StudentFieldsTranslation } from '../translation/studentField';
+import { professorInHistoryFieldsTranslation, ProfessorInHistoryFieldsTranslation } from '../translation/professorInHistory';
 
 interface Error {
   errors: string,
@@ -52,10 +53,15 @@ export const setStudentFormErrors = handlerFormErrors<StudentFieldsTranslation>(
   studentFieldsTranslation,
 );
 
+export const setProfessorInHistoryFormErrors = handlerFormErrors<
+  ProfessorInHistoryFieldsTranslation
+>(professorInHistoryFieldsTranslation);
+
 export default {
   handlerFormErrors,
   setAuthFormErrors,
   setSubjectFormErrors,
   setProfessorFormErrors,
   setStudentFormErrors,
+  setProfessorInHistoryFormErrors,
 };

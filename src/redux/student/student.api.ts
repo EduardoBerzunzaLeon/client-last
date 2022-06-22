@@ -14,6 +14,8 @@ import { EmptyResponse } from '../../interfaces/api/responses/genericInterface';
 
 const providesListStudent = providesList('Students');
 const invalidatesListStudents = invalidatesList('Students');
+const providesListProfessorInHistory = providesList('ProfessorsInHistory');
+const invalidatesListProfessorsInHistory = invalidatesList('ProfessorsInHistory');
 
 export const studentApi = tutorApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -45,6 +47,7 @@ export const studentApi = tutorApi.injectEndpoints({
         url: `students/${id}/professors`,
         method: 'GET',
       }),
+      providesTags: providesListProfessorInHistory,
     }),
     createProfessorInHistory: builder.mutation<EmptyResponse, RequestAddProfessorInHistory>({
       query: ({ userId, ...body }) => ({
@@ -52,6 +55,7 @@ export const studentApi = tutorApi.injectEndpoints({
         method: 'POST',
         body,
       }),
+      invalidatesTags: invalidatesListProfessorsInHistory,
     }),
     updateProfessorInHistory: builder.mutation<EmptyResponse, RequestUpdateProfessorInHistory>({
       query: ({ userId, professorHistoryId, ...patch }) => ({
@@ -59,12 +63,14 @@ export const studentApi = tutorApi.injectEndpoints({
         method: 'PATCH',
         body: patch,
       }),
+      invalidatesTags: invalidatesListProfessorsInHistory,
     }),
     deleteProfessorInHistory: builder.mutation<EmptyResponse, RequestDeleteProfessorInHistory>({
       query: ({ userId, professorHistoryId }) => ({
         url: `students/${userId}/professors/${professorHistoryId}`,
         method: 'DELETE',
       }),
+      invalidatesTags: invalidatesListProfessorsInHistory,
     }),
   }),
 });

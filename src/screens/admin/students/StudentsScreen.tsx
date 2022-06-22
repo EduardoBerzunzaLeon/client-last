@@ -14,8 +14,8 @@ import { SemesterFilter } from './components/columns/Semester';
 import { SpinnerRTK } from '../../../components/spinnerRTK/SpinnerRTK';
 import { StatusBody, StatusFilter } from './components/columns/Status';
 import { StudentContext } from './context/studentContext';
-import { StudentResume } from '../../../interfaces/api';
 import { StudentDialog } from './components/StudentDialog';
+import { StudentResume } from '../../../interfaces/api';
 
 import { useLazyParams } from '../../../hooks/useLazyParams';
 import { useGetStudentsQuery } from '../../../redux/student/student.api';

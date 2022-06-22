@@ -1,20 +1,29 @@
-import { Form, Formik } from 'formik';
+import {
+  useContext, useEffect, useState,
+} from 'react';
+
 import { Button } from 'primereact/button';
 import { Calendar } from 'primereact/calendar';
-import * as Yup from 'yup';
+import { Form, Formik } from 'formik';
 import { InputTextarea } from 'primereact/inputtextarea';
-import { useContext, useEffect, useState } from 'react';
-import { Toast } from 'primereact/toast';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
-import { InputTextApp } from '../../../../../components/forms';
-import { FormElement } from '../../../../../components/forms/formElement/FormElement';
+import { Toast } from 'primereact/toast';
+import * as Yup from 'yup';
+
 import { AutoCompleteProfessors } from '../professor/AutoCompleteProfessors';
-// import { ProfessorsHistoryContext } from './context/professorsHistoryContext';
+import { FormElement } from '../../../../../components/forms/formElement/FormElement';
+import { InputTextApp } from '../../../../../components/forms';
+import { processError, setProfessorInHistoryFormErrors } from '../../../../../utils/forms/handlerFormErrors';
 import { ProfessorInHistory } from '../../../../../interfaces/api';
-import { useCreateProfessorInHistoryMutation, useGetProfessorsHistoryQuery, useUpdateProfessorInHistoryMutation } from '../../../../../redux/student/student.api';
-import { StudentContext } from '../../context/studentContext';
-import { useToast } from '../../../../../hooks/useToast';
 import { ProfessorsHistoryContext } from './context/professorsHistoryContext';
+import { StudentContext } from '../../context/studentContext';
+
+import {
+  useCreateProfessorInHistoryMutation,
+  useGetProfessorsHistoryQuery,
+  useUpdateProfessorInHistoryMutation,
+} from '../../../../../redux/student/student.api';
+import { useToast } from '../../../../../hooks/useToast';
 
 const initialProfessor = {
   fullname: '',
@@ -26,26 +35,31 @@ interface Props {
   lastProfessor: ProfessorInHistory | undefined,
 }
 
+const setProfessorToAutocomplete = ({ professor }: ProfessorInHistory) => ({
+  fullname: `${professor.name.first} ${professor.name.last}`,
+  value: professor.id,
+  avatar: professor.avatar,
+});
+
 export const ProfessorHistoryDataForm = ({ lastProfessor }: Props) => {
-  const {
-    professorSelected,
-    setProfessorSelected,
-  } = useContext(ProfessorsHistoryContext);
+  const { professorSelected, setProfessorSelected } = useContext(ProfessorsHistoryContext);
+  const { studentSelected } = useContext(StudentContext);
 
-  const {
-    studentSelected,
-  } = useContext(StudentContext);
-
-  const { toast, showSuccess } = useToast();
+  const [ initialValues, setInitialValues ] = useState({
+    currentProfessor: lastProfessor ? setProfessorToAutocomplete(lastProfessor).fullname : '',
+    professor: initialProfessor,
+    createdAt: new Date(),
+    comments: '',
+  });
 
   const [ createProfessor, { isLoading: isLoadingCreate }] = useCreateProfessorInHistoryMutation();
   const [ updateProfessor, { isLoading: isLoadingUpdate }] = useUpdateProfessorInHistoryMutation();
+  const { toast, showSuccess, showError } = useToast();
 
   const {
     professorBefore,
   } = useGetProfessorsHistoryQuery(studentSelected?.id ?? skipToken, {
     selectFromResult: ({
-      // eslint-disable-next-line no-shadow
       data,
     }) => ({
       professorBefore: data?.data.professorsHistory.find((
@@ -54,22 +68,11 @@ export const ProfessorHistoryDataForm = ({ lastProfessor }: Props) => {
     }),
   });
 
-  const [ initialValues, setInitialValues ] = useState({
-    currentProfessor: `${lastProfessor?.professor?.name.first} ${lastProfessor?.professor?.name.last}` || '',
-    professor: initialProfessor,
-    createdAt: new Date(),
-    comments: '',
-  });
-
   useEffect(() => {
     if (professorBefore && professorSelected) {
       setInitialValues({
-        professor: {
-          fullname: `${professorSelected?.professor?.name.first} ${professorSelected?.professor?.name.last}`,
-          value: professorSelected?.professor.id,
-          avatar: professorSelected?.professor.avatar,
-        },
-        currentProfessor: `${professorBefore?.professor?.name.first} ${professorBefore?.professor?.name.last}`,
+        professor: setProfessorToAutocomplete(professorSelected),
+        currentProfessor: setProfessorToAutocomplete(professorBefore).fullname,
         createdAt: new Date(professorSelected.createdAt),
         comments: professorBefore.comments,
       });
@@ -93,7 +96,7 @@ export const ProfessorHistoryDataForm = ({ lastProfessor }: Props) => {
       <Formik
         initialValues={initialValues}
         enableReinitialize
-        onSubmit={async (values, { resetForm }) => {
+        onSubmit={async (values, { resetForm, setFieldError }) => {
           const { professor: { value: newProfessorId }, createdAt, comments } = values;
           const dataSend = {
             newProfessorId,
@@ -125,9 +128,8 @@ export const ProfessorHistoryDataForm = ({ lastProfessor }: Props) => {
             }
             showSuccess({ detail: message });
           } catch (error) {
-            console.log(error);
-            // const errors: string = processError({ error, showError });
-            // setStudentFormErrors({ errors, setFieldError });
+            const errors: string = processError({ error, showError });
+            setProfessorInHistoryFormErrors({ errors, setFieldError });
           }
         }}
         validationSchema={Yup.object({
@@ -210,10 +212,8 @@ export const ProfessorHistoryDataForm = ({ lastProfessor }: Props) => {
             )
           }
       </Formik>
-
     </>
   );
 };
 
 export default ProfessorHistoryDataForm;
-// className="mt-2 flex align-items-center justify-content-center"
