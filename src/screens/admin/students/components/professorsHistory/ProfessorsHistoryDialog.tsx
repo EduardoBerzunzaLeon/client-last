@@ -41,6 +41,8 @@ export const ProfessorsHistoryDialog = () => {
     hasEntitySelected: !!studentSelected,
   });
 
+  console.log(data);
+
   return (
     <Provider value={{
       professorSelected,

@@ -1,5 +1,5 @@
 import {
-  useContext, useEffect, useState,
+  useContext, useEffect, useState, useMemo,
 } from 'react';
 
 import { Button } from 'primereact/button';
@@ -12,6 +12,7 @@ import * as Yup from 'yup';
 
 import { AutoCompleteProfessors } from '../professor/AutoCompleteProfessors';
 import { FormElement } from '../../../../../components/forms/formElement/FormElement';
+import { getFormValues, ProfessorInHistoryValues, setProfessorToAutocomplete } from './assets';
 import { InputTextApp } from '../../../../../components/forms';
 import { processError, setProfessorInHistoryFormErrors } from '../../../../../utils/forms/handlerFormErrors';
 import { ProfessorInHistory } from '../../../../../interfaces/api';
@@ -25,32 +26,15 @@ import {
 } from '../../../../../redux/student/student.api';
 import { useToast } from '../../../../../hooks/useToast';
 
-const initialProfessor = {
-  fullname: '',
-  value: '',
-  avatar: '',
-};
-
 interface Props {
   lastProfessor: ProfessorInHistory | undefined,
 }
 
-const setProfessorToAutocomplete = ({ professor }: ProfessorInHistory) => ({
-  fullname: `${professor.name.first} ${professor.name.last}`,
-  value: professor.id,
-  avatar: professor.avatar,
-});
-
 export const ProfessorHistoryDataForm = ({ lastProfessor }: Props) => {
   const { professorSelected, setProfessorSelected } = useContext(ProfessorsHistoryContext);
   const { studentSelected } = useContext(StudentContext);
-
-  const [ initialValues, setInitialValues ] = useState({
-    currentProfessor: lastProfessor ? setProfessorToAutocomplete(lastProfessor).fullname : '',
-    professor: initialProfessor,
-    createdAt: new Date(),
-    comments: '',
-  });
+  const initialFormValues = useMemo(() => getFormValues(lastProfessor), [ lastProfessor ]);
+  const [ initialValues, setInitialValues ] = useState<ProfessorInHistoryValues>(initialFormValues);
 
   const [ createProfessor, { isLoading: isLoadingCreate }] = useCreateProfessorInHistoryMutation();
   const [ updateProfessor, { isLoading: isLoadingUpdate }] = useUpdateProfessorInHistoryMutation();
@@ -78,16 +62,12 @@ export const ProfessorHistoryDataForm = ({ lastProfessor }: Props) => {
       });
     }
 
-    if (!professorSelected) {
-      setInitialValues({
-        currentProfessor: `${lastProfessor?.professor?.name.first} ${lastProfessor?.professor?.name.last}` || '',
-        professor: initialProfessor,
-        createdAt: new Date(),
-        comments: '',
-      });
+    if (!professorSelected && lastProfessor) {
+      setInitialValues(initialFormValues);
     }
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ professorBefore, professorSelected ]);
+  }, [ professorBefore, professorSelected, lastProfessor ]);
 
   return (
     <>
@@ -98,20 +78,14 @@ export const ProfessorHistoryDataForm = ({ lastProfessor }: Props) => {
         enableReinitialize
         onSubmit={async (values, { resetForm, setFieldError }) => {
           const { professor: { value: newProfessorId }, createdAt, comments } = values;
-          const dataSend = {
-            newProfessorId,
-            userId: studentSelected?.id ?? '',
-            currentProfessorHistoryId: lastProfessor?.id ?? '',
-            createdAt,
-            comments,
-          };
+          const userId = studentSelected?.id ?? '';
 
-          let message = 'El alumno se actualizó con éxito';
+          let message = 'La asignación del tutor se actualizó con éxito';
 
           try {
             if (professorSelected) {
-              const dataUpdate = {
-                userId: dataSend.userId,
+              const dataForUpdate = {
+                userId,
                 professorHistoryId: professorSelected.id,
                 professorId: newProfessorId,
                 comments,
@@ -119,10 +93,18 @@ export const ProfessorHistoryDataForm = ({ lastProfessor }: Props) => {
                 professorBeforeId: professorBefore?.id || '',
               };
 
-              await updateProfessor(dataUpdate).unwrap();
+              await updateProfessor(dataForUpdate).unwrap();
               setInitialValues({ ...values });
             } else {
-              await createProfessor(dataSend).unwrap();
+              const dataForCreate = {
+                newProfessorId,
+                currentProfessorHistoryId: lastProfessor?.id ?? '',
+                userId,
+                createdAt,
+                comments,
+              };
+
+              await createProfessor(dataForCreate).unwrap();
               message = 'El tutor se agregó con éxito';
               resetForm();
             }
