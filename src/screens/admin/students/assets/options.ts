@@ -17,15 +17,37 @@ export const atRiskOptions = [
   { label: 'No termina', value: 'no termina' },
 ];
 
-export const statusOptions = [
-  { label: 'Regular', value: 'regular' },
-  { label: 'Baja', value: 'baja' },
-  { label: 'Baja Temporal', value: 'baja temporal' },
-  { label: 'Egresado', value: 'egresado' },
+export const inChanellingOptions = [
+  { label: 'No', value: 'no' },
+  { label: 'Asesoria', value: 'asesoria' },
+  { label: 'Mentoria', value: 'mentoria' },
+  { label: 'A. Psícologica Int.', value: 'atencion psicologica interna' },
+  { label: 'A. Psícologica Ext.', value: 'atencion psicologica externa' },
+  { label: 'Consejeria', value: 'consejeria' },
+];
+
+export const statusGroupOptions = [
+  {
+    label: 'Regular',
+    items: [
+      { label: 'Regular', value: 'regular' },
+      { label: 'Egresado', value: 'egresado' },
+    ],
+  },
+  {
+    label: 'Irregular',
+    items: [
+      { label: 'Baja Definitiva', value: 'baja' },
+      { label: 'Baja Temporal', value: 'baja temporal' },
+      { label: 'Rezago', value: 'rezago' },
+    ],
+  },
+
 ];
 
 export default {
-  semesterOptions,
   atRiskOptions,
-  statusOptions,
+  inChanellingOptions,
+  semesterOptions,
+  statusGroupOptions,
 };

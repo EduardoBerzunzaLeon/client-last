@@ -20,6 +20,7 @@ import { StudentResume } from '../../../interfaces/api';
 import { useLazyParams } from '../../../hooks/useLazyParams';
 import { useGetStudentsQuery } from '../../../redux/student/student.api';
 import { ProfessorsHistoryDialog } from './components/professorsHistory/ProfessorsHistoryDialog';
+import { InChannellingBody, InChannellingFilter } from './components/columns/inChannelling';
 
 const { Provider } = StudentContext;
 
@@ -143,6 +144,17 @@ export const StudentsScreen = () => {
                     filterElement={AtRiskFilter}
                     body={AtRiskBody}
                     header="En riesgo"
+                    showFilterMenu={false}
+                    sortable
+                  />
+                  <Column
+                    field="inChannelling"
+                    filter
+                    filterField="inChannelling"
+                    filterPlaceholder="Buscar en canalización"
+                    filterElement={InChannellingFilter}
+                    body={InChannellingBody}
+                    header="En Canalización"
                     showFilterMenu={false}
                     sortable
                   />

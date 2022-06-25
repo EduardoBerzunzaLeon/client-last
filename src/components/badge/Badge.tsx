@@ -8,7 +8,8 @@ interface MatchObject {
 
 interface Props <T>{
     match: keyof T,
-    text: string
+    text: string,
+    noMatch?: string,
     matchObject?: T,
     className?: string,
 }
@@ -27,8 +28,9 @@ export const Badge = ({
   text,
   matchObject = matchObjectDefault,
   className,
+  noMatch,
 }: Props<MatchObject>) => (
-  <span className={`custom-badge status-${matchObject[match]} ${className}`}>
+  <span className={`custom-badge status-${matchObject[match] ?? noMatch} ${className}`}>
     {text.trim()}
   </span>
 );
@@ -36,6 +38,7 @@ export const Badge = ({
 Badge.defaultProps = {
   matchObject: matchObjectDefault,
   className: '',
+  noMatch: 'danger',
 };
 
 export default Badge;

@@ -46,6 +46,7 @@ export const FileSingleInputApp = ({
   const fileUploadRef = useRef<any>(null);
   const isControlled = useRef(!!onChange);
 
+  console.log(initialValue);
   const { file, setIsLoaded } = useFile({
     url: initialValue,
     name: 'imagen.png',

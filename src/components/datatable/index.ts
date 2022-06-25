@@ -6,4 +6,4 @@ export { GenderFilter } from './filters/GenderFilter';
 export { IntegerFilter } from './filters/IntegerFilter';
 export { TriStateFilter } from './filters/TriStateFilter';
 
-export { createSelectFilter } from './filters/SelectFilter';
+export { createSelectFilter, createSelectGroupFilter } from './filters/SelectFilter';

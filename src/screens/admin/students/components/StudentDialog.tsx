@@ -37,6 +37,7 @@ const initialValues: StudentResume = {
     id: '',
     avatar: '',
   },
+  inChannelling: 'no',
 };
 
 export const StudentDialog = () => {

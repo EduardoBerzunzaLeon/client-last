@@ -25,13 +25,16 @@ interface Props {
 }
 
 export const StudentDataForm = ({ student, buttonLabel }: Props) => {
+  const [ createStudent, { isLoading: isLoadingCreate }] = useCreateStudentMutation();
+  const [ updateStudent, { isLoading: isLoadingUpdate }] = useUpdateStudentMutation();
+
   const [ initialStudent, setInitialStudent ] = useState({
     first: student.name.first,
     last: student.name.last,
     gender: student.id ? student.gender : null,
     email: student.email,
     active: student.active,
-    avatar: null,
+    avatar: student.avatar || null,
     enrollment: student.enrollment,
     currentSemester: student.currentSemester,
     classroom: student.classroom || 'A',
@@ -41,8 +44,6 @@ export const StudentDataForm = ({ student, buttonLabel }: Props) => {
       avatar: student.professor.avatar,
     },
   });
-  const [ createStudent, { isLoading: isLoadingCreate }] = useCreateStudentMutation();
-  const [ updateStudent, { isLoading: isLoadingUpdate }] = useUpdateStudentMutation();
 
   const { toast, showSuccess, showError } = useToast();
 
@@ -122,7 +123,8 @@ export const StudentDataForm = ({ student, buttonLabel }: Props) => {
               onChange={(primeFile) => {
                 setFieldValue('avatar', primeFile);
               }}
-              initialValue={student?.avatar ?? values?.avatar ?? ''}
+              initialValue={initialStudent.avatar ?? values.avatar ?? ''}
+              isLoading={isLoadingUpdate || isLoadingCreate}
               uploadOptions={uploadOptions}
             />
 

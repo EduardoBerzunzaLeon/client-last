@@ -1,7 +1,11 @@
+export type Channeling = 'no' | 'asesoria' | 'mentoria' | 'atención psicologica interna' | 'atención psicologica externa' | 'consejeria';
+export type Status = 'regular' | 'baja' | 'baja temporal' | 'egresado' | 'rezago';
+export type AtRisk = 'no' | 'ultimo intento' | 'unica materia' | 'no termina';
+
 export interface StudentStatus {
     _id: string,
     createdAt: Date,
-    status: 'regular' | 'baja' | 'baja temporal' | 'egresado',
+    status: Status,
 }
 
 export interface StudentProfessor {
@@ -15,7 +19,8 @@ export interface StudentProfessor {
 
 export interface StudentResume {
     id: string,
-    atRisk: 'no' | 'ultimo intento' | 'unica materia' | 'no termina',
+    atRisk: AtRisk,
+    inChannelling: Channeling,
     status: StudentStatus,
     email: string,
     enrollment: string,

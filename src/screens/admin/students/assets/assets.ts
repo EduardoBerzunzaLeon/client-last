@@ -10,6 +10,7 @@ export const initialFiltersValue: DataTableFilterMeta = {
   classroom: { value: null, matchMode: FilterMatchMode.CONTAINS },
   gender: { value: null, matchMode: FilterMatchMode.CONTAINS },
   atRisk: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  inChannelling: { value: null, matchMode: FilterMatchMode.CONTAINS },
   'status.status': { value: null, matchMode: FilterMatchMode.CONTAINS },
   'professor.name.last': { value: null, matchMode: FilterMatchMode.CONTAINS },
   'professor.name.first': { value: null, matchMode: FilterMatchMode.CONTAINS },
