@@ -1,7 +1,6 @@
 import { Generic, MessageProps } from '../../interfaces';
 import { getErrorDetail } from '../../redux/services/error.service';
 
-
 import { authFieldsTranslation, AuthFieldsTranslation } from '../translation/authFields';
 import { professorFieldsTranslation, ProfessorFieldsTranslation } from '../translation/professorField';
 import { subjectFieldsTranslation, SubjectFieldsTranslation } from '../translation/subjectFields';

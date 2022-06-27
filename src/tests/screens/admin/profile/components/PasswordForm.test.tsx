@@ -12,8 +12,8 @@ import { mockStoreWithMiddlewares, renderWithProps } from '../../../../fixtures/
 import { mockUpdatePassword } from '../../../../fixtures/mockServer/mockAuthHandler';
 import { tutorApi } from '../../../../../redux/services/tutor.api';
 import { userLogged } from '../../../../fixtures/testData/fakeAuthData';
-// import * as userApi from '../../../../../redux/user/user.api';
-import { PasswordForm } from '../../../../../screens/admin/profile/components/PasswordForm';
+
+import { PasswordForm } from '../../../../../components/profile/PasswordForm';
 import * as authApi from '../../../../../redux/auth/auth.api';
 
 const server = setupServer(mockUpdatePassword);

@@ -7,14 +7,12 @@ import { TabView, TabPanel } from 'primereact/tabview';
 import { useLocation, useParams } from 'react-router-dom';
 
 import {
-  Badge, Divider, HeaderAdmin, SpinnerRTK,
+  Badge, Divider, HeaderAdmin, Skeleton, SpinnerRTK,
 } from '../../../components/ui';
-import { PasswordForm } from './components/PasswordForm';
+import { PasswordForm } from '../../../components/profile/PasswordForm';
 import { PermissionsGate } from '../../../components/authorization/PermissionGate';
-import { PersonalDataForm } from './components/PersonalDataForm';
-import { ProfileImageForm } from './components/ProfileImageForm';
-import { ProfileProfessorScreen } from '../../../components/professors';
-import { Skeleton, SkeletonImage } from '../../../components/skeleton';
+import { PersonalDataForm, ProfileImageForm } from '../../../components/profile';
+import { ProfileProfessorScreen } from '../../../components/profileProfessors';
 import { User } from '../../../interfaces';
 
 import { useAuth } from '../../../hooks';
@@ -55,7 +53,7 @@ const ProfileScreenMin = ({ data }: {data: User}) => {
               <Skeleton
                 className="border-circle w-8rem h-8rem"
               >
-                <SkeletonImage
+                <Skeleton.Image
                   src={data?.avatar}
                   alt="Profile"
                   className="border-circle border-purple-700 border-3 w-8rem h-8rem"

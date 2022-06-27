@@ -1,4 +1,4 @@
-import { Skeleton, SkeletonImage } from '../../skeleton';
+import { Skeleton } from '../../ui';
 
 interface Props {
     text: string,
@@ -10,7 +10,7 @@ export const TextImageBody = ({ text, imageURL }: Props) => (
     <Skeleton
       className="border-circle w-3rem h-3rem"
     >
-      <SkeletonImage
+      <Skeleton.Image
         src={imageURL}
         alt="Profile"
         className="border-circle  w-3rem h-3rem"

@@ -5,5 +5,6 @@ export * from './bodies/TextImageBody';
 export * from './filters/GenderFilter';
 export * from './filters/IntegerFilter';
 export * from './filters/TriStateFilter';
-
+export * from './Header';
 export * from './filters/SelectFilter';
+export * from './filters/CalendarFilter';

@@ -7,9 +7,9 @@ import classNames from 'classnames';
 
 import { closeSider } from '../../../../redux/ui/ui.slice';
 import { setDefaultAuthState } from '../../../../redux/auth/auth.slice';
-import { Skeleton, SkeletonImage } from '../../../../components/skeleton';
 import { useAppDispatch } from '../../../../redux/hooks';
 import { useAuth } from '../../../../hooks';
+import { Skeleton } from '../../../../components/ui';
 
 export const MenuProfile = () => {
   const dispatch = useAppDispatch();
@@ -37,7 +37,7 @@ export const MenuProfile = () => {
           <Skeleton
             className="border-circle w-6rem h-6rem"
           >
-            <SkeletonImage
+            <Skeleton.Image
               src={user?.avatar}
               imgError="/assets/images/profile.png"
               alt="Profile"

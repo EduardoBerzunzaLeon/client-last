@@ -2,21 +2,26 @@ import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import { useState } from 'react';
 
-import { ActionsBodyTemplate } from './components/columns/Actions';
-import { AtRiskBody, AtRiskFilter } from './components/columns/AtRisk';
 import { GenderBody, GenderFilter } from '../../../components/datatable';
-import { Header } from './components/Header';
 import { HeaderAdmin, SpinnerRTK } from '../../../components/ui';
-import { InChannellingBody, InChannellingFilter } from './components/columns/inChannelling';
-import { initialFiltersValue } from './assets/assets';
-import { NameBodyTemplate } from './components/columns/Name';
-import { ProfessorBodyTemplate } from './components/columns/Professor';
-import { ProfessorsHistoryDialog } from './components/professorsHistory/ProfessorsHistoryDialog';
-import { SemesterFilter } from './components/columns/Semester';
-import { StatusBody, StatusFilter } from './components/columns/Status';
-import { StudentContext } from './context/studentContext';
-import { StudentDialog } from './components/StudentDialog';
 import { StudentResume } from '../../../interfaces';
+import {
+  ActionsBodyTemplate,
+  AtRiskBody,
+  AtRiskFilter,
+  Header,
+  InChannellingBody,
+  InChannellingFilter,
+  initialFiltersValue,
+  NameBodyTemplate,
+  ProfessorBodyTemplate,
+  ProfessorsHistoryDialog,
+  SemesterFilter,
+  StatusBody,
+  StatusFilter,
+  StudentDialog,
+  StudentContext,
+} from '../../../components/students';
 
 import { useLazyParams } from '../../../hooks';
 import { useGetStudentsQuery } from '../../../redux/student/student.api';

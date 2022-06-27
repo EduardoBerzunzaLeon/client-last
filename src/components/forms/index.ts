@@ -1,5 +1,4 @@
-export { FooterInputPassword } from './inputs/FooterInputPassword';
-export { InputTextApp } from './inputs/InputTextApp';
-export { RadioButtonApp } from './radioButton/RadioButtonApp';
-export { RadioGroup } from './radioButton/RadioGroup';
-export { withDetailInputPassword } from './inputs/withDetailInputPassword';
+export * from './fileInput';
+export * from './inputs';
+export * from './radioButton';
+export * from './toggleButton';

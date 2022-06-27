@@ -1,3 +1,3 @@
 export * from './assets';
 export * from './components';
-export * from './context/professorContext';
+export * from './context/studentContext';

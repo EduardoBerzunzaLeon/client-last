@@ -6,15 +6,13 @@ import {
   ActiveBody, GenderBody, GenderFilter, TriStateFilter,
 } from '../../../components/datatable';
 
-import { ActionsBodyTemplate } from './components/columns/Actions';
-import { CoursesDialog } from './components/course/CoursesDialog';
-import { EmailBodyTemplate } from './components/columns/Email';
-import { Header } from './components/Header';
-import { HeaderAdmin, SpinnerRTK } from '../../../components/ui';
-import { initialFiltersValue } from './assets/assets';
+import {
+  ProfessorContext, EmailBodyTemplate, ProfessorDialog, CoursesDialog, Header,
+} from '../../../components/professors';
+
+import { initialFiltersValue, ActionsBodyTemplate } from '../../../components/students';
 import { Professor } from '../../../interfaces';
-import { ProfessorContext } from './context/professorContext';
-import { ProfessorDialog } from './components/ProfessorDialog';
+import { SpinnerRTK, HeaderAdmin } from '../../../components/ui';
 
 import { useGetProfessorsQuery } from '../../../redux/professor/professor.api';
 import { useLazyParams } from '../../../hooks';
