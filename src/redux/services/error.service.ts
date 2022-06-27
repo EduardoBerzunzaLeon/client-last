@@ -1,4 +1,4 @@
-import { ErrorResponse } from '../../interfaces/api';
+import { ErrorResponse } from '../../interfaces';
 
 export const isAPIResponseError = (error: any): error is ErrorResponse => {
   const msg = error?.data?.error?.message;

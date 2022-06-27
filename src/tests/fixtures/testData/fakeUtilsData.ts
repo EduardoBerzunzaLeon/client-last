@@ -1,4 +1,4 @@
-import { ErrorResponse } from '../../../interfaces/api/responses/errorInterface';
+import { ErrorResponse } from '../../../interfaces';
 
 export const errorResponse: ErrorResponse = {
   status: 401,

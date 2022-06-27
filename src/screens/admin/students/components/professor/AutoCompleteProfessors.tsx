@@ -1,7 +1,7 @@
 import { AutoComplete, AutoCompleteChangeParams, AutoCompleteCompleteMethodParams } from 'primereact/autocomplete';
 import { useEffect, useState } from 'react';
 import { TextImageBody } from '../../../../../components/datatable';
-import { Professor } from '../../../../../interfaces/api';
+import { Professor } from '../../../../../interfaces';
 import { useGetProfessorsByFullNameQuery, useGetProfessorsQuery } from '../../../../../redux/professor/professor.api';
 
 export interface ProfessorItem {

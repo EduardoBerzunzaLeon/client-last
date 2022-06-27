@@ -1,7 +1,7 @@
 import { DataTablePFSEvent } from 'primereact/datatable';
 import React, { createContext } from 'react';
 
-import { StudentResume } from '../../../../interfaces/api';
+import { StudentResume } from '../../../../interfaces';
 
 interface StudentContextProps {
     displayModal: boolean,

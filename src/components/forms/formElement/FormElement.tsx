@@ -1,8 +1,9 @@
+import React from 'react';
+
 import { ErrorMessage, useField } from 'formik';
 import classNames from 'classnames';
 
-import React from 'react';
-import { Generic } from '../../../interfaces/generic';
+import { Generic } from '../../../interfaces';
 
 interface Props extends Generic{
     label: string,

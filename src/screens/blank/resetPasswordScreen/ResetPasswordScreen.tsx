@@ -6,10 +6,11 @@ import { useParams, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import { InputTextApp, withDetailInputPassword } from '../../../components/forms';
-import { ResetPasswordRequest } from '../../../interfaces/api';
-import { setAuthFormErrors, processError } from '../../../utils/forms/handlerFormErrors';
+import { ResetPasswordRequest } from '../../../interfaces';
+import { setAuthFormErrors, processError } from '../../../utils';
+
 import { useResetPasswordMutation } from '../../../redux/auth/auth.api';
-import { useToast } from '../../../hooks/useToast';
+import { useToast } from '../../../hooks';
 
 const InputPassword = withDetailInputPassword(InputTextApp);
 

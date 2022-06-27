@@ -1,6 +1,6 @@
 import { DataTableFilterMatchModeType } from 'primereact/datatable';
-import { FilterOptionsProps, Paginator } from '../../interfaces/api';
-import { Generic } from '../../interfaces/generic';
+
+import { FilterOptionsProps, Paginator, Generic } from '../../interfaces';
 
 export const prepareFilters = (filterOptions: FilterOptionsProps) => {
   const filterEquivalence: Record<DataTableFilterMatchModeType, string> = {

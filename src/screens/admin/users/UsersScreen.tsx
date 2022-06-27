@@ -9,16 +9,14 @@ import {
 import { ActionsBodyTemplate } from './components/columns/Actions';
 import { EmailBodyTemplate } from './components/columns/Email';
 import { Header } from './components/Header';
-import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
+import { HeaderAdmin, SpinnerRTK } from '../../../components/ui';
 import { initialFiltersValue } from './assets/assets';
-import { SpinnerRTK } from '../../../components/spinnerRTK/SpinnerRTK';
-import { User } from '../../../interfaces/api';
+import { User } from '../../../interfaces';
 import { UserContext } from './context/userContext';
 import { UserDialog } from './components/UserDialog';
 
-import { useAuth } from '../../../hooks/useAuth';
+import { useAuth, useLazyParams } from '../../../hooks';
 import { useGetUsersQuery } from '../../../redux/user/user.api';
-import { useLazyParams } from '../../../hooks/useLazyParams';
 
 const { Provider } = UserContext;
 

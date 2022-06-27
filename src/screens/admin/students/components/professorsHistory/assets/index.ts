@@ -1,4 +1,4 @@
-import { ProfessorInHistory } from '../../../../../../interfaces/api';
+import { ProfessorInHistory } from '../../../../../../interfaces';
 
 export interface InitialProfessor {
     fullname: string,

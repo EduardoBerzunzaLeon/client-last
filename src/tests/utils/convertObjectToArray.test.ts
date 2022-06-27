@@ -1,5 +1,6 @@
-import { Generic } from '../../interfaces/generic';
-import { convertObjectToArray } from '../../utils/convertObjectToArray';
+import { Generic } from '../../interfaces';
+import { convertObjectToArray } from '../../utils';
+
 
 describe('Convert Object To Array', () => {
   test('should convert correctly the object to arrray', () => {

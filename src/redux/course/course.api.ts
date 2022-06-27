@@ -1,11 +1,11 @@
 import { tutorApi } from '../services/tutor.api';
 import {
-  ListResponse,
-  UpdateCourseRequest,
-  SingleResponse,
-  CreateCourseRequest,
   CourseProfessor,
-} from '../../interfaces/api';
+  CreateCourseRequest,
+  ListResponse,
+  SingleResponse,
+  UpdateCourseRequest,
+} from '../../interfaces';
 import { invalidatesList, providesList } from '../services/response.service';
 
 const providesListCourse = providesList('Courses');

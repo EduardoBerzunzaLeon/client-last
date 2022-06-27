@@ -10,7 +10,7 @@ import { EmptyLayout } from './EmptyLayout';
 import { HeaderFileInput } from './HeaderFileInput';
 import { ItemFileDefault, ItemFileInput } from './ItemFileInput';
 import { ProgressBarFileControlledInput, ProgressBarFileInput } from './ProgressBarFileInput';
-import { useFile } from '../../../hooks/useFile';
+import { useFile } from '../../../hooks';
 
 const cancelOptionsDefault = { icon: 'pi pi-fw pi-times', iconOnly: true, className: 'custom-cancel-btn p-button-danger p-button-rounded p-button-outlined' };
 const chooseOptionsDefault = { icon: 'pi pi-fw pi-images', iconOnly: true, className: 'custom-choose-btn p-button-rounded p-button-outlined' };

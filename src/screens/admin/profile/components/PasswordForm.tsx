@@ -4,9 +4,9 @@ import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
 import { InputTextApp, withDetailInputPassword } from '../../../../components/forms';
-import { processError } from '../../../../utils/forms/handlerFormErrors';
-import { UpdatePasswordRequest } from '../../../../interfaces/api';
-import { useToast } from '../../../../hooks/useToast';
+import { processError } from '../../../../utils';
+import { UpdatePasswordRequest } from '../../../../interfaces';
+import { useToast } from '../../../../hooks';
 import { useUpdatePasswordMutation } from '../../../../redux/auth/auth.api';
 
 const InputPassword = withDetailInputPassword(InputTextApp);

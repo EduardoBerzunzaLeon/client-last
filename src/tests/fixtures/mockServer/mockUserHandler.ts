@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 
 import { generateError } from '../testData/fakeUtilsData';
-import { UpdateUserRequest } from '../../../interfaces/api';
+import { UpdateUserRequest } from '../../../interfaces';
 
 const userTesting = {
   data: {

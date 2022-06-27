@@ -1,23 +1,27 @@
+import { useState } from 'react';
+
 import { Form, Formik } from 'formik';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
-import { useState } from 'react';
 import * as Yup from 'yup';
-import { Divider } from '../../../../components/divider/Divider';
-import { InputTextApp, RadioGroup } from '../../../../components/forms';
-import { uploadOptions } from '../../../../components/forms/fileInput/buttonOptions';
-import { FileSingleInputApp } from '../../../../components/forms/fileInput/FileSingleInputApp';
-import { FormElement } from '../../../../components/forms/formElement/FormElement';
-import { ToggleButtonApp } from '../../../../components/forms/toggleButton/ToggleButtonApp';
-import { useToast } from '../../../../hooks/useToast';
-
-import { StudentResume } from '../../../../interfaces/api';
-import { useCreateStudentMutation, useUpdateStudentMutation } from '../../../../redux/student/student.api';
-import { convertModelToFormData } from '../../../../utils/convertModelToFormData';
-import { processError, setStudentFormErrors } from '../../../../utils/forms/handlerFormErrors';
-import { genderRadio } from '../../../../utils/forms/radioButtonObjects';
 
 import { AutoCompleteProfessors } from './professor/AutoCompleteProfessors';
+import {
+  convertModelToFormData,
+  genderRadio,
+  processError,
+  setStudentFormErrors,
+} from '../../../../utils';
+import { Divider } from '../../../../components/ui';
+import { FileSingleInputApp } from '../../../../components/forms/fileInput/FileSingleInputApp';
+import { FormElement } from '../../../../components/forms/formElement/FormElement';
+import { InputTextApp, RadioGroup } from '../../../../components/forms';
+import { StudentResume } from '../../../../interfaces';
+import { ToggleButtonApp } from '../../../../components/forms/toggleButton/ToggleButtonApp';
+import { uploadOptions } from '../../../../components/forms/fileInput/buttonOptions';
+
+import { useCreateStudentMutation, useUpdateStudentMutation } from '../../../../redux/student/student.api';
+import { useToast } from '../../../../hooks';
 
 interface Props {
     buttonLabel: string,

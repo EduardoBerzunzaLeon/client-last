@@ -7,7 +7,7 @@ import {
   FetchBaseQueryMeta,
 } from '@reduxjs/toolkit/query/react';
 
-import { ErrorResponse } from '../../interfaces/api';
+import { ErrorResponse } from '../../interfaces';
 // eslint-disable-next-line import/no-cycle
 import { RootState } from '../store';
 

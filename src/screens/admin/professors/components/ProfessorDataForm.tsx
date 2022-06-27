@@ -7,22 +7,24 @@ import { MultiSelect } from 'primereact/multiselect';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import { convertAdditionalSubjects } from '../../../../utils/convertAdditionalSubjects';
-import { convertModelToFormData } from '../../../../utils/convertModelToFormData';
+import {
+  convertAdditionalSubjects,
+  convertModelToFormData,
+  genderRadio,
+  setProfessorFormErrors,
+  processError,
+} from '../../../../utils';
 import { FileSingleInputApp } from '../../../../components/forms/fileInput/FileSingleInputApp';
 import { FormElement } from '../../../../components/forms/formElement/FormElement';
-import { genderRadio } from '../../../../utils/forms/radioButtonObjects';
 import { InputTextApp, RadioGroup } from '../../../../components/forms';
-import { Paginator, ProfessorDetail, RequiredSubjects } from '../../../../interfaces/api';
-import { setProfessorFormErrors, processError } from '../../../../utils/forms/handlerFormErrors';
-import { SkeletonDropdown } from '../../../../components/skeletonDropdown/SkeletonDropdown';
+import { Paginator, ProfessorDetail, RequiredSubjects } from '../../../../interfaces';
+import { SkeletonDropdown } from '../../../../components/ui/skeletonDropdown/SkeletonDropdown';
 import { ToggleButtonApp } from '../../../../components/forms/toggleButton/ToggleButtonApp';
 import { uploadOptions } from '../../../../components/forms/fileInput/buttonOptions';
 
-import { useToast } from '../../../../hooks/useToast';
+import { useToast, useDropdownFilter } from '../../../../hooks';
 import { useCreateProfessorMutation, useUpdateProfessorMutation } from '../../../../redux/professor/professor.api';
 import { useGetConsecutiveSubjectsQuery } from '../../../../redux/subject/subject.api';
-import { useDropdownFilter } from '../../../../hooks/useDropdownFilter';
 
 const initialFilters: Paginator = {
   page: 0,

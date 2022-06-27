@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { PrimeFile } from '../interfaces/ui/primereact/primeFileInterface';
+import { PrimeFile } from '../interfaces';
 
 interface Props {
     name: string,

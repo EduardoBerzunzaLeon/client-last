@@ -5,10 +5,11 @@ import { Toast } from 'primereact/toast';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
 import { CLIENT_ID_FACEBOOK } from '../../../../config/enviroment';
-import { processError } from '../../../../utils/forms/handlerFormErrors';
-import { SlipButton } from '../../../../components/slipButton/SlipButton';
+import { processError } from '../../../../utils';
+import { SlipButton } from '../../../../components/ui';
+
 import { useSignInWithSocialMutation } from '../../../../redux/auth/auth.api';
-import { useToast } from '../../../../hooks/useToast';
+import { useToast } from '../../../../hooks';
 
 export const FacebookButton = () => {
   const [ signInSocial, { isLoading }] = useSignInWithSocialMutation();

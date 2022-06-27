@@ -1,10 +1,13 @@
 import { rest } from 'msw';
-import { RegisterRequest } from '../../../interfaces/api';
+import {
+  ForgotPasswordRequest,
+  RegisterRequest,
+  ResetPasswordRequest,
+  SendEmailVerifyRequest,
+  UpdatePasswordRequest,
+} from '../../../interfaces';
 import { userLogged } from '../testData/fakeAuthData';
 import { generateError } from '../testData/fakeUtilsData';
-import {
-  ForgotPasswordRequest, SendEmailVerifyRequest, ResetPasswordRequest, UpdatePasswordRequest,
-} from '../../../interfaces/api/requests/authInterface';
 
 export const mockLoginError = rest.post(
   `${process.env.REACT_APP_API_URL}/users/login`,

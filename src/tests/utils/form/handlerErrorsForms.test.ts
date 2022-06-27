@@ -1,4 +1,4 @@
-import { setAuthFormErrors, processError } from '../../../utils/forms/handlerFormErrors';
+import { setAuthFormErrors, processError } from '../../../utils';
 import { errorResponse } from '../../fixtures/testData/fakeUtilsData';
 
 describe('Handler Errors Forms', () => {

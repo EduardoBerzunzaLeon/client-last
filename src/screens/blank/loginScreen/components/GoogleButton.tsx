@@ -2,12 +2,12 @@ import { useCallback } from 'react';
 
 import { GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 import { Toast } from 'primereact/toast';
-
 import { CLIENT_ID_GOOGLE } from '../../../../config/enviroment';
-import { processError } from '../../../../utils/forms/handlerFormErrors';
-import { SlipButton } from '../../../../components/slipButton/SlipButton';
+import { processError } from '../../../../utils';
+import { SlipButton } from '../../../../components/ui';
+
 import { useSignInWithSocialMutation } from '../../../../redux/auth/auth.api';
-import { useToast } from '../../../../hooks/useToast';
+import { useToast } from '../../../../hooks';
 
 export const GoogleButton = () => {
   const [ signInSocial, { isLoading }] = useSignInWithSocialMutation();

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from 'primereact/button';
 // import { Tooltip } from 'primereact/tooltip';
 
-import { Professor } from '../../../../../interfaces/api';
+import { Professor } from '../../../../../interfaces';
 import { ProfessorContext } from '../../context/professorContext';
 import { ButtonProfessorActive } from '../ButtonProfessorActive';
 import { PermissionsGate } from '../../../../../components/authorization/PermissionGate';

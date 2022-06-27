@@ -3,12 +3,11 @@ import { useContext } from 'react';
 import { Dialog } from 'primereact/dialog';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
 
+import { Badge, SpanDetail, SpinnerRTK } from '../../../../components/ui';
 import { SubjectContext } from '../context/subjectContext';
-import { useGetSubjectQuery } from '../../../../redux/subject/subject.api';
-import { SpinnerRTK } from '../../../../components/spinnerRTK/SpinnerRTK';
-import { Badge } from '../../../../components/badge/Badge';
-import { SpanDetail } from '../../../../components/spanDetail/SpanDetail';
 import { SubjectsList } from '../../../../components/subject/SubjectsList';
+
+import { useGetSubjectQuery } from '../../../../redux/subject/subject.api';
 
 export const SubjectDetailDialog = () => {
   const {

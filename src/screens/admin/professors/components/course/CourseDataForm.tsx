@@ -4,13 +4,13 @@ import { Form, Formik } from 'formik';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import { CreateCourseRequest } from '../../../../../interfaces/api';
+import { CreateCourseRequest } from '../../../../../interfaces';
 import { FormElement } from '../../../../../components/forms/formElement/FormElement';
 import { InputTextApp } from '../../../../../components/forms';
-import { processError, setSubjectFormErrors } from '../../../../../utils/forms/handlerFormErrors';
+import { processError, setSubjectFormErrors } from '../../../../../utils';
 
 import { useCreateCourseMutation } from '../../../../../redux/course/course.api';
-import { useToast } from '../../../../../hooks/useToast';
+import { useToast } from '../../../../../hooks';
 
 const initialCourse = {
   name: '',

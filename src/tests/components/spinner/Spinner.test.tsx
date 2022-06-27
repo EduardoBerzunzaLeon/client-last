@@ -1,5 +1,6 @@
 import { shallow } from 'enzyme';
-import Spinner from '../../../components/spinner/Spinner';
+
+import { Spinner } from '../../../components/ui';
 
 describe('<Spinner />', () => {
   test('should match to snapshot', () => {

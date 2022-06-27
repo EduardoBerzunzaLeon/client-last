@@ -1,4 +1,4 @@
-import { AllowedRoles } from '../interfaces/api';
+import { AllowedRoles } from '../../interfaces';
 
 interface UIRoles {
     name: string,

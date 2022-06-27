@@ -1,18 +1,18 @@
 import { tutorApi } from '../services/tutor.api';
 import {
-  Paginator,
-  Subject,
-  ListResponse,
-  UpdateSubjectRequest,
-  SingleResponse,
   CreateSubjectRequest,
-  SubjectDetail,
+  ListResponse,
+  Paginator,
   RequiredSubjects,
+  SingleResponse,
+  Subject,
+  SubjectCompleteData,
+  SubjectDetail,
   UpdateCorrelativeSubjectRequest,
-} from '../../interfaces/api';
+  UpdateSubjectRequest,
+} from '../../interfaces';
 import { transformQueryWithPaginator } from '../services/paginator.service';
 import { providesList } from '../services/response.service';
-import { SubjectCompleteData } from '../../interfaces/api/responses/subjectInterface';
 
 const providesListSubject = providesList('Subjects');
 

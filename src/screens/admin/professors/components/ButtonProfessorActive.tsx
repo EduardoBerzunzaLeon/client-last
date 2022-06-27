@@ -1,10 +1,10 @@
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 
-import { processError } from '../../../../utils/forms/handlerFormErrors';
-import { Professor } from '../../../../interfaces/api';
+import { processError } from '../../../../utils';
+import { Professor } from '../../../../interfaces';
 
-import { useToast } from '../../../../hooks/useToast';
+import { useToast } from '../../../../hooks';
 import { useUpdateActiveMutation } from '../../../../redux/professor/professor.api';
 
 interface Props {

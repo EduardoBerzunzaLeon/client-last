@@ -1,4 +1,4 @@
-import { ExcelButton } from '../../../../components/excelButton/ExcelButton';
+import { ExcelButton } from '../../../../components/ui';
 
 import { useGetProfessorsForExcelQuery } from '../../../../redux/professor/professor.api';
 

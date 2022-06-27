@@ -9,11 +9,10 @@ import { CalendarFilter } from '../../../../../components/datatable/filters/Cale
 import { CourseDataForm } from './CourseDataForm';
 import { initialFiltersCoursesValue } from '../../assets/assets';
 import { ProfessorContext } from '../../context/professorContext';
-import { SpinnerRTK } from '../../../../../components/spinnerRTK/SpinnerRTK';
-import { useGetCoursesQuery } from '../../../../../redux/course/course.api';
-import { useLazyParams } from '../../../../../hooks/useLazyParams';
+import { SpinnerRTK } from '../../../../../components/ui';
 
-import { useModalLoading } from '../../../../../hooks/useModalLoading';
+import { useGetCoursesQuery } from '../../../../../redux/course/course.api';
+import { useLazyParams, useModalLoading } from '../../../../../hooks';
 
 export const CoursesDialog = () => {
   const {

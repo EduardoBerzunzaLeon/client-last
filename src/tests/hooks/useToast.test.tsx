@@ -3,7 +3,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
 
 import { mount } from 'enzyme';
 import { Toast } from 'primereact/toast';
-import useToast from '../../hooks/useToast';
+import { useToast } from '../../hooks';
 
 describe('useToast', () => {
   test('should render the message in toast', () => {

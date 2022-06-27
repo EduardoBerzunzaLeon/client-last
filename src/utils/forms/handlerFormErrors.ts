@@ -1,12 +1,12 @@
-import { Generic } from '../../interfaces/generic';
+import { Generic, MessageProps } from '../../interfaces';
 import { getErrorDetail } from '../../redux/services/error.service';
-import { MessageProps } from '../../interfaces/ui/hooks/hooksInterface';
+
 
 import { authFieldsTranslation, AuthFieldsTranslation } from '../translation/authFields';
 import { professorFieldsTranslation, ProfessorFieldsTranslation } from '../translation/professorField';
 import { subjectFieldsTranslation, SubjectFieldsTranslation } from '../translation/subjectFields';
 import { studentFieldsTranslation, StudentFieldsTranslation } from '../translation/studentField';
-import { professorInHistoryFieldsTranslation, ProfessorInHistoryFieldsTranslation } from '../translation/professorInHistory';
+import { professorInHistoryFieldsTranslation, ProfessorInHistoryFieldsTranslation } from '../translation/professorInHistoryField';
 
 interface Error {
   errors: string,

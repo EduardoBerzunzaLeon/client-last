@@ -6,7 +6,8 @@ import { TabPanel, TabView } from 'primereact/tabview';
 import { AdminPasswordForm } from './AdminPasswordForm';
 import { UserContext } from '../context/userContext';
 import { UserDataForm } from './UserDataForm';
-import { useTitle } from '../../../../hooks/useTitle';
+
+import { useTitle } from '../../../../hooks';
 
 export const UserDialog = () => {
   const {

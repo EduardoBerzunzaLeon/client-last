@@ -5,19 +5,19 @@ import { useState } from 'react';
 import {
   ActiveBody, GenderBody, GenderFilter, TriStateFilter,
 } from '../../../components/datatable';
+
 import { ActionsBodyTemplate } from './components/columns/Actions';
 import { CoursesDialog } from './components/course/CoursesDialog';
 import { EmailBodyTemplate } from './components/columns/Email';
 import { Header } from './components/Header';
-import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
+import { HeaderAdmin, SpinnerRTK } from '../../../components/ui';
 import { initialFiltersValue } from './assets/assets';
-import { Professor } from '../../../interfaces/api';
+import { Professor } from '../../../interfaces';
 import { ProfessorContext } from './context/professorContext';
 import { ProfessorDialog } from './components/ProfessorDialog';
-import { SpinnerRTK } from '../../../components/spinnerRTK/SpinnerRTK';
 
 import { useGetProfessorsQuery } from '../../../redux/professor/professor.api';
-import { useLazyParams } from '../../../hooks/useLazyParams';
+import { useLazyParams } from '../../../hooks';
 
 const { Provider } = ProfessorContext;
 

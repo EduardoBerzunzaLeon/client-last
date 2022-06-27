@@ -3,9 +3,8 @@ import React from 'react';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { useNavigate } from 'react-router-dom';
 
-import { convertObjectToArray } from '../../utils/convertObjectToArray';
-import { Generic } from '../../interfaces/generic';
-import { MenuItem } from '../../interfaces/ui/primereact/menuItemInterface';
+import { convertObjectToArray } from '../../../utils';
+import { Generic, MenuItem } from '../../../interfaces';
 
 interface Props {
   position: string,

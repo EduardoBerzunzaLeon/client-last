@@ -4,9 +4,10 @@ import { Card } from 'primereact/card';
 import { Link, useParams } from 'react-router-dom';
 import { Toast } from 'primereact/toast';
 
-import { Spinner } from '../../../components/spinner/Spinner';
+import { Spinner } from '../../../components/ui';
+
 import { useEmailVerifyMutation } from '../../../redux/auth/auth.api';
-import { useToast } from '../../../hooks/useToast';
+import { useToast } from '../../../hooks';
 
 export const EmailVerifyScreen = () => {
   const { token } = useParams();

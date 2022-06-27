@@ -1,14 +1,14 @@
 import { tutorApi } from '../services/tutor.api';
 import {
-  Professor,
-  ListResponse,
-  SingleResponse,
-  ProfessorDetail,
-  UpdateActiveProfessor,
-  ProfessorsDataToExcel,
   Course,
+  ListResponse,
+  Professor,
+  ProfessorDetail,
+  ProfessorsDataToExcel,
+  SingleResponse,
+  UpdateActiveProfessor,
   UserSingleResponse,
-} from '../../interfaces/api';
+} from '../../interfaces';
 import { invalidatesList, providesList } from '../services/response.service';
 
 const providesListProfessor = providesList('Professors');

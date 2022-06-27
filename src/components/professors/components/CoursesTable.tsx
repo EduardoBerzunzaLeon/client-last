@@ -2,11 +2,10 @@ import { Card } from 'primereact/card';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import { FilterMatchMode } from 'primereact/api';
+import { CourseProfessor } from '../../../interfaces';
+import { ImpartedAtBodyTemplate } from '../../../screens/admin/professors/components/columns/ActionsCourses';
 
-import { CourseProfessor } from '../../../../interfaces/api';
-import { ImpartedAtBodyTemplate } from '../../professors/components/columns/ActionsCourses';
-
-const CoursesTable = ({ courses } : {courses: [CourseProfessor] | []}) => (
+export const CoursesTable = ({ courses } : {courses: CourseProfessor[] | []}) => (
   <Card title="Cursos">
     <DataTable
       value={courses}

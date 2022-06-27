@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Button } from 'primereact/button';
 
-import { StudentResume } from '../../../../../interfaces/api';
+import { StudentResume } from '../../../../../interfaces';
 import { PermissionsGate } from '../../../../../components/authorization/PermissionGate';
 import { StudentContext } from '../../context/studentContext';
 

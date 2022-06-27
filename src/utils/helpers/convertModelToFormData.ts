@@ -1,4 +1,4 @@
-import { Generic } from '../interfaces/generic';
+import { Generic } from '../../interfaces';
 
 export const convertModelToFormData = (model: Generic, form?: FormData, namespace = ''): FormData => {
   const formData = form || new FormData();

@@ -1,4 +1,4 @@
-import { ProfessorInHistory } from '../../../../../../interfaces/api';
+import { ProfessorInHistory } from '../../../../../../interfaces';
 import { TextImageBody } from '../../../../../../components/datatable';
 
 export const NameHistoryBodyTemplate = ({ professor: { name, avatar }}: ProfessorInHistory) => (

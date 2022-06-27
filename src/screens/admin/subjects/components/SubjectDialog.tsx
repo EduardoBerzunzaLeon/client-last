@@ -7,15 +7,13 @@ import { skipToken } from '@reduxjs/toolkit/dist/query';
 import { TabPanel, TabView } from 'primereact/tabview';
 
 import { CorrelativeSubjectForm } from './CorrelativeSubjectForm';
-import { SingleResponse } from '../../../../interfaces/api/responses/genericInterface';
-import { SpinnerRTK } from '../../../../components/spinnerRTK/SpinnerRTK';
+import { SingleResponse, SubjectDetail } from '../../../../interfaces';
+import { SpinnerRTK } from '../../../../components/ui';
 import { SubjectContext } from '../context/subjectContext';
 import { SubjectDataForm } from './SubjectDataForm';
-import { SubjectDetail } from '../../../../interfaces/api/responses/subjectInterface';
 
 import { useGetSubjectQuery } from '../../../../redux/subject/subject.api';
-import { useTitle } from '../../../../hooks/useTitle';
-import { useModalLoading } from '../../../../hooks/useModalLoading';
+import { useTitle, useModalLoading } from '../../../../hooks';
 
 const emptyData: SingleResponse<SubjectDetail> = {
   status: 'success',

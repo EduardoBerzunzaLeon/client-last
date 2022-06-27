@@ -1,16 +1,16 @@
 import { tutorApi } from '../services/tutor.api';
 import {
-  StudentResume,
+  EmptyResponse,
   ListResponse,
+  RequestAddProfessorInHistory,
+  RequestDeleteProfessorInHistory,
+  RequestUpdateProfessorInHistory,
   SingleResponse,
   StudentProfessorInHistory,
-  RequestAddProfessorInHistory,
-  RequestUpdateProfessorInHistory,
-  RequestDeleteProfessorInHistory,
-} from '../../interfaces/api';
+  StudentResume,
+} from '../../interfaces';
 
 import { invalidatesList, providesList } from '../services/response.service';
-import { EmptyResponse } from '../../interfaces/api/responses/genericInterface';
 
 const providesListStudent = providesList('Students');
 const invalidatesListStudents = invalidatesList('Students');

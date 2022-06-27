@@ -6,18 +6,22 @@ import { MultiSelect } from 'primereact/multiselect';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import { convertModelToFormData } from '../../../../utils/convertModelToFormData';
-import { convertRoles, roles } from '../../../../utils/convertRolesUsers';
+import {
+  convertModelToFormData,
+  convertRoles,
+  genderRadio,
+  processError,
+  roles,
+  setAuthFormErrors,
+} from '../../../../utils';
 import { FileSingleInputApp } from '../../../../components/forms/fileInput/FileSingleInputApp';
 import { FormElement } from '../../../../components/forms/formElement/FormElement';
-import { genderRadio } from '../../../../utils/forms/radioButtonObjects';
 import { InputTextApp, RadioGroup } from '../../../../components/forms';
-import { setAuthFormErrors, processError } from '../../../../utils/forms/handlerFormErrors';
 import { ToggleButtonApp } from '../../../../components/forms/toggleButton/ToggleButtonApp';
 import { uploadOptions } from '../../../../components/forms/fileInput/buttonOptions';
-import { User } from '../../../../interfaces/api';
+import { User } from '../../../../interfaces';
 
-import { useToast } from '../../../../hooks/useToast';
+import { useToast } from '../../../../hooks';
 import { useUpdateUserAdminMutation, useCreateUserMutation } from '../../../../redux/user/user.api';
 
 const initialValues = {

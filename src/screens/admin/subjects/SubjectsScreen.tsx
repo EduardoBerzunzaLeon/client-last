@@ -7,17 +7,16 @@ import { ActionsBodyTemplate } from './components/columns/Actions';
 import { CoreBodyTemplate } from './components/columns/Core';
 import { DeprecatedBodyTemplate } from './components/columns/Deprecated';
 import { Header } from './components/Header';
+import { HeaderAdmin, SpinnerRTK } from '../../../components/ui';
 import { initialFiltersValue } from './assets/assets';
 import { IntegerFilter, TriStateFilter } from '../../../components/datatable';
-import { SpinnerRTK } from '../../../components/spinnerRTK/SpinnerRTK';
-import { Subject } from '../../../interfaces/api';
+import { Subject } from '../../../interfaces';
 import { SubjectContext } from './context/subjectContext';
 import { SubjectDetailDialog } from './components/SubjectDetailDialog';
 import { SubjectDialog } from './components/SubjectDialog';
 
 import { useGetSubjectsQuery } from '../../../redux/subject/subject.api';
-import { useLazyParams } from '../../../hooks/useLazyParams';
-import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
+import { useLazyParams } from '../../../hooks';
 
 const { Provider } = SubjectContext;
 

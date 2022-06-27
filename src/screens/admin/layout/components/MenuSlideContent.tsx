@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 
 import { closeSider } from '../../../../redux/ui/ui.slice';
-import { Menu } from '../../../../utils/menuElement';
+import { Menu } from '../../../../utils';
 import { useAppDispatch } from '../../../../redux/hooks';
 import { PermissionsGate } from '../../../../components/authorization/PermissionGate';
 

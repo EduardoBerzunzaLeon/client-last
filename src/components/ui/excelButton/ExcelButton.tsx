@@ -3,9 +3,8 @@ import { useEffect, useState } from 'react';
 import { Button } from 'primereact/button';
 
 import { Toast } from 'primereact/toast';
-import { exportExcel } from '../../utils/exports/exportExcel';
-
-import { useToast } from '../../hooks/useToast';
+import { useToast } from '../../../hooks';
+import { exportExcel } from '../../../utils';
 
 interface Props {
     hookRTK: any;

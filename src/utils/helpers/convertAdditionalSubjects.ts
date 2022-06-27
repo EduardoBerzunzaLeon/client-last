@@ -1,4 +1,4 @@
-import { RequiredSubjects, SubjectUnion } from '../interfaces/api';
+import { RequiredSubjects, SubjectUnion } from '../../interfaces';
 import { ucWords } from './stringUtils';
 
 export const convertAdditionalSubjects = (requiredSubjects: SubjectUnion[]): RequiredSubjects[] => {

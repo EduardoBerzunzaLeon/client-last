@@ -1,4 +1,4 @@
-import { AllowedRoles } from '../../interfaces/api';
+import { AllowedRoles } from '../../interfaces';
 
 export type ModulesName = 'user' | 'professor' | 'subject' | 'course' | 'student';
 export type PermissionsName = 'canView' | 'canDelete' | 'canUpdate' | 'canCreate';

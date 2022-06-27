@@ -4,7 +4,8 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { Routes } from './routes/Routes';
 import { setDefaultAuthState } from '../redux/auth/auth.slice';
-import { Spinner } from '../components/spinner/Spinner';
+import { Spinner } from '../components/ui';
+
 import { useAppDispatch } from '../redux/hooks';
 import { useRenewTokenQuery } from '../redux/auth/auth.api';
 

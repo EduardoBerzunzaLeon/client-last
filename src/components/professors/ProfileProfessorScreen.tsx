@@ -2,12 +2,11 @@ import { Card } from 'primereact/card';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
 import { useParams } from 'react-router-dom';
 
-import { SpinnerRTK } from '../../../components/spinnerRTK/SpinnerRTK';
-import { SubjectsList } from '../../../components/subject/SubjectsList';
+import { CoursesTable } from './components/CoursesTable';
+import { SubjectsList } from '../subject/SubjectsList';
 
-import { useGetProfessorQuery } from '../../../redux/professor/professor.api';
-import CoursesTable from './components/CoursesTable';
-import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
+import { HeaderAdmin, SpinnerRTK } from '../ui';
+import { useGetProfessorQuery } from '../../redux/professor/professor.api';
 
 export const ProfileProfessorScreen = () => {
   const { id } = useParams();

@@ -1,5 +1,5 @@
 import { atRiskOptions } from '../../assets/options';
-import { Badge } from '../../../../../components/badge/Badge';
+import { Badge } from '../../../../../components/ui';
 import { createSelectFilter } from '../../../../../components/datatable';
 
 export const AtRiskFilter = createSelectFilter({ options: atRiskOptions, placeholder: 'Elige el riesgo' });

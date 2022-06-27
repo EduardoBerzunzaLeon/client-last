@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-import { MessageProps } from '../interfaces/ui/hooks/hooksInterface';
+import { MessageProps } from '../interfaces';
 
 export const useToast = () => {
   const toast = useRef<any>(null);

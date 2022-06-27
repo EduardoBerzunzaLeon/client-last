@@ -1,5 +1,6 @@
 import { mount } from 'enzyme';
-import { SlipButton } from '../../../components/slipButton/SlipButton';
+
+import { SlipButton } from '../../../components/ui';
 
 describe('<SlipButton />', () => {
   test('should match to snapshot and disabled button when the loading is true', () => {

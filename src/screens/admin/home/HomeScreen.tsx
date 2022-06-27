@@ -1,4 +1,4 @@
-import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
+import { HeaderAdmin } from '../../../components/ui';
 
 export const HomeScreen = () => (
   <HeaderAdmin position="home" title="Dashboard" hasBreadcumbs />

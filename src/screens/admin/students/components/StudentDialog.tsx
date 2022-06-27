@@ -1,13 +1,15 @@
+import { useContext } from 'react';
+
 import { skipToken } from '@reduxjs/toolkit/dist/query';
 import { Dialog } from 'primereact/dialog';
-import { useContext } from 'react';
-import { SpinnerRTK } from '../../../../components/spinnerRTK/SpinnerRTK';
-import { useModalLoading } from '../../../../hooks/useModalLoading';
-import { useTitle } from '../../../../hooks/useTitle';
-import { StudentResume } from '../../../../interfaces/api';
-import { useGetStudentsQuery } from '../../../../redux/student/student.api';
+
+import { SpinnerRTK } from '../../../../components/ui';
 import { StudentContext } from '../context/studentContext';
 import { StudentDataForm } from './StudentDataForm';
+import { StudentResume } from '../../../../interfaces';
+
+import { useGetStudentsQuery } from '../../../../redux/student/student.api';
+import { useTitle, useModalLoading } from '../../../../hooks';
 
 const initialValues: StudentResume = {
   name: {

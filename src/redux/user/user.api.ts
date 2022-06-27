@@ -1,14 +1,15 @@
 import { invalidatesList, providesList } from '../services/response.service';
 
 import {
-  User, UserSingleResponse, ListResponse,
-} from '../../interfaces/api';
-import { tutorApi } from '../services/tutor.api';
-import {
+  User,
+  UserSingleResponse,
+  ListResponse,
   UpdatePasswordAdminRequest,
   UpdateUserRequest,
   UpdateBlockedAdminRequest,
-} from '../../interfaces/api/requests/userInterface';
+} from '../../interfaces';
+
+import { tutorApi } from '../services/tutor.api';
 
 const providesListUser = providesList('Users');
 const invalidatesListUsers = invalidatesList('Users');

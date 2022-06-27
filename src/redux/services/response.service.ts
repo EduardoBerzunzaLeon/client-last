@@ -1,4 +1,4 @@
-import { EmptyResponse, responsArrayRTK, responseRTK } from '../../interfaces/api';
+import { EmptyResponse, responsArrayRTK, responseRTK } from '../../interfaces';
 
 export const invalidatesList = <
   R extends responseRTK | EmptyResponse,

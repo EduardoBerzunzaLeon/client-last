@@ -2,9 +2,10 @@ import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 import classNames from 'classnames';
 
-import { processError } from '../../../../utils/forms/handlerFormErrors';
-import { User } from '../../../../interfaces/api';
-import { useToast } from '../../../../hooks/useToast';
+import { processError } from '../../../../utils';
+import { User } from '../../../../interfaces';
+
+import { useToast } from '../../../../hooks';
 import { useUpdateBlockedUserAdminMutation } from '../../../../redux/user/user.api';
 
 interface Props {

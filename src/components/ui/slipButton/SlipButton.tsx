@@ -1,8 +1,7 @@
 import { Button } from 'primereact/button';
 import classNames from 'classnames';
 
-import { Generic } from '../../interfaces/generic';
-
+import { Generic } from '../../../interfaces';
 import './slipButton.scss';
 
 interface Props extends Generic{

@@ -6,12 +6,11 @@ import { TabPanel, TabView } from 'primereact/tabview';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
 import { ProfessorContext } from '../context/professorContext';
 import { ProfessorDataForm } from './ProfessorDataForm';
-import { useGetProfessorQuery } from '../../../../redux/professor/professor.api';
-import { SpinnerRTK } from '../../../../components/spinnerRTK/SpinnerRTK';
-import { ProfessorDetail, SingleResponse } from '../../../../interfaces/api';
+import { ProfessorDetail, SingleResponse } from '../../../../interfaces';
+import { SpinnerRTK } from '../../../../components/ui';
 
-import { useTitle } from '../../../../hooks/useTitle';
-import { useModalLoading } from '../../../../hooks/useModalLoading';
+import { useGetProfessorQuery } from '../../../../redux/professor/professor.api';
+import { useModalLoading, useTitle } from '../../../../hooks';
 
 const emptyData: SingleResponse<ProfessorDetail> = {
   status: 'success',

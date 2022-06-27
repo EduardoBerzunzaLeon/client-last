@@ -1,12 +1,5 @@
 import { DataTableFilterMetaData, DataTableOperatorFilterMetaData } from 'primereact/datatable';
 
-// export type MatchMode = 'contains' | 'equals' | 'notEquals' | 'lt' | 'gt';
-
-// export interface FiltersValueProps {
-//     matchMode: MatchMode,
-//     value?: any,
-//   }
-
 export interface FilterOptionsProps {
     [key: string]: DataTableFilterMetaData | DataTableOperatorFilterMetaData
   }

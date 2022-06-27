@@ -1,9 +1,9 @@
 import { ErrorMessage, useField } from 'formik';
-import classNames from 'classnames';
-
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
-import { Generic } from '../../../interfaces/generic';
+import classNames from 'classnames';
+
+import { Generic } from '../../../interfaces';
 
  interface Props extends Generic{
     label: string,

@@ -1,4 +1,4 @@
-import { Badge } from '../../badge/Badge';
+import { Badge } from '../../ui';
 
 export const ActiveBody = ({ active }: {active: boolean}) => (
   <Badge

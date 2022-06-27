@@ -6,21 +6,20 @@ import { ActionsBodyTemplate } from './components/columns/Actions';
 import { AtRiskBody, AtRiskFilter } from './components/columns/AtRisk';
 import { GenderBody, GenderFilter } from '../../../components/datatable';
 import { Header } from './components/Header';
-import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
+import { HeaderAdmin, SpinnerRTK } from '../../../components/ui';
+import { InChannellingBody, InChannellingFilter } from './components/columns/inChannelling';
 import { initialFiltersValue } from './assets/assets';
 import { NameBodyTemplate } from './components/columns/Name';
 import { ProfessorBodyTemplate } from './components/columns/Professor';
+import { ProfessorsHistoryDialog } from './components/professorsHistory/ProfessorsHistoryDialog';
 import { SemesterFilter } from './components/columns/Semester';
-import { SpinnerRTK } from '../../../components/spinnerRTK/SpinnerRTK';
 import { StatusBody, StatusFilter } from './components/columns/Status';
 import { StudentContext } from './context/studentContext';
 import { StudentDialog } from './components/StudentDialog';
-import { StudentResume } from '../../../interfaces/api';
+import { StudentResume } from '../../../interfaces';
 
-import { useLazyParams } from '../../../hooks/useLazyParams';
+import { useLazyParams } from '../../../hooks';
 import { useGetStudentsQuery } from '../../../redux/student/student.api';
-import { ProfessorsHistoryDialog } from './components/professorsHistory/ProfessorsHistoryDialog';
-import { InChannellingBody, InChannellingFilter } from './components/columns/inChannelling';
 
 const { Provider } = StudentContext;
 

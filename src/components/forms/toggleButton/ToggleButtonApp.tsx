@@ -1,7 +1,8 @@
 import classNames from 'classnames';
 import { ErrorMessage, useField } from 'formik';
 import { ToggleButton } from 'primereact/togglebutton';
-import { Generic } from '../../../interfaces/generic';
+
+import { Generic } from '../../../interfaces';
 
 interface Props extends Generic{
     name: string,

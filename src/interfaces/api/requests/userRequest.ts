@@ -1,5 +1,5 @@
-import { AllowedRoles, User } from '../responses/userInterface';
-import { Name } from './authInterface';
+import { AllowedRoles, User } from '../responses/userResponse';
+import { Name } from './authRequest';
 
 export interface UpdateUserRequest {
     id: string,

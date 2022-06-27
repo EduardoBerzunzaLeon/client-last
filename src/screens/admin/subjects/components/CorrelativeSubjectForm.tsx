@@ -7,15 +7,13 @@ import { MultiSelect } from 'primereact/multiselect';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import { convertAdditionalSubjects } from '../../../../utils/convertAdditionalSubjects';
+import { convertAdditionalSubjects, processError, setSubjectFormErrors } from '../../../../utils';
 import { FormElement } from '../../../../components/forms/formElement/FormElement';
-import { processError, setSubjectFormErrors } from '../../../../utils/forms/handlerFormErrors';
-import { RequiredSubjects, SubjectUnion } from '../../../../interfaces/api';
-import { SkeletonDropdown } from '../../../../components/skeletonDropdown/SkeletonDropdown';
+import { RequiredSubjects, SubjectUnion } from '../../../../interfaces';
+import { SkeletonDropdown } from '../../../../components/ui/skeletonDropdown/SkeletonDropdown';
 
-import { useDropdownFilter } from '../../../../hooks/useDropdownFilter';
+import { useDropdownFilter, useToast } from '../../../../hooks';
 import { useGetConsecutiveSubjectsQuery, useUpdateCorrelativeSubjectsMutation } from '../../../../redux/subject/subject.api';
-import { useToast } from '../../../../hooks/useToast';
 
 interface Props {
     id: string,

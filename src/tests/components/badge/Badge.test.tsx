@@ -1,5 +1,5 @@
 import { shallow } from 'enzyme';
-import { Badge } from '../../../components/badge/Badge';
+import { Badge } from '../../../components/ui';
 
 describe('<Badge />', () => {
   test('should render correctly', () => {

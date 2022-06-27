@@ -8,13 +8,13 @@ import { skipToken } from '@reduxjs/toolkit/dist/query';
 import { ActionsBodyTemplate } from './columns/Actions';
 import { NameHistoryBodyTemplate } from './columns/Name';
 import { ProfessorHistoryDataForm } from './ProfessorHistoryDataForm';
-import { ProfessorInHistory } from '../../../../../interfaces/api';
+import { ProfessorInHistory } from '../../../../../interfaces';
 import { ProfessorsHistoryContext } from './context/professorsHistoryContext';
-import { SpinnerRTK } from '../../../../../components/spinnerRTK/SpinnerRTK';
 import { StudentContext } from '../../context/studentContext';
 
 import { useGetProfessorsHistoryQuery } from '../../../../../redux/student/student.api';
-import { useModalLoading } from '../../../../../hooks/useModalLoading';
+import { useModalLoading } from '../../../../../hooks';
+import { SpinnerRTK } from '../../../../../components/ui';
 
 const createdAtBody = ({ createdAt }: ProfessorInHistory) => `${createdAt}`.slice(0, 10);
 const dischargeAtBody = ({ dischargeAt }: ProfessorInHistory) => (dischargeAt ? `${dischargeAt}`.slice(0, 10) : '');

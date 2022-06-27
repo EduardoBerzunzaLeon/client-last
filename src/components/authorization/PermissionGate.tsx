@@ -1,10 +1,9 @@
 import { cloneElement, useMemo } from 'react';
 
-import { AllowedRoles } from '../../interfaces/api';
-import { Generic } from '../../interfaces/generic';
+import { AllowedRoles, Generic } from '../../interfaces';
 import PERMISSIONS_LIST, { ModulesName, PermissionsName } from './permissions';
 
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../hooks';
 
 interface Props {
     children: JSX.Element,

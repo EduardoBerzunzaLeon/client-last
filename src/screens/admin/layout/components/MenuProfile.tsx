@@ -9,7 +9,7 @@ import { closeSider } from '../../../../redux/ui/ui.slice';
 import { setDefaultAuthState } from '../../../../redux/auth/auth.slice';
 import { Skeleton, SkeletonImage } from '../../../../components/skeleton';
 import { useAppDispatch } from '../../../../redux/hooks';
-import { useAuth } from '../../../../hooks/useAuth';
+import { useAuth } from '../../../../hooks';
 
 export const MenuProfile = () => {
   const dispatch = useAppDispatch();

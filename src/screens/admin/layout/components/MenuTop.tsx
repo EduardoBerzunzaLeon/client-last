@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { openSider } from '../../../../redux/ui/ui.slice';
 import { setDefaultAuthState } from '../../../../redux/auth/auth.slice';
 import { useAppDispatch } from '../../../../redux/hooks';
-import { useAuth } from '../../../../hooks/useAuth';
+import { useAuth } from '../../../../hooks';
 
 export const MenuTop = () => {
   const menu = useRef<any>(null);

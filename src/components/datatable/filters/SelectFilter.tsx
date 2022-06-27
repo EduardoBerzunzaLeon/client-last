@@ -1,23 +1,15 @@
 import { ColumnFilterElementTemplateOptions } from 'primereact/column';
-import { Dropdown, DropdownOptionGroupTemplateType } from 'primereact/dropdown';
+import { Dropdown } from 'primereact/dropdown';
+import { Generic, GroupOption, Option } from '../../../interfaces';
 
-export interface Option {
-    label: string,
-    value: string
-}
-
-export interface GroupOption {
-  label: string,
-  items: Option[]
-}
-
-interface Props {
+interface Props extends Generic {
     placeholder: string;
     options: Option[] | GroupOption[]
-    optionGroupTemplate?: DropdownOptionGroupTemplateType
 }
 
-export const createSelectFilter = ({ options, placeholder }: Props) => ({
+export const createSelectFilter = ({
+  options, placeholder, ...restProps
+}: Props) => ({
   value,
   filterApplyCallback,
 }: ColumnFilterElementTemplateOptions) => (
@@ -30,27 +22,8 @@ export const createSelectFilter = ({ options, placeholder }: Props) => ({
     placeholder={placeholder}
     className="p-column-filter"
     showClear
+    {...restProps}
   />
 );
 
-export const createSelectGroupFilter = ({ options, placeholder, optionGroupTemplate }: Props) => ({
-  value,
-  filterApplyCallback,
-}: ColumnFilterElementTemplateOptions) => (
-  <Dropdown
-    value={value}
-    options={options}
-    onChange={(e) => {
-      filterApplyCallback(e.value);
-    }}
-    placeholder={placeholder}
-    className="p-column-filter"
-    showClear
-    optionLabel="label"
-    optionGroupLabel="label"
-    optionGroupChildren="items"
-    optionGroupTemplate={optionGroupTemplate}
-  />
-);
-
-export default { createSelectFilter, createSelectGroupFilter };
+export default { createSelectFilter };

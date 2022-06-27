@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { Button } from 'primereact/button';
 
 import { ButtonUserBlocked } from '../ButtonUserBlocked';
-import { User } from '../../../../../interfaces/api';
+import { User } from '../../../../../interfaces';
 import { UserContext } from '../../context/userContext';
 import { PermissionsGate } from '../../../../../components/authorization/PermissionGate';
 

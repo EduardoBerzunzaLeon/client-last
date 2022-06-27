@@ -1,6 +1,6 @@
 import React, { createContext } from 'react';
 
-import { Subject } from '../../../../interfaces/api';
+import { Subject } from '../../../../interfaces';
 
 interface SubjectContextProps {
     displayModal: boolean,

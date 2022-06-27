@@ -11,7 +11,7 @@ import {
   SignInSocialRequest,
   UpdatePasswordRequest,
   UserResponse,
-} from '../../interfaces/api';
+} from '../../interfaces';
 
 export const authApi = tutorApi.injectEndpoints({
   endpoints: (builder) => ({

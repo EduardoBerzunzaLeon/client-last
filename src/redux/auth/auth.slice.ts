@@ -2,7 +2,7 @@ import { createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
 
 // eslint-disable-next-line import/no-cycle
 import { authApi } from './auth.api';
-import { User } from '../../interfaces/api';
+import { User } from '../../interfaces';
 
 export interface AuthState {
   user: User | null,

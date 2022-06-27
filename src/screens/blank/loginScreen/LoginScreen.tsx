@@ -13,9 +13,9 @@ import * as Yup from 'yup';
 import { FacebookButton } from './components/FacebookButton';
 import { GoogleButton } from './components/GoogleButton';
 import { InputTextApp } from '../../../components/forms';
-import { processError } from '../../../utils/forms/handlerFormErrors';
+import { processError } from '../../../utils';
 import { useLoginMutation } from '../../../redux/auth/auth.api';
-import { useToast } from '../../../hooks/useToast';
+import { useToast } from '../../../hooks';
 
 import './loginScreen.scss';
 

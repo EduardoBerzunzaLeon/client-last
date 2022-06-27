@@ -6,12 +6,12 @@ import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
 import { ACTIVE_URL } from '../../../config/enviroment';
-import { genderRadio } from '../../../utils/forms/radioButtonObjects';
+import { genderRadio, setAuthFormErrors, processError } from '../../../utils';
 import { InputTextApp, RadioGroup, withDetailInputPassword } from '../../../components/forms';
-import { RegisterRequest } from '../../../interfaces/api';
-import { setAuthFormErrors, processError } from '../../../utils/forms/handlerFormErrors';
+import { RegisterRequest } from '../../../interfaces';
+
 import { useSignUpMutation } from '../../../redux/auth/auth.api';
-import { useToast } from '../../../hooks/useToast';
+import { useToast } from '../../../hooks';
 
 const InputPassword = withDetailInputPassword(InputTextApp);
 

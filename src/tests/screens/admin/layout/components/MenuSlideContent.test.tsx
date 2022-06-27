@@ -1,6 +1,6 @@
 import { mount } from 'enzyme';
 
-import { menu } from '../../../../../utils/menuElement';
+import { menu } from '../../../../../utils';
 import { MenuSlideContent } from '../../../../../screens/admin/layout/components/MenuSlideContent';
 import { mockStore, renderWithProps } from '../../../../fixtures/render';
 

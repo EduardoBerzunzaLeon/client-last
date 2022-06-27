@@ -4,13 +4,13 @@ import { Button } from 'primereact/button';
 import { confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
 
-import { processError } from '../../../../../../utils/forms/handlerFormErrors';
-import { ProfessorInHistory } from '../../../../../../interfaces/api';
+import { processError } from '../../../../../../utils';
+import { ProfessorInHistory } from '../../../../../../interfaces';
 import { ProfessorsHistoryContext } from '../context/professorsHistoryContext';
 import { StudentContext } from '../../../context/studentContext';
 
 import { useDeleteProfessorInHistoryMutation } from '../../../../../../redux/student/student.api';
-import { useToast } from '../../../../../../hooks/useToast';
+import { useToast } from '../../../../../../hooks';
 
 export const ActionsBody = ({ professorInHistory }: { professorInHistory: ProfessorInHistory }) => {
   const { studentSelected } = useContext(StudentContext);

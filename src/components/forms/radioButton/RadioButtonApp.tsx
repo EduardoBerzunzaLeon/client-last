@@ -2,7 +2,7 @@ import { RadioButton } from 'primereact/radiobutton';
 import { useField } from 'formik';
 import classNames from 'classnames';
 
-import { Generic } from '../../../interfaces/generic';
+import { Generic } from '../../../interfaces';
 
 export interface RadioButtonProps extends Generic {
   label: string,

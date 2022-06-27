@@ -7,7 +7,7 @@ import fetchMock, { enableFetchMocks } from 'jest-fetch-mock';
 import { authApi } from '../../redux/auth/auth.api';
 import { loginFakeData, userLogged } from '../fixtures/testData/fakeAuthData';
 import { storeRef } from '../fixtures/render';
-import useAuth from '../../hooks/useAuth';
+import { useAuth } from '../../hooks';
 
 interface Props {
   children: React.ReactNode

@@ -1,4 +1,4 @@
-import { ForgotPasswordRequest, LoginRequest, UserResponse } from '../../../interfaces/api';
+import { ForgotPasswordRequest, LoginRequest, UserResponse } from '../../../interfaces';
 
 export const userLogged: UserResponse = {
   data: {

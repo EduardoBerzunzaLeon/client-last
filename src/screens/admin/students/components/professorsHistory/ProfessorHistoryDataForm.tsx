@@ -14,8 +14,8 @@ import { AutoCompleteProfessors } from '../professor/AutoCompleteProfessors';
 import { FormElement } from '../../../../../components/forms/formElement/FormElement';
 import { getFormValues, ProfessorInHistoryValues, setProfessorToAutocomplete } from './assets';
 import { InputTextApp } from '../../../../../components/forms';
-import { processError, setProfessorInHistoryFormErrors } from '../../../../../utils/forms/handlerFormErrors';
-import { ProfessorInHistory } from '../../../../../interfaces/api';
+import { processError, setProfessorInHistoryFormErrors } from '../../../../../utils';
+import { ProfessorInHistory } from '../../../../../interfaces';
 import { ProfessorsHistoryContext } from './context/professorsHistoryContext';
 import { StudentContext } from '../../context/studentContext';
 
@@ -24,7 +24,7 @@ import {
   useGetProfessorsHistoryQuery,
   useUpdateProfessorInHistoryMutation,
 } from '../../../../../redux/student/student.api';
-import { useToast } from '../../../../../hooks/useToast';
+import { useToast } from '../../../../../hooks';
 
 interface Props {
   lastProfessor: ProfessorInHistory | undefined,

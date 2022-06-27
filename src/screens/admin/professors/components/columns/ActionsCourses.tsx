@@ -2,9 +2,9 @@ import { confirmDialog } from 'primereact/confirmdialog';
 import { Button } from 'primereact/button';
 
 import { Toast } from 'primereact/toast';
-import { Course } from '../../../../../interfaces/api';
-import { processError } from '../../../../../utils/forms/handlerFormErrors';
-import { useToast } from '../../../../../hooks/useToast';
+import { Course } from '../../../../../interfaces';
+import { processError } from '../../../../../utils';
+import { useToast } from '../../../../../hooks';
 import { useDeleteCourseMutation } from '../../../../../redux/course/course.api';
 
 export const ActionsBody = ({ course }: { course: Course }) => {

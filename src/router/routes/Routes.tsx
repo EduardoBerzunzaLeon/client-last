@@ -5,9 +5,11 @@ import type { RouteObject } from 'react-router-dom';
 
 import { AdminLayout } from '../../screens/admin/layout/AdminLayout';
 import { EmailVerifyScreen } from '../../screens/blank/emailVerify/EmailVerifyScreen';
+import { ErrorCard } from '../../components/ui';
 import { ForgotPasswordScreen } from '../../screens/blank/forgotPasswordScreen/ForgotPasswordScreen';
 import { HomeScreen } from '../../screens/admin/home/HomeScreen';
 import { LoginScreen } from '../../screens/blank/loginScreen/LoginScreen';
+import { PermissionsGate } from '../../components/authorization/PermissionGate';
 import { PrivateRoute } from '../PrivateRoute';
 import { ProfessorsScreen } from '../../screens/admin/professors/ProfessorsScreen';
 import { ProfileScreen } from '../../screens/admin/profile/ProfileScreen';
@@ -15,12 +17,9 @@ import { PublicRoute } from '../PublicRoute';
 import { RegisterScreen } from '../../screens/blank/registerScreen/RegisterScreen';
 import { ResetPasswordScreen } from '../../screens/blank/resetPasswordScreen/ResetPasswordScreen';
 import { SendEmailVerifyScreen } from '../../screens/blank/sendEmailVerify/SendEmailVerifyScreen';
+import { StudentsScreen } from '../../screens/admin/students/StudentsScreen';
 import { SubjectsScreen } from '../../screens/admin/subjects/SubjectsScreen';
 import { UsersScreen } from '../../screens/admin/users/UsersScreen';
-import { ProfileProfessorScreen } from '../../screens/admin/profileProfessor/ProfileProfessorScreen';
-import { PermissionsGate } from '../../components/authorization/PermissionGate';
-import { ErrorCard } from '../../components/errorCard/ErrorCard';
-import { StudentsScreen } from '../../screens/admin/students/StudentsScreen';
 
 const BlankLayoutLazy = lazy(() => import(/* webpackChunkName: "Auth" */'../../screens/blank/layout/BlankLayout'));
 
@@ -60,10 +59,6 @@ export const Routes = () => {
         {
           element: <PermissionsGate fallback={fallback} module="professor" permission="canView"><ProfessorsScreen /></PermissionsGate>,
           path: 'professors',
-        },
-        {
-          element: <PermissionsGate fallback={fallback} module="professor" permission="canView"><ProfileProfessorScreen /></PermissionsGate>,
-          path: 'professors/:id',
         },
         {
           element: <PermissionsGate fallback={fallback} module="student" permission="canView"><StudentsScreen /></PermissionsGate>,

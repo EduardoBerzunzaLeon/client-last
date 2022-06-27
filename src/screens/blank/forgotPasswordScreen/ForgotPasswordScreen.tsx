@@ -5,12 +5,13 @@ import { Link } from 'react-router-dom';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import { ForgotPasswordRequest } from '../../../interfaces/api/requests/authInterface';
+import { ForgotPasswordRequest } from '../../../interfaces';
 import { InputTextApp } from '../../../components/forms';
 import { RESET_PASSWORD_URL } from '../../../config/enviroment';
-import { setAuthFormErrors, processError } from '../../../utils/forms/handlerFormErrors';
+import { setAuthFormErrors, processError } from '../../../utils';
+
 import { useForgotPasswordMutation } from '../../../redux/auth/auth.api';
-import { useToast } from '../../../hooks/useToast';
+import { useToast } from '../../../hooks';
 
 export const ForgotPasswordScreen = () => {
   const { toast, showError, showSuccess } = useToast();

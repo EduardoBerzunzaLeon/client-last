@@ -1,8 +1,7 @@
-import { Badge } from '../../../../../components/badge/Badge';
-import { createSelectGroupFilter } from '../../../../../components/datatable';
+import { Badge } from '../../../../../components/ui';
+import { createSelectFilter } from '../../../../../components/datatable';
 import { statusGroupOptions } from '../../assets/options';
-import { StudentStatus } from '../../../../../interfaces/api';
-import { GroupOption } from '../../../../../components/datatable/filters/SelectFilter';
+import { GroupOption, StudentStatus } from '../../../../../interfaces';
 
 const groupedItemTemplate = (option: GroupOption) => (
   <Badge
@@ -15,10 +14,13 @@ const groupedItemTemplate = (option: GroupOption) => (
   />
 );
 
-export const StatusFilter = createSelectGroupFilter({
+export const StatusFilter = createSelectFilter({
   options: statusGroupOptions,
   placeholder: 'Elige el status',
   optionGroupTemplate: groupedItemTemplate,
+  optionLabel: 'label',
+  optionGroupLabel: 'label',
+  optionGroupChildren: 'items',
 });
 
 export const StatusBody = ({ status }: { status: StudentStatus }) => {

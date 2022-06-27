@@ -1,6 +1,6 @@
 import React, { createContext } from 'react';
 
-import { ProfessorInHistory } from '../../../../../../interfaces/api';
+import { ProfessorInHistory } from '../../../../../../interfaces';
 
 interface ProfessorsHistoryContextProps {
     professorSelected: ProfessorInHistory | undefined,

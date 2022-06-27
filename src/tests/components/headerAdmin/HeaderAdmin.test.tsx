@@ -1,6 +1,7 @@
 import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
-import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
+
+import { HeaderAdmin } from '../../../components/ui';
 
 const mockNavigate = jest.fn();
 

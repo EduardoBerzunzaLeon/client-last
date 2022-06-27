@@ -5,14 +5,12 @@ import { Form, Formik } from 'formik';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import { genderRadio } from '../../../../utils/forms/radioButtonObjects';
+import { genderRadio, setAuthFormErrors, processError } from '../../../../utils';
 import { InputTextApp, RadioGroup } from '../../../../components/forms';
-import { setAuthFormErrors, processError } from '../../../../utils/forms/handlerFormErrors';
 import { setDataAuth } from '../../../../redux/auth/auth.slice';
-import { UpdateUserRequest } from '../../../../interfaces/api/requests/userInterface';
+import { UpdateUserRequest, User } from '../../../../interfaces';
 import { useAppDispatch } from '../../../../redux/hooks';
-import { User } from '../../../../interfaces/api';
-import { useToast } from '../../../../hooks/useToast';
+import { useToast } from '../../../../hooks';
 import { useUpdateUserMutation } from '../../../../redux/user/user.api';
 
 interface Props { user: User, isUserLogged: boolean }

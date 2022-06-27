@@ -6,19 +6,19 @@ import { Dialog } from 'primereact/dialog';
 import { TabView, TabPanel } from 'primereact/tabview';
 import { useLocation, useParams } from 'react-router-dom';
 
-import { Badge } from '../../../components/badge/Badge';
-import { Divider } from '../../../components/divider/Divider';
-import { HeaderAdmin } from '../../../components/headerAdmin/HeaderAdmin';
+import {
+  Badge, Divider, HeaderAdmin, SpinnerRTK,
+} from '../../../components/ui';
 import { PasswordForm } from './components/PasswordForm';
+import { PermissionsGate } from '../../../components/authorization/PermissionGate';
 import { PersonalDataForm } from './components/PersonalDataForm';
 import { ProfileImageForm } from './components/ProfileImageForm';
+import { ProfileProfessorScreen } from '../../../components/professors';
 import { Skeleton, SkeletonImage } from '../../../components/skeleton';
-import { SpinnerRTK } from '../../../components/spinnerRTK/SpinnerRTK';
-import { useAuth } from '../../../hooks/useAuth';
+import { User } from '../../../interfaces';
+
+import { useAuth } from '../../../hooks';
 import { useGetUserQuery } from '../../../redux/user/user.api';
-import { User } from '../../../interfaces/api';
-import { PermissionsGate } from '../../../components/authorization/PermissionGate';
-import { ProfileProfessorScreen } from '../profileProfessor/ProfileProfessorScreen';
 
 interface LocationProps {
   state: { root?: string } | null

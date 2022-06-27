@@ -3,7 +3,7 @@ import { Sidebar } from 'primereact/sidebar';
 import { useSelector } from 'react-redux';
 
 import { closeSider } from '../../../redux/ui/ui.slice';
-import { menu } from '../../../utils/menuElement';
+import { menu } from '../../../utils';
 import { MenuProfile } from './components/MenuProfile';
 import { MenuSlideContent } from './components/MenuSlideContent';
 import { MenuTop } from './components/MenuTop';

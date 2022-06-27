@@ -1,5 +1,5 @@
 import { MouseEvent } from 'react';
-import { ModulesName, PermissionsName } from '../components/authorization/permissions';
+import { ModulesName, PermissionsName } from '../../components/authorization/permissions';
 
 interface Command {
   originalEvent: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>,

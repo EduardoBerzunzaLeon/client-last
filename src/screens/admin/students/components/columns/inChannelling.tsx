@@ -1,6 +1,6 @@
-import { inChanellingOptions } from '../../assets/options';
-import { Badge } from '../../../../../components/badge/Badge';
+import { Badge } from '../../../../../components/ui';
 import { createSelectFilter } from '../../../../../components/datatable';
+import { inChanellingOptions } from '../../assets/options';
 
 export const InChannellingFilter = createSelectFilter({
   options: inChanellingOptions,
