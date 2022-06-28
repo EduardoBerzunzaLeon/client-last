@@ -54,6 +54,8 @@ export const ActionsBody = ({ subject }: { subject: Subject }) => {
       <Button
         icon="pi pi-eye"
         className="p-button-sm p-button-raised p-button-primary mr-1"
+        tooltip="Ver materia"
+        tooltipOptions={{ position: 'top' }}
         onClick={handleViewDetail}
       />
       <PermissionsGate
@@ -63,6 +65,8 @@ export const ActionsBody = ({ subject }: { subject: Subject }) => {
         <Button
           icon="pi pi-pencil"
           className="p-button-sm p-button-raised p-button-primary mr-1"
+          tooltip="Actualizar materia"
+          tooltipOptions={{ position: 'top' }}
           onClick={handleUpdate}
         />
       </PermissionsGate>
@@ -73,6 +77,8 @@ export const ActionsBody = ({ subject }: { subject: Subject }) => {
         <Button
           icon="pi pi-trash"
           className="p-button-sm p-button-raised p-button-danger"
+          tooltip="Eliminar materia"
+          tooltipOptions={{ position: 'top' }}
           onClick={handleDelete}
           loading={isLoading}
         />

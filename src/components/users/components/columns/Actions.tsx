@@ -17,7 +17,13 @@ export const ActionsBody = ({ user }: { user: User }) => {
 
   return (
     <>
-      <Button icon="pi pi-eye" className="p-button-sm p-button-raised p-button-primary mr-1" onClick={() => navigate(`/admin/users/${id}`)} />
+      <Button
+        icon="pi pi-eye"
+        className="p-button-sm p-button-raised p-button-primary mr-1"
+        onClick={() => navigate(`/admin/users/${id}`)}
+        tooltip="Ver Perfil"
+        tooltipOptions={{ position: 'top' }}
+      />
       <PermissionsGate
         module="user"
         permission="canUpdate"
@@ -29,6 +35,8 @@ export const ActionsBody = ({ user }: { user: User }) => {
             setUserSelected(user);
             setDisplayModal(true);
           }}
+          tooltip="Actualizar usuario"
+          tooltipOptions={{ position: 'top' }}
         />
       </PermissionsGate>
       <PermissionsGate

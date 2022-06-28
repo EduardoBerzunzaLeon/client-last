@@ -35,6 +35,8 @@ export const ButtonUserBlocked = ({ user, isUserLogged }: Props) => {
         loading={isLoading}
         className={classNames('p-button-sm', 'p-button-raised', { 'p-disabled': isUserLogged, 'p-button-danger': user.blocked, 'p-button-success': !user.blocked })}
         onClick={() => handlerClick(user)}
+        tooltip={user.blocked ? 'Desbloquear usuario' : 'Bloquear usuario'}
+        tooltipOptions={{ position: 'top' }}
       />
     </>
 

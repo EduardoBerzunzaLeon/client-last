@@ -12,8 +12,9 @@ import {
   SubjectContext,
   SubjectDetailDialog,
   SubjectDialog,
+  initialFiltersValue,
+  ActionsBodyTemplate,
 } from '../../../components/subjects';
-import { initialFiltersValue, ActionsBodyTemplate } from '../../../components/professors';
 import { IntegerFilter, TriStateFilter } from '../../../components/datatable';
 import { Subject } from '../../../interfaces';
 

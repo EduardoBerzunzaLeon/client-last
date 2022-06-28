@@ -7,10 +7,15 @@ import {
 } from '../../../components/datatable';
 
 import {
-  ProfessorContext, EmailBodyTemplate, ProfessorDialog, CoursesDialog, Header,
+  ProfessorContext,
+  EmailBodyTemplate,
+  ProfessorDialog,
+  CoursesDialog,
+  Header,
+  initialFiltersValue,
+  ActionsBodyTemplate,
 } from '../../../components/professors';
 
-import { initialFiltersValue, ActionsBodyTemplate } from '../../../components/students';
 import { Professor } from '../../../interfaces';
 import { SpinnerRTK, HeaderAdmin } from '../../../components/ui';
 
