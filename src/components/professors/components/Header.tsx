@@ -10,7 +10,7 @@ export const Header = () => (
     createTitle="Crear Tutor"
     module="professor"
   >
-    <ExcelButtonProfessors />
+    {() => (<ExcelButtonProfessors />)}
   </GenericHeader>
 );
 

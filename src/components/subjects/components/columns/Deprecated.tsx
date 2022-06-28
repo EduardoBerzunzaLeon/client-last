@@ -1,5 +1,5 @@
-import { Badge } from '../../../../../components/ui';
-import { Subject } from '../../../../../interfaces';
+import { Subject } from '../../../../interfaces';
+import { Badge } from '../../../ui';
 
 export const DeprecatedBodyTemplate = ({ deprecated }: Subject) => (
   <Badge

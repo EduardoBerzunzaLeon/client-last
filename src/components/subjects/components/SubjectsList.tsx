@@ -1,6 +1,6 @@
-import { Badge, SpanDetail, Divider } from '../ui';
-import { SubjectUnion } from '../../interfaces';
-import { ucWords } from '../../utils';
+import { Badge, SpanDetail, Divider } from '../../ui';
+import { SubjectUnion } from '../../../interfaces';
+import { ucWords } from '../../../utils';
 
 interface Props {
     subjects: SubjectUnion[],

@@ -4,13 +4,13 @@ import { Button } from 'primereact/button';
 import { confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
 
-import { PermissionsGate } from '../../../../../components/authorization/PermissionGate';
-import { processError } from '../../../../../utils';
-import { Subject } from '../../../../../interfaces';
+import { PermissionsGate } from '../../../authorization/PermissionGate';
+import { processError } from '../../../../utils';
+import { Subject } from '../../../../interfaces';
 import { SubjectContext } from '../../context/subjectContext';
 
-import { useDeleteSubjectMutation } from '../../../../../redux/subject/subject.api';
-import { useToast } from '../../../../../hooks';
+import { useDeleteSubjectMutation } from '../../../../redux/subject/subject.api';
+import { useToast } from '../../../../hooks';
 
 export const ActionsBody = ({ subject }: { subject: Subject }) => {
   const { setSubjectSelected, setDisplayModal, setIsOpenDetailModal } = useContext(SubjectContext);

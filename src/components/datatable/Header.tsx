@@ -2,12 +2,12 @@ import React, { ReactElement, useContext } from 'react';
 
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
-
 import {
   DataTablePFSEvent,
   DataTableFilterMeta,
   DataTableFilterMetaData,
 } from 'primereact/datatable';
+
 import { ModulesName } from '../authorization/permissions';
 import { PermissionsGate } from '../authorization/PermissionGate';
 
@@ -23,14 +23,14 @@ interface Props<T> {
     initialFiltersValue: DataTableFilterMeta,
     createTitle: string,
     module: ModulesName,
-    children?: ReactElement | ReactElement[],
+    children?: (restDataContext: Omit<T, 'lazyParams' | 'setLazyParams' | 'setFilterValue' | 'setDisplayModal'>) => ReactElement | ReactElement[],
 }
 
 export const Header = <T extends HeaderGenericContext>({
   context, initialFiltersValue, children, createTitle, module,
 }: Props<T>) => {
   const {
-    lazyParams, setLazyParams, setFilterValue, setDisplayModal,
+    lazyParams, setLazyParams, setFilterValue, setDisplayModal, ...restDataContext
   } = useContext(context);
 
   const onGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,7 +64,7 @@ export const Header = <T extends HeaderGenericContext>({
             onClick={() => setDisplayModal(true)}
           />
         </PermissionsGate>
-        { children }
+        { children && children(restDataContext) }
       </div>
       <span className="p-input-icon-left m-2 overflow-hidden">
         <i className="pi pi-search" />

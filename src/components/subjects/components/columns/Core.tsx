@@ -1,5 +1,5 @@
-import { Badge } from '../../../../../components/ui';
-import { Subject } from '../../../../../interfaces';
+import { Badge } from '../../../ui';
+import { Subject } from '../../../../interfaces';
 
 export const CoreBodyTemplate = ({ core }: Subject) => (
   <Badge

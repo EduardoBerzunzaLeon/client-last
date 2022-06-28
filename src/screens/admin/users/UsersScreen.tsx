@@ -4,16 +4,21 @@ import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 
 import {
-  ActiveBody, GenderBody, GenderFilter, TriStateFilter,
+  ActiveBody,
+  GenderBody,
+  GenderFilter,
+  TriStateFilter,
 } from '../../../components/datatable';
-import { ActionsBodyTemplate } from './components/columns/Actions';
-import { EmailBodyTemplate } from './components/columns/Email';
-import { Header } from './components/Header';
-import { HeaderAdmin, SpinnerRTK } from '../../../components/ui';
-import { initialFiltersValue } from './assets/assets';
+import {
+  ActionsBodyTemplate,
+  EmailBodyTemplate,
+  Header,
+  initialFiltersValue,
+  UserContext,
+  UserDialog,
+} from '../../../components/users';
+import { SpinnerRTK, HeaderAdmin } from '../../../components/ui';
 import { User } from '../../../interfaces';
-import { UserContext } from './context/userContext';
-import { UserDialog } from './components/UserDialog';
 
 import { useAuth, useLazyParams } from '../../../hooks';
 import { useGetUsersQuery } from '../../../redux/user/user.api';

@@ -13,16 +13,19 @@ import {
   processError,
   roles,
   setAuthFormErrors,
-} from '../../../../utils';
-import { FileSingleInputApp } from '../../../../components/forms/fileInput/FileSingleInputApp';
-import { FormElement } from '../../../../components/forms/inputs/FormElement';
-import { InputTextApp, RadioGroup } from '../../../../components/forms';
-import { ToggleButtonApp } from '../../../../components/forms/toggleButton/ToggleButtonApp';
-import { uploadOptions } from '../../../../components/forms/fileInput/buttonOptions';
-import { User } from '../../../../interfaces';
+} from '../../../utils';
+import {
+  FileSingleInputApp,
+  FormElement,
+  InputTextApp,
+  RadioGroup,
+  ToggleButtonApp,
+  uploadOptions,
+} from '../../forms';
+import { User } from '../../../interfaces';
 
-import { useToast } from '../../../../hooks';
-import { useUpdateUserAdminMutation, useCreateUserMutation } from '../../../../redux/user/user.api';
+import { useToast } from '../../../hooks';
+import { useUpdateUserAdminMutation, useCreateUserMutation } from '../../../redux/user/user.api';
 
 const initialValues = {
   first: '',

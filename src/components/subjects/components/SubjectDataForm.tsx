@@ -8,15 +8,17 @@ import { MultiSelect } from 'primereact/multiselect';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import { convertAdditionalSubjects, processError, setSubjectFormErrors } from '../../../../utils';
-import { FormElement } from '../../../../components/forms/inputs/FormElement';
-import { InputTextApp } from '../../../../components/forms';
-import { RequiredSubjects, SubjectDetail } from '../../../../interfaces';
-import { SkeletonDropdown } from '../../../../components/ui/skeletonDropdown/SkeletonDropdown';
-import { ToggleButtonApp } from '../../../../components/forms/toggleButton/ToggleButtonApp';
+import { convertAdditionalSubjects, processError, setSubjectFormErrors } from '../../../utils';
+import { InputTextApp, FormElement, ToggleButtonApp } from '../../forms';
+import { SkeletonDropdown } from '../../ui';
+import { SubjectDetail, RequiredSubjects } from '../../../interfaces';
 
-import { useCreateSubjectMutation, useGetConsecutiveSubjectsQuery, useUpdateSubjectMutation } from '../../../../redux/subject/subject.api';
-import { useDropdownFilter, useToast } from '../../../../hooks';
+import {
+  useCreateSubjectMutation,
+  useUpdateSubjectMutation,
+  useGetConsecutiveSubjectsQuery,
+} from '../../../redux/subject/subject.api';
+import { useToast, useDropdownFilter } from '../../../hooks';
 
 interface Props {
   buttonLabel: string,

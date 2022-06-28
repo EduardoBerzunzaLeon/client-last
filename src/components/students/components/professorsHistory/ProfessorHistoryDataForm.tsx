@@ -10,7 +10,7 @@ import { skipToken } from '@reduxjs/toolkit/dist/query';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import { AutoCompleteProfessors } from '../../../professors/components/AutoCompleteProfessors';
+import { AutoCompleteProfessors } from '../../../profileProfessors';
 import { getFormValues, ProfessorInHistoryValues, setProfessorToAutocomplete } from './assets';
 import { InputTextApp, FormElement } from '../../../forms';
 import { ProfessorInHistory } from '../../../../interfaces';

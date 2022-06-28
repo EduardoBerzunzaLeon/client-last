@@ -3,7 +3,7 @@ import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import { FilterMatchMode } from 'primereact/api';
 import { CourseProfessor } from '../../../interfaces';
-import { ImpartedAtBodyTemplate } from '../../../screens/admin/professors/components/columns/ActionsCourses';
+import { ImpartedAtBodyTemplate } from '../../professors';
 
 export const CoursesTable = ({ courses } : {courses: CourseProfessor[] | []}) => (
   <Card title="Cursos">

@@ -6,6 +6,7 @@ import {
   RequestDeleteProfessorInHistory,
   RequestUpdateProfessorInHistory,
   SingleResponse,
+  StudentByExcel,
   StudentProfessorInHistory,
   StudentResume,
 } from '../../interfaces';
@@ -22,6 +23,10 @@ export const studentApi = tutorApi.injectEndpoints({
     getStudents: builder.query<ListResponse<StudentResume>, string>({
       query: (path) => path,
       providesTags: providesListStudent,
+    }),
+    getStudentsByExcel: builder.query<ListResponse<StudentByExcel>, string>({
+      query: (path) => path,
+      providesTags: [ 'Students' ],
     }),
     createStudent: builder.mutation<SingleResponse<StudentResume>, FormData>({
       query: (post) => ({
@@ -77,6 +82,7 @@ export const studentApi = tutorApi.injectEndpoints({
 
 export const {
   useGetStudentsQuery,
+  useGetStudentsByExcelQuery,
   useCreateStudentMutation,
   useUpdateStudentMutation,
   useGetProfessorsHistoryQuery,

@@ -37,6 +37,19 @@ export interface StudentResume {
     professor: StudentProfessor
 }
 
+export interface StudentByExcel {
+    fullname: string,
+    email: string,
+    gender: string,
+    professorName: string,
+    atRisk: string,
+    inChannelling: string,
+    enrollment: string,
+    status: string,
+    currentSemester: string,
+    classroom: string,
+}
+
 export interface ProfessorInHistory {
     createdAt: Date,
     id: string,

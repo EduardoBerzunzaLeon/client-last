@@ -1,6 +1,6 @@
 import { ExcelButtonSubjects } from './ExcelButtonSubjects';
-import { Header as GenericHeader } from '../../../../components/datatable/Header';
-import { initialFiltersValue } from '../assets/assets';
+import { Header as GenericHeader } from '../../datatable';
+import { initialFiltersValue } from '../assets';
 import { SubjectContext } from '../context/subjectContext';
 
 export const Header = () => (
@@ -10,7 +10,9 @@ export const Header = () => (
     createTitle="Crear Materia"
     module="subject"
   >
-    <ExcelButtonSubjects />
+    {() => (
+      <ExcelButtonSubjects />
+    )}
   </GenericHeader>
 );
 

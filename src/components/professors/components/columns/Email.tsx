@@ -1,5 +1,5 @@
-import { TextImageBody } from '../../../../../components/datatable';
-import { Professor } from '../../../../../interfaces';
+import { Professor } from '../../../../interfaces';
+import { TextImageBody } from '../../../datatable';
 
 export const EmailBodyTemplate = ({ email, avatar }: Professor) => (
   <TextImageBody text={email} imageURL={avatar} />

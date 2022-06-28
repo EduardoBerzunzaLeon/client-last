@@ -5,7 +5,7 @@ import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import { AutoCompleteProfessors } from '../../professors/components/AutoCompleteProfessors';
+import { AutoCompleteProfessors } from '../../profileProfessors';
 import {
   convertModelToFormData,
   processError,

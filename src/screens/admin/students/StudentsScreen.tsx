@@ -2,9 +2,6 @@ import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import { useState } from 'react';
 
-import { GenderBody, GenderFilter } from '../../../components/datatable';
-import { HeaderAdmin, SpinnerRTK } from '../../../components/ui';
-import { StudentResume } from '../../../interfaces';
 import {
   ActionsBodyTemplate,
   AtRiskBody,
@@ -22,6 +19,9 @@ import {
   StudentDialog,
   StudentContext,
 } from '../../../components/students';
+import { GenderBody, GenderFilter } from '../../../components/datatable';
+import { HeaderAdmin, SpinnerRTK } from '../../../components/ui';
+import { StudentResume } from '../../../interfaces';
 
 import { useLazyParams } from '../../../hooks';
 import { useGetStudentsQuery } from '../../../redux/student/student.api';
@@ -63,6 +63,7 @@ export const StudentsScreen = () => {
             displayProfessorsHistoryModal,
             lazyParams,
             studentSelected,
+            paginatorURL,
             setDisplayModal,
             setDisplayProfessorsHistoryModal,
             setFilterValue,

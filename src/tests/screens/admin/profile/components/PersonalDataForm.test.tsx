@@ -10,7 +10,7 @@ import {
 import { mockStoreWithMiddlewares, renderWithProps } from '../../../../fixtures/render';
 import { mockUpdateUser } from '../../../../fixtures/mockServer/mockUserHandler';
 import { tutorApi } from '../../../../../redux/services/tutor.api';
-import { PersonalDataForm } from '../../../../../screens/admin/profile/components/PersonalDataForm';
+import { PersonalDataForm } from '../../../../../components/profile';
 import { userLogged } from '../../../../fixtures/testData/fakeAuthData';
 import * as userApi from '../../../../../redux/user/user.api';
 

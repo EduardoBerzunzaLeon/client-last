@@ -3,17 +3,19 @@ import { useState } from 'react';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 
-import { ActionsBodyTemplate } from './components/columns/Actions';
-import { CoreBodyTemplate } from './components/columns/Core';
-import { DeprecatedBodyTemplate } from './components/columns/Deprecated';
-import { Header } from './components/Header';
 import { HeaderAdmin, SpinnerRTK } from '../../../components/ui';
-import { initialFiltersValue } from './assets/assets';
+
+import {
+  CoreBodyTemplate,
+  DeprecatedBodyTemplate,
+  Header,
+  SubjectContext,
+  SubjectDetailDialog,
+  SubjectDialog,
+} from '../../../components/subjects';
+import { initialFiltersValue, ActionsBodyTemplate } from '../../../components/professors';
 import { IntegerFilter, TriStateFilter } from '../../../components/datatable';
 import { Subject } from '../../../interfaces';
-import { SubjectContext } from './context/subjectContext';
-import { SubjectDetailDialog } from './components/SubjectDetailDialog';
-import { SubjectDialog } from './components/SubjectDialog';
 
 import { useGetSubjectsQuery } from '../../../redux/subject/subject.api';
 import { useLazyParams } from '../../../hooks';
@@ -136,7 +138,7 @@ export const SubjectsScreen = () => {
                       <Column
                         body={ActionsBodyTemplate}
                         exportable={false}
-                        style={{ minWidth: '12rem' }}
+                        style={{ minWidth: '13rem' }}
                       />
                     </DataTable>
                   </div>

@@ -3,7 +3,7 @@ import { skipToken } from '@reduxjs/toolkit/dist/query';
 import { useParams } from 'react-router-dom';
 
 import { CoursesTable } from './components/CoursesTable';
-import { SubjectsList } from '../subject/SubjectsList';
+import { SubjectsList } from '../subjects/components/SubjectsList';
 
 import { HeaderAdmin, SpinnerRTK } from '../ui';
 import { useGetProfessorQuery } from '../../redux/professor/professor.api';

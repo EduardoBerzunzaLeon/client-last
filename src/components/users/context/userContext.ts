@@ -1,6 +1,6 @@
 import React, { createContext } from 'react';
 
-import { User } from '../../../../interfaces';
+import { User } from '../../../interfaces';
 
 interface UserContextProps {
     displayModal: boolean,

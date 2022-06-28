@@ -8,6 +8,7 @@ interface StudentContextProps {
     displayProfessorsHistoryModal: boolean,
     lazyParams: DataTablePFSEvent,
     studentSelected: StudentResume | undefined,
+    paginatorURL: string,
     setDisplayModal: (value: React.SetStateAction<boolean>) => void,
     setDisplayProfessorsHistoryModal: (value: React.SetStateAction<boolean>) => void,
     setLazyParams: (value: React.SetStateAction<any>) => void,

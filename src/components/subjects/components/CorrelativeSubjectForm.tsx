@@ -7,18 +7,18 @@ import { MultiSelect } from 'primereact/multiselect';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import { convertAdditionalSubjects, processError, setSubjectFormErrors } from '../../../../utils';
-import { FormElement } from '../../../../components/forms/inputs/FormElement';
-import { RequiredSubjects, SubjectUnion } from '../../../../interfaces';
-import { SkeletonDropdown } from '../../../../components/ui/skeletonDropdown/SkeletonDropdown';
+import { convertAdditionalSubjects, processError, setSubjectFormErrors } from '../../../utils';
+import { FormElement } from '../../forms';
+import { SkeletonDropdown } from '../../ui';
+import { SubjectUnion, RequiredSubjects } from '../../../interfaces';
 
-import { useDropdownFilter, useToast } from '../../../../hooks';
-import { useGetConsecutiveSubjectsQuery, useUpdateCorrelativeSubjectsMutation } from '../../../../redux/subject/subject.api';
+import { useUpdateCorrelativeSubjectsMutation, useGetConsecutiveSubjectsQuery } from '../../../redux/subject/subject.api';
+import { useToast, useDropdownFilter } from '../../../hooks';
 
 interface Props {
     id: string,
     semester: number,
-    correlativeSubjects: [SubjectUnion] | [],
+    correlativeSubjects: SubjectUnion[] | [],
 }
 
 export const CorrelativeSubjectForm = ({ id, semester, correlativeSubjects }: Props) => {

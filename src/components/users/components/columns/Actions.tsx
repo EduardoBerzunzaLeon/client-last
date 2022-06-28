@@ -5,11 +5,11 @@ import classNames from 'classnames';
 import { Button } from 'primereact/button';
 
 import { ButtonUserBlocked } from '../ButtonUserBlocked';
-import { User } from '../../../../../interfaces';
+import { PermissionsGate } from '../../../authorization/PermissionGate';
+import { User } from '../../../../interfaces';
 import { UserContext } from '../../context/userContext';
-import { PermissionsGate } from '../../../../../components/authorization/PermissionGate';
 
-export const ActionsBody = ({ user }: {user: User}) => {
+export const ActionsBody = ({ user }: { user: User }) => {
   const { userAuth, setUserSelected, setDisplayModal } = useContext(UserContext);
   const { id } = user;
   const isUserLogged = id === userAuth?.id;

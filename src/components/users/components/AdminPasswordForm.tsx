@@ -3,18 +3,18 @@ import { Form, Formik } from 'formik';
 import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import { InputTextApp, withDetailInputPassword } from '../../../../components/forms';
-import { processError } from '../../../../utils';
+import { processError } from '../../../utils';
+import { UpdatePasswordAdminRequest } from '../../../interfaces';
+import { withDetailInputPassword, InputTextApp } from '../../forms';
 
-import { UpdatePasswordAdminRequest } from '../../../../interfaces';
-import { useToast } from '../../../../hooks';
-import { useUpdatePasswordUserAdminMutation } from '../../../../redux/user/user.api';
-
-const InputPassword = withDetailInputPassword(InputTextApp);
+import { useToast } from '../../../hooks';
+import { useUpdatePasswordUserAdminMutation } from '../../../redux/user/user.api';
 
 interface Props {
   userId: string,
 }
+
+const InputPassword = withDetailInputPassword(InputTextApp);
 
 export const AdminPasswordForm = ({ userId }: Props) => {
   const [ updatePassword, { isLoading }] = useUpdatePasswordUserAdminMutation();

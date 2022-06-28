@@ -1,24 +1,28 @@
 import { useEffect, useState } from 'react';
 
 import { Button } from 'primereact/button';
-
 import { Toast } from 'primereact/toast';
+// eslint-disable-next-line import/no-unresolved
+import { UseQuery } from '@reduxjs/toolkit/dist/query/react/buildHooks';
+import { QueryDefinition } from '@reduxjs/toolkit/dist/query';
+
 import { useToast } from '../../../hooks';
 import { exportExcel } from '../../../utils';
 
 interface Props {
-    hookRTK: any;
-    headers: any[][],
+    hookRTK: UseQuery<QueryDefinition<any, any, any, any>>;
+    headers: string[][],
     fileName: string,
     label?: string,
+    hookParams?: string,
 }
 
 export const ExcelButton = ({
-  hookRTK, headers, fileName, label,
+  hookRTK, headers, fileName, label, hookParams,
 }: Props) => {
   const [ skip, setSkip ] = useState(true);
   const [ isLoading, setIsLoading ] = useState(false);
-  const { data, isError } = hookRTK(null, { skip });
+  const { data, isError } = hookRTK(hookParams, { skip });
 
   const { toast, showError } = useToast();
 
@@ -61,6 +65,7 @@ export const ExcelButton = ({
 
 ExcelButton.defaultProps = {
   label: 'Exportar Excel',
+  hookParams: null,
 };
 
 export default ExcelButton;

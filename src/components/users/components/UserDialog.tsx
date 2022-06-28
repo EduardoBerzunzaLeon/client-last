@@ -7,7 +7,7 @@ import { AdminPasswordForm } from './AdminPasswordForm';
 import { UserContext } from '../context/userContext';
 import { UserDataForm } from './UserDataForm';
 
-import { useTitle } from '../../../../hooks';
+import { useTitle } from '../../../hooks';
 
 export const UserDialog = () => {
   const {
