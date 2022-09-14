@@ -53,6 +53,8 @@ export const ActionsBody = ({ subject }: { subject: Subject }) => {
       <Toast ref={toast} />
       <Button
         icon="pi pi-eye"
+        tooltip="Ver Materia"
+        tooltipOptions={{ position: 'top' }}
         className="p-button-sm p-button-raised p-button-primary mr-1"
         onClick={handleViewDetail}
       />
@@ -62,6 +64,8 @@ export const ActionsBody = ({ subject }: { subject: Subject }) => {
       >
         <Button
           icon="pi pi-pencil"
+          tooltip="Editar Materia"
+          tooltipOptions={{ position: 'top' }}
           className="p-button-sm p-button-raised p-button-primary mr-1"
           onClick={handleUpdate}
         />
@@ -72,6 +76,8 @@ export const ActionsBody = ({ subject }: { subject: Subject }) => {
       >
         <Button
           icon="pi pi-trash"
+          tooltip="Eliminar Materia"
+          tooltipOptions={{ position: 'top' }}
           className="p-button-sm p-button-raised p-button-danger"
           onClick={handleDelete}
           loading={isLoading}

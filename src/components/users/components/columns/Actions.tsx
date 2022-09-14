@@ -17,13 +17,21 @@ export const ActionsBody = ({ user }: { user: User }) => {
 
   return (
     <>
-      <Button icon="pi pi-eye" className="p-button-sm p-button-raised p-button-primary mr-1" onClick={() => navigate(`/admin/users/${id}`)} />
+      <Button
+        icon="pi pi-eye"
+        tooltip="Ver Usuario"
+        tooltipOptions={{ position: 'top' }}
+        className="p-button-sm p-button-raised p-button-primary mr-1"
+        onClick={() => navigate(`/admin/users/${id}`)}
+      />
       <PermissionsGate
         module="user"
         permission="canUpdate"
       >
         <Button
           icon="pi pi-pencil"
+          tooltip="Editar Usuario"
+          tooltipOptions={{ position: 'top' }}
           className={classNames('p-button-sm', 'p-button-raised', 'p-button-primary', 'mr-1', { 'p-disabled': isUserLogged })}
           onClick={() => {
             setUserSelected(user);
