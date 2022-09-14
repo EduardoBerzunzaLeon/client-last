@@ -13,3 +13,4 @@ export * from './responses/professorResponse';
 export * from './responses/studentResponse';
 export * from './responses/subjectResponse';
 export * from './responses/userResponse';
+export * from './responses/subjectHistoryResponse';
