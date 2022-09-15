@@ -56,3 +56,38 @@ export interface SubjectHistoryDetail {
     statusHistory: StatusHistory[];
     subjectHistory: SubjectHistory[];
 }
+
+export interface SubjectsStudied {
+    id: number;
+    subjects: {
+        subject: {
+            _id: string;
+            deprecated: boolean;
+            name: string;
+        };
+        phaseStatus: string;
+        step: number;
+    }[];
+}
+
+export interface UnstudySubject {
+    _id: string;
+    practicalHours: number;
+    theoreticalHours: number;
+    name: string;
+    semester: number;
+    credit: number;
+    core: string;
+}
+
+export interface SubjectInHistory {
+    id: string;
+    student: string;
+    subject: string;
+    phase: {
+        id: string;
+        date: string;
+        phaseStatus: string;
+        semester: number;
+    }[];
+}

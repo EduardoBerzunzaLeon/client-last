@@ -5,6 +5,7 @@ export * from './requests/professorRequest';
 export * from './requests/studentRequest';
 export * from './requests/subjectRequest';
 export * from './requests/userRequest';
+export * from './requests/subjectHistoryRequest';
 
 export * from './responses/courseResponse';
 export * from './responses/errorResponse';
