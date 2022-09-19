@@ -40,13 +40,20 @@ export const SubjectHistoryScreen = () => {
           phaseOfSubjectSelected,
           setDisplayModal,
           setPhaseOfSubjectSelected,
+          user: {
+            id: dataSend.user._id,
+            semester: dataSend.currentSemester,
+          },
         }}
         >
-          <HeaderAdmin position="students/subjectHistory" title={`Historial de ${dataSend.user.fullName}`} hasBreadcumbs />
+          <HeaderAdmin
+            position="students/subjectHistory"
+            title={`Historial de ${dataSend.user.fullName}`}
+            hasBreadcumbs
+          />
           <div className="grid mb-4">
             <div className="col-12">
               <CurrentSubjects
-                userId={dataSend.user._id}
                 currentSubjects={dataSend.subjectHistory}
               />
             </div>

@@ -1,3 +1,4 @@
+import { SubjectsStudied } from '../../../../interfaces';
 import { Badge } from '../../../ui';
 
 const convertStepToString = (step:number) => {
@@ -14,7 +15,7 @@ interface Props {
   step: number;
 }
 
-export const StepBodyTemplate = ({ step }: Props) => {
+export const StepBody = ({ step }: Props) => {
   const stepString = convertStepToString(step);
 
   return (
@@ -30,6 +31,14 @@ export const StepBodyTemplate = ({ step }: Props) => {
   );
 };
 
+export const StepBodyTemplate = ({ data }: SubjectsStudied) => {
+  if (data?.step) {
+    return (<StepBody step={Number(data.step)} />);
+  }
+  return undefined;
+};
+
 export default {
+  StepBody,
   StepBodyTemplate,
 };
