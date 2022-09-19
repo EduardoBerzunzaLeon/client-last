@@ -84,5 +84,6 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
     'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
     'import/no-extraneous-dependencies': [ RULES.ERROR, { devDependencies: true }],
+    'no-underscore-dangle': RULES.OFF,
   },
 };

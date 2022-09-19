@@ -57,7 +57,18 @@ export const ActionsBody = ({ student }: { student: StudentResume }) => {
             onClick={handleShowProfessorsHistory}
           />
         </>
-
+      </PermissionsGate>
+      <PermissionsGate
+        module="subjectHistory"
+        permission="canView"
+      >
+        <Button
+          icon="pi pi-map"
+          tooltip="Ver Historico de Materias"
+          tooltipOptions={{ position: 'top' }}
+          className="p-button-sm p-button-raised p-button-primary mr-1"
+          onClick={() => navigate(`/admin/students/${id}`)}
+        />
       </PermissionsGate>
     </>
   );

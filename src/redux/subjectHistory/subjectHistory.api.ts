@@ -1,14 +1,15 @@
 import { tutorApi } from '../services/tutor.api';
 import {
-  SingleResponse,
+  AddSubjectHistory,
+  CreateSubjectHistory,
   EmptyResponse,
+  ListResponse,
+  SingleResponse,
   SubjectHistoryDetail,
+  SubjectInHistory,
   SubjectsStudied,
   UnstudySubject,
-  SubjectInHistory,
-  CreateSubjectHistory,
   UpdateSubjectHistory,
-  AddSubjectHistory,
 } from '../../interfaces';
 
 export const subjectHistoryApi = tutorApi.injectEndpoints({
@@ -17,11 +18,11 @@ export const subjectHistoryApi = tutorApi.injectEndpoints({
       query: (userId) => `subjectHistory/${userId}`,
       providesTags: (result, error, id) => [{ type: 'SubjectsHistory', id }],
     }),
-    getSubjectStudied: builder.query<SingleResponse<SubjectsStudied>, string>({
+    getSubjectStudied: builder.query<ListResponse<SubjectsStudied>, string>({
       query: (userId) => `subjectHistory/${userId}/history`,
       providesTags: (result, error, id) => [{ type: 'SubjectsHistory', id }],
     }),
-    getUnstudySubject: builder.query<SingleResponse<UnstudySubject>, string>({
+    getUnstudySubject: builder.query<ListResponse<UnstudySubject>, string>({
       query: (userId) => `subjectHistory/${userId}/unstudy`,
       providesTags: (result, error, id) => [{ type: 'SubjectsHistory', id }],
     }),

@@ -18,6 +18,7 @@ import { RegisterScreen } from '../../screens/blank/registerScreen/RegisterScree
 import { ResetPasswordScreen } from '../../screens/blank/resetPasswordScreen/ResetPasswordScreen';
 import { SendEmailVerifyScreen } from '../../screens/blank/sendEmailVerify/SendEmailVerifyScreen';
 import { StudentsScreen } from '../../screens/admin/students/StudentsScreen';
+import { SubjectHistoryScreen } from '../../screens/admin/subjectHistory/SubjectHistoryScreen';
 import { SubjectsScreen } from '../../screens/admin/subjects/SubjectsScreen';
 import { UsersScreen } from '../../screens/admin/users/UsersScreen';
 
@@ -63,6 +64,10 @@ export const Routes = () => {
         {
           element: <PermissionsGate fallback={fallback} module="student" permission="canView"><StudentsScreen /></PermissionsGate>,
           path: 'students',
+        },
+        {
+          element: <PermissionsGate fallback={fallback} module="subjectHistory" permission="canView"><SubjectHistoryScreen /></PermissionsGate>,
+          path: 'students/:userId',
         },
       ],
     },

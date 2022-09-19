@@ -1,7 +1,11 @@
 import { Badge } from '../../../ui';
-import { Subject } from '../../../../interfaces';
+// import { Subject } from '../../../../interfaces';
 
-export const CoreBodyTemplate = ({ core }: Subject) => (
+interface Props {
+  core: string
+}
+
+export const CoreBodyTemplate = ({ core }: Props) => (
   <Badge
     text={core}
     matchObject={{

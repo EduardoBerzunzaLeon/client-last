@@ -15,9 +15,8 @@ import { useToast } from '../../../../hooks';
 export const ActionsBody = ({ subject }: { subject: Subject }) => {
   const { setSubjectSelected, setDisplayModal, setIsOpenDetailModal } = useContext(SubjectContext);
   const [ deleteSubject, { isLoading }] = useDeleteSubjectMutation();
-
-  const { id } = subject;
   const { toast, showSuccess, showError } = useToast();
+  const { id } = subject;
 
   const accept = async () => {
     try {
