@@ -4,6 +4,11 @@ export interface SubjectUnion {
     deprecated: boolean,
 }
 
+export interface SingleSubject {
+    _id: string,
+    name: string,
+}
+
 export interface Subject {
     id: string,
     core: string,

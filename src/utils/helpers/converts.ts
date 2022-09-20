@@ -1,9 +1,11 @@
 import {
-  AllowedRoles, Generic, RequiredSubjects, SubjectUnion,
+  AllowedRoles, Generic, RequiredSubjects, SingleSubject,
 } from '../../interfaces';
 import { ucWords } from './stringUtils';
 
-export const convertAdditionalSubjects = (requiredSubjects: SubjectUnion[]): RequiredSubjects[] => {
+export const convertAdditionalSubjects = (
+  requiredSubjects: SingleSubject[],
+): RequiredSubjects[] => {
   const subjects = requiredSubjects.map((subject) => ({
     // eslint-disable-next-line no-underscore-dangle
     id: subject._id,

@@ -71,7 +71,7 @@ export interface SubjectHistoryDetail {
 //     }[];
 // }
 
-export interface UnstudySubject {
+export interface GeneralSubject {
     _id: string;
     practicalHours: number;
     theoreticalHours: number;

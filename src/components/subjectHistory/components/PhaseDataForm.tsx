@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
@@ -7,6 +7,9 @@ import * as Yup from 'yup';
 
 import { FormElement, InputTextApp } from '../../forms';
 import { InitialValues } from '../../../interfaces';
+import { useGetPossibleSubjectsQuery } from '../../../redux/subjectHistory/subjectHistory.api';
+import { SkeletonDropdown } from '../../ui';
+import { useDropdownFilter } from '../../../hooks';
 
 const phasesStatus = [
   { name: 'cursando', code: 'cursando' },
@@ -19,23 +22,34 @@ interface Props {
     buttonLabel: string,
 }
 
-export const PhaseDataForm = ({ initialValues, buttonLabel }: Props) => (
-  <div className="formgrid">
-    <Formik
-      initialValues={initialValues}
-      enableReinitialize
-      onSubmit={console.log}
-      validationSchema={Yup.object({
-        subject: Yup.object().required('Requerido'),
-        phaseStatus: Yup.object()
-          .required('Requerido'),
-        semester: Yup.number()
-          .required('Requerido').positive().integer()
-          .min(1, 'El semestre debe tener valor entre 1 y 13')
-          .max(13, 'El semestre debe tener valor entre 1 y 13'),
-      })}
-    >
-      {
+export const PhaseDataForm = ({ initialValues, buttonLabel }: Props) => {
+  const [ skip, setSkip ] = useState<boolean>(true);
+
+  const { data, isLoading } = useGetPossibleSubjectsQuery(initialValues.userId, { skip });
+
+  const { cleanData, onFilter } = useDropdownFilter({
+    field: 'name',
+    data: data?.data,
+  });
+
+  console.log({ initialValues, cleanData });
+  return (
+    <div className="formgrid">
+      <Formik
+        initialValues={initialValues}
+        enableReinitialize
+        onSubmit={console.log}
+        validationSchema={Yup.object({
+          subject: Yup.object().required('Requerido'),
+          phaseStatus: Yup.object()
+            .required('Requerido'),
+          semester: Yup.number()
+            .required('Requerido').positive().integer()
+            .min(1, 'El semestre debe tener valor entre 1 y 13')
+            .max(13, 'El semestre debe tener valor entre 1 y 13'),
+        })}
+      >
+        {
             ({ isValid, isSubmitting, dirty }) => (
               <Form>
                 <div className="field pt-2 mt-4">
@@ -62,12 +76,31 @@ export const PhaseDataForm = ({ initialValues, buttonLabel }: Props) => (
                   />
                 </div>
                 <div className="field pt-2 mt-4">
-                  <InputTextApp
-                    label="Materia*"
+                  <FormElement
+                    element={Dropdown}
                     id="subject"
+                    inputId="subject"
                     name="subject"
+                    options={[ ...cleanData ]}
+                    optionLabel="name"
                     className="w-full"
-                    icon="pi pi-pencil"
+                    label="Materia"
+                    filter
+                    showClear
+                    onFilter={onFilter}
+                    showFilterClear
+                    filterBy="name"
+                    emptyFilterMessage="Materias no encontradas"
+                    virtualScrollerOptions={{
+                      lazy: true,
+                      onLazyLoad: () => {
+                        setSkip(false);
+                      },
+                      itemSize: 1,
+                      showLoader: true,
+                      loading: isLoading,
+                      loadingTemplate: SkeletonDropdown,
+                    }}
                   />
                 </div>
                 <div className="flex flex-column">
@@ -82,8 +115,9 @@ export const PhaseDataForm = ({ initialValues, buttonLabel }: Props) => (
               </Form>
             )
         }
-    </Formik>
-  </div>
-);
+      </Formik>
+    </div>
+  );
+};
 
 export default PhaseDataForm;

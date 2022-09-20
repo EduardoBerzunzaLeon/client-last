@@ -9,14 +9,13 @@ import { PhaseDataForm } from './PhaseDataForm';
 
 const generateInitialValue = (
   user: UserContext,
-  phase: SubjectHistory | undefined,
+  phase?: SubjectHistory,
 ): InitialValues => {
   if (!phase) {
     return {
       semester: user.semester,
       userId: user.id,
       phaseStatus: { code: 'cursando', name: 'cursando' },
-      subject: '',
     };
   }
 
@@ -28,7 +27,7 @@ const generateInitialValue = (
       code: phaseStatus,
       name: phaseStatus,
     },
-    subject: phase.subject.name,
+    subject: { name: phase.subject.name, id: phase.subject._id },
   };
 };
 

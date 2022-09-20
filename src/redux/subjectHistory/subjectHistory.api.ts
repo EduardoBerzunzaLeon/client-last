@@ -8,7 +8,7 @@ import {
   SubjectHistoryDetail,
   SubjectInHistory,
   SubjectsStudied,
-  UnstudySubject,
+  GeneralSubject,
   UpdateSubjectHistory,
 } from '../../interfaces';
 
@@ -22,8 +22,12 @@ export const subjectHistoryApi = tutorApi.injectEndpoints({
       query: (userId) => `subjectHistory/${userId}/history`,
       providesTags: (result, error, id) => [{ type: 'SubjectsHistory', id }],
     }),
-    getUnstudySubject: builder.query<ListResponse<UnstudySubject>, string>({
+    getUnstudySubject: builder.query<ListResponse<GeneralSubject>, string>({
       query: (userId) => `subjectHistory/${userId}/unstudy`,
+      providesTags: (result, error, id) => [{ type: 'SubjectsHistory', id }],
+    }),
+    getPossibleSubjects: builder.query<ListResponse<GeneralSubject>, string>({
+      query: (userId) => `subjectHistory/${userId}/subjects`,
       providesTags: (result, error, id) => [{ type: 'SubjectsHistory', id }],
     }),
     updateSubjectPhase: builder.mutation<EmptyResponse, UpdateSubjectHistory>({
@@ -67,6 +71,7 @@ export const {
   useGetStudentSubjectQuery,
   useGetSubjectStudiedQuery,
   useGetUnstudySubjectQuery,
+  useGetPossibleSubjectsQuery,
   useUpdateSubjectPhaseMutation,
   useCreateSubjectinHistoryMutation,
   useAddSubjectPhaseMutation,
