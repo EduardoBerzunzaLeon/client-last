@@ -2,13 +2,13 @@ import { SubjectsStudied } from '../../../../interfaces';
 import { Badge } from '../../../ui';
 
 const convertStepToString = (step:number) => {
-  const stepInString = new Map([
-    [ 1, 'primero' ],
-    [ 2, 'segundo' ],
-    [ 3, 'tercero' ],
-  ]);
+  const steps = [ 'primero', 'segundo', 'tercero' ];
 
-  return stepInString.get(step) ?? '';
+  if (step < 0 || step > 3) {
+    return '';
+  }
+
+  return steps[step - 1];
 };
 
 interface Props {

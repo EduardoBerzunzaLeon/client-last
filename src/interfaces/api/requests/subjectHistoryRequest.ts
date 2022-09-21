@@ -7,13 +7,6 @@ export interface CreateSubjectHistory {
   semester: number
 }
 
-export interface AddSubjectHistory {
-  id: string,
-  phaseStatus: PhaseStatus,
-  semester: number,
-  date?: Date
-}
-
 export interface UpdateSubjectHistory {
   phaseId: string,
   phaseStatus: PhaseStatus,

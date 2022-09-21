@@ -5,16 +5,27 @@ import { Dropdown } from 'primereact/dropdown';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 
+import { Toast } from 'primereact/toast';
 import { FormElement, InputTextApp } from '../../forms';
-import { InitialValues } from '../../../interfaces';
-import { useGetPossibleSubjectsQuery } from '../../../redux/subjectHistory/subjectHistory.api';
+import { InitialValues, PhaseStatus } from '../../../interfaces';
+import {
+  useCreateSubjectinHistoryMutation,
+  useGetPossibleSubjectsQuery,
+  useUpdateSubjectPhaseMutation,
+} from '../../../redux/subjectHistory/subjectHistory.api';
 import { SkeletonDropdown } from '../../ui';
-import { useDropdownFilter } from '../../../hooks';
+import { useDropdownFilter, useToast } from '../../../hooks';
+import { processError, setSubjectInHistoryFormErrors } from '../../../utils';
 
-const phasesStatus = [
-  { name: 'cursando', code: 'cursando' },
-  { name: 'aprobado', code: 'aprobado' },
-  { name: 'reprobado', code: 'reprobado' },
+interface PhaseStatusDropdown {
+  name: string,
+  code: PhaseStatus
+}
+
+const phasesStatus: PhaseStatusDropdown[] = [
+  { name: 'Cursando', code: 'cursando' },
+  { name: 'Aprobado', code: 'aprobado' },
+  { name: 'Reprobado', code: 'reprobado' },
 ];
 
 interface Props {
@@ -23,22 +34,59 @@ interface Props {
 }
 
 export const PhaseDataForm = ({ initialValues, buttonLabel }: Props) => {
+  const { phaseId, userId, ...formValues } = initialValues;
   const [ skip, setSkip ] = useState<boolean>(true);
+  const [ initialPhase, setInitialPhase ] = useState(formValues);
 
-  const { data, isLoading } = useGetPossibleSubjectsQuery(initialValues.userId, { skip });
+  const { data, isLoading } = useGetPossibleSubjectsQuery(userId, { skip });
+  const [ createPhase, { isLoading: isLoadingCreate }] = useCreateSubjectinHistoryMutation();
+  const [ updatePhase, { isLoading: isLoadingUpdate }] = useUpdateSubjectPhaseMutation();
+  const { toast, showSuccess, showError } = useToast();
 
   const { cleanData, onFilter } = useDropdownFilter({
     field: 'name',
     data: data?.data,
   });
 
-  console.log({ initialValues, cleanData });
   return (
     <div className="formgrid">
+      <Toast ref={toast} />
       <Formik
-        initialValues={initialValues}
+        initialValues={initialPhase}
         enableReinitialize
-        onSubmit={console.log}
+        onSubmit={async (values, { setFieldError, resetForm }) => {
+          const genericSend = {
+            semester: values.semester,
+            phaseStatus: (values.phaseStatus.code as PhaseStatus),
+          };
+
+          let message = 'La fase se actualizó con éxito';
+
+          try {
+            if (phaseId !== '') {
+              const dataSend = {
+                ...genericSend,
+                phaseId,
+              };
+              await updatePhase({ ...dataSend }).unwrap();
+              setInitialPhase({ ...values });
+            } else {
+              const dataSend = {
+                ...genericSend,
+                userId,
+                subjectId: values.subject!._id,
+              };
+              await createPhase({ ...dataSend }).unwrap();
+              message = 'La fase se creó con éxito';
+              resetForm();
+            }
+            setSkip(true);
+            showSuccess({ detail: message });
+          } catch (error) {
+            const errors: string = processError({ error, showError });
+            setSubjectInHistoryFormErrors({ errors, setFieldError });
+          }
+        }}
         validationSchema={Yup.object({
           subject: Yup.object().required('Requerido'),
           phaseStatus: Yup.object()
@@ -52,18 +100,6 @@ export const PhaseDataForm = ({ initialValues, buttonLabel }: Props) => {
         {
             ({ isValid, isSubmitting, dirty }) => (
               <Form>
-                <div className="field pt-2 mt-4">
-                  <FormElement
-                    element={Dropdown}
-                    id="phaseStatus"
-                    inputId="phaseStatus"
-                    name="phaseStatus"
-                    options={phasesStatus}
-                    optionLabel="name"
-                    className="w-full"
-                    label="Núcleo"
-                  />
-                </div>
                 <div className="field pt-2 mt-4">
                   <InputTextApp
                     label="Semestre*"
@@ -81,7 +117,7 @@ export const PhaseDataForm = ({ initialValues, buttonLabel }: Props) => {
                     id="subject"
                     inputId="subject"
                     name="subject"
-                    options={[ ...cleanData ]}
+                    options={initialValues.subject ? [ initialValues.subject ] : [ ...cleanData ]}
                     optionLabel="name"
                     className="w-full"
                     label="Materia"
@@ -91,6 +127,7 @@ export const PhaseDataForm = ({ initialValues, buttonLabel }: Props) => {
                     showFilterClear
                     filterBy="name"
                     emptyFilterMessage="Materias no encontradas"
+                    disabled={initialValues.subject}
                     virtualScrollerOptions={{
                       lazy: true,
                       onLazyLoad: () => {
@@ -103,12 +140,25 @@ export const PhaseDataForm = ({ initialValues, buttonLabel }: Props) => {
                     }}
                   />
                 </div>
+                <div className="field pt-2 mt-4">
+                  <FormElement
+                    element={Dropdown}
+                    id="phaseStatus"
+                    inputId="phaseStatus"
+                    name="phaseStatus"
+                    options={phasesStatus}
+                    optionLabel="name"
+                    className="w-full"
+                    label="Núcleo"
+                  />
+                </div>
+
                 <div className="flex flex-column">
                   <Button
                     type="submit"
                     label={buttonLabel}
                     className="mt-2 flex align-items-center justify-content-center"
-                    // loading={isLoadingUpdate || isLoadingCreate}
+                    loading={isLoadingUpdate || isLoadingCreate}
                     disabled={!isValid || isSubmitting || !dirty}
                   />
                 </div>

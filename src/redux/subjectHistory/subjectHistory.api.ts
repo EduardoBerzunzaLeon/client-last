@@ -1,12 +1,10 @@
 import { tutorApi } from '../services/tutor.api';
 import {
-  AddSubjectHistory,
   CreateSubjectHistory,
   EmptyResponse,
   ListResponse,
   SingleResponse,
   SubjectHistoryDetail,
-  SubjectInHistory,
   SubjectsStudied,
   GeneralSubject,
   UpdateSubjectHistory,
@@ -39,19 +37,11 @@ export const subjectHistoryApi = tutorApi.injectEndpoints({
       invalidatesTags: [ 'SubjectsHistory' ],
     }),
     createSubjectinHistory: builder.mutation<
-      SingleResponse<SubjectInHistory>,
+      EmptyResponse,
       CreateSubjectHistory
     >({
       query: (post) => ({
         url: 'subjectHistory/',
-        method: 'POST',
-        body: post,
-      }),
-      invalidatesTags: [ 'SubjectsHistory' ],
-    }),
-    addSubjectPhase: builder.mutation<EmptyResponse, AddSubjectHistory>({
-      query: ({ id, ...post }) => ({
-        url: `subjectHistory/${id}/phase`,
         method: 'POST',
         body: post,
       }),
@@ -74,6 +64,5 @@ export const {
   useGetPossibleSubjectsQuery,
   useUpdateSubjectPhaseMutation,
   useCreateSubjectinHistoryMutation,
-  useAddSubjectPhaseMutation,
   useDeleteSubjectPhaseMutation,
 } = subjectHistoryApi;

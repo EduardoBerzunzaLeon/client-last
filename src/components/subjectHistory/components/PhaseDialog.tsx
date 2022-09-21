@@ -6,6 +6,7 @@ import { SubjectHistoryContext } from '../context/subjectHistoryContext';
 import { useTitle } from '../../../hooks';
 import { InitialValues, SubjectHistory, UserContext } from '../../../interfaces';
 import { PhaseDataForm } from './PhaseDataForm';
+import { ucWords } from '../../../utils';
 
 const generateInitialValue = (
   user: UserContext,
@@ -15,7 +16,8 @@ const generateInitialValue = (
     return {
       semester: user.semester,
       userId: user.id,
-      phaseStatus: { code: 'cursando', name: 'cursando' },
+      phaseStatus: { code: 'cursando', name: 'Cursando' },
+      phaseId: '',
     };
   }
 
@@ -25,9 +27,10 @@ const generateInitialValue = (
     userId: user.id,
     phaseStatus: {
       code: phaseStatus,
-      name: phaseStatus,
+      name: ucWords(phaseStatus),
     },
-    subject: { name: phase.subject.name, id: phase.subject._id },
+    subject: { name: phase.subject.name, _id: phase.subject._id },
+    phaseId: phase.lastPhase._id,
   };
 };
 
