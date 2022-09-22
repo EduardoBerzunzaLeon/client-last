@@ -27,8 +27,9 @@ export const SubjectsStudied = ({ userId }: Props) => {
         <Card title="Materias cursadas">
           <TreeTable
             value={dataSend}
-            scrollable
             rowClassName={(node) => ({ 'bg-purple-100': node.children })}
+            style={{ overflowX: 'auto' }}
+            emptyMessage="Materias no encontradas"
           >
             <Column
               field="subject"

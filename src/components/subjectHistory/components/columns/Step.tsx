@@ -1,15 +1,6 @@
-import { SubjectsStudied } from '../../../../interfaces';
 import { Badge } from '../../../ui';
-
-const convertStepToString = (step:number) => {
-  const steps = [ 'primero', 'segundo', 'tercero' ];
-
-  if (step < 0 || step > 3) {
-    return '';
-  }
-
-  return steps[step - 1];
-};
+import { convertStepToString } from '../../../../utils';
+import { SubjectsStudied } from '../../../../interfaces';
 
 interface Props {
   step: number;

@@ -11,7 +11,7 @@ import {
 } from '../../../components/ui';
 import { PasswordForm } from '../../../components/profile/PasswordForm';
 import { PermissionsGate } from '../../../components/authorization/PermissionGate';
-import { PersonalDataForm, ProfileImageForm } from '../../../components/profile';
+import { PersonalDataForm, ProfileImageForm, ProfileStudent } from '../../../components/profile';
 import { ProfileProfessorScreen } from '../../../components/profileProfessors';
 import { User } from '../../../interfaces';
 
@@ -132,6 +132,7 @@ const ProfileScreenMin = ({ data }: {data: User}) => {
       </div>
 
       {data?.roles.includes('professor') && (<ProfileProfessorScreen />)}
+      {data?.roles.includes('student') && (<ProfileStudent />)}
 
       <Dialog header="Editar Perfil" className="shadow-5 w-11 md:w-6 lg:w-5" modal visible={displayModal} onHide={() => setDisplayModal(false)}>
         <TabView>

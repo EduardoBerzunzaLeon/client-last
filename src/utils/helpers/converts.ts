@@ -3,11 +3,38 @@ import {
 } from '../../interfaces';
 import { ucWords } from './stringUtils';
 
+interface UIRoles {
+  name: string,
+  code: AllowedRoles
+}
+
+export const roles: UIRoles[] = [
+  { name: 'Lector', code: 'reader' },
+  { name: 'Administrador', code: 'admin' },
+  { name: 'Profesor', code: 'professor' },
+  { name: 'Mentor', code: 'mentor' },
+  { name: 'Estudiante', code: 'student' },
+];
+
+export const convertRoles = (allowedRoles: AllowedRoles[]): UIRoles[] => {
+  const uiRoles = allowedRoles.reduce((
+    acc: UIRoles[],
+    allowedRole: AllowedRoles,
+  ) => {
+    const newRoles = roles.find((role) => role.code === allowedRole);
+    if (newRoles) {
+      acc.push(newRoles);
+    }
+    return acc;
+  }, []);
+
+  return uiRoles;
+};
+
 export const convertAdditionalSubjects = (
   requiredSubjects: SingleSubject[],
 ): RequiredSubjects[] => {
   const subjects = requiredSubjects.map((subject) => ({
-    // eslint-disable-next-line no-underscore-dangle
     id: subject._id,
     name: ucWords(subject.name),
   }));
@@ -53,32 +80,11 @@ export const convertObjectToArray = <T>(modelPropierties: string[], model: Gener
       : previous), [])
 );
 
-  interface UIRoles {
-    name: string,
-    code: AllowedRoles
-  }
-
-export const roles: UIRoles[] = [
-  { name: 'Lector', code: 'reader' },
-  { name: 'Administrador', code: 'admin' },
-  { name: 'Profesor', code: 'professor' },
-  { name: 'Mentor', code: 'mentor' },
-  { name: 'Estudiante', code: 'student' },
-];
-
-export const convertRoles = (allowedRoles: AllowedRoles[]): UIRoles[] => {
-  const uiRoles = allowedRoles.reduce((
-    acc: UIRoles[],
-    allowedRole: AllowedRoles,
-  ) => {
-    const newRoles = roles.find((role) => role.code === allowedRole);
-    if (newRoles) {
-      acc.push(newRoles);
-    }
-    return acc;
-  }, []);
-
-  return uiRoles;
+export const convertStepToString = (step: number) => {
+  const steps = [ 'primero', 'segundo', 'tercero' ];
+  return (step < 1 || step > 3)
+    ? ''
+    : steps[step - 1];
 };
 
 export default {
@@ -87,4 +93,5 @@ export default {
   convertObjectToArray,
   convertRoles,
   roles,
+  convertStepToString,
 };

@@ -2,11 +2,12 @@ import { useContext, useMemo } from 'react';
 
 import { Dialog } from 'primereact/dialog';
 
-import { SubjectHistoryContext } from '../context/subjectHistoryContext';
-import { useTitle } from '../../../hooks';
 import { InitialValues, SubjectHistory, UserContext } from '../../../interfaces';
 import { PhaseDataForm } from './PhaseDataForm';
+import { SubjectHistoryContext } from '../context/subjectHistoryContext';
 import { ucWords } from '../../../utils';
+
+import { useTitle } from '../../../hooks';
 
 const generateInitialValue = (
   user: UserContext,

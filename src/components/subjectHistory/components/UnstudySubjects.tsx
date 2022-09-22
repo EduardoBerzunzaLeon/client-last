@@ -2,9 +2,10 @@ import { Card } from 'primereact/card';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 
-import { useGetUnstudySubjectQuery } from '../../../redux/subjectHistory/subjectHistory.api';
 import { CoreBodyTemplate } from '../../subjects';
 import { SpinnerRTK } from '../../ui';
+
+import { useGetUnstudySubjectQuery } from '../../../redux/subjectHistory/subjectHistory.api';
 
 interface Props {
     userId: string

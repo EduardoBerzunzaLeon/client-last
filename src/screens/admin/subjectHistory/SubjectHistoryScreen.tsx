@@ -4,16 +4,16 @@ import { useParams } from 'react-router-dom';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
 
 import {
-  SubjectsStudied,
   CurrentSubjects,
-  UnstudySubjects,
-  SubjectHistoryContext,
   PhaseDialog,
+  SubjectHistoryContext,
+  SubjectsStudied,
+  UnstudySubjects,
 } from '../../../components/subjectHistory';
 import { HeaderAdmin, SpinnerRTK } from '../../../components/ui';
+import { SubjectHistory } from '../../../interfaces';
 
 import { useGetStudentSubjectQuery } from '../../../redux/subjectHistory/subjectHistory.api';
-import { SubjectHistory } from '../../../interfaces';
 
 const { Provider } = SubjectHistoryContext;
 
@@ -32,7 +32,6 @@ export const SubjectHistoryScreen = () => {
       error={error}
       isError={isError}
       isLoading={isLoading}
-      errorBody={<HeaderAdmin position="students/subjectHistory" title="Historial de materias" hasBreadcumbs />}
     >
       {({ data: dataSend }) => (
         <Provider value={{
@@ -55,6 +54,7 @@ export const SubjectHistoryScreen = () => {
             <div className="col-12">
               <CurrentSubjects
                 currentSubjects={dataSend.subjectHistory}
+                isEditable
               />
             </div>
             <div className="col-12 xl:col-6">

@@ -3,19 +3,20 @@ import { useState } from 'react';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { Form, Formik } from 'formik';
+import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
-import { Toast } from 'primereact/toast';
 import { FormElement, InputTextApp } from '../../forms';
 import { InitialValues, PhaseStatus } from '../../../interfaces';
+import { processError, setSubjectInHistoryFormErrors } from '../../../utils';
+import { SkeletonDropdown } from '../../ui';
+
 import {
   useCreateSubjectinHistoryMutation,
   useGetPossibleSubjectsQuery,
   useUpdateSubjectPhaseMutation,
 } from '../../../redux/subjectHistory/subjectHistory.api';
-import { SkeletonDropdown } from '../../ui';
 import { useDropdownFilter, useToast } from '../../../hooks';
-import { processError, setSubjectInHistoryFormErrors } from '../../../utils';
 
 interface PhaseStatusDropdown {
   name: string,

@@ -5,12 +5,12 @@ import { confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
 
 import { PermissionsGate } from '../../../authorization/PermissionGate';
-import { SubjectHistory } from '../../../../interfaces';
-
-import { useToast } from '../../../../hooks';
-import { useDeleteSubjectPhaseMutation } from '../../../../redux/subjectHistory/subjectHistory.api';
 import { processError } from '../../../../utils';
+import { SubjectHistory } from '../../../../interfaces';
 import { SubjectHistoryContext } from '../../context/subjectHistoryContext';
+
+import { useDeleteSubjectPhaseMutation } from '../../../../redux/subjectHistory/subjectHistory.api';
+import { useToast } from '../../../../hooks';
 
 const ActionsBody = memo(({ subjectHistory }: { subjectHistory: SubjectHistory }) => {
   const { setDisplayModal, setPhaseOfSubjectSelected } = useContext(SubjectHistoryContext);
@@ -34,7 +34,7 @@ const ActionsBody = memo(({ subjectHistory }: { subjectHistory: SubjectHistory }
 
   const handleDelete = () => {
     confirmDialog({
-      message: '¿Estas seguro en eliminar esta materia en la carga actual?, el proceso IRREVERSIBLE',
+      message: '¿Estas seguro en eliminar esta materia en la carga actual?, el proceso es IRREVERSIBLE',
       header: 'Confirmación de eliminación',
       icon: 'pi pi-info-circle',
       acceptClassName: 'p-button-danger',
