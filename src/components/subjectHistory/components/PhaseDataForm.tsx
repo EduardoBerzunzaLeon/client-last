@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { Form, Formik } from 'formik';
-import { Toast } from 'primereact/toast';
+// import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
 import { FormElement, InputTextApp } from '../../forms';
@@ -17,6 +17,7 @@ import {
   useUpdateSubjectPhaseMutation,
 } from '../../../redux/subjectHistory/subjectHistory.api';
 import { useDropdownFilter, useToast } from '../../../hooks';
+import { PortalToast } from './PortalToast';
 
 interface PhaseStatusDropdown {
   name: string,
@@ -51,7 +52,7 @@ export const PhaseDataForm = ({ initialValues, buttonLabel }: Props) => {
 
   return (
     <div className="formgrid">
-      <Toast ref={toast} />
+      <PortalToast ref={toast} />
       <Formik
         initialValues={initialPhase}
         enableReinitialize
