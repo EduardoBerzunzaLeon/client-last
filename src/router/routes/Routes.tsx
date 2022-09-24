@@ -21,6 +21,7 @@ import { StudentsScreen } from '../../screens/admin/students/StudentsScreen';
 import { SubjectHistoryScreen } from '../../screens/admin/subjectHistory/SubjectHistoryScreen';
 import { SubjectsScreen } from '../../screens/admin/subjects/SubjectsScreen';
 import { UsersScreen } from '../../screens/admin/users/UsersScreen';
+import { ToastProvider } from '../../context';
 
 const BlankLayoutLazy = lazy(() => import(/* webpackChunkName: "Auth" */'../../screens/blank/layout/BlankLayout'));
 
@@ -66,7 +67,7 @@ export const Routes = () => {
           path: 'students',
         },
         {
-          element: <PermissionsGate fallback={fallback} module="subjectHistory" permission="canView"><SubjectHistoryScreen /></PermissionsGate>,
+          element: <PermissionsGate fallback={fallback} module="subjectHistory" permission="canView"><ToastProvider><SubjectHistoryScreen /></ToastProvider></PermissionsGate>,
           path: 'students/:userId',
         },
       ],

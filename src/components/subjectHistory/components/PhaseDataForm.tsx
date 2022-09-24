@@ -130,16 +130,19 @@ export const PhaseDataForm = ({ initialValues, buttonLabel }: Props) => {
                     filterBy="name"
                     emptyFilterMessage="Materias no encontradas"
                     disabled={initialValues.subject}
+                    // onShow={() => setSkip(false)}
                     virtualScrollerOptions={{
                       lazy: true,
                       onLazyLoad: () => {
                         setSkip(false);
                       },
-                      itemSize: 1,
+                      itemSize: 20,
                       showLoader: true,
                       loading: isLoading,
+                      // delay: 400,
                       loadingTemplate: SkeletonDropdown,
                     }}
+
                   />
                 </div>
                 <div className="field pt-2 mt-4">

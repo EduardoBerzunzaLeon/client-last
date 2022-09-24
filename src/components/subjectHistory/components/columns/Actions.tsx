@@ -2,20 +2,23 @@ import { memo, useContext } from 'react';
 
 import { Button } from 'primereact/button';
 import { confirmDialog } from 'primereact/confirmdialog';
-import { Toast } from 'primereact/toast';
 
 import { PermissionsGate } from '../../../authorization/PermissionGate';
 import { processError } from '../../../../utils';
 import { SubjectHistory } from '../../../../interfaces';
 import { SubjectHistoryContext } from '../../context/subjectHistoryContext';
+import { ToastContext } from '../../../../context';
 
 import { useDeleteSubjectPhaseMutation } from '../../../../redux/subjectHistory/subjectHistory.api';
-import { useToast } from '../../../../hooks';
 
 const ActionsBody = memo(({ subjectHistory }: { subjectHistory: SubjectHistory }) => {
-  const { setDisplayModal, setPhaseOfSubjectSelected } = useContext(SubjectHistoryContext);
+  const {
+    setDisplayModal,
+    setPhaseOfSubjectSelected,
+  } = useContext(SubjectHistoryContext);
+
+  const { showSuccess, showError } = useContext(ToastContext);
   const [ deletePhase, { isLoading }] = useDeleteSubjectPhaseMutation();
-  const { toast, showSuccess, showError } = useToast();
   const { lastPhase, subject } = subjectHistory;
 
   const accept = async () => {
@@ -44,7 +47,6 @@ const ActionsBody = memo(({ subjectHistory }: { subjectHistory: SubjectHistory }
 
   return (
     <>
-      <Toast ref={toast} />
       <PermissionsGate
         module="student"
         permission="canUpdate"
