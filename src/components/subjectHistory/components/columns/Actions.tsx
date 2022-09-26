@@ -1,4 +1,4 @@
-import { memo, useContext } from 'react';
+import { useContext } from 'react';
 
 import { Button } from 'primereact/button';
 import { confirmDialog } from 'primereact/confirmdialog';
@@ -11,7 +11,7 @@ import { ToastContext } from '../../../../context';
 
 import { useDeleteSubjectPhaseMutation } from '../../../../redux/subjectHistory/subjectHistory.api';
 
-const ActionsBody = memo(({ subjectHistory }: { subjectHistory: SubjectHistory }) => {
+const ActionsBody = ({ subjectHistory }: { subjectHistory: SubjectHistory }) => {
   const {
     setDisplayModal,
     setPhaseOfSubjectSelected,
@@ -74,7 +74,7 @@ const ActionsBody = memo(({ subjectHistory }: { subjectHistory: SubjectHistory }
       </PermissionsGate>
     </>
   );
-});
+};
 
 export const ActionsBodyTemplate = (
   subjectHistory: SubjectHistory,

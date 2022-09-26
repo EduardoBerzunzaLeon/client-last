@@ -1,19 +1,17 @@
-import React from 'react';
-
-import { Toast } from 'primereact/toast';
+import React, { useContext } from 'react';
 
 import { FileSingleInputApp } from '../forms';
 import { processError } from '../../utils';
 import { setDataAuth } from '../../redux/auth/auth.slice';
+import { ToastContext } from '../../context';
 
 import { useUploadAvatarMutation } from '../../redux/user/user.api';
 import { useAppDispatch } from '../../redux/hooks';
-import { useToast } from '../../hooks';
 
 export const ProfileImageForm = () => {
   const [ uploadAvatar, { isLoading }] = useUploadAvatarMutation();
 
-  const { toast, showError, showSuccess } = useToast();
+  const { showSuccess, showError } = useContext(ToastContext);
   const dispatch = useAppDispatch();
 
   const onUpload = async (
@@ -33,13 +31,10 @@ export const ProfileImageForm = () => {
   };
 
   return (
-    <>
-      <Toast ref={toast} />
-      <FileSingleInputApp
-        onUpload={onUpload}
-        isLoading={isLoading}
-      />
-    </>
+    <FileSingleInputApp
+      onUpload={onUpload}
+      isLoading={isLoading}
+    />
   );
 };
 

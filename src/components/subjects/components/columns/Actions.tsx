@@ -2,7 +2,6 @@ import { useContext } from 'react';
 
 import { Button } from 'primereact/button';
 import { confirmDialog } from 'primereact/confirmdialog';
-import { Toast } from 'primereact/toast';
 
 import { PermissionsGate } from '../../../authorization/PermissionGate';
 import { processError } from '../../../../utils';
@@ -10,12 +9,13 @@ import { Subject } from '../../../../interfaces';
 import { SubjectContext } from '../../context/subjectContext';
 
 import { useDeleteSubjectMutation } from '../../../../redux/subject/subject.api';
-import { useToast } from '../../../../hooks';
+import { ToastContext } from '../../../../context';
 
 export const ActionsBody = ({ subject }: { subject: Subject }) => {
   const { setSubjectSelected, setDisplayModal, setIsOpenDetailModal } = useContext(SubjectContext);
   const [ deleteSubject, { isLoading }] = useDeleteSubjectMutation();
-  const { toast, showSuccess, showError } = useToast();
+  const { showSuccess, showError } = useContext(ToastContext);
+
   const { id } = subject;
 
   const accept = async () => {
@@ -49,7 +49,6 @@ export const ActionsBody = ({ subject }: { subject: Subject }) => {
 
   return (
     <>
-      <Toast ref={toast} />
       <Button
         icon="pi pi-eye"
         tooltip="Ver Materia"

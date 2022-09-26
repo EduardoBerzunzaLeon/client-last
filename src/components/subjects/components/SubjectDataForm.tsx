@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { FilterMatchMode } from 'primereact/api';
 import { Form, Formik } from 'formik';
 import { MultiSelect } from 'primereact/multiselect';
-import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
 import { convertAdditionalSubjects, processError, setSubjectFormErrors } from '../../../utils';
 import { InputTextApp, FormElement, ToggleButtonApp } from '../../forms';
 import { SkeletonDropdown } from '../../ui';
 import { SubjectDetail, RequiredSubjects } from '../../../interfaces';
+import { ToastContext } from '../../../context';
 
 import {
   useCreateSubjectMutation,
   useUpdateSubjectMutation,
   useGetConsecutiveSubjectsQuery,
 } from '../../../redux/subject/subject.api';
-import { useToast, useDropdownFilter } from '../../../hooks';
+import { useDropdownFilter } from '../../../hooks';
 
 interface Props {
   buttonLabel: string,
@@ -47,7 +47,7 @@ export const SubjectDataForm = ({ subject, buttonLabel }: Props) => {
 
   const [ skip, setSkip ] = useState<boolean>(true);
   const [ semester, setSemester ] = useState(subject.semester);
-  const { toast, showSuccess, showError } = useToast();
+  const { showSuccess, showError } = useContext(ToastContext);
 
   const [ createSubject, { isLoading: isLoadingCreate }] = useCreateSubjectMutation();
   const [ updateSubject, { isLoading: isLoadingUpdate }] = useUpdateSubjectMutation();
@@ -71,78 +71,76 @@ export const SubjectDataForm = ({ subject, buttonLabel }: Props) => {
   });
 
   return (
-    <>
-      <Toast ref={toast} />
-      <Formik
-        initialValues={initialSubject}
-        enableReinitialize
-        onSubmit={async (values, { setFieldError, resetForm }) => {
-          const { core, requiredSubjects, ...rest } = values;
-          const { code: coreDB } = core;
+    <Formik
+      initialValues={initialSubject}
+      enableReinitialize
+      onSubmit={async (values, { setFieldError, resetForm }) => {
+        const { core, requiredSubjects, ...rest } = values;
+        const { code: coreDB } = core;
 
-          let requiredSubjectsDB: string[] | [] = [];
-          if (requiredSubjects?.length) {
-            requiredSubjectsDB = requiredSubjects.map((
-              { id }: RequiredSubjects,
-            ) => id);
+        let requiredSubjectsDB: string[] | [] = [];
+        if (requiredSubjects?.length) {
+          requiredSubjectsDB = requiredSubjects.map((
+            { id }: RequiredSubjects,
+          ) => id);
+        }
+
+        const dataSend = {
+          core: coreDB,
+          requiredSubjects: requiredSubjectsDB,
+          ...rest,
+        };
+        let message = 'La materia se actualizó con éxito';
+
+        try {
+          if (subject.id) {
+            await updateSubject({ id: subject.id, ...dataSend }).unwrap();
+            setInitialSubject({ ...values });
+          } else {
+            await createSubject(dataSend).unwrap();
+            message = 'La materia se creó con éxito';
+            resetForm();
           }
-
-          const dataSend = {
-            core: coreDB,
-            requiredSubjects: requiredSubjectsDB,
-            ...rest,
-          };
-          let message = 'La materia se actualizó con éxito';
-
-          try {
-            if (subject.id) {
-              await updateSubject({ id: subject.id, ...dataSend }).unwrap();
-              setInitialSubject({ ...values });
-            } else {
-              await createSubject(dataSend).unwrap();
-              message = 'La materia se creó con éxito';
-              resetForm();
-            }
-            setSkip(true);
-            showSuccess({ detail: message });
-          } catch (error) {
-            const errors: string = processError({ error, showError });
-            setSubjectFormErrors({ errors, setFieldError });
-          }
-        }}
-        validationSchema={Yup.object({
-          name: Yup.string()
-            .required('Requerido'),
-          semester: Yup.number()
-            .required('Requerido').positive().integer()
-            .min(1, 'El semestre debe tener valor entre 1 y 9')
-            .max(9, 'El semestre debe tener valor entre 1 y 9'),
-          credit: Yup.number()
-            .required('Requerido').positive().integer()
-            .min(1, 'Los créditos debe ser mayor o igual a 1'),
-          practicalHours: Yup.number()
-            .required('Requerido').positive().integer()
-            .min(0, 'El semestre debe tener valor entre 0 y 5')
-            .max(5, 'El semestre debe tener valor entre 0 y 5'),
-          theoreticalHours: Yup.number()
-            .required('Requerido').positive().integer()
-            .min(0, 'El semestre debe tener valor entre 0 y 5')
-            .max(5, 'El semestre debe tener valor entre 0 y 5')
-            .when('practicalHours', (
-              practicalHours: number,
-              schema,
-            ) => schema.test({
-              test: (theoreticalHours: number) => ((practicalHours || 0) + theoreticalHours) <= 5,
-              message: 'La suma de horas no puede ser mayor a 5',
-            })),
-          core: Yup.object()
-            .required('Requerido'),
-          deprecated: Yup.boolean()
-            .required('Requerido'),
-          requiredSubjects: Yup.array().nullable(true),
-        })}
-      >
-        {
+          setSkip(true);
+          showSuccess({ detail: message });
+        } catch (error) {
+          const errors: string = processError({ error, showError });
+          setSubjectFormErrors({ errors, setFieldError });
+        }
+      }}
+      validationSchema={Yup.object({
+        name: Yup.string()
+          .required('Requerido'),
+        semester: Yup.number()
+          .required('Requerido').positive().integer()
+          .min(1, 'El semestre debe tener valor entre 1 y 9')
+          .max(9, 'El semestre debe tener valor entre 1 y 9'),
+        credit: Yup.number()
+          .required('Requerido').positive().integer()
+          .min(1, 'Los créditos debe ser mayor o igual a 1'),
+        practicalHours: Yup.number()
+          .required('Requerido').positive().integer()
+          .min(0, 'El semestre debe tener valor entre 0 y 5')
+          .max(5, 'El semestre debe tener valor entre 0 y 5'),
+        theoreticalHours: Yup.number()
+          .required('Requerido').positive().integer()
+          .min(0, 'El semestre debe tener valor entre 0 y 5')
+          .max(5, 'El semestre debe tener valor entre 0 y 5')
+          .when('practicalHours', (
+            practicalHours: number,
+            schema,
+          ) => schema.test({
+            test: (theoreticalHours: number) => ((practicalHours || 0) + theoreticalHours) <= 5,
+            message: 'La suma de horas no puede ser mayor a 5',
+          })),
+        core: Yup.object()
+          .required('Requerido'),
+        deprecated: Yup.boolean()
+          .required('Requerido'),
+        requiredSubjects: Yup.array().nullable(true),
+      })}
+    >
+      {
           ({
             values, isValid, isSubmitting, dirty, setFieldValue, handleChange,
           }) => (
@@ -277,8 +275,7 @@ export const SubjectDataForm = ({ subject, buttonLabel }: Props) => {
             </Form>
           )
         }
-      </Formik>
-    </>
+    </Formik>
   );
 };
 

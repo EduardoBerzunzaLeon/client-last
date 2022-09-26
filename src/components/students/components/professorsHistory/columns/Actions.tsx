@@ -2,22 +2,21 @@ import { useContext } from 'react';
 
 import { Button } from 'primereact/button';
 import { confirmDialog } from 'primereact/confirmdialog';
-import { Toast } from 'primereact/toast';
 
 import { processError } from '../../../../../utils';
 import { ProfessorInHistory } from '../../../../../interfaces';
 import { ProfessorsHistoryContext } from '../context/professorsHistoryContext';
 import { StudentContext } from '../../../context/studentContext';
+import { ToastContext } from '../../../../../context';
 
 import { useDeleteProfessorInHistoryMutation } from '../../../../../redux/student/student.api';
-import { useToast } from '../../../../../hooks';
 
 export const ActionsBody = ({ professorInHistory }: { professorInHistory: ProfessorInHistory }) => {
   const { studentSelected } = useContext(StudentContext);
   const { setProfessorSelected } = useContext(ProfessorsHistoryContext);
+  const { showSuccess, showError } = useContext(ToastContext);
 
   const [ deleteSubject, { isLoading }] = useDeleteProfessorInHistoryMutation();
-  const { toast, showSuccess, showError } = useToast();
 
   const { dischargeAt, id, professor } = professorInHistory;
 
@@ -47,7 +46,6 @@ export const ActionsBody = ({ professorInHistory }: { professorInHistory: Profes
 
   return (
     <>
-      <Toast ref={toast} />
       <Button
         icon="pi pi-pencil"
         tooltip="Editar Asignación Tutor"

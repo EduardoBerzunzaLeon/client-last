@@ -1,9 +1,8 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { Form, Formik } from 'formik';
-// import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
 import { FormElement, InputTextApp } from '../../forms';
@@ -16,8 +15,8 @@ import {
   useGetPossibleSubjectsQuery,
   useUpdateSubjectPhaseMutation,
 } from '../../../redux/subjectHistory/subjectHistory.api';
-import { useDropdownFilter, useToast } from '../../../hooks';
-import { PortalToast } from './PortalToast';
+import { useDropdownFilter } from '../../../hooks';
+import { ToastContext } from '../../../context';
 
 interface PhaseStatusDropdown {
   name: string,
@@ -37,13 +36,14 @@ interface Props {
 
 export const PhaseDataForm = ({ initialValues, buttonLabel }: Props) => {
   const { phaseId, userId, ...formValues } = initialValues;
+
+  const { showSuccess, showError } = useContext(ToastContext);
   const [ skip, setSkip ] = useState<boolean>(true);
   const [ initialPhase, setInitialPhase ] = useState(formValues);
 
   const { data, isLoading } = useGetPossibleSubjectsQuery(userId, { skip });
   const [ createPhase, { isLoading: isLoadingCreate }] = useCreateSubjectinHistoryMutation();
   const [ updatePhase, { isLoading: isLoadingUpdate }] = useUpdateSubjectPhaseMutation();
-  const { toast, showSuccess, showError } = useToast();
 
   const { cleanData, onFilter } = useDropdownFilter({
     field: 'name',
@@ -52,7 +52,6 @@ export const PhaseDataForm = ({ initialValues, buttonLabel }: Props) => {
 
   return (
     <div className="formgrid">
-      <PortalToast ref={toast} />
       <Formik
         initialValues={initialPhase}
         enableReinitialize

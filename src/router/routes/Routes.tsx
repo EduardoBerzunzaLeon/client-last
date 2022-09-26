@@ -11,19 +11,20 @@ import { HomeScreen } from '../../screens/admin/home/HomeScreen';
 import { LoginScreen } from '../../screens/blank/loginScreen/LoginScreen';
 import { PermissionsGate } from '../../components/authorization/PermissionGate';
 import { PrivateRoute } from '../PrivateRoute';
-import { ProfessorsScreen } from '../../screens/admin/professors/ProfessorsScreen';
-import { ProfileScreen } from '../../screens/admin/profile/ProfileScreen';
 import { PublicRoute } from '../PublicRoute';
 import { RegisterScreen } from '../../screens/blank/registerScreen/RegisterScreen';
 import { ResetPasswordScreen } from '../../screens/blank/resetPasswordScreen/ResetPasswordScreen';
 import { SendEmailVerifyScreen } from '../../screens/blank/sendEmailVerify/SendEmailVerifyScreen';
-import { StudentsScreen } from '../../screens/admin/students/StudentsScreen';
-import { SubjectHistoryScreen } from '../../screens/admin/subjectHistory/SubjectHistoryScreen';
-import { SubjectsScreen } from '../../screens/admin/subjects/SubjectsScreen';
-import { UsersScreen } from '../../screens/admin/users/UsersScreen';
+
 import { ToastProvider } from '../../context';
 
 const BlankLayoutLazy = lazy(() => import(/* webpackChunkName: "Auth" */'../../screens/blank/layout/BlankLayout'));
+const UserScreenLazy = lazy(() => import(/* webpackChunkName: "User" */'../../screens/admin/users/UsersScreen'));
+const ProfileScreenLazy = lazy(() => import(/* webpackChunkName: "Profile" */'../../screens/admin/profile/ProfileScreen'));
+const SubjectsScreenLazy = lazy(() => import(/* webpackChunkName: "Subjects" */'../../screens/admin/subjects/SubjectsScreen'));
+const ProfessorsScreenLazy = lazy(() => import(/* webpackChunkName: "Professors" */'../../screens/admin/professors/ProfessorsScreen'));
+const StudentsScreenLazy = lazy(() => import(/* webpackChunkName: "Students" */'../../screens/admin/students/StudentsScreen'));
+const SubjectHistoryScreenLazy = lazy(() => import(/* webpackChunkName: "SubjectsHistory" */'../../screens/admin/subjectHistory/SubjectHistoryScreen'));
 
 const fallback = (
   <ErrorCard
@@ -36,7 +37,7 @@ export const Routes = () => {
   const routesObject: RouteObject[] = [
     {
       path: '/admin',
-      element: <PrivateRoute><AdminLayout /></PrivateRoute>,
+      element: <PrivateRoute><ToastProvider><AdminLayout /></ToastProvider></PrivateRoute>,
       children: [
         {
           index: true,
@@ -47,27 +48,27 @@ export const Routes = () => {
           path: 'home',
         },
         {
-          element: <PermissionsGate fallback={fallback} module="user" permission="canView"><UsersScreen /></PermissionsGate>,
+          element: <PermissionsGate fallback={fallback} module="user" permission="canView"><UserScreenLazy /></PermissionsGate>,
           path: 'users',
         },
         {
-          element: <ProfileScreen />,
+          element: <ProfileScreenLazy />,
           path: 'users/:id',
         },
         {
-          element: <PermissionsGate fallback={fallback} module="subject" permission="canView"><SubjectsScreen /></PermissionsGate>,
+          element: <PermissionsGate fallback={fallback} module="subject" permission="canView"><SubjectsScreenLazy /></PermissionsGate>,
           path: 'subjects',
         },
         {
-          element: <PermissionsGate fallback={fallback} module="professor" permission="canView"><ProfessorsScreen /></PermissionsGate>,
+          element: <PermissionsGate fallback={fallback} module="professor" permission="canView"><ProfessorsScreenLazy /></PermissionsGate>,
           path: 'professors',
         },
         {
-          element: <PermissionsGate fallback={fallback} module="student" permission="canView"><StudentsScreen /></PermissionsGate>,
+          element: <PermissionsGate fallback={fallback} module="student" permission="canView"><StudentsScreenLazy /></PermissionsGate>,
           path: 'students',
         },
         {
-          element: <PermissionsGate fallback={fallback} module="subjectHistory" permission="canView"><ToastProvider><SubjectHistoryScreen /></ToastProvider></PermissionsGate>,
+          element: <PermissionsGate fallback={fallback} module="subjectHistory" permission="canView"><SubjectHistoryScreenLazy /></PermissionsGate>,
           path: 'students/:userId',
         },
       ],

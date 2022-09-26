@@ -1,10 +1,10 @@
+import { useContext } from 'react';
 import { Button } from 'primereact/button';
-import { Toast } from 'primereact/toast';
 
 import { processError } from '../../../utils';
 import { Professor } from '../../../interfaces';
+import { ToastContext } from '../../../context';
 
-import { useToast } from '../../../hooks';
 import { useUpdateActiveMutation } from '../../../redux/professor/professor.api';
 
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
 export const ButtonProfessorActive = ({ professor }: Props) => {
   const [ updateBlocked, { isLoading }] = useUpdateActiveMutation();
 
-  const { toast, showError, showSuccess } = useToast();
+  const { showSuccess, showError } = useContext(ToastContext);
 
   const handlerClick = async ({ id, active }: Professor) => {
     try {
@@ -26,18 +26,14 @@ export const ButtonProfessorActive = ({ professor }: Props) => {
   };
 
   return (
-    <>
-      <Toast ref={toast} />
-      <Button
-        icon={`pi pi-${professor.active ? 'lock-open' : 'lock'}`}
-        loading={isLoading}
-        tooltip="Cambiar Estatus"
-        tooltipOptions={{ position: 'top' }}
-        className={`p-button-sm p-button-raised ${professor.active ? 'p-button-success' : 'p-button-danger'} `}
-        onClick={() => handlerClick(professor)}
-      />
-    </>
-
+    <Button
+      icon={`pi pi-${professor.active ? 'lock-open' : 'lock'}`}
+      loading={isLoading}
+      tooltip="Cambiar Estatus"
+      tooltipOptions={{ position: 'top' }}
+      className={`p-button-sm p-button-raised ${professor.active ? 'p-button-success' : 'p-button-danger'} `}
+      onClick={() => handlerClick(professor)}
+    />
   );
 };
 

@@ -7,7 +7,6 @@ import { Calendar } from 'primereact/calendar';
 import { Form, Formik } from 'formik';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
-import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
 import { AutoCompleteProfessors } from '../../../profileProfessors';
@@ -17,13 +16,13 @@ import { ProfessorInHistory } from '../../../../interfaces';
 import { ProfessorsHistoryContext } from './context/professorsHistoryContext';
 import { setProfessorInHistoryFormErrors, processError } from '../../../../utils';
 import { StudentContext } from '../../context/studentContext';
+import { ToastContext } from '../../../../context';
 
 import {
   useCreateProfessorInHistoryMutation,
   useGetProfessorsHistoryQuery,
   useUpdateProfessorInHistoryMutation,
 } from '../../../../redux/student/student.api';
-import { useToast } from '../../../../hooks';
 
 interface Props {
   lastProfessor: ProfessorInHistory | undefined,
@@ -32,12 +31,13 @@ interface Props {
 export const ProfessorHistoryDataForm = ({ lastProfessor }: Props) => {
   const { professorSelected, setProfessorSelected } = useContext(ProfessorsHistoryContext);
   const { studentSelected } = useContext(StudentContext);
+  const { showSuccess, showError } = useContext(ToastContext);
+
   const initialFormValues = useMemo(() => getFormValues(lastProfessor), [ lastProfessor ]);
   const [ initialValues, setInitialValues ] = useState<ProfessorInHistoryValues>(initialFormValues);
 
   const [ createProfessor, { isLoading: isLoadingCreate }] = useCreateProfessorInHistoryMutation();
   const [ updateProfessor, { isLoading: isLoadingUpdate }] = useUpdateProfessorInHistoryMutation();
-  const { toast, showSuccess, showError } = useToast();
 
   const {
     professorBefore,
@@ -70,7 +70,6 @@ export const ProfessorHistoryDataForm = ({ lastProfessor }: Props) => {
 
   return (
     <>
-      <Toast ref={toast} />
       <h4>Agregar Tutor</h4>
       <Formik
         initialValues={initialValues}

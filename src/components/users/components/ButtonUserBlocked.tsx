@@ -1,11 +1,11 @@
+import { useContext } from 'react';
 import { Button } from 'primereact/button';
-import { Toast } from 'primereact/toast';
 import classNames from 'classnames';
 
 import { processError } from '../../../utils';
 import { User } from '../../../interfaces';
+import { ToastContext } from '../../../context';
 
-import { useToast } from '../../../hooks';
 import { useUpdateBlockedUserAdminMutation } from '../../../redux/user/user.api';
 
 interface Props {
@@ -16,7 +16,7 @@ interface Props {
 export const ButtonUserBlocked = ({ user, isUserLogged }: Props) => {
   const [ updateBlocked, { isLoading }] = useUpdateBlockedUserAdminMutation();
 
-  const { toast, showError, showSuccess } = useToast();
+  const { showSuccess, showError } = useContext(ToastContext);
 
   const handlerClick = async ({ id, blocked }: User) => {
     try {
@@ -28,18 +28,14 @@ export const ButtonUserBlocked = ({ user, isUserLogged }: Props) => {
   };
 
   return (
-    <>
-      <Toast ref={toast} />
-      <Button
-        icon={`pi pi-${user.blocked ? 'lock' : 'lock-open'}`}
-        loading={isLoading}
-        tooltip={user.blocked ? 'Desbloquear usuario' : 'Bloquear Usuario'}
-        tooltipOptions={{ position: 'top' }}
-        className={classNames('p-button-sm', 'p-button-raised', { 'p-disabled': isUserLogged, 'p-button-danger': user.blocked, 'p-button-success': !user.blocked })}
-        onClick={() => handlerClick(user)}
-      />
-    </>
-
+    <Button
+      icon={`pi pi-${user.blocked ? 'lock' : 'lock-open'}`}
+      loading={isLoading}
+      tooltip={user.blocked ? 'Desbloquear usuario' : 'Bloquear Usuario'}
+      tooltipOptions={{ position: 'top' }}
+      className={classNames('p-button-sm', 'p-button-raised', { 'p-disabled': isUserLogged, 'p-button-danger': user.blocked, 'p-button-success': !user.blocked })}
+      onClick={() => handlerClick(user)}
+    />
   );
 };
 

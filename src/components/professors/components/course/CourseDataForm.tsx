@@ -1,15 +1,16 @@
+import { useContext } from 'react';
+
 import { Button } from 'primereact/button';
 import { Calendar } from 'primereact/calendar';
 import { Form, Formik } from 'formik';
-import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
 import { CreateCourseRequest } from '../../../../interfaces';
 import { InputTextApp, FormElement } from '../../../forms';
 import { processError, setSubjectFormErrors } from '../../../../utils';
+import { ToastContext } from '../../../../context';
 
 import { useCreateCourseMutation } from '../../../../redux/course/course.api';
-import { useToast } from '../../../../hooks';
 
 const initialCourse = {
   name: '',
@@ -19,10 +20,9 @@ const initialCourse = {
 export const CourseDataForm = ({ professorId }: { professorId?: string}) => {
   const [ createCourse, { isLoading: isLoadingCreate }] = useCreateCourseMutation();
 
-  const { toast, showSuccess, showError } = useToast();
+  const { showSuccess, showError } = useContext(ToastContext);
   return (
     <div>
-      <Toast ref={toast} />
       <h4>Nuevo Curso</h4>
       <Formik
         initialValues={initialCourse}

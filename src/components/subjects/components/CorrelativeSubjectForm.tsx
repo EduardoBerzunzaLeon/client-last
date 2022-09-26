@@ -1,19 +1,19 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import { Button } from 'primereact/button';
 import { FilterMatchMode } from 'primereact/api';
 import { Form, Formik } from 'formik';
 import { MultiSelect } from 'primereact/multiselect';
-import { Toast } from 'primereact/toast';
 import * as Yup from 'yup';
 
 import { convertAdditionalSubjects, processError, setSubjectFormErrors } from '../../../utils';
 import { FormElement } from '../../forms';
 import { SkeletonDropdown } from '../../ui';
 import { SubjectUnion, RequiredSubjects } from '../../../interfaces';
+import { ToastContext } from '../../../context';
 
 import { useUpdateCorrelativeSubjectsMutation, useGetConsecutiveSubjectsQuery } from '../../../redux/subject/subject.api';
-import { useToast, useDropdownFilter } from '../../../hooks';
+import { useDropdownFilter } from '../../../hooks';
 
 interface Props {
     id: string,
@@ -22,7 +22,7 @@ interface Props {
 }
 
 export const CorrelativeSubjectForm = ({ id, semester, correlativeSubjects }: Props) => {
-  const { toast, showSuccess, showError } = useToast();
+  const { showSuccess, showError } = useContext(ToastContext);
   const [ skip, setSkip ] = useState<boolean>(true);
   const [
     initialValues,
@@ -50,39 +50,37 @@ export const CorrelativeSubjectForm = ({ id, semester, correlativeSubjects }: Pr
   });
 
   return (
-    <>
-      <Toast ref={toast} />
-      <Formik
-        initialValues={initialValues}
-        enableReinitialize
-        onSubmit={async (values, { setFieldError }) => {
-          let correlativeSubjectsDB: string[] | [] = [];
-          if (values.correlativeSubjects?.length) {
-            correlativeSubjectsDB = values.correlativeSubjects.map((
-              { id: subjectId }: RequiredSubjects,
-            ) => subjectId);
-          }
+    <Formik
+      initialValues={initialValues}
+      enableReinitialize
+      onSubmit={async (values, { setFieldError }) => {
+        let correlativeSubjectsDB: string[] | [] = [];
+        if (values.correlativeSubjects?.length) {
+          correlativeSubjectsDB = values.correlativeSubjects.map((
+            { id: subjectId }: RequiredSubjects,
+          ) => subjectId);
+        }
 
-          const dataSend = {
-            id,
-            correlativeSubjects: correlativeSubjectsDB,
-          };
+        const dataSend = {
+          id,
+          correlativeSubjects: correlativeSubjectsDB,
+        };
 
-          try {
-            await updateSubject(dataSend).unwrap();
-            setSkip(true);
-            showSuccess({ detail: 'Se ha actualizadó las materias correlativas' });
-            setInitialValues({ ...values });
-          } catch (error) {
-            const errors: string = processError({ error, showError });
-            setSubjectFormErrors({ errors, setFieldError });
-          }
-        }}
-        validationSchema={Yup.object({
-          correlativeSubjects: Yup.array().nullable(true),
-        })}
-      >
-        {
+        try {
+          await updateSubject(dataSend).unwrap();
+          setSkip(true);
+          showSuccess({ detail: 'Se ha actualizadó las materias correlativas' });
+          setInitialValues({ ...values });
+        } catch (error) {
+          const errors: string = processError({ error, showError });
+          setSubjectFormErrors({ errors, setFieldError });
+        }
+      }}
+      validationSchema={Yup.object({
+        correlativeSubjects: Yup.array().nullable(true),
+      })}
+    >
+      {
 
              ({
                isValid, isSubmitting, dirty, values,
@@ -134,8 +132,7 @@ export const CorrelativeSubjectForm = ({ id, semester, correlativeSubjects }: Pr
                </Form>
              )
           }
-      </Formik>
-    </>
+    </Formik>
   );
 };
 
