@@ -34,6 +34,7 @@ const initialFilters: Paginator = {
   sortField: 'name',
   sortOrder: 1,
   fields: 'name',
+  rows: 100,
   filters: {
     id: { value: 1, matchMode: FilterMatchMode.NOT_EQUALS },
   },
@@ -67,7 +68,7 @@ export const ProfessorDataForm = ({ professor, buttonLabel }: Props) => {
     data, isLoading,
   } = useGetConsecutiveSubjectsQuery(initialFilters, { skip });
 
-  const { cleanData, onFilter } = useDropdownFilter({
+  const { cleanData } = useDropdownFilter({
     field: 'name',
     data: data?.data,
   });
@@ -182,7 +183,6 @@ export const ProfessorDataForm = ({ professor, buttonLabel }: Props) => {
               label="Materias Impartidas"
               filter
               showClear
-              onFilter={onFilter}
               showFilterClear
               placeholder={cleanData[0]?.selectItemId === 'notFound' && !!values.subjects ? 'Seleccione una materia' : ''}
               className="w-full"

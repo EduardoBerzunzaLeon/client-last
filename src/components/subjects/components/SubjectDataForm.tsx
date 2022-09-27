@@ -63,9 +63,10 @@ export const SubjectDataForm = ({ subject, buttonLabel }: Props) => {
       semester: { value: semester || 1, matchMode: FilterMatchMode.LESS_THAN },
     },
     fields: 'name',
+    rows: 100,
   }, { skip });
 
-  const { cleanData, setCleanData, onFilter } = useDropdownFilter({
+  const { cleanData, setCleanData } = useDropdownFilter({
     field: 'name',
     data: data?.data,
   });
@@ -229,7 +230,7 @@ export const SubjectDataForm = ({ subject, buttonLabel }: Props) => {
                   label="Materias Requeridas"
                   filter
                   showClear
-                  onFilter={onFilter}
+                  // onFilter={onFilter}
                   showFilterClear
                   placeholder={cleanData[0]?.selectItemId === 'notFound' && !!values.requiredSubjects ? 'Seleccione una materia' : ''}
                   className="w-full"

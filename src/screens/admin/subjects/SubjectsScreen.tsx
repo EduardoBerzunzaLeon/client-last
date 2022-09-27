@@ -52,7 +52,7 @@ export const SubjectsScreen = () => {
       messageLoading="Cargando Materias"
     >
       {
-            ({ data: dataSend }) => (
+            ({ data: dataSend, total }) => (
               <Provider value={{
                 displayModal,
                 isOpenDetailModal,
@@ -79,7 +79,7 @@ export const SubjectsScreen = () => {
                       paginator
                       first={lazyParams.first}
                       rows={lazyParams.rows}
-                      totalRecords={7}
+                      totalRecords={total}
                       onPage={onPage}
                       onSort={onSort}
                       sortField={lazyParams.sortField}
@@ -87,6 +87,7 @@ export const SubjectsScreen = () => {
                       onFilter={onFilter}
                       filters={lazyParams.filters}
                       loading={isFetching}
+                      emptyMessage="No se encontraron materias"
                     >
                       <Column
                         header="Materia"
