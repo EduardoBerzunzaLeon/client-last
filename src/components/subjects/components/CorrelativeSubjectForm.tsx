@@ -41,10 +41,11 @@ export const CorrelativeSubjectForm = ({ id, semester, correlativeSubjects }: Pr
       _id: { value: id, matchMode: FilterMatchMode.NOT_EQUALS },
       semester: { value: semester, matchMode: FilterMatchMode.GREATER_THAN },
     },
+    rows: 100,
     fields: 'name',
   }, { skip });
 
-  const { cleanData, onFilter } = useDropdownFilter({
+  const { cleanData } = useDropdownFilter({
     field: 'name',
     data: data?.data,
   });
@@ -100,7 +101,6 @@ export const CorrelativeSubjectForm = ({ id, semester, correlativeSubjects }: Pr
                      label="Materias Correlativas"
                      filter
                      showClear
-                     onFilter={onFilter}
                      showFilterClear
                      placeholder={cleanData[0]?.selectItemId === 'notFound'
                         && !!values.correlativeSubjects ? 'Seleccione una materia' : ''}
