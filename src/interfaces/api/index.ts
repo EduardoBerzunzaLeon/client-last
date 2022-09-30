@@ -6,6 +6,7 @@ export * from './requests/studentRequest';
 export * from './requests/subjectRequest';
 export * from './requests/userRequest';
 export * from './requests/subjectHistoryRequest';
+export * from './requests/academicCareerRequest';
 
 export * from './responses/courseResponse';
 export * from './responses/errorResponse';
@@ -15,3 +16,4 @@ export * from './responses/studentResponse';
 export * from './responses/subjectResponse';
 export * from './responses/userResponse';
 export * from './responses/subjectHistoryResponse';
+export * from './responses/academicCareerResponse';

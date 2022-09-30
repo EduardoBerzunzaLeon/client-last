@@ -11,8 +11,8 @@ export const CoursesTable = ({ courses } : {courses: CourseProfessor[] | []}) =>
       value={courses}
       responsiveLayout="scroll"
       paginator
+      rows={10}
       sortMode="multiple"
-      rows={5}
       filters={{
         name: { value: null, matchMode: FilterMatchMode.CONTAINS },
         impartedAt: { value: null, matchMode: FilterMatchMode.CONTAINS },

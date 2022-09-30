@@ -70,6 +70,18 @@ export const ActionsBody = ({ student }: { student: StudentResume }) => {
           onClick={() => navigate(`/admin/students/${id}`)}
         />
       </PermissionsGate>
+      <PermissionsGate
+        module="academicCareer"
+        permission="canView"
+      >
+        <Button
+          icon="pi pi-sitemap"
+          tooltip="Ver Trayectoria Academica"
+          tooltipOptions={{ position: 'top' }}
+          className="p-button-sm p-button-raised p-button-primary mr-1"
+          onClick={() => navigate(`/admin/students/${id}/roadmap`)}
+        />
+      </PermissionsGate>
     </>
   );
 };

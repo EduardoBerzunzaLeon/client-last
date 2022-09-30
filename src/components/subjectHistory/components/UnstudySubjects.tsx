@@ -25,7 +25,12 @@ export const UnstudySubjects = ({ userId }: Props) => {
     >
       {({ data: dataSend }) => (
         <Card title="Materias aun no cursadas">
-          <DataTable value={dataSend} responsiveLayout="scroll">
+          <DataTable
+            value={dataSend}
+            responsiveLayout="scroll"
+            paginator
+            rows={10}
+          >
             <Column field="semester" header="Semestre" />
             <Column field="name" header="Materia" />
             <Column field="credit" header="Créditos" />

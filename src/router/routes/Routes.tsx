@@ -25,6 +25,7 @@ const SubjectsScreenLazy = lazy(() => import(/* webpackChunkName: "Subjects" */'
 const ProfessorsScreenLazy = lazy(() => import(/* webpackChunkName: "Professors" */'../../screens/admin/professors/ProfessorsScreen'));
 const StudentsScreenLazy = lazy(() => import(/* webpackChunkName: "Students" */'../../screens/admin/students/StudentsScreen'));
 const SubjectHistoryScreenLazy = lazy(() => import(/* webpackChunkName: "SubjectsHistory" */'../../screens/admin/subjectHistory/SubjectHistoryScreen'));
+const AcademicCareerScreenLazy = lazy(() => import(/* webpackChunkName: "AcademicCareer" */'../../screens/admin/academicCareer/AcademicCareerScreen'));
 
 const fallback = (
   <ErrorCard
@@ -70,6 +71,10 @@ export const Routes = () => {
         {
           element: <PermissionsGate fallback={fallback} module="subjectHistory" permission="canView"><SubjectHistoryScreenLazy /></PermissionsGate>,
           path: 'students/:userId',
+        },
+        {
+          element: <PermissionsGate fallback={fallback} module="academicCareer" permission="canView"><AcademicCareerScreenLazy /></PermissionsGate>,
+          path: 'students/:userId/roadmap',
         },
       ],
     },

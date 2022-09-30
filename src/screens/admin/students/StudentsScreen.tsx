@@ -207,7 +207,7 @@ export const StudentsScreen = () => {
                   <Column
                     body={ActionsBodyTemplate}
                     exportable={false}
-                    style={{ minWidth: '13rem' }}
+                    style={{ minWidth: '16rem' }}
                   />
                 </DataTable>
                 <StudentDialog />
