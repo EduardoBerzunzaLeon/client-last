@@ -1,5 +1,6 @@
 export * from './bodies/ActiveBody';
 export * from './bodies/GenderBody';
+export * from './bodies/EmailBody';
 export * from './bodies/TextImageBody';
 
 export * from './filters/GenderFilter';

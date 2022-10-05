@@ -1,12 +1,12 @@
 import { tutorApi } from '../services/tutor.api';
 import {
   SingleResponse,
-  AcademicCareerTreeData,
+  AcademicCareerComplete,
 } from '../../interfaces';
 
 export const subjectHistoryApi = tutorApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAcademicCareer: builder.query<SingleResponse<AcademicCareerTreeData>, string>({
+    getAcademicCareer: builder.query<SingleResponse<AcademicCareerComplete>, string>({
       query: (userId) => `academicCareer/${userId}`,
       providesTags: (result, error, id) => [{ type: 'AcademicCareer', id }],
     }),

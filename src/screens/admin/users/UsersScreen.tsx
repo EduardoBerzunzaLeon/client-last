@@ -5,13 +5,13 @@ import { DataTable } from 'primereact/datatable';
 
 import {
   ActiveBody,
+  EmailBody,
   GenderBody,
   GenderFilter,
   TriStateFilter,
 } from '../../../components/datatable';
 import {
   ActionsBodyTemplate,
-  EmailBodyTemplate,
   Header,
   initialFiltersValue,
   UserContext,
@@ -111,7 +111,7 @@ export const UsersScreen = () => {
                     header="Email"
                     field="email"
                     filterField="email"
-                    body={EmailBodyTemplate}
+                    body={EmailBody}
                     sortable
                     filter
                     showFilterMenu={false}

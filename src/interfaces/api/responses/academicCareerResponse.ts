@@ -37,7 +37,40 @@ export interface AdjustedSubject {
     children: Child[];
 }
 
-export interface AcademicCareerTreeData {
-    adjustedSubjects: AdjustedSubject[];
-    unaddedSubjects: [];
+interface Name {
+    first: string;
+    last: string;
+}
+
+export interface GenerationParams {
+    subjectsInSemester: number;
+    canAdvanceSubject: boolean;
+    hasValidation: boolean;
+}
+
+export interface CreatorUser {
+    _id: string;
+    name: Name;
+    avatar: string;
+}
+
+export interface AcademicCareer {
+    _id: string;
+    createdAt: string;
+    generationParams: GenerationParams;
+    creatorUser: CreatorUser;
+    processStatus: string;
+    subjects: AdjustedSubject[],
+}
+
+export interface AcademicCareerComplete {
+    _id: string;
+    name: Name;
+    email: string;
+    gender: string;
+    avatar: string;
+    currentSemester: number;
+    enrollment: string;
+    academicCareer?: AcademicCareer;
+    unaddedSubjects: []
 }

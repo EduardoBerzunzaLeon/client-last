@@ -3,12 +3,11 @@ import { DataTable } from 'primereact/datatable';
 import { useState } from 'react';
 
 import {
-  ActiveBody, GenderBody, GenderFilter, TriStateFilter,
+  ActiveBody, EmailBody, GenderBody, GenderFilter, TriStateFilter,
 } from '../../../components/datatable';
 
 import {
   ProfessorContext,
-  EmailBodyTemplate,
   ProfessorDialog,
   CoursesDialog,
   Header,
@@ -108,7 +107,7 @@ export const ProfessorsScreen = () => {
                     sortable
                   />
                   <Column
-                    body={EmailBodyTemplate}
+                    body={EmailBody}
                     field="email"
                     filter
                     filterField="email"

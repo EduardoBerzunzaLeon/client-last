@@ -10,6 +10,7 @@ import { Chip } from 'primereact/chip';
 import { SpinnerRTK, HeaderAdmin, Badge } from '../../../components/ui';
 import { useGetAcademicCareerQuery } from '../../../redux/academicCareer/academicCareer.api';
 import { ucWords } from '../../../utils';
+import { StudentCard, UserCreatorCard } from '../../../components/academicCareer';
 
 export const AcademicCareerScreen = () => {
   const { userId } = useParams();
@@ -21,7 +22,7 @@ export const AcademicCareerScreen = () => {
   } = useGetAcademicCareerQuery(userId ?? skipToken);
 
   useEffect(() => {
-    setNodes(data?.data.adjustedSubjects);
+    setNodes(data?.data?.academicCareer?.subjects || null);
   }, [ data ]);
 
   const nodeTemplate = (node: TreeNode) => {
@@ -88,10 +89,31 @@ export const AcademicCareerScreen = () => {
             title="Trayectoria Academica de Name Test"
             hasBreadcumbs
           />
+          {/* <div className="flex justify-content-between flex-wrap card-container">
+          </div> */}
+          <div className="grid">
+            <div className={`col-12 ${dataSend.academicCareer && 'md:col-6'}`}>
+              <StudentCard
+                name={dataSend.name}
+                email={dataSend.email}
+                gender={dataSend.gender}
+                avatar={dataSend.avatar}
+                currentSemester={dataSend.currentSemester}
+                enrollment={dataSend.enrollment}
+              />
+            </div>
+            <div className="col-12 md:col-6">
+              {dataSend.academicCareer && (
+                <UserCreatorCard {...dataSend.academicCareer.creatorUser} />
+              )}
+            </div>
+          </div>
+
           <div className="grid mb-4">
+
             <div className="col-12">
               <Tree
-                value={nodes ?? dataSend.adjustedSubjects}
+                value={nodes ?? dataSend.academicCareer?.subjects}
                 nodeTemplate={nodeTemplate}
                 filter
                 filterBy="data.name,data.atRisk"

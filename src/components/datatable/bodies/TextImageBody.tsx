@@ -1,28 +1,24 @@
-import { Skeleton } from '../../ui';
+import { ProfileImage } from '../../ui';
 
 interface Props {
     text: string,
-    imageURL?: string,
+    imageURL: string,
+    className?: string,
 }
 
-export const TextImageBody = ({ text, imageURL }: Props) => (
+export const TextImageBody = ({
+  text,
+  imageURL,
+  className,
+}: Props) => (
   <div className="flex align-items-center">
-    <Skeleton
-      className="border-circle w-3rem h-3rem"
-    >
-      <Skeleton.Image
-        src={imageURL}
-        alt="Profile"
-        className="border-circle  w-3rem h-3rem"
-        referrerPolicy="no-referrer"
-      />
-    </Skeleton>
+    <ProfileImage imageURL={imageURL} className={className} />
     <span className="ml-2">{text}</span>
   </div>
 );
 
 TextImageBody.defaultProps = {
-  imageURL: '',
+  className: 'border-circle w-3rem h-3rem',
 };
 
 export default TextImageBody;
