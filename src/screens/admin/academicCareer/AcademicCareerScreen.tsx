@@ -4,12 +4,12 @@ import { skipToken } from '@reduxjs/toolkit/dist/query';
 
 import { SpinnerRTK, HeaderAdmin } from '../../../components/ui';
 import { useGetAcademicCareerQuery } from '../../../redux/academicCareer/academicCareer.api';
-import { StudentCard, UserCreatorCard } from '../../../components/academicCareer';
-import AcademicCareerTree from '../../../components/academicCareer/components/AcademicCareerTree';
+import {
+  AcademicCareerTree, StudentCard, UserCreatorCard, UnaddedSubjects,
+} from '../../../components/academicCareer';
 
 export const AcademicCareerScreen = () => {
   const { userId } = useParams();
-  // eslint-disable-next-line no-undef
 
   const {
     data, isError, error, isLoading,
@@ -46,7 +46,13 @@ export const AcademicCareerScreen = () => {
               )}
             </div>
           </div>
-          <AcademicCareerTree academicCareer={dataSend.academicCareer} />
+          <AcademicCareerTree
+            academicCareer={dataSend.academicCareer}
+            userId={userId || ''}
+          />
+          { dataSend.unaddedSubjects.length > 0 && (
+            <UnaddedSubjects subjects={dataSend.unaddedSubjects} />
+          )}
         </>
       )}
     </SpinnerRTK>

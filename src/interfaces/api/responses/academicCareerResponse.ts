@@ -1,3 +1,5 @@
+import { GeneralSubject } from './subjectHistoryResponse';
+
 export type PhaseStatusAcademicCareer =
     'aprobado' |
     'Por cursar' |
@@ -72,5 +74,14 @@ export interface AcademicCareerComplete {
     currentSemester: number,
     enrollment: string,
     academicCareer?: AcademicCareer,
-    unaddedSubjects: []
+    unaddedSubjects: GeneralSubject[]
+}
+
+export interface AcademicCareerExcel {
+    subject: string,
+    atRisk: string,
+    semester: string,
+    firstPhase: string,
+    secondPhase: string,
+    thirsPhase: string,
 }

@@ -1,75 +1,63 @@
-import { useState, useEffect } from 'react';
+import { useContext } from 'react';
 
 import { Button } from 'primereact/button';
-import { Chip } from 'primereact/chip';
 import { Message } from 'primereact/message';
-import { Tree } from 'primereact/tree';
-// eslint-disable-next-line import/no-unresolved
-import TreeNode from 'primereact/treenode';
+import { Tree, TreeDragDropParams } from 'primereact/tree';
 
 import { AcademicCareer } from '../../../interfaces/api/responses/academicCareerResponse';
-import { Badge } from '../../ui';
-import { ucWords } from '../../../utils';
+import { Node } from './Node';
+import { useGenerateAcademicCareerMutation, useUpdateAcademicCareerMutation } from '../../../redux/academicCareer/academicCareer.api';
+import { ToastContext } from '../../../context';
+import { processError } from '../../../utils';
+import { ExcelButtonCareer } from './ExcelButtonCareer';
 
 interface Props {
-    academicCareer: AcademicCareer | undefined;
+    userId: string,
+    academicCareer: AcademicCareer | undefined,
 }
 
-const AcademicCareerTree = ({ academicCareer }: Props) => {
-  const [ nodes, setNodes ] = useState<any>(null);
+export const AcademicCareerTree = ({ academicCareer, userId }: Props) => {
+  const { showSuccess, showError } = useContext(ToastContext);
+  const [ generate, { isLoading: isLoadingGenerate }] = useGenerateAcademicCareerMutation();
+  const [ update, { isLoading: isLoadingUpdate }] = useUpdateAcademicCareerMutation();
 
-  useEffect(() => {
-    setNodes(academicCareer?.subjects || null);
-  }, [ academicCareer ]);
-
-  const nodeTemplate = (node: TreeNode) => {
-    if (!Array.isArray(node.data.phase)) {
-      return (
-        <span>
-          {node.data.name}
-        </span>
-      );
+  const onGenerate = async () => {
+    try {
+      const data = {
+        userId,
+        subjectsInSemester: 100,
+        canAdvanceSubject: true,
+        hasValidation: true,
+      };
+      await generate(data).unwrap();
+      showSuccess({ detail: 'La trayectoria academica se genero con éxito' });
+    } catch (error) {
+      processError({ error, showError });
     }
+  };
 
-    return (
-      <div className="flex justify-content-between flex-wrap w-full" draggable={false}>
-        <span>{ucWords(node.data.name)}</span>
-        <div className="flex align-items-center">
-
-          { node.data.atRisk && (
-          <Chip
-            label={node.data.atRisk}
-            className="mr-2"
-            icon="pi pi-exclamation-triangle"
-            style={{ backgroundColor: '#ffcc10', fontWeight: 'bolder' }}
-          />
-          )}
-
-          {
-            node.data.phase.map((phase: any) => {
-              const phaseStatusCleaned = phase.phaseStatus.replaceAll(' ', '').toLowerCase();
-              return (
-                <Badge
-                  key={`${phase.phaseStatus}${phase.semester}`}
-                  className="mr-2"
-                  text={`${phase.phaseStatus} - Semestre ${phase.semester}`}
-                  matchObject={{
-                    aprobado: 'success',
-                    porcursar: 'warning',
-                    reprobado: 'danger',
-                    cursando: 'info',
-                  }}
-                  match={phaseStatusCleaned}
-                />
-              );
-            })
-          }
-
-        </div>
-
-      </div>
-
-    );
+  const onDragDrop = async (event: TreeDragDropParams) => {
+    const { dragNode, dropNode } = event;
+    if (
+      dragNode.data.draggable
+      && dropNode?.data.droppable
+    ) {
+      try {
+        const data = {
+          userId,
+          subjectId: dragNode.key?.toString() || '',
+          newSemester: dropNode.key?.toString() || '',
+          subjectsInSemester: 100,
+          canAdvanceSubject: true,
+          hasValidation: true,
+        };
+        await update(data).unwrap();
+        return showSuccess({ detail: 'La trayectoria academica se generó con éxito' });
+      } catch (error) {
+        return processError({ error, showError });
+      }
+    }
+    return showError({ detail: 'No se puede cambiar la materia, favor de verificar su movimiento' });
   };
 
   return (
@@ -79,31 +67,21 @@ const AcademicCareerTree = ({ academicCareer }: Props) => {
           type="button"
           icon="pi pi-sitemap"
           label="Generar Trayectoria Academica"
-          className="p-button-outlined m-2 mb-3"
+          className="p-button-outlined m-2"
+          onClick={onGenerate}
         />
         {
         academicCareer ? (
           <>
-            <Button
-              type="button"
-              icon="pi pi-file-excel"
-              label="Descargar Trayectoria en Excel"
-              className="p-button p-button-success m-2 mb-3"
-            />
+            <ExcelButtonCareer userId={userId} />
             <Tree
-              value={nodes ?? academicCareer?.subjects}
-              nodeTemplate={nodeTemplate}
+              value={academicCareer?.subjects}
+              nodeTemplate={Node}
               filter
               filterBy="data.name,data.atRisk"
               dragdropScope="demo"
-              onDragDrop={(event) => {
-                if (
-                  event.dragNode.data.draggable
-              && event.dropNode?.data.droppable
-                ) {
-                  setNodes(event.value);
-                }
-              }}
+              loading={isLoadingGenerate || isLoadingUpdate}
+              onDragDrop={onDragDrop}
             />
           </>
         ) : (<Message severity="warn" text="Aun no se ha generado la trayectoria academica" className="mt-3 p-4 font-bold block" />)
