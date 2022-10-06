@@ -50,7 +50,6 @@ export const Header = <T extends HeaderGenericContext>({
             ...prev,
             filters: { ...initialFiltersValue },
           }))}
-
         />
         <PermissionsGate
           module={module}

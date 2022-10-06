@@ -1,6 +1,4 @@
-import { Card } from 'primereact/card';
 import { Name } from '../../../interfaces';
-
 import { ProfileImage } from '../../ui';
 
 interface Props {
@@ -15,9 +13,10 @@ interface Props {
 export const StudentCard = ({
   name, email, gender, avatar, currentSemester, enrollment,
 }: Props) => (
-  <Card title="Alumno">
+  <div className="ml-2 flex flex-column card">
+    <h4 className="text-purple-700 mb-2">Estudiante</h4>
     <div className="flex align-items-center">
-      <ProfileImage imageURL={avatar} className="border-circle w-7rem h-7rem" />
+      <ProfileImage imageURL={avatar} className="border-circle w-7rem h-7rem mr-3" />
       <div className="ml-2 flex flex-column card-container">
         <span>
           <b className="text-purple-700">Nombre: </b>
@@ -37,12 +36,12 @@ export const StudentCard = ({
         </span>
         <span>
           <b className="text-purple-700">Sexo: </b>
-          {gender}
+          {gender === 'M' ? 'Masculino' : 'Femenino'}
         </span>
 
       </div>
     </div>
-  </Card>
+  </div>
 );
 
 export default StudentCard;

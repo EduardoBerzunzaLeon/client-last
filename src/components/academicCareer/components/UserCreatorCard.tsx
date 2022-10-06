@@ -1,25 +1,29 @@
-import { Card } from 'primereact/card';
 import { Name } from '../../../interfaces';
 import { ProfileImage } from '../../ui';
 
 interface Props {
-  _id: string;
   name: Name;
   avatar: string;
+  createdAt: Date;
 }
 
-export const UserCreatorCard = ({ _id, name, avatar }: Props) => (
-  <Card title="Usuario generador">
+export const UserCreatorCard = ({ createdAt, name, avatar }: Props) => (
+  <div className="ml-2 flex flex-column card">
+    <h4 className="text-purple-700 mb-2">Usuario Generador</h4>
     <div className="flex align-items-center">
-      <ProfileImage imageURL={avatar} className="border-circle w-7rem h-7rem" />
+      <ProfileImage imageURL={avatar} className="border-circle w-7rem h-7rem mr-3" />
       <div className="ml-2 flex flex-column card-container">
         <span>
           <b className="text-purple-700">Nombre: </b>
-          {`${name.first} ${name.last} ${_id}`}
+          {`${name.first} ${name.last}`}
+        </span>
+        <span>
+          <b className="text-purple-700">Generado el: </b>
+          {`${new Date(createdAt).toLocaleString()}`}
         </span>
       </div>
     </div>
-  </Card>
+  </div>
 );
 
 export default UserCreatorCard;
