@@ -1,12 +1,11 @@
+import { Name } from '../requests/authRequest';
+
 export type AllowedRoles = 'admin' | 'professor' | 'reader' | 'student' | 'mentor';
 
 export interface User {
     id: string,
     email: string,
-    name: {
-      first: string,
-      last: string,
-    },
+    name: Name,
     fullname: string,
     gender: string,
     roles: AllowedRoles[],

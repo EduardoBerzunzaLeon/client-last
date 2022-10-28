@@ -17,3 +17,4 @@ export * from './responses/subjectResponse';
 export * from './responses/userResponse';
 export * from './responses/subjectHistoryResponse';
 export * from './responses/academicCareerResponse';
+export * from './responses/schoolYear';
