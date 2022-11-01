@@ -87,6 +87,8 @@ export const convertStepToString = (step: number) => {
     : steps[step - 1];
 };
 
+export const convertDateToString = (date: Date) => `${new Date(date).toLocaleString()}`;
+
 export default {
   convertAdditionalSubjects,
   convertModelToFormData,
@@ -94,4 +96,5 @@ export default {
   convertRoles,
   roles,
   convertStepToString,
+  convertDateToString,
 };

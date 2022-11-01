@@ -1,4 +1,5 @@
 import { Name } from '../../../interfaces';
+import { convertDateToString } from '../../../utils';
 import { ProfileImage } from '../../ui';
 
 interface Props {
@@ -19,7 +20,7 @@ export const UserCreatorCard = ({ createdAt, name, avatar }: Props) => (
         </span>
         <span>
           <b className="text-purple-700">Generado el: </b>
-          {`${new Date(createdAt).toLocaleString()}`}
+          { convertDateToString(createdAt) }
         </span>
       </div>
     </div>

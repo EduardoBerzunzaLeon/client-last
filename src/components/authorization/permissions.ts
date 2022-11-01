@@ -1,6 +1,15 @@
 import { AllowedRoles } from '../../interfaces';
 
-export type ModulesName = 'user' | 'professor' | 'subject' | 'course' | 'student' | 'subjectHistory' | 'academicCareer';
+export type ModulesName =
+  'user' |
+  'professor' |
+  'subject' |
+  'course' |
+  'student' |
+  'subjectHistory' |
+  'academicCareer' |
+  'schoolYear';
+
 export type PermissionsName = 'canView' | 'canDelete' | 'canUpdate' | 'canCreate';
 
 interface Roles {
@@ -68,6 +77,13 @@ const ACADEMIC_CAREER_PERMISSIONS: Record<PermissionsName, AllowedRoles[]> = {
   canCreate: [ Admin, Professor ],
 };
 
+const SCHOOL_YEAR_PERMISSIONS: Record<PermissionsName, AllowedRoles[]> = {
+  canView: [ Admin ],
+  canDelete: [ Admin ],
+  canUpdate: [ Admin ],
+  canCreate: [ Admin ],
+};
+
 const PERMISSIONS_LIST: Record<ModulesName, Record<PermissionsName, AllowedRoles[]>> = {
   user: USER_PERMISSIONS,
   professor: PROFESSOR_PERMISSIONS,
@@ -76,6 +92,7 @@ const PERMISSIONS_LIST: Record<ModulesName, Record<PermissionsName, AllowedRoles
   student: STUDENT_PERMISSIONS,
   subjectHistory: SUBJECT_HISTORY_PERMISSIONS,
   academicCareer: ACADEMIC_CAREER_PERMISSIONS,
+  schoolYear: SCHOOL_YEAR_PERMISSIONS,
 };
 
 export default PERMISSIONS_LIST;

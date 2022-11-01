@@ -42,8 +42,7 @@ export const tutorApi = createApi({
     'SubjectsHistory',
     'AcademicCareer',
     'SchoolYear',
-    'FailedSubjects',
-    'CurrentSubjects',
+    'SchoolYearErrors',
   ],
   endpoints: () => ({}),
 });

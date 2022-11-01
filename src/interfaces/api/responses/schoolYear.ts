@@ -4,6 +4,7 @@ export interface UserSchoolYear {
     _id: string,
     name: Name,
     email: string,
+    avatar: string,
 }
 
 export interface Period {
@@ -31,7 +32,7 @@ export interface BeforeSchoolYear {
 }
 
 export interface PhaseSchoolYear {
-    createdAt: string;
+    createdAt: Date;
     user?: UserSchoolYear;
     status: string;
 }

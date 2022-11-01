@@ -24,6 +24,7 @@ export const HeaderAdmin = React.memo(({ position, title, hasBreadcumbs }: Props
     professor: { label: 'Maestro' },
     subjectHistory: { label: 'Historial de Materias' },
     academicCareer: { label: 'Trayectoria Academica' },
+    schoolYear: { label: 'Ciclo Escolar' },
     home: { label: 'Dashboard' },
   };
 

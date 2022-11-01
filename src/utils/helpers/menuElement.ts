@@ -42,6 +42,9 @@ export const menu: Menu[] = [
   {
     label: 'Materias', icon: 'pi pi-fw pi-book', to: '/admin/subjects', module: 'subject', permission: 'canView',
   },
+  {
+    label: 'Ciclo Escolar', icon: 'pi pi-fw pi-database', to: '/admin/schoolYear', module: 'schoolYear', permission: 'canView',
+  },
 ];
 
 export default { menu };

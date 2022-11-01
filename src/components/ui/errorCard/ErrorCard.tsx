@@ -8,7 +8,7 @@ interface Props {
 export const ErrorCard = ({ title, detail }: Props) => (
   <div className="grid">
     <div className="col-12">
-      <Card title={title} className="bg-purple-100 ">
+      <Card title={title} className="bg-purple-100">
         <div className="flex align-items-center justify-content-center">
           <div
             className="fadein animation-duration-2000"

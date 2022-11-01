@@ -18,3 +18,4 @@ export * from './responses/userResponse';
 export * from './responses/subjectHistoryResponse';
 export * from './responses/academicCareerResponse';
 export * from './responses/schoolYear';
+export * from './requests/schoolYear';
