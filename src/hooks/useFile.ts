@@ -10,6 +10,7 @@ interface Props {
 
 const getFileFromUrl = async (url: string, name: string, defaultType = 'image/jpeg') => {
   const response = await fetch(url);
+
   if (response.status === 200 && url) {
     const data = await response.blob();
     return new File([ data ], name, {
@@ -26,6 +27,7 @@ export const useFile = ({ url, name, type = 'image/jpeg' }: Props) => {
 
   useEffect(() => {
     const getFile = async () => {
+      if (url === '') { return; }
       try {
         const data = await getFileFromUrl(url ?? '', name, type);
 

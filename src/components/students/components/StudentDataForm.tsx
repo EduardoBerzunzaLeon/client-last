@@ -130,6 +130,7 @@ export const StudentDataForm = ({ student, buttonLabel }: Props) => {
             initialValue={initialStudent.avatar ?? values.avatar ?? ''}
             isLoading={isLoadingUpdate || isLoadingCreate}
             uploadOptions={uploadOptions}
+            hasPersistence={Boolean(student?.id)}
           />
 
           <Divider text="Datos Personales" icon="user" />

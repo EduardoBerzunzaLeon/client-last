@@ -124,6 +124,7 @@ export const UserDataForm = ({ buttonLabel, user }: Props) => {
               initialValue={initialUser?.avatar ?? values?.avatar ?? ''}
               isLoading={isLoadingUpdate || isLoadingCreate}
               uploadOptions={uploadOptions}
+              hasPersistence={Boolean(user?.id)}
             />
             <div className="field pt-2 mt-4">
               <InputTextApp

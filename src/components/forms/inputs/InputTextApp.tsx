@@ -27,7 +27,7 @@ export const InputTextApp = ({ label, ...props }: Props) => {
         <i className={props.icon} />
         { props.type !== 'password'
           ? <InputText {...field} {...props} className={classname} autoComplete="off" />
-          : <Password {...field} {...props} className={classname} />}
+          : <Password {...field} {...props} className={classname} autoComplete="off" />}
 
         <label htmlFor={props.id || props.name} className={classNames({ 'p-error': showErrorClass })}>{label}</label>
       </span>
