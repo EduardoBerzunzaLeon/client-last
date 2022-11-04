@@ -25,7 +25,12 @@ export const schoolYearApi = tutorApi.injectEndpoints({
         method: 'POST',
         body,
       }),
-      invalidatesTags: [ 'SchoolYear' ],
+      invalidatesTags: (result, error) => {
+        if (error?.status === 401) {
+          return [ 'UNAUTHORIZED' ];
+        }
+        return [ 'SchoolYear' ];
+      },
     }),
   }),
 });

@@ -47,8 +47,9 @@ export const SchoolYearScreen = () => {
                 title="Error en el archivo de Materias Reprobadas"
               />
             </div>
-
-            <SchoolYearStepForm />
+            <div className="col-12">
+              <SchoolYearStepForm />
+            </div>
           </div>
         </>
 

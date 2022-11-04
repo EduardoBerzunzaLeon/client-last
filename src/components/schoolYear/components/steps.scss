@@ -1,5 +1,5 @@
 @media screen and (max-width: 640px) {
-	.steps-demo {
+	.steps-custom {
 		.p-steps {
 			height: 350px;
 			>ul {
@@ -42,8 +42,9 @@
 	}
 }
 
-.steps-demo {
+.steps-custom {
 	.p-steps {
+		margin-bottom: 1rem;
 		>ul {	
 			.p-steps-item {
 				.p-menuitem-link {	

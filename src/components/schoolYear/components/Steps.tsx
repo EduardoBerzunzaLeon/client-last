@@ -1,24 +1,34 @@
-import { useMemo, useState } from 'react';
+import {
+  useEffect, useMemo, useRef, useState,
+} from 'react';
 
 import { Button } from 'primereact/button';
 // eslint-disable-next-line import/no-unresolved
 import { MenuItem } from 'primereact/menuitem';
 import { Steps } from 'primereact/steps';
 
-import { Generic } from '../../../interfaces';
 import { StepContext } from './stepContext';
 import './steps.scss';
+import { numberUtils } from '../../../utils';
 
-type StepItem = MenuItem & Generic;
-
-interface Props {
-  initAdvanceValue?: boolean;
-  contextValues?: Generic,
-  items: StepItem[]
+interface Props<T, I> {
+  activeStep?: number,
+  contextValues?: T,
+  initAdvanceValue?: boolean,
+  items: I[],
+  onChange?: (increaseBy: number) => any
 }
 
-export const StepsDemo = ({ contextValues, initAdvanceValue, items }: Props) => {
-  const [ canAdvance, setCanAdvance ] = useState(initAdvanceValue ?? true);
+export const StepsDemo = <T extends {}, I extends MenuItem>({
+  contextValues,
+  initAdvanceValue = true,
+  activeStep = 0,
+  items,
+  onChange,
+}: Props<T, I>) => {
+  const [ canAdvance, setCanAdvance ] = useState(initAdvanceValue);
+  const [ activeIndex, setActiveIndex ] = useState(activeStep);
+  const isControlled = useRef(Boolean(onChange));
 
   const memorizedValues = useMemo(() => ({
     canAdvance,
@@ -26,16 +36,24 @@ export const StepsDemo = ({ contextValues, initAdvanceValue, items }: Props) => 
     ...contextValues,
   }), [ contextValues, canAdvance ]);
 
-  const [ activeIndex, setActiveIndex ] = useState(0);
+  const memorizedActiveItem = useMemo(() => items[activeIndex], [ activeIndex, items ]);
 
-  const increaseBy = (value: number): void => {
-    setActiveIndex((prev) => Math.max(Math.min(prev + value, items.length - 1), 0));
+  useEffect(() => setActiveIndex(activeStep), [ activeStep ]);
+
+  const increaseBy = (value: number) => {
+    if (isControlled.current) {
+      onChange!(value);
+      return;
+    }
+
+    const maxValue = items.length - 1;
+    setActiveIndex((prev) => numberUtils.increaseBy({ value: prev + value, maxValue }));
   };
 
   const nextMethod = () => {
-    if (typeof items[activeIndex]?.nextButton === 'function') {
-      const { nextButton } = items[activeIndex];
-      return nextButton!();
+    if (memorizedActiveItem?.nextButton?.handler) {
+      const { nextButton } = memorizedActiveItem;
+      return nextButton.handler();
     }
 
     return increaseBy(1);
@@ -43,33 +61,31 @@ export const StepsDemo = ({ contextValues, initAdvanceValue, items }: Props) => 
 
   return (
     <StepContext.Provider value={memorizedValues}>
-      <div className="steps-demo">
-        <div className="card">
-          <h5>Interactive</h5>
-          <Steps
-            model={items}
-            activeIndex={activeIndex}
-            onSelect={(e) => setActiveIndex(e.index)}
-            readOnly
+      <div className="steps-custom">
+        <Steps
+          model={items}
+          activeIndex={activeIndex}
+          onSelect={(e) => setActiveIndex(e.index)}
+          readOnly
+        />
+
+        { memorizedActiveItem.children }
+
+        <div className="flex justify-content-between mt-3">
+          <Button
+            className="p-button-secondary"
+            label="Atras"
+            icon="pi pi-arrow-left"
+            onClick={() => increaseBy(-1)}
           />
-
-          { items[activeIndex].children }
-
-          <div className="flex justify-content-between">
-            <Button
-              className="p-button-secondary"
-              label="Atras"
-              icon="pi pi-arrow-left"
-              onClick={() => increaseBy(-1)}
-            />
-            <Button
-              label={items[activeIndex].nextButtonLabel ?? 'Siguiente'}
-              icon="pi pi-arrow-right"
-              iconPos="right"
-              onClick={() => nextMethod()}
-              disabled={!canAdvance}
-            />
-          </div>
+          <Button
+            label={memorizedActiveItem?.nextButton?.label ?? 'Siguiente'}
+            icon="pi pi-arrow-right"
+            iconPos="right"
+            onClick={() => nextMethod()}
+            disabled={!canAdvance}
+            loading={memorizedActiveItem?.nextButton?.isLoading ?? false}
+          />
         </div>
       </div>
     </StepContext.Provider>
@@ -77,8 +93,10 @@ export const StepsDemo = ({ contextValues, initAdvanceValue, items }: Props) => 
 };
 
 StepsDemo.defaultProps = {
+  activeStep: 0,
   contextValues: undefined,
   initAdvanceValue: true,
+  onChange: undefined,
 };
 
 export default StepsDemo;

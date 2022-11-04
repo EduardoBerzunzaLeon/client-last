@@ -43,6 +43,7 @@ export const tutorApi = createApi({
     'AcademicCareer',
     'SchoolYear',
     'SchoolYearErrors',
+    'UNAUTHORIZED',
   ],
   endpoints: () => ({}),
 });

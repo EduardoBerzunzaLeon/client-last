@@ -1,11 +1,26 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+import { Card } from 'primereact/card';
+import { Toast } from 'primereact/toast';
+// eslint-disable-next-line import/no-unresolved
+import { MenuItem } from 'primereact/menuitem';
 import { useGenerateSchoolYearMutation } from '../../../redux/schoolYear/schoolYear.api';
 import { CurrentSubjectsForm } from './CurrentSubjectsForm';
 import { FailedSubjectsForm } from './FailedSubjectsForm';
 import { StepsDemo } from './Steps';
 import { ValidationPasswordForm } from './ValidationPasswordForm';
 import { GenerateSchoolYear } from '../../../interfaces/api/requests/schoolYear';
-import { convertModelToFormData } from '../../../utils';
+import { convertModelToFormData, numberUtils, processError } from '../../../utils';
+import { useToast } from '../../../hooks';
+import { ErrorResponse } from '../../../interfaces';
+
+interface Item extends MenuItem {
+  children: JSX.Element;
+  nextButton?: {
+      handler: () => Promise<void>;
+      label: string;
+      isLoading: boolean;
+  };
+}
 
 export const SchoolYearStepForm = () => {
   const failedSubjectFile = useRef<any>(null);
@@ -13,13 +28,20 @@ export const SchoolYearStepForm = () => {
   const passwordInput = useRef<any>(null);
 
   const [ generate, { isLoading }] = useGenerateSchoolYearMutation();
-
-  console.log(isLoading);
+  const { toast, showError, showSuccess } = useToast();
+  const [ activeIndex, setActiveIndex ] = useState(0);
 
   const contextValues = {
     failedSubjectFile,
     currentSubjectFile,
     passwordInput,
+  };
+
+  const resetForm = () => {
+    currentSubjectFile.current = null;
+    failedSubjectFile.current = null;
+    passwordInput.current = '';
+    setActiveIndex(0);
   };
 
   const handleNextButton = async () => {
@@ -30,40 +52,53 @@ export const SchoolYearStepForm = () => {
 
     try {
       const dataSend = convertModelToFormData(prepareData);
-      console.log(dataSend);
       await generate(dataSend).unwrap();
-    //   currentSubjectFile.current = null;
-    //   failedSubjectFile.current = null;
-    //   passwordInput.current = '';
+      resetForm();
+      showSuccess({ detail: 'El ciclo escolar a inicializado con éxito' });
     } catch (error) {
-      console.log(error);
+      if ((error as ErrorResponse)?.status === 400) {
+        resetForm();
+      }
+      processError({ error, showError });
     }
   };
 
-  const items = [
+  const items: Item[] = [
     {
-      label: 'Materias Reprobadas',
+      label: 'Reprobadas',
       children: <FailedSubjectsForm />,
     },
     {
-      label: 'Materias Nuevas',
+      label: 'Nuevas',
       children: <CurrentSubjectsForm />,
     },
     {
       label: 'Validación',
       children: <ValidationPasswordForm />,
-      nextButton: handleNextButton,
-      nextButtonLabel: 'Actualizar',
+      nextButton: {
+        handler: handleNextButton,
+        label: 'Actualizar',
+        isLoading,
+      },
     },
   ];
+
+  const onChange = (increaseBy: number) => {
+    const maxValue = items.length;
+    setActiveIndex((prev) => numberUtils.increaseBy({ value: prev + increaseBy, maxValue }));
+  };
+
   return (
-    <div className="col-12">
+    <Card title="Actualización del Ciclo Escolar">
+      <Toast ref={toast} />
       <StepsDemo
         contextValues={contextValues}
         initAdvanceValue={false}
         items={items}
+        activeStep={activeIndex}
+        onChange={onChange}
       />
-    </div>
+    </Card>
   );
 };
 
