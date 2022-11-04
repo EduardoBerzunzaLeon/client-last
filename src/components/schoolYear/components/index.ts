@@ -4,3 +4,4 @@ export * from './Steps';
 export * from './CurrentSubjectsForm';
 export * from './FailedSubjectsForm';
 export * from './ValidationPasswordForm';
+export * from './SchoolYearStepForm';

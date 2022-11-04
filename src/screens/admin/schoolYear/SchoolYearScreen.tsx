@@ -1,44 +1,14 @@
-import { useRef } from 'react';
 import {
-  CurrentSubjectsForm, FailedSubjectsForm, FileErrors, PhaseCard, StepsDemo, ValidationPasswordForm,
+  FileErrors, PhaseCard, SchoolYearStepForm,
 } from '../../../components/schoolYear';
 import { HeaderAdmin, SpinnerRTK } from '../../../components/ui';
 
 import { useGetSchoolYearQuery } from '../../../redux/schoolYear/schoolYear.api';
 
 export const SchoolYearScreen = () => {
-  const failedSubjectFile = useRef<any>(null);
-  const currentSubjectFile = useRef<any>(null);
-  const passwordInput = useRef<any>(null);
-
   const {
     data, isError, error, isLoading,
   } = useGetSchoolYearQuery();
-
-  const contextValues = {
-    failedSubjectFile,
-    currentSubjectFile,
-    passwordInput,
-  };
-
-  const items = [
-    {
-      label: 'Materias Reprobadas',
-      children: <FailedSubjectsForm />,
-    },
-    {
-      label: 'Materias Nuevas',
-      children: <CurrentSubjectsForm />,
-    },
-    {
-      label: 'Validación',
-      children: <ValidationPasswordForm />,
-      nextButton: () => {
-        console.log('Last Button');
-      },
-      nextButtonLabel: 'Actualizar',
-    },
-  ];
 
   return (
     <SpinnerRTK
@@ -78,13 +48,7 @@ export const SchoolYearScreen = () => {
               />
             </div>
 
-            <div className="col-12">
-              <StepsDemo
-                contextValues={contextValues}
-                initAdvanceValue={false}
-                items={items}
-              />
-            </div>
+            <SchoolYearStepForm />
           </div>
         </>
 

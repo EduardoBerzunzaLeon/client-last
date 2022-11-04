@@ -48,6 +48,10 @@ export const convertModelToFormData = (model: Generic, form?: FormData, namespac
   if (typeof model === 'string') {
     formData.append(namespace, model);
   } else {
+    if (model instanceof File) {
+      const field = namespace.split('[', 1).join();
+      formData.append(field, model);
+    }
     Object.keys(model).forEach((key) => {
       if (!model[key]) {
         return;

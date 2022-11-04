@@ -1,4 +1,4 @@
 export interface GenerateSchoolYear {
-    currentSubjects: File,
-    failedSubjectS: File,
+    files: File[],
+    password: string,
 }
