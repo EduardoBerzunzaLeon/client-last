@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { InputTextApp } from '../../forms';
-import { StepContext } from './stepContext';
+import { StepContext } from '../../stepWizard/stepContext';
 
 export const ValidationPasswordForm = () => {
   const { setCanAdvance, passwordInput } = useContext(StepContext);

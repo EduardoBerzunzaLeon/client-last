@@ -10,6 +10,7 @@ import { setDefaultAuthState } from '../../../../redux/auth/auth.slice';
 import { useAppDispatch } from '../../../../redux/hooks';
 import { useAuth } from '../../../../hooks';
 import { Skeleton } from '../../../../components/ui';
+import { setDefaultSchoolYearState } from '../../../../redux/schoolYear/schoolYear.slice';
 
 export const MenuProfile = () => {
   const dispatch = useAppDispatch();
@@ -23,6 +24,7 @@ export const MenuProfile = () => {
 
   const handleLogout = () => {
     dispatch(setDefaultAuthState());
+    dispatch(setDefaultSchoolYearState());
     dispatch(closeSider());
   };
 

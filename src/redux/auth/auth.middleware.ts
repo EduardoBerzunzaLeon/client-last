@@ -4,6 +4,8 @@ import {
   MiddlewareAPI,
 } from '@reduxjs/toolkit';
 // eslint-disable-next-line import/no-cycle
+import { schoolYearApi } from '../schoolYear/schoolYear.api';
+// eslint-disable-next-line import/no-cycle
 import { setDefaultAuthState } from './auth.slice';
 
 export const persistLogingMiddleware: Middleware = (api: MiddlewareAPI) => (next) => (action) => {
@@ -20,6 +22,7 @@ export const persistLogingMiddleware: Middleware = (api: MiddlewareAPI) => (next
     ) {
       localStorage.setItem('token', token);
       localStorage.setItem('token-init-date', `${new Date().getTime()}`);
+      api.dispatch<any>(schoolYearApi.endpoints.getSchoolYear.initiate());
     }
   }
 

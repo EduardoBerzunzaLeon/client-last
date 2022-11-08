@@ -1,5 +1,5 @@
 import {
-  FileErrors, PhaseCard, SchoolYearStepForm,
+  FileErrorsTable, PhaseCard, SchoolYearStepForm,
 } from '../../../components/schoolYear';
 import { HeaderAdmin, SpinnerRTK } from '../../../components/ui';
 
@@ -32,7 +32,7 @@ export const SchoolYearScreen = () => {
               <PhaseCard {...dataSend.secondPhase} title="Segunda Fase" />
             </div>
             <div className="col-12 md:col-6">
-              <FileErrors
+              <FileErrorsTable
                 {...dataSend.period}
                 status="no generado"
                 endpointName="currentSubjects"
@@ -40,7 +40,7 @@ export const SchoolYearScreen = () => {
               />
             </div>
             <div className="col-12 md:col-6">
-              <FileErrors
+              <FileErrorsTable
                 {...dataSend.period}
                 status="no generado"
                 endpointName="failedSubjects"

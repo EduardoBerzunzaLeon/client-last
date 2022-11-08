@@ -5,6 +5,7 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import { tutorApi } from './services/tutor.api';
 import authReducer from './auth/auth.slice';
 import uiReducer from './ui/ui.slice';
+import schoolYearReducer from './schoolYear/schoolYear.slice';
 
 import { persistLogingMiddleware } from './auth/auth.middleware';
 
@@ -13,6 +14,7 @@ export const store = configureStore({
     [tutorApi.reducerPath]: tutorApi.reducer,
     auth: authReducer,
     ui: uiReducer,
+    schoolYear: schoolYearReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware()
     .concat(tutorApi.middleware, persistLogingMiddleware),

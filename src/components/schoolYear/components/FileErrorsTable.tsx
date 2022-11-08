@@ -18,7 +18,7 @@ interface Props {
   title: string,
 }
 
-export const FileErrors = ({
+export const FileErrorsTable = ({
   start, end, status, endpointName, title,
 }: Props) => {
   const initialFiltersValue: DataTableFilterMeta = useMemo(() => ({
@@ -105,4 +105,4 @@ export const FileErrors = ({
   );
 };
 
-export default FileErrors;
+export default FileErrorsTable;

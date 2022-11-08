@@ -1,17 +1,19 @@
 import { useRef, useState } from 'react';
 import { Card } from 'primereact/card';
 import { Toast } from 'primereact/toast';
+
 // eslint-disable-next-line import/no-unresolved
 import { MenuItem } from 'primereact/menuitem';
-import { useGenerateSchoolYearMutation } from '../../../redux/schoolYear/schoolYear.api';
-import { CurrentSubjectsForm } from './CurrentSubjectsForm';
-import { FailedSubjectsForm } from './FailedSubjectsForm';
-import { StepsDemo } from './Steps';
-import { ValidationPasswordForm } from './ValidationPasswordForm';
-import { GenerateSchoolYear } from '../../../interfaces/api/requests/schoolYear';
 import { convertModelToFormData, numberUtils, processError } from '../../../utils';
-import { useToast } from '../../../hooks';
+import { CurrentSubjectsForm } from './CurrentSubjectsForm';
 import { ErrorResponse } from '../../../interfaces';
+import { FailedSubjectsForm } from './FailedSubjectsForm';
+import { GenerateSchoolYear } from '../../../interfaces/api/requests/schoolYear';
+import { StepsWizard } from '../../stepWizard';
+import { useGenerateSchoolYearMutation } from '../../../redux/schoolYear/schoolYear.api';
+import { ValidationPasswordForm } from './ValidationPasswordForm';
+
+import { useToast } from '../../../hooks';
 
 interface Item extends MenuItem {
   children: JSX.Element;
@@ -91,7 +93,7 @@ export const SchoolYearStepForm = () => {
   return (
     <Card title="Actualización del Ciclo Escolar">
       <Toast ref={toast} />
-      <StepsDemo
+      <StepsWizard
         contextValues={contextValues}
         initAdvanceValue={false}
         items={items}

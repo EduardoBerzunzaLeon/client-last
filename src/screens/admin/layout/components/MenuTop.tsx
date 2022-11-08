@@ -1,19 +1,21 @@
 import { useRef } from 'react';
 
-import { InputText } from 'primereact/inputtext';
 import { Menu } from 'primereact/menu';
 import { useNavigate } from 'react-router-dom';
 
 import { openSider } from '../../../../redux/ui/ui.slice';
 import { setDefaultAuthState } from '../../../../redux/auth/auth.slice';
 import { useAppDispatch } from '../../../../redux/hooks';
-import { useAuth } from '../../../../hooks';
+import { useAuth, useSchoolYear } from '../../../../hooks';
 
 export const MenuTop = () => {
   const menu = useRef<any>(null);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { schoolYear } = useSchoolYear();
+
+  console.log({ schoolYear });
 
   const items = [
     {
@@ -48,10 +50,10 @@ export const MenuTop = () => {
         <span className="pi pi-bars" />
       </button>
       <div className="layout-topbar-icons">
-        <span className="layout-topbar-search">
+        {/* <span className="layout-topbar-search">
           <InputText type="text" placeholder="Search" />
           <span className="layout-topbar-search-icon pi pi-search" />
-        </span>
+        </span> */}
         <button
           type="button"
           className="p-link"

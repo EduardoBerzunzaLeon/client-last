@@ -5,16 +5,17 @@ import {
   FileUploadHandlerParam,
   FileUploadOptionsType,
 } from 'primereact/fileupload';
-import { Tooltip } from 'primereact/tooltip';
 import { Tag } from 'primereact/tag';
+import { Tooltip } from 'primereact/tooltip';
 
 import { Button } from 'primereact/button';
 import { EmptyLayout } from './EmptyLayout';
 import { HeaderFileInput } from './HeaderFileInput';
-import { ProgressBarFileControlledInput, ProgressBarFileInput } from './ProgressBarFileInput';
-import { useFile } from '../../../hooks';
 import { ItemImageDefault } from './ItemFileInput';
 import { PrimeFile } from '../../../interfaces';
+import { ProgressBarFileControlledInput, ProgressBarFileInput } from './ProgressBarFileInput';
+
+import { useFile } from '../../../hooks';
 
 const cancelOptionsDefault = { icon: 'pi pi-fw pi-times', iconOnly: true, className: 'custom-cancel-btn p-button-danger p-button-rounded p-button-outlined' };
 const chooseOptionsDefault = { icon: 'pi pi-fw pi-images', iconOnly: true, className: 'custom-choose-btn p-button-rounded p-button-outlined' };
@@ -90,15 +91,19 @@ export const FileSingleInputApp = ({
 
   // eslint-disable-next-line no-shadow
   const itemTemplate = (file: any, options: any) => (
-    <div className="p-d-flex p-ai-center p-flex-wrap">
-      <div className="p-d-flex p-ai-center" style={{ width: '40%' }}>
-        <span className="p-d-flex p-dir-col p-text-left p-ml-3">
-          {file.name}
-          <small>{new Date().toLocaleDateString()}</small>
-        </span>
+    <div className="grid">
+      <div className="col-3 surface-overlay md:text-overflow-ellipsis">{file.name}</div>
+      <div className="col-3 surface-overlay md:text-overflow-ellipsis"><small className="">{new Date().toLocaleDateString()}</small></div>
+      <div className="col-3"><Tag value={`${file.size} KB`} severity="warning" className="p-px-3 p-py-2" /></div>
+      <div className="col-3">
+        <Button
+          type="button"
+          icon="pi pi-times"
+          className="p-button-outlined p-button-rounded
+  p-button-danger p-ml-auto"
+          onClick={() => onTemplateRemove(file, options?.onRemove ?? options.onClear)}
+        />
       </div>
-      <Tag value={`${file.size} KB`} severity="warning" className="p-px-3 p-py-2" />
-      <Button type="button" icon="pi pi-times" className="p-button-outlined p-button-rounded p-button-danger p-ml-auto" onClick={() => onTemplateRemove(file, options?.onRemove ?? options.onClear)} />
     </div>
   );
 

@@ -1,5 +1,6 @@
 import React, { createContext } from 'react';
-import { Generic } from '../../../interfaces';
+
+import { Generic } from '../../interfaces';
 
 interface StepContextProps extends Generic{
     canAdvance: boolean;

@@ -1,6 +1,6 @@
-import { PhaseSchoolYear } from '../../../interfaces';
-import { convertDateToString } from '../../../utils';
 import { Badge, ProfileImage } from '../../ui';
+import { convertDateToString } from '../../../utils';
+import { PhaseSchoolYear } from '../../../interfaces';
 
 interface Props extends PhaseSchoolYear {
     title: string,
@@ -17,8 +17,8 @@ export const PhaseCard = ({
         ? (<ProfileImage imageURL={user.avatar} className="border-circle w-7rem h-7rem mr-3" />)
         : (<i className="pi pi-exclamation-triangle" style={{ fontSize: '7em', color: '#d5a326' }} />)}
 
-      <div className="ml-2 flex flex-column card-container">
-        <span>
+      <div className="ml-2 flex flex-column card-container surface-overlay overflow-hidden text-overflow-clip">
+        <span style={{ backgroundColor: !user ? '#FFE994' : 'white' }}>
           <b className="text-purple-700">Estatus: </b>
           <Badge
             matchObject={{

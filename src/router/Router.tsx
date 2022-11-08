@@ -14,7 +14,10 @@ const token = localStorage.getItem('token');
 export const Router = () => {
   const [ skip, setSkip ] = useState<boolean>(true);
   const dispatch = useAppDispatch();
-  const { isLoading, isError } = useRenewTokenQuery(null, { skip });
+  const {
+    isLoading,
+    isError,
+  } = useRenewTokenQuery(null, { skip });
 
   useEffect(() => {
     if (isError) {
@@ -31,7 +34,7 @@ export const Router = () => {
   return (
     <div>
       {
-        isLoading ? <Spinner message="Cargando Aplicación..." /> : (
+        (isLoading) ? <Spinner message="Cargando Aplicación..." /> : (
           <Suspense fallback={<Spinner message="Cargando Módulo..." />}>
             <BrowserRouter>
               <Routes />

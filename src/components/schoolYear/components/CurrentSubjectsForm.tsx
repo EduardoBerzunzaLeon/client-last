@@ -1,6 +1,7 @@
 import { useContext, useEffect } from 'react';
+
 import { FileSingleInputApp } from '../../forms';
-import { StepContext } from './stepContext';
+import { StepContext } from '../../stepWizard/stepContext';
 
 export const CurrentSubjectsForm = () => {
   const { setCanAdvance, currentSubjectFile } = useContext(StepContext);

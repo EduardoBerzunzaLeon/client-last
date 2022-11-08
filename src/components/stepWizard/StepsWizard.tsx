@@ -8,8 +8,9 @@ import { MenuItem } from 'primereact/menuitem';
 import { Steps } from 'primereact/steps';
 
 import { StepContext } from './stepContext';
+
 import './steps.scss';
-import { numberUtils } from '../../../utils';
+import { numberUtils } from '../../utils';
 
 interface Props<T, I> {
   activeStep?: number,
@@ -19,7 +20,7 @@ interface Props<T, I> {
   onChange?: (increaseBy: number) => any
 }
 
-export const StepsDemo = <T extends {}, I extends MenuItem>({
+export const StepsWizard = <T extends {}, I extends MenuItem>({
   contextValues,
   initAdvanceValue = true,
   activeStep = 0,
@@ -92,11 +93,11 @@ export const StepsDemo = <T extends {}, I extends MenuItem>({
   );
 };
 
-StepsDemo.defaultProps = {
+StepsWizard.defaultProps = {
   activeStep: 0,
   contextValues: undefined,
   initAdvanceValue: true,
   onChange: undefined,
 };
 
-export default StepsDemo;
+export default StepsWizard;
