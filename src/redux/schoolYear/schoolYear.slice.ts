@@ -11,7 +11,7 @@ export interface SchoolYearState {
     secondPhase: PhaseSchoolYear | null;
     beforeSchoolYear: BeforeSchoolYear | null;
     period: Period | null;
-    currentPhase: string | null;
+    currentPhase: number | null;
 }
 
 const schoolYearSlice = createSlice({
@@ -46,7 +46,7 @@ const schoolYearSlice = createSlice({
             secondPhase,
             beforeSchoolYear,
             period,
-            currentPhase: payload?.data.secondPhase?.user ? '2' : '1',
+            currentPhase: payload?.data.currentPhase,
           };
 
           Object.assign(state, newSchoolYear);

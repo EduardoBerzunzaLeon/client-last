@@ -13,9 +13,7 @@ export const MenuTop = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { schoolYear } = useSchoolYear();
-
-  console.log({ schoolYear });
+  const { schoolYear: { period, currentPhase }} = useSchoolYear();
 
   const items = [
     {
@@ -49,11 +47,11 @@ export const MenuTop = () => {
       >
         <span className="pi pi-bars" />
       </button>
+
       <div className="layout-topbar-icons">
-        {/* <span className="layout-topbar-search">
-          <InputText type="text" placeholder="Search" />
-          <span className="layout-topbar-search-icon pi pi-search" />
-        </span> */}
+        <span className="font-semibold">
+          {`${currentPhase === 1 ? 'Primera Fase' : 'Segunda Fase'} ${period?.start} - ${period?.end}`}
+        </span>
         <button
           type="button"
           className="p-link"

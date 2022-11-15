@@ -56,11 +56,23 @@ export interface CreatorUser {
     createdAt: Date,
 }
 
+export interface SchoolYearAcademic {
+    id: {
+        _id: string,
+        period: {
+            start: number,
+            end: number,
+        }
+    },
+    phase: number
+}
+
 export interface AcademicCareer {
     _id: string,
     createdAt: string,
     generationParams: GenerationParams,
     creatorUser: CreatorUser,
+    schoolYear: SchoolYearAcademic,
     processStatus: string,
     subjects: AdjustedSubject[],
 }

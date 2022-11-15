@@ -42,7 +42,11 @@ export const AcademicCareerScreen = () => {
             </div>
             <div className="col-12 md:col-6">
               { dataSend.academicCareer && (
-                <UserCreatorCard {...dataSend.academicCareer.creatorUser} />
+                <UserCreatorCard
+                  {...dataSend.academicCareer.creatorUser}
+                  period={dataSend.academicCareer.schoolYear.id.period}
+                  phase={dataSend.academicCareer.schoolYear.phase}
+                />
               )}
             </div>
           </div>

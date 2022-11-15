@@ -46,4 +46,5 @@ export interface SchoolYear {
     createdAt: string;
     updatedAt: string;
     period: Period;
+    currentPhase: number;
 }
