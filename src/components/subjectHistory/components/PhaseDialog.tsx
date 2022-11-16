@@ -30,7 +30,11 @@ const generateInitialValue = (
       code: phaseStatus,
       name: ucWords(phaseStatus),
     },
-    subject: { name: phase.subject.name, _id: phase.subject._id },
+    subject: {
+      name: phase.subject.name,
+      _id: phase.subject._id,
+      semester: phase.lastPhase.semester,
+    },
     phaseId: phase.lastPhase._id,
   };
 };

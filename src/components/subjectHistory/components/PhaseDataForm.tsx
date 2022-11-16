@@ -59,6 +59,7 @@ export const PhaseDataForm = ({ initialValues, buttonLabel }: Props) => {
           const genericSend = {
             semester: values.semester,
             phaseStatus: (values.phaseStatus.code as PhaseStatus),
+            mode: values.semester < values?.subject!.semester ? 'adelantar' : 'normal',
           };
 
           let message = 'La fase se actualizó con éxito';

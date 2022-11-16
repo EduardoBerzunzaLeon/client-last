@@ -2,7 +2,9 @@ import { Card } from 'primereact/card';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 
-import { ActionsBodyTemplate, StatusCurrentTemplate, StepBody } from './columns';
+import {
+  ActionsBodyTemplate, StatusCurrentTemplate, StepBody, ModeBodyTemplate,
+} from './columns';
 import { Header } from './Header';
 import { SubjectHistory } from '../../../interfaces/api';
 
@@ -31,6 +33,11 @@ export const CurrentSubjects = ({ currentSubjects, isEditable, title }: Props) =
         field="lastPhase.phaseStatus"
         header="Estatus"
         body={StatusCurrentTemplate}
+      />
+      <Column
+        field="lastPhase.mode"
+        header="Modalidad"
+        body={ModeBodyTemplate}
       />
       { isEditable && (
         <Column

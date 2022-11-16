@@ -16,6 +16,7 @@ interface LastPhase {
     _id: string;
     phaseStatus: string;
     semester: number;
+    mode: string;
 }
 
 interface Subject {
@@ -84,6 +85,7 @@ export interface DataNode {
     subject: string;
     status: string;
     step: string;
+    mode: string;
 }
 
 export interface SubjectsStudied {

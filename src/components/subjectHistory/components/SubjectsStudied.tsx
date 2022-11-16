@@ -3,7 +3,7 @@ import { Column } from 'primereact/column';
 import { TreeTable } from 'primereact/treetable';
 
 import { SpinnerRTK } from '../../ui';
-import { StatusBodyTemplate, StepBodyTemplate } from './columns';
+import { ModeBodyTemplateTree, StatusBodyTemplate, StepBodyTemplate } from './columns';
 
 import { useGetSubjectStudiedQuery } from '../../../redux/subjectHistory/subjectHistory.api';
 
@@ -53,6 +53,14 @@ export const SubjectsStudied = ({ userId }: Props) => {
               body={StepBodyTemplate}
               filter
               filterPlaceholder="Filtrar por intento"
+              style={{ width: '14rem' }}
+            />
+            <Column
+              field="mode"
+              header="Modalidad"
+              body={ModeBodyTemplateTree}
+              filter
+              filterPlaceholder="Filtrar por modalidad"
               style={{ width: '14rem' }}
             />
           </TreeTable>
