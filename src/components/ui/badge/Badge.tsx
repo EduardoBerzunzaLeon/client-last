@@ -1,6 +1,6 @@
 import './badge.scss';
 
-type Status = 'warning' | 'danger' | 'success' | 'info' | 'purple' | 'extra';
+export type Status = 'warning' | 'danger' | 'success' | 'info' | 'purple' | 'extra';
 
 interface MatchObject {
   [x: string]: Status
