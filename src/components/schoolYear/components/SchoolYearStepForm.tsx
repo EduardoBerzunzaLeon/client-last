@@ -4,14 +4,17 @@ import { Toast } from 'primereact/toast';
 
 // eslint-disable-next-line import/no-unresolved
 import { MenuItem } from 'primereact/menuitem';
+
 import { convertModelToFormData, numberUtils, processError } from '../../../utils';
 import { CurrentSubjectsForm } from './CurrentSubjectsForm';
 import { ErrorResponse } from '../../../interfaces';
 import { FailedSubjectsForm } from './FailedSubjectsForm';
 import { GenerateSchoolYear } from '../../../interfaces/api/requests/schoolYear';
+import { InterSubjectsForm } from './InterSubjectsForm';
 import { StepsWizard } from '../../stepWizard';
-import { useGenerateSchoolYearMutation } from '../../../redux/schoolYear/schoolYear.api';
 import { ValidationPasswordForm } from './ValidationPasswordForm';
+
+import { useGenerateSchoolYearMutation } from '../../../redux/schoolYear/schoolYear.api';
 
 import { useToast } from '../../../hooks';
 
@@ -27,6 +30,7 @@ interface Item extends MenuItem {
 export const SchoolYearStepForm = () => {
   const failedSubjectFile = useRef<any>(null);
   const currentSubjectFile = useRef<any>(null);
+  const interSubjectFile = useRef<any>(null);
   const passwordInput = useRef<any>(null);
 
   const [ generate, { isLoading }] = useGenerateSchoolYearMutation();
@@ -36,19 +40,21 @@ export const SchoolYearStepForm = () => {
   const contextValues = {
     failedSubjectFile,
     currentSubjectFile,
+    interSubjectFile,
     passwordInput,
   };
 
   const resetForm = () => {
     currentSubjectFile.current = null;
     failedSubjectFile.current = null;
+    interSubjectFile.current = null;
     passwordInput.current = '';
     setActiveIndex(0);
   };
 
   const handleNextButton = async () => {
     const prepareData: GenerateSchoolYear = {
-      files: [ failedSubjectFile.current, currentSubjectFile.current ],
+      files: [ failedSubjectFile.current, currentSubjectFile.current, interSubjectFile.current ],
       password: passwordInput.current,
     };
 
@@ -73,6 +79,10 @@ export const SchoolYearStepForm = () => {
     {
       label: 'Nuevas',
       children: <CurrentSubjectsForm />,
+    },
+    {
+      label: 'Inter',
+      children: <InterSubjectsForm />,
     },
     {
       label: 'Validación',

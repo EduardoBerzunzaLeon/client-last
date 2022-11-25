@@ -39,8 +39,7 @@ export const AcademicCareerTree = ({ academicCareer, userId }: Props) => {
     }
   };
 
-  const onDrop = async (event: TreeDragDropParams, mode: string) => {
-    const { dragNode, dropNode } = event;
+  const onDrop = async ({ dragNode, dropNode }: TreeDragDropParams, mode: string) => {
     // if (
     //   dragNode.data.draggable
     //   && dropNode?.data.droppable

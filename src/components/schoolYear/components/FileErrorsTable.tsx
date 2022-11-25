@@ -10,16 +10,37 @@ import { SpinnerRTK } from '../../ui';
 import { useGetErrosInSchoolYearFilesQuery } from '../../../redux/schoolYear/schoolYear.api';
 import { useLazyParams } from '../../../hooks';
 
+export interface DynamicColumn {
+  field: string,
+  header: string,
+}
+
 interface Props {
   start: number,
   end: number,
   status: 'generado' | 'no generado',
   endpointName: string,
   title: string,
+  globalFilterFields?: string[],
+  initialFilters?: object,
+  columns?: DynamicColumn[]
 }
 
+const dynamicColumns: DynamicColumn[] = [
+  { field: 'enrollment', header: 'Matricula' },
+  { field: 'subject', header: 'Materia' },
+  { field: 'error', header: 'Error' },
+];
+
 export const FileErrorsTable = ({
-  start, end, status, endpointName, title,
+  start,
+  end,
+  status,
+  endpointName,
+  title,
+  globalFilterFields,
+  initialFilters,
+  columns,
 }: Props) => {
   const initialFiltersValue: DataTableFilterMeta = useMemo(() => ({
     start: { value: start, matchMode: FilterMatchMode.EQUALS },
@@ -28,7 +49,8 @@ export const FileErrorsTable = ({
     enrollment: { value: '', matchMode: FilterMatchMode.CONTAINS },
     subject: { value: '', matchMode: FilterMatchMode.CONTAINS },
     error: { value: '', matchMode: FilterMatchMode.CONTAINS },
-  }), [ start, end, status ]);
+    ...initialFilters,
+  }), [ start, end, status, initialFilters ]);
 
   const {
     lazyParams,
@@ -56,7 +78,7 @@ export const FileErrorsTable = ({
             lazy
             filterDisplay="row"
             responsiveLayout="scroll"
-            globalFilterFields={[ 'enrollment', 'subject', 'error' ]}
+            globalFilterFields={globalFilterFields}
             dataKey="id"
             paginator
             first={lazyParams.first}
@@ -71,38 +93,31 @@ export const FileErrorsTable = ({
             loading={isFetching}
             emptyMessage="No se encontraron materias"
           >
-            <Column
-              header="Matricula"
-              field="enrollment"
-              sortable
-              showFilterMenu={false}
-              filter
-              filterField="enrollment"
-              filterPlaceholder="Buscar por matricula"
-            />
-            <Column
-              header="Materia"
-              field="subject"
-              sortable
-              showFilterMenu={false}
-              filter
-              filterField="subject"
-              filterPlaceholder="Buscar por materia"
-            />
-            <Column
-              header="Error"
-              field="error"
-              sortable
-              showFilterMenu={false}
-              filter
-              filterField="error"
-              filterPlaceholder="Buscar por error"
-            />
+            {
+              columns?.map(({ field, header }) => (
+                <Column
+                  header={header}
+                  field={field}
+                  sortable
+                  showFilterMenu={false}
+                  filter
+                  filterField={field}
+                  filterPlaceholder={`Buscar por ${header}`}
+                />
+              ))
+            }
+
           </DataTable>
         </Card>
       )}
     </SpinnerRTK>
   );
+};
+
+FileErrorsTable.defaultProps = {
+  globalFilterFields: [ 'enrollment', 'subject', 'error' ],
+  initialFilters: {},
+  columns: dynamicColumns,
 };
 
 export default FileErrorsTable;

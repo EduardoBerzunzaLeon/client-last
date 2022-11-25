@@ -22,6 +22,7 @@ export interface SchoolYearErrors {
     schoolYear: SchoolYearSimplify;
     enrollment: string;
     subject: string;
+    status?: string;
     createdAt: string;
     error: string;
 }

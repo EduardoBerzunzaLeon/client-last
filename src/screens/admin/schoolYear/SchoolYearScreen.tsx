@@ -1,9 +1,17 @@
 import {
+  DynamicColumn,
   FileErrorsTable, PhaseCard, SchoolYearStepForm,
 } from '../../../components/schoolYear';
 import { HeaderAdmin, SpinnerRTK } from '../../../components/ui';
 
 import { useGetSchoolYearQuery } from '../../../redux/schoolYear/schoolYear.api';
+
+const columns: DynamicColumn[] = [
+  { field: 'enrollment', header: 'Matricula' },
+  { field: 'subject', header: 'Materia' },
+  { field: 'status', header: 'Estatus' },
+  { field: 'error', header: 'Error' },
+];
 
 export const SchoolYearScreen = () => {
   const {
@@ -31,7 +39,7 @@ export const SchoolYearScreen = () => {
             <div className="col-12 md:col-6">
               <PhaseCard {...dataSend.secondPhase} title="Segunda Fase" />
             </div>
-            <div className="col-12 md:col-6">
+            <div className="col-12 md:col-6 lg:col-4">
               <FileErrorsTable
                 {...dataSend.period}
                 status="no generado"
@@ -39,12 +47,21 @@ export const SchoolYearScreen = () => {
                 title="Error en el archivo de Materias Nuevas"
               />
             </div>
-            <div className="col-12 md:col-6">
+            <div className="col-12 md:col-6 lg:col-4">
               <FileErrorsTable
                 {...dataSend.period}
                 status="no generado"
                 endpointName="failedSubjects"
                 title="Error en el archivo de Materias Reprobadas"
+              />
+            </div>
+            <div className="col-12 md:col-6 lg:col-4">
+              <FileErrorsTable
+                {...dataSend.period}
+                status="no generado"
+                endpointName="intersemestralSubjects"
+                title="Error en el archivo de intersemestrales"
+                columns={columns}
               />
             </div>
             <div className="col-12">
