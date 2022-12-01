@@ -5,6 +5,7 @@ import { Message } from 'primereact/message';
 import { Tree, TreeDragDropParams } from 'primereact/tree';
 import { confirmDialog } from 'primereact/confirmdialog';
 import { Checkbox } from 'primereact/checkbox';
+import { InputNumber } from 'primereact/inputnumber';
 
 import { AcademicCareer } from '../../../interfaces/api/responses/academicCareerResponse';
 import { Node } from './Node';
@@ -21,6 +22,7 @@ interface Props {
 export const AcademicCareerTree = ({ academicCareer, userId }: Props) => {
   const { showSuccess, showError } = useContext(ToastContext);
   const [ isAllowed, setIsAllowed ] = useState<boolean>(false);
+  const [ amount, setAmount ] = useState<number>(6);
   const [ generate, { isLoading: isLoadingGenerate }] = useGenerateAcademicCareerMutation();
   const [ update, { isLoading: isLoadingUpdate }] = useUpdateAcademicCareerMutation();
 
@@ -40,17 +42,18 @@ export const AcademicCareerTree = ({ academicCareer, userId }: Props) => {
   };
 
   const onDrop = async ({ dragNode, dropNode }: TreeDragDropParams, mode: string) => {
-    // if (
-    //   dragNode.data.draggable
-    //   && dropNode?.data.droppable
-    // ) {
+    const { children } = dropNode;
+    if (children && children.length > amount) {
+      return showError({ detail: 'El semestre ya alcanzo el límite de materias permitidas' });
+    }
+
     try {
       const data = {
         userId,
         mode,
         subjectId: dragNode.key?.toString() || '',
         newSemester: dropNode.key?.toString() || '',
-        subjectsInSemester: 100,
+        subjectsInSemester: amount,
         canAdvanceSubject: true,
         hasValidation: true,
       };
@@ -59,13 +62,11 @@ export const AcademicCareerTree = ({ academicCareer, userId }: Props) => {
     } catch (error) {
       return processError({ error, showError });
     }
-    // }
-    // return showError(
-    // { detail: 'No se puede cambiar la materia, favor de verificar su movimiento' });
   };
 
   const onDragDrop = async (event: TreeDragDropParams) => {
     const { dragNode, dropNode } = event;
+
     if (!dragNode.data.draggable || !dropNode?.data.droppable) {
       showError({ detail: 'No se puede cambiar la materia, favor de verificar su movimiento' });
       return;
@@ -90,20 +91,37 @@ export const AcademicCareerTree = ({ academicCareer, userId }: Props) => {
     <div className="card">
 
       <div className="col-12">
-        <div className="flex">
+        <div className="flex flex-wrap  card-container">
+
           <Button
             type="button"
             icon="pi pi-sitemap"
             label="Generar Trayectoria Academica"
-            className="p-button-outlined m-2"
+            className="p-button-outlined m-2 "
             onClick={onGenerate}
           />
           { academicCareer && (
           <>
             <ExcelButtonCareer userId={userId} />
-            <div className="p-field-checkbox flex align-items-center justify-content-center m-2">
-              <Checkbox inputId="binary" checked={isAllowed} onChange={(e) => setIsAllowed(e.checked)} />
-              <label className="ml-1" htmlFor="binary">{isAllowed ? 'Intersemestrales permitidos' : 'Intersemestrales NO permitidos'}</label>
+            <div className="flex  lg:justify-content-end flex-grow-1">
+              <div className="p-field-checkbox flex align-items-center justify-content-center m-2 w-12rem ">
+                <Checkbox inputId="binary" checked={isAllowed} onChange={(e) => setIsAllowed(e.checked)} />
+                <label className="ml-1" htmlFor="binary">{isAllowed ? 'Intersemestrales permitidos' : 'Intersemestrales NO permitidos'}</label>
+              </div>
+              <div className="flex flex-column mb-2">
+                <label htmlFor="minmax-buttons">Máximo de Materias</label>
+                <InputNumber
+                  inputId="minmax-buttons"
+                  value={amount}
+                  onValueChange={(e) => setAmount(e.value ?? 1)}
+                  mode="decimal"
+                  showButtons
+                  min={1}
+                  max={12}
+                  className="w-1rem"
+                  inputClassName="w-5rem"
+                />
+              </div>
             </div>
           </>
           )}

@@ -6,8 +6,11 @@ const headers = [[
   'En riesgo',
   'Semestre',
   'Primera Fase',
+  'Modo Primera Fase',
   'Segunda Fase',
+  'Modo Segunda Fase',
   'Tercera Fase',
+  'Modo Tercera Fase',
 ]];
 
 interface Props {
@@ -19,7 +22,7 @@ export const ExcelButtonCareer = ({ userId }: Props) => (
     hookRTK={useGetAcademicCareerForExcelQuery}
     headers={headers}
     fileName="trayectoria_academica"
-    label="Descargar Trayectoria Academica"
+    label="Descargar Trayectoria"
     hookParams={userId}
   />
 );

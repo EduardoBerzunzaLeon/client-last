@@ -11,7 +11,7 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
     type: EXCEL_TYPE,
   });
 
-  saveAs(dataset, `${fileName}_export_${new Date().getTime()}${EXCEL_EXTENSION}`);
+  saveAs(dataset, `${fileName}_export_${new Date().toJSON()}${EXCEL_EXTENSION}`);
   return true;
 };
 
