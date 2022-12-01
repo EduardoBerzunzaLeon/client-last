@@ -96,6 +96,7 @@ export const FileErrorsTable = ({
             {
               columns?.map(({ field, header }) => (
                 <Column
+                  key={field}
                   header={header}
                   field={field}
                   sortable

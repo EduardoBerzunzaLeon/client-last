@@ -53,8 +53,12 @@ export const SchoolYearStepForm = () => {
   };
 
   const handleNextButton = async () => {
+    const files = [ failedSubjectFile.current, currentSubjectFile.current ];
+
+    interSubjectFile.current && files.push(interSubjectFile.current);
+
     const prepareData: GenerateSchoolYear = {
-      files: [ failedSubjectFile.current, currentSubjectFile.current, interSubjectFile.current ],
+      files,
       password: passwordInput.current,
     };
 

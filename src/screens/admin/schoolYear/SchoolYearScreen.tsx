@@ -1,3 +1,4 @@
+import { FilterMatchMode } from 'primereact/api';
 import {
   DynamicColumn,
   FileErrorsTable, PhaseCard, SchoolYearStepForm,
@@ -9,7 +10,7 @@ import { useGetSchoolYearQuery } from '../../../redux/schoolYear/schoolYear.api'
 const columns: DynamicColumn[] = [
   { field: 'enrollment', header: 'Matricula' },
   { field: 'subject', header: 'Materia' },
-  { field: 'status', header: 'Estatus' },
+  { field: 'passed', header: 'Estatus' },
   { field: 'error', header: 'Error' },
 ];
 
@@ -58,6 +59,7 @@ export const SchoolYearScreen = () => {
             <div className="col-12 md:col-6 lg:col-4">
               <FileErrorsTable
                 {...dataSend.period}
+                initialFilters={{ passed: { value: '', matchMode: FilterMatchMode.CONTAINS }}}
                 status="no generado"
                 endpointName="intersemestralSubjects"
                 title="Error en el archivo de intersemestrales"
