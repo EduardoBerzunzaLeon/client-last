@@ -1,7 +1,10 @@
+import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
+
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
-import { useState } from 'react';
 
+import { FilterMatchMode } from 'primereact/api';
 import {
   ActionsBodyTemplate,
   AtRiskBody,
@@ -26,9 +29,15 @@ import { StudentResume } from '../../../interfaces';
 import { useLazyParams } from '../../../hooks';
 import { useGetStudentsQuery } from '../../../redux/student/student.api';
 
+interface LocationProps {
+  state: { enrollment?: string } | null
+}
+
 const { Provider } = StudentContext;
 
 export const StudentsScreen = () => {
+  const { state } = useLocation() as LocationProps;
+
   const {
     lazyParams,
     setLazyParams,
@@ -37,7 +46,10 @@ export const StudentsScreen = () => {
     onSort,
     onFilter,
     paginatorURL,
-  } = useLazyParams(initialFiltersValue, 'students');
+  } = useLazyParams({
+    ...initialFiltersValue,
+    enrollment: { value: state ? state.enrollment : null, matchMode: FilterMatchMode.CONTAINS },
+  }, 'students');
 
   const [ displayModal, setDisplayModal ] = useState(false);
   const [ displayProfessorsHistoryModal, setDisplayProfessorsHistoryModal ] = useState(false);

@@ -9,6 +9,7 @@ import {
   StudentByExcel,
   StudentProfessorInHistory,
   StudentResume,
+  StudentsByField,
 } from '../../interfaces';
 
 import { invalidatesList, providesList } from '../services/response.service';
@@ -25,6 +26,10 @@ export const studentApi = tutorApi.injectEndpoints({
       providesTags: providesListStudent,
     }),
     getStudentsByExcel: builder.query<ListResponse<StudentByExcel>, string>({
+      query: (path) => path,
+      providesTags: [ 'Students' ],
+    }),
+    getStudentsByField: builder.query<ListResponse<StudentsByField>, string>({
       query: (path) => path,
       providesTags: [ 'Students' ],
     }),
@@ -83,6 +88,7 @@ export const studentApi = tutorApi.injectEndpoints({
 export const {
   useGetStudentsQuery,
   useGetStudentsByExcelQuery,
+  useGetStudentsByFieldQuery,
   useCreateStudentMutation,
   useUpdateStudentMutation,
   useGetProfessorsHistoryQuery,

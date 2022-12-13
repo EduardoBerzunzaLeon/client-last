@@ -1,3 +1,5 @@
+import { Name } from '../requests/authRequest';
+
 export type Channeling = 'no' | 'asesoria' | 'mentoria' | 'atención psicologica interna' | 'atención psicologica externa' | 'consejeria';
 export type Status = 'regular' | 'baja' | 'baja temporal' | 'egresado' | 'rezago';
 export type AtRisk = 'no' | 'ultimo intento' | 'unica materia' | 'no termina';
@@ -62,4 +64,21 @@ export interface ProfessorInHistory {
 export interface StudentProfessorInHistory {
     id: string,
     professorsHistory: ProfessorInHistory[],
+}
+
+export interface StudentUserByField {
+    _id: string;
+    avatar: string;
+    name: Name;
+    email: string;
+    gender: string;
+}
+
+export interface StudentsByField {
+    id: string;
+    currentSemester: number;
+    classroom: string;
+    enrollment: string;
+    atRisk: string;
+    user: StudentUserByField;
 }

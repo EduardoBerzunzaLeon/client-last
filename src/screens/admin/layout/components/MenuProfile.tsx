@@ -73,13 +73,6 @@ export const MenuProfile = () => {
 
             </li>
             <li>
-              <button type="button" className="p-link">
-                <i className="pi pi-fw pi-inbox" />
-                <span>Notifications</span>
-                <span className="menuitem-badge">2</span>
-              </button>
-            </li>
-            <li>
               <button onClick={handleLogout} type="button" className="p-link">
                 <i className="pi pi-fw pi-power-off" />
                 <span>Cerrar Sesión</span>

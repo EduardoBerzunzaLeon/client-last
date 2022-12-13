@@ -23,6 +23,7 @@ export const prepareFilters = (filterOptions: FilterOptionsProps) => {
     custom: '[regex]=',
   };
 
+  if (!filterOptions) return null;
   return Object.keys(filterOptions).map((fieldName) => {
     const filter = filterOptions[fieldName];
 
@@ -37,11 +38,11 @@ export const prepareFilters = (filterOptions: FilterOptionsProps) => {
 };
 
 export const transformQueryWithPaginator = (path: string) => ({
-  page = 1,
   sortField,
   sortOrder,
   filters,
   fields,
+  page = 1,
   rows = 10,
 }: Paginator): string => {
   const options: Generic = {
