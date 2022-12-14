@@ -32,7 +32,7 @@ const initialValues = {
   last: '',
   gender: '',
   email: '',
-  roles: [{ name: 'Lector', code: 'reader' }],
+  roles: [{ name: 'Estudiante', code: 'student' }],
   blocked: false,
   avatar: null,
 };
@@ -121,7 +121,7 @@ export const UserDataForm = ({ buttonLabel, user }: Props) => {
               onChange={(primeFile) => {
                 setFieldValue('avatar', primeFile);
               }}
-              initialValue={initialUser?.avatar ?? values?.avatar ?? ''}
+              initialValue={values?.avatar ?? initialUser?.avatar ?? ''}
               isLoading={isLoadingUpdate || isLoadingCreate}
               uploadOptions={uploadOptions}
               hasPersistence={Boolean(user?.id)}

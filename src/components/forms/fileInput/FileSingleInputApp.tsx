@@ -108,7 +108,11 @@ export const FileSingleInputApp = ({
   );
 
   const getItemTemplate = (f: PrimeFile | File, options: any) => {
-    if (f?.type.startsWith('image')) return ItemImageDefault(f as PrimeFile);
+    if (!initialValue && !hasPersistence) { return EmptyLayout({ label: emptyLabel || '' }); }
+
+    if (f?.type.startsWith('image')) {
+      return ItemImageDefault(f as PrimeFile);
+    }
     if (f) return itemTemplate(f as File, options);
     return null;
   };

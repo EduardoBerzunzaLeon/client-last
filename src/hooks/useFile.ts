@@ -27,7 +27,11 @@ export const useFile = ({ url, name, type = 'image/jpeg' }: Props) => {
 
   useEffect(() => {
     const getFile = async () => {
-      if (url === '') { return; }
+      if (url === '') {
+        setFile(undefined);
+        return;
+      }
+
       try {
         const data = await getFileFromUrl(url ?? '', name, type);
 
