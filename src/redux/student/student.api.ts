@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-unresolved
+import { TagDescription } from '@reduxjs/toolkit/dist/query/endpointDefinitions';
 import { tutorApi } from '../services/tutor.api';
 import {
   EmptyResponse,
@@ -65,7 +67,10 @@ export const studentApi = tutorApi.injectEndpoints({
         method: 'POST',
         body,
       }),
-      invalidatesTags: invalidatesListProfessorsInHistory,
+      invalidatesTags: (result) => {
+        const invalidate = invalidatesListProfessorsInHistory(result);
+        return [ ...invalidate, 'Students' as TagDescription<'Students'> ];
+      },
     }),
     updateProfessorInHistory: builder.mutation<EmptyResponse, RequestUpdateProfessorInHistory>({
       query: ({ userId, professorHistoryId, ...patch }) => ({
@@ -73,14 +78,20 @@ export const studentApi = tutorApi.injectEndpoints({
         method: 'PATCH',
         body: patch,
       }),
-      invalidatesTags: invalidatesListProfessorsInHistory,
+      invalidatesTags: (result) => {
+        const invalidate = invalidatesListProfessorsInHistory(result);
+        return [ ...invalidate, 'Students' as TagDescription<'Students'> ];
+      },
     }),
     deleteProfessorInHistory: builder.mutation<EmptyResponse, RequestDeleteProfessorInHistory>({
       query: ({ userId, professorHistoryId }) => ({
         url: `students/${userId}/professors/${professorHistoryId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: invalidatesListProfessorsInHistory,
+      invalidatesTags: (result) => {
+        const invalidate = invalidatesListProfessorsInHistory(result);
+        return [ ...invalidate, 'Students' as TagDescription<'Students'> ];
+      },
     }),
   }),
 });
