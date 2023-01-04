@@ -13,7 +13,9 @@ const userTesting = {
     },
     fullname: 'test lastTest',
     gender: 'M',
+    // TODO: Verify this object beacuse is similar to fakeAuthData
     role: 'Admin',
+    roles: [ 'admin', 'mentor' ],
     avatar: 'https:/url/myimage.jpg',
     active: true,
     blocked: false,

@@ -1,16 +1,19 @@
 import React, { Suspense } from 'react';
-import { AnyAction, EnhancedStore, Middleware } from '@reduxjs/toolkit';
 import { MemoryRouter } from 'react-router-dom';
+
+import { AnyAction, EnhancedStore, Middleware } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { ReactWrapper } from 'enzyme';
 
 import { authApi } from '../../redux/auth/auth.api';
-import { authState, uiState } from './testData/fakeStoreData';
+import { authState, schoolYearState, uiState } from './testData/fakeStoreData';
+import { persistLogingMiddleware } from '../../redux/auth/auth.middleware';
 import { setupApiStore } from './redux/setupApiStore';
+import { ToastProvider } from '../../context';
+import { tutorApi } from '../../redux/services/tutor.api';
 import authReducer from '../../redux/auth/auth.slice';
 import uiReducer from '../../redux/ui/ui.slice';
-import { tutorApi } from '../../redux/services/tutor.api';
-import { persistLogingMiddleware } from '../../redux/auth/auth.middleware';
+import schoolYearReducer from '../../redux/schoolYear/schoolYear.slice';
 
 declare type Middlewares<S> = ReadonlyArray<Middleware<{}, S>>;
 export declare type Wrapper = ReactWrapper<any, Readonly<{}>, React.Component<{}, {}, any>>;
@@ -34,12 +37,12 @@ export const storeGeneric: StoreRef = setupApiStore(
 );
 
 export const mockStore = <P extends Object>(state?: P): StoreRef => {
-  const initialState = { auth: authState, ui: uiState };
+  const initialState = { auth: authState, ui: uiState, schoolYear: schoolYearState };
   const finalState = state ? { ...initialState, ...state } : { ...initialState };
   return setupApiStore(
     authApi,
     [],
-    { auth: authReducer, ui: uiReducer },
+    { auth: authReducer, ui: uiReducer, schoolYear: schoolYearReducer },
     finalState,
   );
 };
@@ -72,7 +75,9 @@ export const renderWithProps = <P extends object>(
   <Provider store={store}>
     <Suspense fallback="cargando">
       <MemoryRouter initialEntries={[ initialEntries ]}>
-        <Component {...props} />
+        <ToastProvider>
+          <Component {...props} />
+        </ToastProvider>
       </MemoryRouter>
     </Suspense>
   </Provider>
@@ -85,7 +90,9 @@ export const renderWithRouter = (
   <Provider store={store}>
     <Suspense fallback="cargando">
       <MemoryRouter initialEntries={[ initialEntries ]}>
-        <Component />
+        <ToastProvider>
+          <Component />
+        </ToastProvider>
       </MemoryRouter>
     </Suspense>
   </Provider>

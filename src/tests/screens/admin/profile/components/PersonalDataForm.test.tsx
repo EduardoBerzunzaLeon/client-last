@@ -94,7 +94,7 @@ describe('<PersonalDataForm />', () => {
       }
 
       await waitFor(() => {
-        expect(getByText('El usuario se actualizo con éxito')).toBeInTheDocument();
+        expect(getByText('El usuario se actualizó con éxito')).toBeInTheDocument();
         expect(mockUseAppDispatch).toBeCalledTimes(1);
       });
     });

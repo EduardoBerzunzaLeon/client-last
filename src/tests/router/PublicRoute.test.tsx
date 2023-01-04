@@ -5,7 +5,7 @@ import authSlice from '../../redux/auth/auth.slice';
 import { setupApiStore } from '../fixtures/redux/setupApiStore';
 import uiSlice from '../../redux/ui/ui.slice';
 import { renderWithChildren } from '../fixtures/render';
-import PublicRoute from '../../router/PublicRoute';
+import { PublicRoute } from '../../router/PublicRoute';
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),

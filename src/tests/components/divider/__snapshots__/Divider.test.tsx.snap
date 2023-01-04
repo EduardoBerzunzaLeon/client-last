@@ -9,7 +9,7 @@ exports[`<Divider /> should match to snapshot 1`] = `
   type="solid"
 >
   <div
-    className="inline-flex align-items-center text-purple-700"
+    className="inline-flex align-items-center text-purple-700 "
   >
     <i
       className="pi pi-user mr-2"

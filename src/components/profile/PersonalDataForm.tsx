@@ -55,7 +55,7 @@ export const PersonalDataForm = ({ user, isUserLogged }: Props) => {
             dispatch(setDataAuth({ user: updatedUser.data }));
           }
 
-          showSuccess({ detail: 'El usuario se actualizo con éxito' });
+          showSuccess({ detail: 'El usuario se actualizó con éxito' });
         } catch (error) {
           const errors: string = processError({ error, showError });
           setAuthFormErrors({ errors, setFieldError });

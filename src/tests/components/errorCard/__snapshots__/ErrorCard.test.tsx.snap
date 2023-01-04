@@ -8,7 +8,7 @@ exports[`<ErrorCard /> should match to snapshot 1`] = `
     className="col-12"
   >
     <Card
-      className="bg-purple-100 "
+      className="bg-purple-100"
       footer={null}
       header={null}
       id={null}

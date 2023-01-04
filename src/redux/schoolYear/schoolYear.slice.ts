@@ -15,7 +15,7 @@ export interface SchoolYearState {
 }
 
 const schoolYearSlice = createSlice({
-  name: 'auth',
+  name: 'schoolYear',
   initialState: {
     firstPhase: null,
     secondPhase: null,

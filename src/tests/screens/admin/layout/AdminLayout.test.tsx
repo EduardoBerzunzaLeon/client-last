@@ -1,7 +1,7 @@
 import { mount } from 'enzyme';
 
 import { mockStore, renderWithRouter } from '../../../fixtures/render';
-import AdminLayout from '../../../../screens/admin/layout/AdminLayout';
+import { AdminLayout } from '../../../../screens/admin/layout/AdminLayout';
 import { openSider } from '../../../../redux/ui/ui.slice';
 
 describe('<AdminLayout />', () => {

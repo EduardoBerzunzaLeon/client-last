@@ -1,7 +1,7 @@
 import { mount } from 'enzyme';
 
+import { MenuTop } from '../../../../../screens/admin/layout/components/MenuTop';
 import { renderWithRouter, mockStore } from '../../../../fixtures/render';
-import MenuTop from '../../../../../screens/admin/layout/components/MenuTop';
 import { userLogged } from '../../../../fixtures/testData/fakeAuthData';
 
 const mockNavigate = jest.fn();
@@ -17,7 +17,11 @@ describe('<MenuTop />', () => {
     const wrapper = mount(renderWithRouter(MenuTop, { initialEntries: '/admin', store: storeRef.store }));
 
     const button = wrapper.find('.layout-menu-button');
+    const schoolYearData = storeRef.store.getState().schoolYear;
+
+    const span = wrapper.find({ children: `Primera Fase ${schoolYearData.period.start} - ${schoolYearData.period.end}` });
     expect(button.exists()).toBe(true);
+    expect(span.exists()).toBe(true);
     expect(storeRef.store.getState().ui.siderOpen).toBe(false);
 
     button.simulate('click');

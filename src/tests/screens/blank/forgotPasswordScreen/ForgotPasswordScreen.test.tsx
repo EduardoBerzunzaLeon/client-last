@@ -12,7 +12,7 @@ import { mockForgotPassword } from '../../../fixtures/mockServer/mockAuthHandler
 import { renderWithRouter, storeGeneric } from '../../../fixtures/render';
 import { tutorApi } from '../../../../redux/services/tutor.api';
 import * as authApi from '../../../../redux/auth/auth.api';
-import ForgotPasswordScreen from '../../../../screens/blank/forgotPasswordScreen/ForgotPasswordScreen';
+import { ForgotPasswordScreen } from '../../../../screens/blank/forgotPasswordScreen/ForgotPasswordScreen';
 
 const server = setupServer(mockForgotPassword);
 const storeRef = storeGeneric;
