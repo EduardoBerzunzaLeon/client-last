@@ -41,7 +41,6 @@ export const MenuProfile = () => {
           >
             <Skeleton.Image
               src={user?.avatar}
-              imgError="/assets/images/profile.png"
               alt="Profile"
               className="border-circle border-purple-300 border-3 w-6rem h-6rem m-2"
               referrerPolicy="no-referrer"
