@@ -12,7 +12,7 @@ import { mockRegister } from '../../../fixtures/mockServer/mockAuthHandler';
 import { renderWithRouter, storeGeneric } from '../../../fixtures/render';
 import { tutorApi } from '../../../../redux/services/tutor.api';
 import * as authApi from '../../../../redux/auth/auth.api';
-import RegisterScreen from '../../../../screens/blank/registerScreen/RegisterScreen';
+import { RegisterScreen } from '../../../../screens/blank/registerScreen/RegisterScreen';
 
 Storage.prototype.setItem = jest.fn();
 

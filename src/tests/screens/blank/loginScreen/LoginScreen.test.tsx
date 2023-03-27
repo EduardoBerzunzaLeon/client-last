@@ -7,7 +7,7 @@ import {
   render,
   waitFor,
 } from '@testing-library/react';
-import LoginScreen from '../../../../screens/blank/loginScreen/LoginScreen';
+import { LoginScreen } from '../../../../screens/blank/loginScreen/LoginScreen';
 import { renderWithRouter, storeGeneric } from '../../../fixtures/render';
 
 import { tutorApi } from '../../../../redux/services/tutor.api';
