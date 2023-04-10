@@ -14,7 +14,6 @@ exports[`<FacebookButton /> should math to snapshot 1`] = `
 >
   <FacebookButton>
     <Toast
-      appendTo="self"
       baseZIndex={0}
       className={null}
       id={null}
@@ -26,37 +25,18 @@ exports[`<FacebookButton /> should math to snapshot 1`] = `
       style={null}
       transitionOptions={null}
     >
-      <Portal
-        appendTo="self"
-        element={
-          <div
-            className="p-toast p-component p-toast-top-right"
-            id={null}
-            style={null}
-          >
-            <TransitionGroup
-              childFactory={[Function]}
-              component="div"
-            />
-          </div>
-        }
-        onMounted={null}
-        onUnmounted={null}
-        visible={false}
+      <div
+        className="p-toast p-component p-toast-top-right"
+        id={null}
+        style={null}
       >
-        <div
-          className="p-toast p-component p-toast-top-right"
-          id={null}
-          style={null}
+        <TransitionGroup
+          childFactory={[Function]}
+          component="div"
         >
-          <TransitionGroup
-            childFactory={[Function]}
-            component="div"
-          >
-            <div />
-          </TransitionGroup>
-        </div>
-      </Portal>
+          <div />
+        </TransitionGroup>
+      </div>
     </Toast>
     <t
       appId="326264092782043"

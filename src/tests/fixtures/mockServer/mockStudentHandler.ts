@@ -71,10 +71,25 @@ export const studentsDataMock = {
 
 export const mockGetStudents = rest.get<string>(
   `${process.env.REACT_APP_API_URL}/students`,
-  (req, res, ctx) => res(
-    ctx.status(200),
-    ctx.json(studentsDataMock),
-  ),
+  (req, res, ctx) => {
+    const semester: string | null = req.url.searchParams.get('currentSemester');
+
+    if (!semester) {
+      return res(
+        ctx.status(200),
+        ctx.json(studentsDataMock),
+      );
+    }
+
+    const filteredStudents = studentsDataMock.data.filter(
+      ({ currentSemester }) => currentSemester === parseInt(semester, 10),
+    );
+
+    return res(
+      ctx.status(200),
+      ctx.json(filteredStudents),
+    );
+  },
 );
 
 export default {

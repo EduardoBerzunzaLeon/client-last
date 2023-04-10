@@ -9,8 +9,6 @@ import { mockStoreWithMiddlewares, renderWithRouter } from '../../../fixtures/re
 import { StudentsScreen } from '../../../../screens/admin/students/StudentsScreen';
 import { tutorApi } from '../../../../redux/services/tutor.api';
 
-// carguen los datos correctamente (la tabla)
-// que los filtros funcionen (que llamen el endpoint correctamente) y eliminar filtros
 // Crear un estudiante nuevo
 // Actualizar un estudiante
 
@@ -99,5 +97,80 @@ describe('<StudentScreen />', () => {
         { state: { root: 'students' }},
       );
     });
+  });
+
+  test('should correctly filter the semester and clear the filter', async () => {
+    const {
+      findByText,
+      getByText,
+      container,
+    } = wrapper;
+
+    const spanSemester = await findByText(/Elige el semestre/i, { selector: 'span' });
+    const spanCleanFilter = await findByText(/Limpiar Filtros/i, { selector: 'span' });
+
+    expect(spanSemester).toBeInTheDocument();
+
+    await waitFor(() => {
+      fireEvent.click(spanSemester);
+    });
+
+    const option = getByText('Semestre 2');
+    expect(option).toBeInTheDocument();
+
+    await waitFor(() => {
+      fireEvent.click(option);
+    });
+
+    await waitFor(() => {
+      expect(option).not.toBeInTheDocument();
+      const tbodyRows = container.querySelectorAll('tbody > tr');
+      expect(tbodyRows.length).toEqual(1);
+    });
+
+    await waitFor(() => {
+      fireEvent.click(spanCleanFilter);
+    });
+
+    await waitFor(() => {
+      const tbodyRows = container.querySelectorAll('tbody > tr');
+      expect(tbodyRows.length).toEqual(studentsDataMock.data.length);
+    });
+  });
+
+  test.only('should create student and refresh the table', async () => {
+    const {
+      findByText,
+      getByRole,
+      container,
+      findAllByLabelText,
+    } = wrapper;
+
+    const spanCreateStudent = await findByText(/Crear Estudiante/i, { selector: 'span' });
+
+    expect(spanCreateStudent).toBeInTheDocument();
+
+    fireEvent.click(spanCreateStudent);
+
+    const dialog = getByRole('dialog');
+
+    expect(dialog).toBeInTheDocument();
+
+    const inputFirst = container.querySelector('#first');
+    const inputLast = container.querySelector('#last');
+    const inputEmail = container.querySelector('#email');
+    const inputEnrollment = container.querySelector('#enrollment');
+    const inputSemester = container.querySelector('#currentSemester');
+    const inputClassroom = container.querySelector('#classroom');
+    const inputGenderMale = findAllByLabelText('male');
+
+    expect(inputGenderMale).toBeInTheDocument();
+    expect(inputFirst).toBeInTheDocument();
+    expect(inputLast).toBeInTheDocument();
+    expect(inputEmail).toBeInTheDocument();
+    expect(inputEnrollment).toBeInTheDocument();
+    expect(inputSemester).toBeInTheDocument();
+    expect(inputClassroom).toBeInTheDocument();
+    // const maleRadio;
   });
 });

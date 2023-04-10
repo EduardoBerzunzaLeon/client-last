@@ -96,7 +96,7 @@ export const StudentsScreen = () => {
                   header={<Header />}
                   lazy
                   loading={isFetching}
-                  onFilter={onFilter}
+                  onFilter={(a: any) => onFilter(a)}
                   onPage={onPage}
                   onSort={onSort}
                   paginator

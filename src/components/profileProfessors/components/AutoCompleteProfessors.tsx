@@ -12,6 +12,7 @@ import {
   useGetProfessorsByFullNameQuery,
   useGetProfessorsQuery,
 } from '../../../redux/professor/professor.api';
+import { SkeletonDropdown } from '../../ui';
 
 export interface ProfessorItem {
   fullname: string,
@@ -38,11 +39,12 @@ const itemTemplate = (item: any) => (
 export const AutoCompleteProfessors = ({ value, onChange, disabled }: Props) => {
   const [ filteredItems, setFilteredItems ] = useState<ProfessorItem[] | []>([]);
   const [ query, setQuery ] = useState<string>('');
+  const [ skip, setSkip ] = useState<boolean>(true);
 
   const {
     data,
     isLoading,
-  } = useGetProfessorsQuery('professors', { skip: !!query });
+  } = useGetProfessorsQuery('professors', { skip });
 
   const {
     data: professors,
@@ -78,6 +80,10 @@ export const AutoCompleteProfessors = ({ value, onChange, disabled }: Props) => 
     setQuery('');
   };
 
+  const onFocus = () => {
+    setSkip(false);
+  };
+
   return (
     <AutoComplete
       name="professor"
@@ -87,19 +93,23 @@ export const AutoCompleteProfessors = ({ value, onChange, disabled }: Props) => 
       suggestions={filteredItems}
       completeMethod={searchItems}
       virtualScrollerOptions={{
+        lazy: true,
         itemSize: 38,
         showLoader: true,
-        delay: 250,
+        loading: isLoading,
+        loadingTemplate: SkeletonDropdown,
       }}
       field="fullname"
       dropdown
       forceSelection
       itemTemplate={itemTemplate}
       onHide={onHide}
+      onFocus={onFocus}
       className="w-full"
       aria-label="Professors"
       panelClassName="overflow-hidden"
       disabled={disabled}
+      dropdownMode="current"
     />
   );
 };
